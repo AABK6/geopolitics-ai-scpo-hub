@@ -15,7 +15,9 @@ const initLatentSpace = () => {
   // Ensure gsap is loaded globally via CDN
   const gsap = window.gsap;
 
+
   let renderer;
+  let labelRenderer;
   try {
     // Renderer setup
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -24,7 +26,15 @@ const initLatentSpace = () => {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
+
+    labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    container.appendChild(labelRenderer.domElement);
   } catch (e) {
+
     console.error('WebGL Initialization Error:', e);
     if (loadingOverlay) loadingOverlay.style.display = 'none';
     if (fallbackUI) fallbackUI.style.display = 'flex';
@@ -233,9 +243,6 @@ const initLatentSpace = () => {
       transparent: true,
       opacity: 0.2
     });
-    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-    mesh.add(wireMesh);
-
     const wireMesh = new THREE.Mesh(wireGeo, wireMat);
     mesh.add(wireMesh);
     mesh.userData.wireMesh = wireMesh;
