@@ -7,7 +7,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 // =====================
-// SHADER SOURCE CODE: Opaque Atmospheric Marble
+// SHADER SOURCE CODE: Neural Node Material
 // =====================
 const nodeVertexShader = `
   varying vec2 vUv;
@@ -92,20 +92,20 @@ const nodeFragmentShader = `
     
     float activity = (n0 * 0.5 + n1 * 0.3 + n2 * 0.2) * 0.5 + 0.5;
     
-    // Balanced color mix
-    vec3 baseColor = uColor * 0.2;
-    vec3 midColor = uColor * 0.55;
-    vec3 activeColor = uColor * 0.95;
+    // Brighter palette to read as an active network, not dark celestial bodies.
+    vec3 baseColor = uColor * 0.55;
+    vec3 midColor = uColor * 0.9;
+    vec3 activeColor = uColor * 1.2;
     
     vec3 finalColor = mix(baseColor, midColor, activity);
     finalColor = mix(finalColor, activeColor, pow(activity, 5.0));
     
     // Interaction
-    finalColor *= (1.0 + uHover * 0.2);
+    finalColor *= (1.0 + uHover * 0.1);
 
-    // Soft diffuse shading
-    float diff = max(dot(vNormal, normalize(vec3(1.0, 1.0, 1.0))), 0.2);
-    finalColor *= (diff + 0.4);
+    // Light, flatter shading so nodes read as data points.
+    float diff = max(dot(vNormal, normalize(vec3(0.5, 1.0, 0.8))), 0.45);
+    finalColor *= (0.75 + diff * 0.5);
 
     gl_FragColor = vec4(finalColor, 1.0);
   }
@@ -152,12 +152,12 @@ export const initLatentSpace = () => {
 
   // Scene setup
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0a0f1a, 0.035); // Re-enabled with data-medium color
+  scene.fog = new THREE.FogExp2(0x4b6176, 0.008);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
   scene.add(ambientLight);
   
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1c2e45, 1.0);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
 
@@ -360,8 +360,9 @@ export const initLatentSpace = () => {
 
   // Create Nodes
   nodesData.forEach(data => {
-    // Inner core - high detail for perfect roundness
-    const geometry = new THREE.IcosahedronGeometry(data.size, 5);
+    // Slightly smaller, less perfectly spherical forms read more like graph nodes.
+    const nodeSize = data.type === 'anchor' ? data.size * 0.58 : data.size * 0.52;
+    const geometry = new THREE.IcosahedronGeometry(nodeSize, 1);
     let material = createAnchorMaterial(data.color);
     
     const mesh = new THREE.Mesh(geometry, material);
@@ -371,24 +372,6 @@ export const initLatentSpace = () => {
     constellation.add(mesh);
     meshes.push(mesh);
 
-    // Visual Enhancements (Orbitals for Satellites)
-    if (data.type === 'satellite') {
-      const ringGroup = new THREE.Group();
-      mesh.add(ringGroup);
-      mesh.userData.ringGroup = ringGroup;
-
-      const ringCount = 2;
-      for (let i = 0; i < ringCount; i++) {
-        const radius = data.size * (1.4 + i * 0.3);
-        const ringGeo = new THREE.TorusGeometry(radius, 0.01, 8, 64);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.random() * Math.PI;
-        ring.rotation.y = Math.random() * Math.PI;
-        ringGroup.add(ring);
-      }
-    }
-
     // Typography Labels
     if (data.type === 'anchor') {
       const div = document.createElement('div');
@@ -396,10 +379,10 @@ export const initLatentSpace = () => {
       div.textContent = '0' + data.id.replace('m', '');
       div.style.color = data.id.match(/m[1-4]/) ? '#38bdf8' : '#ea580c';
       div.style.fontFamily = 'JetBrains Mono, monospace';
-      div.style.fontSize = '3rem';
+      div.style.fontSize = '2.4rem';
       div.style.fontWeight = 'bold';
-      div.style.opacity = '0.3';
-      div.style.textShadow = '0 0 10px rgba(255,255,255,0.2)';
+      div.style.opacity = '0.28';
+      div.style.textShadow = '0 0 8px rgba(170,220,255,0.2)';
       const label = new CSS2DObject(div);
       label.position.set(0, 2.5, 0);
       mesh.add(label);
@@ -425,7 +408,7 @@ export const initLatentSpace = () => {
       const satMesh = meshes.find(m => m.userData.id === sat.id);
       const points = [sat.position, closestAnchorMesh.position];
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
+      const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.2 });
       const line = new THREE.Line(geometry, mat);
       constellation.add(line);
       
@@ -440,7 +423,7 @@ export const initLatentSpace = () => {
   for (let i = 0; i < anchorMeshes.length - 1; i++) {
     const points = [anchorMeshes[i].position, anchorMeshes[i+1].position];
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
+    const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.24 });
     const line = new THREE.Line(geometry, mat);
     constellation.add(line);
     
@@ -479,13 +462,13 @@ export const initLatentSpace = () => {
 
     // Slow constellation drift
     if (!hoveredNode) {
-      constellation.rotation.y += 0.0003;
-      constellation.rotation.x += 0.00015;
+      constellation.rotation.y += 0.00008;
+      constellation.rotation.x += 0.00002;
     }
 
     meshes.forEach(mesh => {
       // Common slow rotation
-      mesh.rotation.y += 0.002;
+      mesh.rotation.y += 0.0008;
 
       // Update Shader Uniforms
       if (mesh.material.uniforms) {
@@ -494,15 +477,9 @@ export const initLatentSpace = () => {
         mesh.material.uniforms.uHover.value = THREE.MathUtils.lerp(mesh.material.uniforms.uHover.value, targetHover, 0.1);
       }
 
-      // Update Satellite Orbitals
-      if (mesh.userData.type === 'satellite' && mesh.userData.ringGroup) {
-        mesh.userData.ringGroup.rotation.y += 0.01;
-        mesh.userData.ringGroup.rotation.x += 0.005;
-      }
-
       // Pulse effect logic refined for both
       const pulseSpeed = (mesh.userData.type === 'anchor') ? 2 : 1;
-      const pulseAmount = (mesh.userData.type === 'anchor') ? 0.05 : 0.02;
+      const pulseAmount = (mesh.userData.type === 'anchor') ? 0.025 : 0.012;
       const scaleBase = (hoveredNode === mesh) ? 1.2 : 1.0;
       const scale = scaleBase + Math.sin(elapsedTime * pulseSpeed + mesh.position.x) * pulseAmount;
       mesh.scale.set(scale, scale, scale);
