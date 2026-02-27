@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geopolitics of AI | Latent Space</title>
+  
+  <link rel="stylesheet" href="shared/design-system.css">
+  
+  <!-- GSAP for UI Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #050505;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    #canvas-container {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    #ui-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem 3rem;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+    }
+
+    .course-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .course-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #94a3b8;
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    .escape-hatch {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .escape-hatch:hover {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      border-color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Briefing Card */
+    #briefing-card {
+      position: absolute;
+      top: 50%;
+      right: 4rem;
+      transform: translateY(-50%) translateX(50px);
+      width: 380px;
+      background: rgba(10, 15, 25, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      pointer-events: auto;
+      opacity: 0;
+      visibility: hidden;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .card-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: #ea580c;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      display: block;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-type::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #ea580c;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ea580c;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 1rem 0;
+      line-height: 1.1;
+      color: #f8fafc;
+    }
+
+    .card-bluf {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .card-action {
+      flex: 1;
+      text-align: center;
+      padding: 0.8rem;
+      background: #f8fafc;
+      color: #0f172a;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .card-action:hover {
+      background: #ea580c;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);
+    }
+
+    .card-action.secondary {
+      background: transparent;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-action.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+      box-shadow: none;
+    }
+
+    /* Loading & Fallback overlays */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #050505;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .loader-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-top: 1.5rem;
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 50%;
+      height: 100%;
+      background: #ea580c;
+      animation: load 1.5s infinite ease-in-out;
+    }
+
+    @keyframes load {
+      0% { left: -50%; }
+      100% { left: 100%; }
+    }
+
+    #fallback-ui {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1e293b 0%, #050505 100%);
+      z-index: 5;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .fallback-msg {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+  </style>
+
+  <!-- Import Map for ES Modules -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <div id="loading-overlay">
+    <div class="loader-bar"></div>
+    <div class="loader-text" id="loader-text">Initializing Latent Space...</div>
+  </div>
+
+  <div id="fallback-ui">
+    <div class="fallback-msg">WebGL Context Unavailable</div>
+    <p style="font-family: 'Inter'; color: #94a3b8; max-width: 500px; margin-bottom: 2rem;">
+      Your browser or device does not support the 3D Latent Space environment.
+    </p>
+    <a href="magazine.html" class="escape-hatch" style="position: relative; pointer-events: auto;">Enter Text-Based View</a>
+  </div>
+
+  <div id="canvas-container"></div>
+
+  <div id="ui-layer">
+    <div class="top-bar">
+      <div>
+        <div class="course-title">Geopolitics of AI</div>
+        <div class="course-subtitle">Sciences Po — Spring 2026</div>
+      </div>
+      <a href="magazine.html" class="escape-hatch">Text-Based View [Esc]</a>
+    </div>
+
+    <div id="briefing-card">
+      <span class="card-type" id="card-type">Module 01</span>
+      <h2 class="card-title" id="card-title">Title</h2>
+      <p class="card-bluf" id="card-bluf">Bottom line up front goes here.</p>
+      <div class="card-actions" id="card-actions">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D Hub Logic as an ES Module -->
+  <script type="module" src="shared/3d-hub-option4.js"></script>
+</body>
+</html>
