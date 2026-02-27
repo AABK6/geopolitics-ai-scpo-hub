@@ -3,19 +3,31 @@
  * Geopolitics of AI | Course Hub
  */
 
-let scene, camera, renderer, nodes = [], lines = [];
+let scene, camera, renderer, nodes = [];
 const container = document.getElementById('canvas-container');
 
 function init() {
+    if (!container) return;
+    
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0f172a); // Deep Navy
+    scene.background = new THREE.Color(0x000000); 
 
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 100;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
+    camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    camera.position.z = 80;
+
+    try {
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+    } catch (e) {
+        console.error("WebGL initialization failed", e);
+        container.innerHTML = "<div style='display:flex;align-items:center;justify-content:center;height:100%;color:#444;font-family:monospace;'>[ GPU Acceleration Unavailable ]</div>";
+        return;
+    }
 
     // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -95,9 +107,12 @@ window.addEventListener('click', (event) => {
 });
 
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    if (!container || !renderer) return;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
 });
 
 init();

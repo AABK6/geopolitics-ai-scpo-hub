@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Preview | Geopolitics of AI</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      overflow: hidden; /* Prevent body scroll, let iframe scroll */
+      background: #faf9f7;
+    }
+    
+    .hub-top-bar {
+      height: 50px;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      box-sizing: border-box;
+      border-bottom: 2px solid #ea580c;
+    }
+    
+    .hub-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .hub-brand span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      margin-left: 1rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .hub-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .hub-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #334155;
+      transition: all 0.2s;
+    }
+    
+    .hub-btn:hover {
+      background: #fff;
+      color: #0f172a;
+      border-color: #fff;
+    }
+    
+    #project-frame {
+      width: 100%;
+      height: calc(100vh - 50px);
+      border: none;
+      display: block;
+      background: #fff;
+    }
+
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #64748b;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hub-top-bar">
+    <a href="index.html" class="hub-brand">
+      Geopolitics of AI <span>Course Hub</span>
+    </a>
+    <div class="hub-actions">
+      <a href="#" id="open-direct" class="hub-btn" target="_blank">Open Fullscreen ↗</a>
+      <a href="magazine.html" class="hub-btn">Back to Magazine</a>
+      <a href="index.html" class="hub-btn">Back to 3D Space</a>
+    </div>
+  </header>
+
+  <div id="loading">Loading Project Sandbox...</div>
+  <iframe id="project-frame" title="Student Project Sandbox" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+
+  <script>
+    // Simple router based on URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('project');
+    
+    const iframe = document.getElementById('project-frame');
+    const openDirectBtn = document.getElementById('open-direct');
+    
+    // Map of allowed projects for basic validation
+    const validProjects = ['group-1', 'group-2', 'group-3', 'group-4', 'group-5'];
+    
+    if (projectId && validProjects.includes(projectId)) {
+      const targetUrl = `projects/${projectId}/index.html`;
+      iframe.src = targetUrl;
+      openDirectBtn.href = targetUrl;
+    } else {
+      document.getElementById('loading').textContent = 'Error: Invalid or missing project ID.';
+    }
+  </script>
+
+</body>
+</html>
