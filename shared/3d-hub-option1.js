@@ -77,7 +77,7 @@ const initLatentSpace = () => {
       id: 'm2',
       type: 'anchor',
       title: 'Architecture of Sovereignty',
-      bluf: 'China's foundational rebuttal to the liberal digital order: the construction of a "Porous but Policed" internet that imports capital while filtering dissent.',
+      bluf: "China's foundational rebuttal to the liberal digital order: the construction of a 'Porous but Policed' internet that imports capital while filtering dissent.",
       url: 'primer/module-02.html',
       position: new THREE.Vector3(-10, 2, 0),
       color: 0xea580c,

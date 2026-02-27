@@ -1,8 +1,11 @@
+
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
 
 const initLatentSpace = () => {
   const container = document.getElementById('canvas-container');
@@ -12,7 +15,9 @@ const initLatentSpace = () => {
   // Ensure gsap is loaded globally via CDN
   const gsap = window.gsap;
 
+
   let renderer;
+  let labelRenderer;
   try {
     // Renderer setup
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -21,7 +26,15 @@ const initLatentSpace = () => {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
+
+    labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    container.appendChild(labelRenderer.domElement);
   } catch (e) {
+
     console.error('WebGL Initialization Error:', e);
     if (loadingOverlay) loadingOverlay.style.display = 'none';
     if (fallbackUI) fallbackUI.style.display = 'flex';
@@ -69,7 +82,7 @@ const initLatentSpace = () => {
       bluf: 'The "End of History" illusion and the Clintonian Wager: How early internet optimism assumed the non-rival nature of digital ideas would inevitably dissolve borders.',
       url: 'primer/module-01.html',
       position: new THREE.Vector3(-12, 4, 0),
-      color: 0xea580c,
+      color: 0x38bdf8,
       size: 1.5
     },
     {
@@ -79,7 +92,7 @@ const initLatentSpace = () => {
       bluf: 'China\'s foundational rebuttal to the liberal digital order: the construction of a "Porous but Policed" internet that imports capital while filtering dissent.',
       url: 'primer/module-02.html',
       position: new THREE.Vector3(-8, -2, -4),
-      color: 0xea580c,
+      color: 0x38bdf8,
       size: 1.5
     },
     {
@@ -89,7 +102,7 @@ const initLatentSpace = () => {
       bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust, triggering a race for defensive sovereignty over critical infrastructure.',
       url: 'primer/module-03.html',
       position: new THREE.Vector3(-4, 3, 5),
-      color: 0xea580c,
+      color: 0x38bdf8,
       size: 1.5
     },
     {
@@ -99,7 +112,7 @@ const initLatentSpace = () => {
       bluf: 'The balkanization of the web into competing, deeply sovereign technological stacks and the end of globalization as the default state.',
       url: 'primer/module-04.html',
       position: new THREE.Vector3(0, -4, 0),
-      color: 0xea580c,
+      color: 0x38bdf8,
       size: 1.5
     },
     {
@@ -109,7 +122,7 @@ const initLatentSpace = () => {
       bluf: 'The return of the production function: how frontier AI relies on rival, physical inputs—compute, energy, data, and human talent.',
       url: 'primer/module-05.html',
       position: new THREE.Vector3(4, 5, -3),
-      color: 0x15803d,
+      color: 0xea580c,
       size: 1.5
     },
     {
@@ -119,7 +132,7 @@ const initLatentSpace = () => {
       bluf: 'The resurgence of techno-nationalism and industrial policy, as states race to secure domestic capability while denying adversaries access to critical chokepoints.',
       url: 'primer/module-06.html',
       position: new THREE.Vector3(8, 0, 4),
-      color: 0x15803d,
+      color: 0xea580c,
       size: 1.5
     },
     {
@@ -129,7 +142,7 @@ const initLatentSpace = () => {
       bluf: 'Tracing the competing intellectual frames—from state realism to techno-accelerationism—that are actively defining what constitutes "rational" policy.',
       url: 'primer/module-07.html',
       position: new THREE.Vector3(12, -4, 0),
-      color: 0x15803d,
+      color: 0xea580c,
       size: 1.5
     },
     {
@@ -139,7 +152,7 @@ const initLatentSpace = () => {
       bluf: 'The core tradeoffs that will dictate the future global order: diffusion vs. enclosure, growth vs. legitimacy, and state control vs. corporate power.',
       url: 'primer/module-08.html',
       position: new THREE.Vector3(16, 2, -4),
-      color: 0x15803d,
+      color: 0xea580c,
       size: 1.5
     },
     {
@@ -150,7 +163,7 @@ const initLatentSpace = () => {
       previewUrl: 'preview.html?project=group-1',
       directUrl: 'projects/group-1/index.html',
       position: new THREE.Vector3(5, 8, -6),
-      color: 0x38bdf8,
+      color: 0x94a3b8,
       size: 0.8
     },
     {
@@ -161,7 +174,7 @@ const initLatentSpace = () => {
       previewUrl: 'preview.html?project=group-2',
       directUrl: 'projects/group-2/index.html',
       position: new THREE.Vector3(9, -2, 7),
-      color: 0x38bdf8,
+      color: 0x94a3b8,
       size: 0.8
     },
     {
@@ -172,7 +185,7 @@ const initLatentSpace = () => {
       previewUrl: 'preview.html?project=group-3',
       directUrl: 'projects/group-3/index.html',
       position: new THREE.Vector3(-9, -5, -6),
-      color: 0x38bdf8,
+      color: 0x94a3b8,
       size: 0.8
     },
     {
@@ -183,7 +196,7 @@ const initLatentSpace = () => {
       previewUrl: 'preview.html?project=group-4',
       directUrl: 'projects/group-4/index.html',
       position: new THREE.Vector3(-3, 6, 7),
-      color: 0x38bdf8,
+      color: 0x94a3b8,
       size: 0.8
     },
     {
@@ -194,7 +207,7 @@ const initLatentSpace = () => {
       previewUrl: 'preview.html?project=group-5',
       directUrl: 'projects/group-5/index.html',
       position: new THREE.Vector3(13, -7, 2),
-      color: 0x38bdf8,
+      color: 0x94a3b8,
       size: 0.8
     }
   ];
@@ -204,16 +217,47 @@ const initLatentSpace = () => {
 
   const meshes = [];
 
+
   // Materials
-  const anchorMat = new THREE.MeshBasicMaterial({ color: 0xea580c });
-  const satelliteMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+  const anchorMat1 = new THREE.MeshPhysicalMaterial({ 
+    color: 0x38bdf8,
+    metalness: 0.8,
+    roughness: 0.2,
+    transmission: 0.9,
+    thickness: 1.5,
+    clearcoat: 1.0,
+    emissive: 0x0f172a,
+    emissiveIntensity: 0.2
+  });
+  const anchorMat2 = new THREE.MeshPhysicalMaterial({ 
+    color: 0xea580c,
+    metalness: 0.8,
+    roughness: 0.2,
+    transmission: 0.9,
+    thickness: 1.5,
+    clearcoat: 1.0,
+    emissive: 0x0f172a,
+    emissiveIntensity: 0.2
+  });
+  const satelliteMat = new THREE.MeshPhysicalMaterial({ 
+    color: 0x94a3b8,
+    metalness: 0.5,
+    roughness: 0.5,
+    transmission: 0.5,
+    clearcoat: 0.5
+  });
 
   // Create Nodes
   nodesData.forEach(data => {
     // Inner core
-    const geometry = new THREE.IcosahedronGeometry(data.size, 2);
-    const material = data.type === 'anchor' ? anchorMat.clone() : satelliteMat.clone();
-    material.color.setHex(data.color);
+    const geometry = new THREE.IcosahedronGeometry(data.size, 3);
+    let material;
+    if (data.type === 'anchor') {
+      material = data.id.match(/m[1-4]/) ? anchorMat1.clone() : anchorMat2.clone();
+    } else {
+      material = satelliteMat.clone();
+    }
+
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(data.position);
@@ -232,7 +276,27 @@ const initLatentSpace = () => {
     });
     const wireMesh = new THREE.Mesh(wireGeo, wireMat);
     mesh.add(wireMesh);
+
+    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+    mesh.add(wireMesh);
     mesh.userData.wireMesh = wireMesh;
+
+    // Typography Labels
+    if (data.type === 'anchor') {
+      const div = document.createElement('div');
+      div.className = 'node-label';
+      div.textContent = '0' + data.id.replace('m', '');
+      div.style.color = data.id.match(/m[1-4]/) ? '#38bdf8' : '#ea580c';
+      div.style.fontFamily = 'JetBrains Mono, monospace';
+      div.style.fontSize = '3rem';
+      div.style.fontWeight = 'bold';
+      div.style.opacity = '0.3';
+      div.style.textShadow = '0 0 10px rgba(255,255,255,0.2)';
+      const label = new CSS2DObject(div);
+      label.position.set(0, 2.5, 0);
+      mesh.add(label);
+    }
+
   });
 
   // Data Dust (Particles)
@@ -253,13 +317,22 @@ const initLatentSpace = () => {
   const particleMesh = new THREE.Points(particlesGeo, particlesMat);
   scene.add(particleMesh);
 
+
   // Add Edges
   const lineMaterial = new THREE.LineBasicMaterial({
     color: 0xffffff,
     transparent: true,
-    opacity: 0.05
+    opacity: 0.1
+  });
+  
+  const thickLineMaterial = new THREE.LineBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.3,
+    linewidth: 2 
   });
 
+  // Connect satellites to nearest anchor
   nodesData.filter(n => n.type === 'satellite').forEach(sat => {
     let closestAnchor = null;
     let minDistance = Infinity;
@@ -279,13 +352,15 @@ const initLatentSpace = () => {
     }
   });
 
+  // Connect anchors Sequentially to form a path
   const anchors = nodesData.filter(n => n.type === 'anchor');
-  if (anchors.length > 1) {
-    const points = anchors.map(a => a.position);
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const points = [anchors[i].position, anchors[i+1].position];
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line(geometry, lineMaterial);
+    const line = new THREE.Line(geometry, thickLineMaterial);
     constellation.add(line);
   }
+
 
   // Raycaster for interactions
   const raycaster = new THREE.Raycaster();
@@ -397,8 +472,11 @@ const initLatentSpace = () => {
       }
     }
 
+
     controls.update();
     composer.render();
+    if (labelRenderer) labelRenderer.render(scene, camera);
+
   };
 
   // Handle Resize
@@ -406,7 +484,11 @@ const initLatentSpace = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
     composer.setSize(window.innerWidth, window.innerHeight);
+    if (labelRenderer) labelRenderer.setSize(window.innerWidth, window.innerHeight);
+
   });
 
   // Remove loading overlay
