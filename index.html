@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geopolitics of AI | Latent Space Hub</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="shared/design-system.css">
+  <link rel="stylesheet" href="shared/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  
+  <style>
+    body { margin: 0; overflow: hidden; background-color: #0f172a; color: #fff; }
+    #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    
+    .hub-ui {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem;
+    }
+    
+    .hub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: auto;
+    }
+    
+    .hub-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+    
+    .hub-switch-mode {
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .hub-switch-mode:hover {
+      background-color: #fff;
+      color: #0f172a;
+    }
+    
+    #briefing-card {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 320px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      display: none;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    
+    .brief-type { font-family: var(--font-mono); font-size: 0.7rem; color: #ea580c; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .brief-title { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 1rem; }
+    .brief-bluf { font-size: 0.875rem; color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.4; }
+    .brief-btn {
+      display: inline-block;
+      background-color: #ea580c;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .hub-controls {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="canvas-container"></div>
+  
+  <div class="hub-ui">
+    <div class="hub-header">
+      <div class="hub-title">The Latent Space</div>
+      <a href="magazine.html" class="hub-switch-mode">[ Switch to Magazine View ]</a>
+    </div>
+    
+    <div id="briefing-card">
+      <div class="brief-type">Anchor Node</div>
+      <div class="brief-title">Module 01: History</div>
+      <div class="brief-bluf">Understanding the transition from cyber-utopianism to AI geopolitics (1996-2026).</div>
+      <a href="primer/module-01.html" class="brief-btn">Start Briefing</a>
+    </div>
+    
+    <div class="hub-controls">Click & Drag to Rotate | Scroll to Zoom | Click Node to Select</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="assets/js/hub-latent.js"></script>
+
+</body>
+</html>
