@@ -276,9 +276,6 @@ const initLatentSpace = () => {
     });
     const wireMesh = new THREE.Mesh(wireGeo, wireMat);
     mesh.add(wireMesh);
-
-    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-    mesh.add(wireMesh);
     mesh.userData.wireMesh = wireMesh;
 
     // Typography Labels
