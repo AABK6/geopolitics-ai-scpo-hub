@@ -9,35 +9,257 @@
   
   <!-- GSAP for UI Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
 
   <style>
     body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      background-color: #050505;
+      overflow-x: hidden;
+      background-color: #050505 !important;
       color: #fff;
       font-family: 'Inter', sans-serif;
+      height: 300vh;
     }
-    
+
+    #hero-bg-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('images/hero-background.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      opacity: 1;
+    }
+
     #canvas-container {
       width: 100vw;
       height: 100vh;
       display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      background-color: transparent !important;
+      filter: blur(2px) brightness(0.7);
+      transition: filter 0.5s ease;
+      pointer-events: none; 
+    }
+
+    #canvas-container canvas {
+      pointer-events: auto !important;
+    }
+
+    #hero-section {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      box-sizing: border-box;
+      background: rgba(5, 5, 5, 0.2);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      pointer-events: auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      color: #60a5fa;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title-line {
+      display: block;
+    }
+
+    .hero-title-accent {
+      display: block;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: #94a3b8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-statement {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      color: #94a3b8;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .hero-statement strong {
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .core-question-box {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      margin-bottom: 4rem;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      position: relative;
+    }
+
+    .core-question-box::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 1;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    .core-question-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #3b82f6;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .core-question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 500;
+      color: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .hero-instructors {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .instructor-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border: 2px solid #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #fff;
+      margin-left: -8px;
+    }
+
+    .instructor-avatar:first-child { margin-left: 0; }
+    .instructor-info { text-align: left; }
+    .instructor-label { font-size: 0.7rem; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
+    .instructor-names { font-size: 0.9rem; font-weight: 500; color: #94a3b8; }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      color: #64748b;
+    }
+
+    .scroll-indicator-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #94a3b8;
+    }
+
+    .scroll-indicator-icon {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      padding-top: 8px;
+    }
+
+    .scroll-indicator-dot {
+      width: 4px;
+      height: 8px;
+      background: #3b82f6;
+      border-radius: 2px;
+      animation: scroll-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(8px); opacity: 0.5; }
     }
 
     #ui-layer {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10;
+      z-index: 20;
+      opacity: 0;
     }
 
     .top-bar {
@@ -50,25 +272,6 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      pointer-events: none;
-    }
-
-    .course-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-
-    .course-subtitle {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #94a3b8;
-      display: block;
-      margin-top: 0.2rem;
     }
 
     .escape-hatch {
@@ -80,25 +283,11 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border-radius: 4px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    .escape-hatch:hover {
-      background: rgba(255, 255, 255, 0.95);
-      color: #0f172a;
-      border-color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
-    }
-
-    /* Briefing Card */
     #briefing-card {
       position: absolute;
       top: 50%;
@@ -109,51 +298,46 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 2.5rem;
       backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      pointer-events: auto;
+      border-radius: 8px;
       opacity: 0;
       visibility: hidden;
-      border-radius: 8px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
     }
 
     .card-type {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.65rem;
       color: #ea580c;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      margin-bottom: 1rem;
-      display: block;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .card-type::before {
       content: '';
-      display: inline-block;
       width: 6px;
       height: 6px;
-      background: #ea580c;
       border-radius: 50%;
+      background: #ea580c;
       box-shadow: 0 0 10px #ea580c;
     }
 
     .card-title {
+      margin: 0 0 1rem 0;
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
       font-weight: 700;
-      margin: 0 0 1rem 0;
       line-height: 1.1;
       color: #f8fafc;
     }
 
     .card-bluf {
+      margin-bottom: 2rem;
       font-size: 0.95rem;
-      color: #94a3b8;
       line-height: 1.6;
-      margin-bottom: 2.5rem;
+      color: #94a3b8;
     }
 
     .card-actions {
@@ -163,17 +347,17 @@
 
     .card-action {
       flex: 1;
-      text-align: center;
+      border-radius: 4px;
       padding: 0.8rem;
+      text-align: center;
+      text-decoration: none;
       background: #f8fafc;
       color: #0f172a;
-      text-decoration: none;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       transition: all 0.3s ease;
-      border-radius: 4px;
     }
 
     .card-action:hover {
@@ -194,7 +378,6 @@
       box-shadow: none;
     }
 
-    /* Loading & Fallback overlays */
     #loading-overlay {
       position: fixed;
       top: 0;
@@ -208,15 +391,6 @@
       justify-content: center;
       align-items: center;
       color: #fff;
-    }
-
-    .loader-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #94a3b8;
-      margin-top: 1.5rem;
     }
 
     .loader-bar {
@@ -234,7 +408,7 @@
       left: -50%;
       width: 50%;
       height: 100%;
-      background: #ea580c;
+      background: #3b82f6;
       animation: load 1.5s infinite ease-in-out;
     }
 
@@ -245,35 +419,22 @@
 
     #fallback-ui {
       display: none;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, #1e293b 0%, #050505 100%);
-      z-index: 5;
+      z-index: 100;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-    }
-    
-    .fallback-msg {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: #fff;
-      margin-bottom: 1rem;
-    }
-
-    /* 3D Node Labels */
-    .node-label {
-      pointer-events: none;
-      user-select: none;
-      z-index: 5;
+      background: rgba(5,5,5,0.9);
+      backdrop-filter: blur(10px);
     }
   </style>
 
-  <!-- Import Map for ES Modules -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script type="importmap">
     {
       "imports": {
@@ -284,19 +445,66 @@
   </script>
 </head>
 <body>
-
+  <div id="hero-bg-image"></div>
+  
   <div id="loading-overlay">
     <div class="loader-bar"></div>
-    <div class="loader-text" id="loader-text">Initializing Latent Space...</div>
+    <div class="loader-text" style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em;">Initializing Latent Space...</div>
   </div>
 
   <div id="fallback-ui">
-    <div class="fallback-msg">WebGL Context Unavailable</div>
-    <p style="font-family: 'Inter'; color: #94a3b8; max-width: 500px; margin-bottom: 2rem;">
-      Your browser or device does not support the 3D Latent Space environment.
-    </p>
-    <a href="magazine.html" class="escape-hatch" style="position: relative; pointer-events: auto;">Enter Text-Based View</a>
+    <div class="fallback-msg">WebGL Unavailable</div>
+    <a href="magazine.html" class="escape-hatch" style="margin-top: 2rem;">Enter Text-Based View</a>
   </div>
+
+  <section id="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">
+        <i data-lucide="globe" style="width: 14px; height: 14px;"></i>
+        <span>Sciences Po — Spring 2026</span>
+      </div>
+      
+      <h1 class="hero-title">
+        <span class="hero-title-line" id="title-line-1">The Geopolitics of</span>
+        <span class="hero-title-line hero-title-accent" id="title-line-2">Artificial Intelligence</span>
+      </h1>
+      
+      <p class="hero-subtitle" id="hero-subtitle">Sovereignty, Power, and the Future of World Order</p>
+      
+      <p class="hero-statement" id="hero-statement">
+        From the <strong>cyber-utopianism</strong> of the 1990s to the era of <strong>techno-nationalism</strong>—
+        witness the dramatic transformation of how nations compete, cooperate, and conflict in the digital age.
+      </p>
+      
+      <div class="core-question-box" id="core-question">
+        <div class="core-question-label">
+          <i data-lucide="help-circle" style="width: 14px; height: 14px;"></i>
+          <span>The Central Question</span>
+        </div>
+        <p class="core-question-text">
+          How did the internet transform from a borderless "Liberation Technology" 
+          into the primary battlefield of 21st-century state sovereignty?
+        </p>
+      </div>
+      
+      <div class="hero-instructors" id="hero-instructors">
+        <div class="instructor-avatars" style="display: flex;">
+          <div class="instructor-avatar">AA</div>
+          <div class="instructor-avatar">AM</div>
+        </div>
+        <div class="instructor-info">
+          <div class="instructor-label">Course Instructors</div>
+          <div class="instructor-names">Adrien Abecassis & Alexandre Mirlesse</div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="scroll-indicator">
+      <span class="scroll-indicator-text">Scroll Down</span>
+      <div class="scroll-indicator-icon"><div class="scroll-indicator-dot"></div></div>
+    </div>
+  </section>
 
   <div id="canvas-container"></div>
 
@@ -313,13 +521,101 @@
       <span class="card-type" id="card-type">Module 01</span>
       <h2 class="card-title" id="card-title">Title</h2>
       <p class="card-bluf" id="card-bluf">Bottom line up front goes here.</p>
-      <div class="card-actions" id="card-actions">
-        <!-- Injected via JS -->
-      </div>
+      <div class="card-actions" id="card-actions"></div>
     </div>
   </div>
 
-  <!-- 3D Hub Logic as an ES Module -->
-  <script type="module" src="shared/3d-hub.js"></script>
+  <script type="module">
+    import { initLatentSpace } from './shared/3d-hub.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const revealHeroNow = () => {
+        const revealTargets = [
+          '#hero-badge',
+          '#title-line-1',
+          '#title-line-2',
+          '#hero-subtitle',
+          '#hero-statement',
+          '#core-question',
+          '#hero-instructors'
+        ];
+        revealTargets.forEach((selector) => {
+          const element = document.querySelector(selector);
+          if (!element) return;
+          element.style.opacity = '1';
+          element.style.transform = 'none';
+        });
+      };
+
+      const hideLoadingOverlayNow = () => {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (!loadingOverlay) return;
+        loadingOverlay.style.opacity = '0';
+        loadingOverlay.style.display = 'none';
+      };
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+
+      let latentSpace = null;
+      try {
+        latentSpace = initLatentSpace();
+      } catch (error) {
+        console.error('Latent space initialization failed:', error);
+        hideLoadingOverlayNow();
+      }
+      const { camera, controls, renderer } = latentSpace || {};
+
+      if (latentSpace) {
+        camera.position.set(-15, 6, 8);
+        controls.target.set(-12, 4, 0);
+        controls.enabled = false;
+        controls.autoRotate = false;
+      }
+
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        revealHeroNow();
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Entrance
+      const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      introTl.fromTo('#hero-badge', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.5 })
+             .fromTo('#title-line-1', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.4')
+             .fromTo('#title-line-2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.7')
+             .fromTo('#hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+             .fromTo('#hero-statement', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+             .fromTo('#core-question', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, '-=0.4')
+             .fromTo('#hero-instructors', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4');
+
+      // Scroll
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "50% top",
+          scrub: 1.5,
+          onLeave: () => { if(controls) { controls.enabled = true; controls.autoRotate = true; } },
+          onEnterBack: () => { if(controls) { controls.enabled = false; controls.autoRotate = false; } }
+        }
+      });
+
+      scrollTl.to("#hero-section", { opacity: 0, y: -100, pointerEvents: "none" }, 0);
+      scrollTl.to("#hero-bg-image", { opacity: 0 }, 0);
+      scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1)", pointerEvents: "auto" }, 0);
+
+      if (camera && controls) {
+        scrollTl.to(camera.position, { x: 0, y: 5, z: 25 }, 0);
+        const targetObj = { x: -12, y: 4, z: 0 };
+        scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
+      }
+
+      scrollTl.to("#ui-layer", { opacity: 1, pointerEvents: "auto" }, 0.6);
+
+    });
+  </script>
 </body>
 </html>
