@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geopolitics of AI | Latent Space</title>
-  
+
   <link rel="stylesheet" href="shared/design-system.css">
-  
+
   <!-- GSAP for UI Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -30,14 +31,17 @@
       width: 100vw;
       height: 120vh;
       background-image:
-        linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.85) 50%, rgba(15,23,42,0.95) 100%),
-        url('images/hero-background.jpg');
-      background-size: cover, 200% auto;
-      background-position: center, 50% 0%;
+        linear-gradient(180deg, rgba(8, 12, 18, 0.5) 0%, rgba(8, 12, 18, 0.6) 50%, rgba(8, 12, 18, 0.8) 100%),
+        url('images/MareNostrum1.jpg');
+      background-size: cover;
+      background-position: 50% 0%;
+      /* Start at the top: the church/geopolitics */
       background-repeat: no-repeat;
       z-index: 1;
       opacity: 1;
-      filter: none;
+      filter: brightness(0.5);
+      /* Dim initially behind the hero text */
+      transition: filter 0.8s ease, opacity 0.8s ease;
     }
 
     #canvas-container {
@@ -52,7 +56,7 @@
       filter: blur(1.8px) brightness(0.55) contrast(0.85) saturate(0.8);
       opacity: 0.16;
       transition: filter 0.5s ease, opacity 0.5s ease;
-      pointer-events: none; 
+      pointer-events: none;
     }
 
     #canvas-container canvas {
@@ -208,10 +212,27 @@
       margin-left: -8px;
     }
 
-    .instructor-avatar:first-child { margin-left: 0; }
-    .instructor-info { text-align: left; }
-    .instructor-label { font-size: 0.7rem; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
-    .instructor-names { font-size: 0.9rem; font-weight: 500; color: #94a3b8; }
+    .instructor-avatar:first-child {
+      margin-left: 0;
+    }
+
+    .instructor-info {
+      text-align: left;
+    }
+
+    .instructor-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .instructor-names {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #94a3b8;
+    }
 
     .scroll-indicator {
       position: absolute;
@@ -252,8 +273,17 @@
     }
 
     @keyframes scroll-bounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(8px); opacity: 0.5; }
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(8px);
+        opacity: 0.5;
+      }
     }
 
     #ui-layer {
@@ -265,6 +295,8 @@
       pointer-events: none;
       z-index: 20;
       opacity: 0;
+      /* Adding a very subtle vignette to focus the center */
+      background: radial-gradient(circle at center, transparent 40%, rgba(5, 10, 20, 0.4) 100%);
     }
 
     .top-bar {
@@ -282,15 +314,30 @@
     .escape-hatch {
       pointer-events: auto;
       background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
       padding: 0.75rem 1.5rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
       text-transform: uppercase;
       text-decoration: none;
       backdrop-filter: blur(12px);
-      border-radius: 4px;
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 9999px;
+      /* Pill shape for premium feel */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .escape-hatch:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     #briefing-card {
@@ -298,55 +345,67 @@
       top: -9999px;
       left: -9999px;
       transform: translate3d(0, 0, 0) translate(-50%, -100%);
-      width: 380px;
-      background: rgba(10, 15, 25, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 420px;
+      /* Slightly wider for elegance */
+      /* Premium Glassmorphism */
+      background: linear-gradient(145deg, rgba(20, 30, 48, 0.75) 0%, rgba(10, 15, 25, 0.85) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
       padding: 2.5rem;
-      backdrop-filter: blur(24px);
-      border-radius: 12px;
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      border-radius: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: auto;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1);
+      /* Soft glowing drop shadow */
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       z-index: 100;
-      margin-top: -15px; /* Spacing above node */
+      margin-top: -25px;
+      /* Spacing above node */
     }
 
     .card-type {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      color: #ea580c;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #94a3b8;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
     }
 
     .card-type::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: #ea580c;
-      box-shadow: 0 0 10px #ea580c;
+      background: currentColor;
+      /* Inherits color dynamically based on JS */
+      box-shadow: 0 0 12px currentColor;
     }
 
     .card-title {
       margin: 0 0 1rem 0;
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: 2.25rem;
       font-weight: 700;
       line-height: 1.1;
       color: #f8fafc;
+      letter-spacing: -0.02em;
     }
 
     .card-bluf {
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #94a3b8;
+      margin-bottom: 2.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      font-weight: 300;
     }
 
     .card-actions {
@@ -356,35 +415,49 @@
 
     .card-action {
       flex: 1;
-      border-radius: 4px;
-      padding: 0.8rem;
+      border-radius: 8px;
+      padding: 1rem;
       text-align: center;
       text-decoration: none;
-      background: #f8fafc;
-      color: #0f172a;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
+      /* Dynamic Gradient Button */
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
       text-transform: uppercase;
-      transition: all 0.3s ease;
+      letter-spacing: 0.1em;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
     }
 
     .card-action:hover {
-      background: #ea580c;
-      color: #fff;
-      box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+      filter: brightness(1.1);
+    }
+
+    /* Used for anchor nodes styling via JS injection */
+    .card-action.anchor-theme {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+    }
+
+    .card-action.anchor-theme:hover {
+      box-shadow: 0 8px 25px rgba(234, 88, 12, 0.5);
     }
 
     .card-action.secondary {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.05);
       color: #f8fafc;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: none;
     }
 
     .card-action.secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #fff;
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
     #loading-overlay {
@@ -405,7 +478,7 @@
     .loader-bar {
       width: 200px;
       height: 1px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
@@ -422,8 +495,13 @@
     }
 
     @keyframes load {
-      0% { left: -50%; }
-      100% { left: 100%; }
+      0% {
+        left: -50%;
+      }
+
+      100% {
+        left: 100%;
+      }
     }
 
     #fallback-ui {
@@ -438,7 +516,7 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background: rgba(5,5,5,0.9);
+      background: rgba(5, 5, 5, 0.9);
       backdrop-filter: blur(10px);
     }
   </style>
@@ -453,12 +531,15 @@
     }
   </script>
 </head>
+
 <body>
   <div id="hero-bg-image"></div>
-  
+
   <div id="loading-overlay">
     <div class="loader-bar"></div>
-    <div class="loader-text" style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em;">Initializing Latent Space...</div>
+    <div class="loader-text"
+      style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em;">
+      Initializing Latent Space...</div>
   </div>
 
   <div id="fallback-ui">
@@ -472,30 +553,30 @@
         <i data-lucide="globe" style="width: 14px; height: 14px;"></i>
         <span>Sciences Po — Spring 2026</span>
       </div>
-      
+
       <h1 class="hero-title">
         <span class="hero-title-line" id="title-line-1">The Geopolitics of</span>
         <span class="hero-title-line hero-title-accent" id="title-line-2">Artificial Intelligence</span>
       </h1>
-      
+
       <p class="hero-subtitle" id="hero-subtitle">Sovereignty, Power, and the Future of World Order</p>
-      
+
       <p class="hero-statement" id="hero-statement">
         From the <strong>cyber-utopianism</strong> of the 1990s to the era of <strong>techno-nationalism</strong>—
         witness the dramatic transformation of how nations compete, cooperate, and conflict in the digital age.
       </p>
-      
+
       <div class="core-question-box" id="core-question">
         <div class="core-question-label">
           <i data-lucide="help-circle" style="width: 14px; height: 14px;"></i>
           <span>The Central Question</span>
         </div>
         <p class="core-question-text">
-          How did the internet transform from a borderless "Liberation Technology" 
+          How did the internet transform from a borderless "Liberation Technology"
           into the primary battlefield of 21st-century state sovereignty?
         </p>
       </div>
-      
+
       <div class="hero-instructors" id="hero-instructors">
         <div class="instructor-avatars" style="display: flex;">
           <div class="instructor-avatar">AA</div>
@@ -508,10 +589,12 @@
       </div>
 
     </div>
-    
+
     <div class="scroll-indicator">
       <span class="scroll-indicator-text">Scroll Down</span>
-      <div class="scroll-indicator-icon"><div class="scroll-indicator-dot"></div></div>
+      <div class="scroll-indicator-icon">
+        <div class="scroll-indicator-dot"></div>
+      </div>
     </div>
   </section>
 
@@ -577,7 +660,7 @@
       const { camera, controls, renderer } = latentSpace || {};
 
       if (latentSpace) {
-        camera.position.set(-15, 6, 8);
+        camera.position.set(-30, 8, 25);
         controls.target.set(-12, 4, 0);
         controls.enabled = false;
         controls.autoRotate = false;
@@ -593,12 +676,12 @@
       // Entrance
       const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       introTl.fromTo('#hero-badge', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.5 })
-             .fromTo('#title-line-1', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.4')
-             .fromTo('#title-line-2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.7')
-             .fromTo('#hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
-             .fromTo('#hero-statement', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
-             .fromTo('#core-question', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, '-=0.4')
-             .fromTo('#hero-instructors', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4');
+        .fromTo('#title-line-1', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.4')
+        .fromTo('#title-line-2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, '-=0.7')
+        .fromTo('#hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+        .fromTo('#hero-statement', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+        .fromTo('#core-question', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, '-=0.4')
+        .fromTo('#hero-instructors', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4');
 
       // Scroll
       const scrollTl = gsap.timeline({
@@ -606,18 +689,22 @@
           trigger: "body",
           start: "top top",
           end: "50% top",
-          scrub: 1.5,
-          onLeave: () => { if(controls) { controls.enabled = true; controls.autoRotate = true; } },
-          onEnterBack: () => { if(controls) { controls.enabled = false; controls.autoRotate = false; } }
+          scrub: 2.5, // Increased inertia for smoother, slower feel
+          onLeave: () => { if (controls) { controls.enabled = true; controls.autoRotate = true; } },
+          onEnterBack: () => { if (controls) { controls.enabled = false; controls.autoRotate = false; } }
         }
       });
 
       scrollTl.to("#hero-section", { opacity: 0, y: -100, pointerEvents: "none" }, 0);
-      scrollTl.to("#hero-bg-image", { opacity: 0 }, 0);
-      scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1.08) contrast(1.08)", opacity: 0.95, pointerEvents: "auto" }, 0);
+      /* Brighten the background and slowly pan down to the data center racks */
+      scrollTl.to("#hero-bg-image", {
+        filter: "brightness(0.9) blur(1px)",
+        backgroundPosition: "50% 75%" // Slows down scroll mapping by travelling less distance
+      }, 0);
+      scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1.1) contrast(1.05)", opacity: 1, pointerEvents: "auto" }, 0);
 
       if (camera && controls) {
-        scrollTl.to(camera.position, { x: 0, y: 5, z: 25 }, 0);
+        scrollTl.to(camera.position, { x: 0, y: 5, z: 42 }, 0); // Pulled back for tighter FOV
         const targetObj = { x: -12, y: 4, z: 0 };
         scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
       }
@@ -627,4 +714,5 @@
     });
   </script>
 </body>
+
 </html>

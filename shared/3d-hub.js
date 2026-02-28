@@ -1,115 +1,7 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-
-// =====================
-// SHADER SOURCE CODE: Neural Node Material
-// =====================
-const nodeVertexShader = `
-  varying vec2 vUv;
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  void main() {
-    vUv = uv;
-    vNormal = normalize(normalMatrix * normal);
-    vPosition = position;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const nodeFragmentShader = `
-  uniform float uTime;
-  varying vec2 vUv;
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-  uniform vec3 uColor;
-  uniform float uHover;
-
-  // Smooth Simplex Noise for organic "grouillement"
-  vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-  vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-  vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
-  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
-
-  float snoise(vec3 v) { 
-    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-    vec3 i  = floor(v + dot(v, C.yyy) );
-    vec3 x0 =   v - i + dot(i, C.xxx) ;
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min( g.xyz, l.zxy );
-    vec3 i2 = max( g.xyz, l.zxy );
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy;
-    vec3 x3 = x0 - D.yyy;
-    i = mod289(i); 
-    vec4 p = permute( permute( permute( 
-               i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-             + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
-             + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
-    float n_ = 0.142857142857;
-    vec3  ns = n_ * D.wyz - D.xzx;
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_ );
-    vec4 x = x_ *ns.x + ns.yyyy;
-    vec4 y = y_ *ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-    vec4 b0 = vec4( x.xy, y.xy );
-    vec4 b1 = vec4( x.zw, y.zw );
-    vec4 s0 = floor(b0)*2.0 + 1.0;
-    vec4 s1 = floor(b1)*2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
-    vec3 p0 = vec3(a0.xy,h.x);
-    vec3 p1 = vec3(a0.zw,h.y);
-    vec3 p2 = vec3(a1.xy,h.z);
-    vec3 p3 = vec3(a1.zw,h.w);
-    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
-    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
-                                  dot(p2,x2), dot(p3,x3) ) );
-  }
-
-  void main() {
-    // THREE mixed frequencies for "active but smooth" grouillement
-    // 1. NEW Macro-scale blocks (Very slow)
-    float n0 = snoise(vPosition * 1.5 + uTime * 0.1);
-    
-    // 2. Medium-scale flow
-    float n1 = snoise(vPosition * 4.0 + uTime * 0.3);
-    
-    // 3. Fine-grain activity
-    float n2 = snoise(vPosition * 10.0 - uTime * 0.5);
-    
-    float activity = (n0 * 0.5 + n1 * 0.3 + n2 * 0.2) * 0.5 + 0.5;
-    
-    // Brighter palette to read as an active network, not dark celestial bodies.
-    vec3 baseColor = uColor * 0.55;
-    vec3 midColor = uColor * 0.9;
-    vec3 activeColor = uColor * 1.2;
-    
-    vec3 finalColor = mix(baseColor, midColor, activity);
-    finalColor = mix(finalColor, activeColor, pow(activity, 5.0));
-    
-    // Interaction
-    finalColor *= (1.0 + uHover * 0.1);
-
-    // Light, flatter shading so nodes read as data points.
-    float diff = max(dot(vNormal, normalize(vec3(0.5, 1.0, 0.8))), 0.45);
-    finalColor *= (0.75 + diff * 0.5);
-
-    gl_FragColor = vec4(finalColor, 1.0);
-  }
-`;
+// Materials & Shaders have been replaced with native PBR MeshPhysicalMaterials
 
 export const initLatentSpace = () => {
   const container = document.getElementById('canvas-container');
@@ -121,7 +13,6 @@ export const initLatentSpace = () => {
 
 
   let renderer;
-  let labelRenderer;
   try {
     // Renderer setup
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
@@ -134,13 +25,6 @@ export const initLatentSpace = () => {
 
     // Ensure the canvas element has no background
     renderer.domElement.style.background = 'transparent';
-
-    labelRenderer = new CSS2DRenderer();
-    labelRenderer.setSize(window.innerWidth, window.innerHeight);
-    labelRenderer.domElement.style.position = 'absolute';
-    labelRenderer.domElement.style.top = '0px';
-    labelRenderer.domElement.style.pointerEvents = 'none'; // Fall-through to canvas
-    container.appendChild(labelRenderer.domElement);
   } catch (e) {
 
     console.error('WebGL Initialization Error:', e);
@@ -152,36 +36,26 @@ export const initLatentSpace = () => {
 
   // Scene setup
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x4b6176, 0.008);
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+  // Removed fog to allow crisp visibility of HTML background image (chapel data center)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Lowered ambient for contrast
   scene.add(ambientLight);
 
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1c2e45, 1.0);
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1c2e45, 0.5);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
 
+  // High-end studio lighting for physical materials
+  const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+  dirLight.position.set(10, 20, 15);
+  scene.add(dirLight);
+
+  const backLight = new THREE.DirectionalLight(0x3b82f6, 1.5);
+  backLight.position.set(-15, 10, -15);
+  scene.add(backLight);
+
   // Camera setup
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 5, 25);
-
-  // Post-Processing (Bloom) - Drastically Reduced
-  const renderScene = new RenderPass(scene, camera);
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.2, // strength reduced from 1.5
-    0.1, // radius reduced from 0.4
-    0.9  // threshold increased from 0.1
-  );
-
-  const composer = new EffectComposer(renderer);
-
-  // Ensure the composer's render targets support alpha
-  composer.renderTarget1.texture.format = THREE.RGBAFormat;
-  composer.renderTarget2.texture.format = THREE.RGBAFormat;
-
-  composer.addPass(renderScene);
-  composer.addPass(bloomPass);
+  const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 5, 45);
 
   // Controls
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -189,80 +63,80 @@ export const initLatentSpace = () => {
   controls.dampingFactor = 0.04;
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.1; // Reduced from 0.8
-  controls.maxDistance = 50;
+  controls.maxDistance = 100;
   controls.minDistance = 5;
-  controls.enablePan = true; // Enabled panning
-  controls.enableZoom = true;
-
+  controls.enablePan = false; // Prevent dragging scene off-screen
+  controls.enableZoom = false; // Fix trackpad scrolling
   // Data Definition
   const nodesData = [
+
     {
       id: 'm1',
       type: 'anchor',
       title: 'The Strategic Convergence',
-      bluf: 'The "End of History" illusion and the Clintonian Wager: How early internet optimism assumed the non-rival nature of digital ideas would inevitably dissolve borders.',
+      bluf: 'The "End of History" illusion and the Clintonian Wager.',
       url: 'primer/module-01.html',
-      position: new THREE.Vector3(-12, 4, 0),
-      color: 0x38bdf8,
+      position: new THREE.Vector3(-14, 8, 0), // Layer 1 (Top Left)
+      color: 0x3b82f6, // Royal Blue
       size: 1.5
     },
     {
       id: 'm2',
       type: 'anchor',
       title: 'Architecture of Sovereignty',
-      bluf: 'China\'s foundational rebuttal to the liberal digital order: the construction of a "Porous but Policed" internet that imports capital while filtering dissent.',
+      bluf: 'China\'s foundational rebuttal to the liberal digital order.',
       url: 'primer/module-02.html',
-      position: new THREE.Vector3(-8, -2, -4),
-      color: 0x38bdf8,
+      position: new THREE.Vector3(-14, 0, 0), // Layer 1 (Mid Left)
+      color: 0x3b82f6,
       size: 1.5
     },
     {
       id: 'm3',
       type: 'anchor',
       title: 'The Rupture',
-      bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust, triggering a race for defensive sovereignty over critical infrastructure.',
+      bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust.',
       url: 'primer/module-03.html',
-      position: new THREE.Vector3(-4, 3, 5),
-      color: 0x38bdf8,
+      position: new THREE.Vector3(-14, -8, 0), // Layer 1 (Bot Left)
+      color: 0x3b82f6,
       size: 1.5
     },
     {
       id: 'm4',
       type: 'anchor',
       title: 'The Splinternet Accelerates',
-      bluf: 'The balkanization of the web into competing, deeply sovereign technological stacks and the end of globalization as the default state.',
+      bluf: 'The balkanization of the web into competing sovereign technology stacks.',
       url: 'primer/module-04.html',
-      position: new THREE.Vector3(0, -4, 0),
-      color: 0x38bdf8,
+      position: new THREE.Vector3(0, 5, -2), // Layer 2 (Top Mid)
+      color: 0x0ea5e9, // Bright Sky Blue
       size: 1.5
     },
     {
       id: 'm5',
       type: 'anchor',
       title: 'Industrial Sovereignty',
-      bluf: 'The return of the production function: how frontier AI relies on rival, physical inputs—compute, energy, data, and human talent.',
+      bluf: 'The return of the production function: compute, energy, and hardware chokepoints.',
       url: 'primer/module-05.html',
-      position: new THREE.Vector3(4, 5, -3),
-      color: 0xea580c,
+      position: new THREE.Vector3(0, -5, 2), // Layer 2 (Bot Mid)
+      color: 0x0ea5e9,
       size: 1.5
     },
     {
       id: 'm6',
       type: 'anchor',
       title: 'National Revival Through Tech',
-      bluf: 'The resurgence of techno-nationalism and industrial policy, as states race to secure domestic capability while denying adversaries access to critical chokepoints.',
+      bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.',
       url: 'primer/module-06.html',
-      position: new THREE.Vector3(8, 0, 4),
-      color: 0xea580c,
+      position: new THREE.Vector3(14, 8, 0), // Layer 3 (Top Right)
+      color: 0xea580c, // Terracotta
       size: 1.5
     },
     {
       id: 'm7',
       type: 'anchor',
       title: 'New Ideological Map of AI',
-      bluf: 'Tracing the competing intellectual frames—from state realism to techno-accelerationism—that are actively defining what constitutes "rational" policy.',
+      bluf: 'Tracing competing intellectual frames—from realism to techno-accelerationism.',
       url: 'primer/module-07.html',
-      position: new THREE.Vector3(12, -4, 0),
+      position: new THREE.Vector3(14, 0, 0), // Layer 3 (Mid Right)
       color: 0xea580c,
       size: 1.5
     },
@@ -270,12 +144,13 @@ export const initLatentSpace = () => {
       id: 'm8',
       type: 'anchor',
       title: 'The Collision of Frames',
-      bluf: 'The core tradeoffs that will dictate the future global order: diffusion vs. enclosure, growth vs. legitimacy, and state control vs. corporate power.',
+      bluf: 'The core tradeoffs that will dictate the future global order.',
       url: 'primer/module-08.html',
-      position: new THREE.Vector3(16, 2, -4),
+      position: new THREE.Vector3(14, -8, 0), // Layer 3 (Bot Right)
       color: 0xea580c,
       size: 1.5
     },
+    // --- Satellites ---
     {
       id: 'p1',
       type: 'satellite',
@@ -283,19 +158,19 @@ export const initLatentSpace = () => {
       bluf: 'Analyzing the geopolitical leverage of data center cooling infrastructure.',
       previewUrl: 'preview.html?project=group-1',
       directUrl: 'projects/group-1/index.html',
-      position: new THREE.Vector3(5, 8, -6),
-      color: 0x94a3b8,
+      position: new THREE.Vector3(-10, 11, -4), // Anchored near m1
+      color: 0xf8fafc,
       size: 0.8
     },
     {
       id: 'p2',
       type: 'satellite',
       title: 'Group 2: DeepSeek Asymmetry',
-      bluf: 'The strategic impact of algorithmic efficiency in resource-constrained environments.',
+      bluf: 'The strategic impact of algorithmic efficiency targeting heavily constrained computing power.',
       previewUrl: 'preview.html?project=group-2',
       directUrl: 'projects/group-2/index.html',
-      position: new THREE.Vector3(9, -2, 7),
-      color: 0x94a3b8,
+      position: new THREE.Vector3(-3, -10, 4), // Anchored near m5/m3
+      color: 0xf8fafc,
       size: 0.8
     },
     {
@@ -305,8 +180,8 @@ export const initLatentSpace = () => {
       bluf: 'The physical chokepoints of global data transmission.',
       previewUrl: 'preview.html?project=group-3',
       directUrl: 'projects/group-3/index.html',
-      position: new THREE.Vector3(-9, -5, -6),
-      color: 0x94a3b8,
+      position: new THREE.Vector3(-18, -2, -6), // Anchored near m2
+      color: 0xf8fafc,
       size: 0.8
     },
     {
@@ -316,8 +191,8 @@ export const initLatentSpace = () => {
       bluf: 'Capital concentration and compute hoarding as national security imperatives.',
       previewUrl: 'preview.html?project=group-4',
       directUrl: 'projects/group-4/index.html',
-      position: new THREE.Vector3(-3, 6, 7),
-      color: 0x94a3b8,
+      position: new THREE.Vector3(4, 11, 4), // Anchored near m4
+      color: 0xf8fafc,
       size: 0.8
     },
     {
@@ -327,8 +202,8 @@ export const initLatentSpace = () => {
       bluf: 'How access to raw compute is reshaping traditional diplomatic alliances.',
       previewUrl: 'preview.html?project=group-5',
       directUrl: 'projects/group-5/index.html',
-      position: new THREE.Vector3(13, -7, 2),
-      color: 0x94a3b8,
+      position: new THREE.Vector3(10, 3, 5), // Anchored near m7
+      color: 0xf8fafc,
       size: 0.8
     }
   ];
@@ -337,33 +212,48 @@ export const initLatentSpace = () => {
   scene.add(constellation);
 
   const meshes = [];
+  const manualLabels = [];
+  const uiLayer = document.getElementById('ui-layer');
 
-
-  // Materials
-  const createAnchorMaterial = (color) => new THREE.ShaderMaterial({
-    uniforms: {
-      uTime: { value: 0 },
-      uColor: { value: new THREE.Color(color) },
-      uHover: { value: 0.0 }
-    },
-    vertexShader: nodeVertexShader,
-    fragmentShader: nodeFragmentShader,
-    transparent: false
-  });
-
-  const satelliteMat = new THREE.MeshPhongMaterial({
-    color: 0x94a3b8,
-    shininess: 100,
-    transparent: true,
-    opacity: 0.8
-  });
-
-  // Create Nodes
+  // Replace chaotic shaders with premium architectural materials
   nodesData.forEach(data => {
-    // Slightly smaller, less perfectly spherical forms read more like graph nodes.
-    const nodeSize = data.type === 'anchor' ? data.size * 0.58 : data.size * 0.52;
-    const geometry = new THREE.IcosahedronGeometry(nodeSize, 1);
-    let material = createAnchorMaterial(data.color);
+    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : data.size * 0.45;
+    // Perfect, high-resolution spheres instead of low-poly icosahedrons
+    const geometry = new THREE.SphereGeometry(nodeSize, 64, 64);
+    let material;
+
+    if (data.type === 'anchor') {
+      if (data.id.match(/m[1-4]/)) {
+        // Architecture & Security nodes -> Polished Cobalt/Cyan
+        material = new THREE.MeshPhysicalMaterial({
+          color: 0x0284c7, // Deep Cyan base
+          metalness: 0.6,
+          roughness: 0.15,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.1,
+          emissive: 0x0369a1,
+          emissiveIntensity: 0.3
+        });
+      } else {
+        // Industry & Theory nodes -> Polished Terracotta / Copper
+        material = new THREE.MeshPhysicalMaterial({
+          color: 0xea580c,
+          metalness: 0.6,
+          roughness: 0.2,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.15,
+          emissive: 0x9a3412,
+          emissiveIntensity: 0.2
+        });
+      }
+    } else {
+      // Satellites -> Matte pearl finish
+      material = new THREE.MeshStandardMaterial({
+        color: 0xf8fafc,
+        metalness: 0.3,
+        roughness: 0.4
+      });
+    }
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(data.position);
@@ -377,21 +267,53 @@ export const initLatentSpace = () => {
       const div = document.createElement('div');
       div.className = 'node-label';
       div.textContent = '0' + data.id.replace('m', '');
-      div.style.color = data.id.match(/m[1-4]/) ? '#38bdf8' : '#ea580c';
-      div.style.fontFamily = 'JetBrains Mono, monospace';
-      div.style.fontSize = '2.4rem';
-      div.style.fontWeight = 'bold';
-      div.style.opacity = '0.28';
-      div.style.textShadow = '0 0 8px rgba(170,220,255,0.2)';
-      const label = new CSS2DObject(div);
-      label.position.set(0, 2.5, 0);
-      mesh.add(label);
+      div.style.color = 'rgba(255, 255, 255, 0.9)'; // Crisper white instead of pure blue/orange
+      div.style.fontFamily = 'Inter, -apple-system, sans-serif';
+      div.style.fontSize = '2.2rem';
+      div.style.fontWeight = '300'; // Thin, elegant weight
+      div.style.opacity = '0.7';
+      div.style.letterSpacing = '-0.04em';
+      div.style.position = 'absolute';
+      div.style.transform = 'translate(-50%, -50%)';
+      div.style.pointerEvents = 'none';
+
+      if (uiLayer) {
+        uiLayer.appendChild(div);
+      }
+      manualLabels.push({ element: div, mesh: mesh });
     }
 
   });
 
 
-  // Connect satellites to nearest anchor
+  // Pipeline Connection Logic (Solid Cylinders instead of 1px ghostly Lines)
+  const createPipeline = (pt1, pt2, isAnchor) => {
+    const distance = pt1.distanceTo(pt2);
+    // Extremely thin "fiber optic" traces, not thick plastic pipes
+    const geometry = new THREE.CylinderGeometry(0.02, 0.02, distance, 8);
+    // Rotate cylinder to point from pt1 to pt2
+    geometry.translate(0, distance / 2, 0);
+    geometry.rotateX(Math.PI / 2);
+
+    // High-end glass/optical material for data throughput
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      transmission: 0.9,
+      opacity: isAnchor ? 0.6 : 0.2,
+      transparent: true,
+      roughness: 0.1,
+      clearcoat: 1.0,
+      emissive: 0xffffff,
+      emissiveIntensity: isAnchor ? 0.4 : 0.1
+    });
+
+    const cylinder = new THREE.Mesh(geometry, mat);
+    cylinder.position.copy(pt1);
+    cylinder.lookAt(pt2);
+    return cylinder;
+  };
+
+  // Connect satellites to nearest anchor via smaller pipes
   nodesData.filter(n => n.type === 'satellite').forEach(sat => {
     let closestAnchorMesh = null;
     let minDistance = Infinity;
@@ -406,29 +328,34 @@ export const initLatentSpace = () => {
 
     if (closestAnchorMesh) {
       const satMesh = meshes.find(m => m.userData.id === sat.id);
-      const points = [sat.position, closestAnchorMesh.position];
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.2 });
-      const line = new THREE.Line(geometry, mat);
-      constellation.add(line);
+      const pipe = createPipeline(satMesh.position, closestAnchorMesh.position, false);
+      constellation.add(pipe);
 
-      // Store references
-      if (satMesh) satMesh.userData.connectedLines.push(line);
-      closestAnchorMesh.userData.connectedLines.push(line);
+      // Store references for interaction rip-effects
+      if (satMesh) satMesh.userData.connectedLines.push(pipe);
+      closestAnchorMesh.userData.connectedLines.push(pipe);
     }
   });
 
-  // Connect anchors Sequentially
+  // Connect anchors Sequentially as heavily rigid Neural Net structural links
   const anchorMeshes = meshes.filter(m => m.userData.type === 'anchor');
-  for (let i = 0; i < anchorMeshes.length - 1; i++) {
-    const points = [anchorMeshes[i].position, anchorMeshes[i + 1].position];
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.24 });
-    const line = new THREE.Line(geometry, mat);
-    constellation.add(line);
-
-    anchorMeshes[i].userData.connectedLines.push(line);
-    anchorMeshes[i + 1].userData.connectedLines.push(line);
+  // Layer 1 -> Layer 2
+  for (let i = 0; i < 3; i++) {
+    for (let j = 3; j < 5; j++) {
+      const pipe = createPipeline(anchorMeshes[i].position, anchorMeshes[j].position, true);
+      constellation.add(pipe);
+      anchorMeshes[i].userData.connectedLines.push(pipe);
+      anchorMeshes[j].userData.connectedLines.push(pipe);
+    }
+  }
+  // Layer 2 -> Layer 3
+  for (let j = 3; j < 5; j++) {
+    for (let k = 5; k < 8; k++) {
+      const pipe = createPipeline(anchorMeshes[j].position, anchorMeshes[k].position, true);
+      constellation.add(pipe);
+      anchorMeshes[j].userData.connectedLines.push(pipe);
+      anchorMeshes[k].userData.connectedLines.push(pipe);
+    }
   }
 
 
@@ -446,6 +373,7 @@ export const initLatentSpace = () => {
   const cardActions = document.getElementById('card-actions');
 
   const onMouseMove = (event) => {
+    if (event.isPrimary === false) return; // Ignore multi-touch
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   };
@@ -453,19 +381,33 @@ export const initLatentSpace = () => {
   const onClick = (event) => {
     if (briefingCard && briefingCard.contains(event.target)) return;
 
-    if (hoveredNode) {
-      activeNode = hoveredNode;
+    // Evaluate intersection explicitly on click (fixes mobile/touch/automation missing mousemove)
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(meshes, true);
+
+    let clickedNode = null;
+    if (intersects.length > 0) {
+      clickedNode = intersects[0].object;
+      if (!clickedNode.userData || !clickedNode.userData.type) {
+        clickedNode = clickedNode.parent;
+      }
+    }
+
+    if (clickedNode) {
+      activeNode = clickedNode;
       const data = activeNode.userData;
       controls.autoRotate = false;
 
       cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
-      cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#38bdf8';
+      cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#3b82f6'; // Map to gradient themes
       cardTitle.textContent = data.title;
       cardBluf.textContent = data.bluf;
 
       cardActions.innerHTML = '';
       if (data.type === 'anchor') {
-        cardActions.innerHTML = `<a href="${data.url}" class="card-action">Read Briefing</a>`;
+        cardActions.innerHTML = `<a href="${data.url}" class="card-action anchor-theme">Read Briefing</a>`;
       } else {
         cardActions.innerHTML = `
           <a href="${data.previewUrl}" class="card-action">Preview</a>
@@ -508,14 +450,7 @@ export const initLatentSpace = () => {
       // Common slow rotation
       mesh.rotation.y += 0.0008;
 
-      // Update Shader Uniforms
-      if (mesh.material.uniforms) {
-        mesh.material.uniforms.uTime.value = elapsedTime;
-        const targetHover = (hoveredNode === mesh) ? 1.0 : 0.0;
-        mesh.material.uniforms.uHover.value = THREE.MathUtils.lerp(mesh.material.uniforms.uHover.value, targetHover, 0.1);
-      }
-
-      // Pulse effect logic refined for both
+      // Pulse effect logic
       const pulseSpeed = (mesh.userData.type === 'anchor') ? 2 : 1;
       const pulseAmount = (mesh.userData.type === 'anchor') ? 0.025 : 0.012;
       const scaleBase = (hoveredNode === mesh) ? 1.2 : 1.0;
@@ -591,7 +526,8 @@ export const initLatentSpace = () => {
     }
 
     if (activeNode) {
-      const vector = activeNode.position.clone();
+      const vector = new THREE.Vector3();
+      activeNode.getWorldPosition(vector);
       const offset = activeNode.userData.type === 'anchor' ? 1.5 : 1.0;
       vector.y += offset;
       vector.project(camera);
@@ -609,10 +545,37 @@ export const initLatentSpace = () => {
       }
     }
 
+    // Update custom 2D labels
+    manualLabels.forEach(labelObj => {
+      const { element, mesh } = labelObj;
+      const vector = new THREE.Vector3();
+      mesh.getWorldPosition(vector);
+
+      const dist = camera.position.distanceTo(vector);
+      vector.project(camera);
+
+      if (vector.z > 1.0) {
+        element.style.display = 'none';
+        return;
+      }
+      element.style.display = 'block';
+
+      const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+      const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
+
+      // Exaggerated depth scaling
+      const scale = Math.max(0.2, 1 - (dist - 15) / 30);
+      const targetOpacity = Math.max(0.1, 0.65 - (dist - 20) / 40);
+
+      element.style.transform = `translate(-50%, -150%) scale(${scale})`;
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+      element.style.opacity = targetOpacity.toFixed(2);
+      element.style.zIndex = Math.round((100 - dist) * 10);
+    });
 
     controls.update();
-    composer.render();
-    if (labelRenderer) labelRenderer.render(scene, camera);
+    renderer.render(scene, camera);
 
   };
 
@@ -621,11 +584,6 @@ export const initLatentSpace = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
-    if (labelRenderer) labelRenderer.setSize(window.innerWidth, window.innerHeight);
-
   });
 
   // Remove loading overlay
@@ -635,7 +593,7 @@ export const initLatentSpace = () => {
 
   animate();
 
-  return { camera, controls, scene, renderer, composer, labelRenderer };
+  return { camera, controls, scene, renderer };
 };
 
 // document.addEventListener('DOMContentLoaded', initLatentSpace);
