@@ -131,7 +131,7 @@ export const initLatentSpace = () => {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
-    
+
     // Ensure the canvas element has no background
     renderer.domElement.style.background = 'transparent';
 
@@ -156,7 +156,7 @@ export const initLatentSpace = () => {
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
   scene.add(ambientLight);
-  
+
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1c2e45, 1.0);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
@@ -175,7 +175,7 @@ export const initLatentSpace = () => {
   );
 
   const composer = new EffectComposer(renderer);
-  
+
   // Ensure the composer's render targets support alpha
   composer.renderTarget1.texture.format = THREE.RGBAFormat;
   composer.renderTarget2.texture.format = THREE.RGBAFormat;
@@ -351,7 +351,7 @@ export const initLatentSpace = () => {
     transparent: false
   });
 
-  const satelliteMat = new THREE.MeshPhongMaterial({ 
+  const satelliteMat = new THREE.MeshPhongMaterial({
     color: 0x94a3b8,
     shininess: 100,
     transparent: true,
@@ -364,11 +364,11 @@ export const initLatentSpace = () => {
     const nodeSize = data.type === 'anchor' ? data.size * 0.58 : data.size * 0.52;
     const geometry = new THREE.IcosahedronGeometry(nodeSize, 1);
     let material = createAnchorMaterial(data.color);
-    
+
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(data.position);
     mesh.userData = { ...data, connectedLines: [] };
-    
+
     constellation.add(mesh);
     meshes.push(mesh);
 
@@ -395,7 +395,7 @@ export const initLatentSpace = () => {
   nodesData.filter(n => n.type === 'satellite').forEach(sat => {
     let closestAnchorMesh = null;
     let minDistance = Infinity;
-    
+
     meshes.filter(m => m.userData.type === 'anchor').forEach(anchorMesh => {
       const dist = sat.position.distanceTo(anchorMesh.position);
       if (dist < minDistance) {
@@ -411,7 +411,7 @@ export const initLatentSpace = () => {
       const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.2 });
       const line = new THREE.Line(geometry, mat);
       constellation.add(line);
-      
+
       // Store references
       if (satMesh) satMesh.userData.connectedLines.push(line);
       closestAnchorMesh.userData.connectedLines.push(line);
@@ -421,22 +421,23 @@ export const initLatentSpace = () => {
   // Connect anchors Sequentially
   const anchorMeshes = meshes.filter(m => m.userData.type === 'anchor');
   for (let i = 0; i < anchorMeshes.length - 1; i++) {
-    const points = [anchorMeshes[i].position, anchorMeshes[i+1].position];
+    const points = [anchorMeshes[i].position, anchorMeshes[i + 1].position];
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
     const mat = new THREE.LineBasicMaterial({ color: 0x7d9eb7, transparent: true, opacity: 0.24 });
     const line = new THREE.Line(geometry, mat);
     constellation.add(line);
-    
+
     anchorMeshes[i].userData.connectedLines.push(line);
-    anchorMeshes[i+1].userData.connectedLines.push(line);
+    anchorMeshes[i + 1].userData.connectedLines.push(line);
   }
 
 
   // Raycaster for interactions
   const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
+  const mouse = new THREE.Vector2(-999, -999);
   let hoveredNode = null;
-  
+  let activeNode = null;
+
   // UI Elements
   const briefingCard = document.getElementById('briefing-card');
   const cardType = document.getElementById('card-type');
@@ -449,7 +450,44 @@ export const initLatentSpace = () => {
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   };
 
+  const onClick = (event) => {
+    if (briefingCard && briefingCard.contains(event.target)) return;
+
+    if (hoveredNode) {
+      activeNode = hoveredNode;
+      const data = activeNode.userData;
+      controls.autoRotate = false;
+
+      cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
+      cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#38bdf8';
+      cardTitle.textContent = data.title;
+      cardBluf.textContent = data.bluf;
+
+      cardActions.innerHTML = '';
+      if (data.type === 'anchor') {
+        cardActions.innerHTML = `<a href="${data.url}" class="card-action">Read Briefing</a>`;
+      } else {
+        cardActions.innerHTML = `
+          <a href="${data.previewUrl}" class="card-action">Preview</a>
+          <a href="${data.directUrl}" class="card-action secondary">Direct Link ↗</a>
+        `;
+      }
+
+      gsap.killTweensOf(briefingCard);
+      gsap.fromTo(briefingCard,
+        { autoAlpha: 0, scale: 0.9, y: 15 },
+        { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }
+      );
+    } else {
+      activeNode = null;
+      controls.autoRotate = true;
+      gsap.killTweensOf(briefingCard);
+      gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, duration: 0.3, ease: "power2.in" });
+    }
+  };
+
   window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('click', onClick);
 
   // Animation Loop
   const clock = new THREE.Clock();
@@ -494,7 +532,7 @@ export const initLatentSpace = () => {
       if (!object.userData || !object.userData.type) {
         object = object.parent;
       }
-      
+
       if (hoveredNode !== object) {
         // Reset previous hovered lines
         if (hoveredNode && hoveredNode.userData.connectedLines) {
@@ -507,51 +545,29 @@ export const initLatentSpace = () => {
         if (hoveredNode) {
           document.body.style.cursor = 'default';
         }
-        
+
         hoveredNode = object;
-        const data = hoveredNode.userData;
         document.body.style.cursor = 'pointer';
-        controls.autoRotate = false;
 
         // Ripple Effect on Connected Lines
         if (hoveredNode.userData.connectedLines) {
           const nodeColor = new THREE.Color(hoveredNode.userData.color);
           hoveredNode.userData.connectedLines.forEach((line, index) => {
-            gsap.to(line.material, { 
-              opacity: 0.8, 
-              duration: 0.4, 
-              delay: index * 0.05, 
-              repeat: 1, 
+            gsap.to(line.material, {
+              opacity: 0.8,
+              duration: 0.4,
+              delay: index * 0.05,
+              repeat: 1,
               yoyo: true,
               ease: "power2.out"
             });
-            gsap.to(line.material.color, { 
-              r: nodeColor.r, g: nodeColor.g, b: nodeColor.b, 
-              duration: 0.4, 
-              delay: index * 0.05 
+            gsap.to(line.material.color, {
+              r: nodeColor.r, g: nodeColor.g, b: nodeColor.b,
+              duration: 0.4,
+              delay: index * 0.05
             });
           });
         }
-        
-        // Update UI
-        cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
-        cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#38bdf8';
-        cardTitle.textContent = data.title;
-        cardBluf.textContent = data.bluf;
-        
-        // Build actions
-        cardActions.innerHTML = '';
-        if (data.type === 'anchor') {
-          cardActions.innerHTML = `<a href="${data.url}" class="card-action">Read Briefing</a>`;
-        } else {
-          cardActions.innerHTML = `
-            <a href="${data.previewUrl}" class="card-action">Preview</a>
-            <a href="${data.directUrl}" class="card-action secondary">Direct Link ↗</a>
-          `;
-        }
-        
-        // Show Card
-        gsap.to(briefingCard, { autoAlpha: 1, x: 0, duration: 0.6, ease: "power3.out" });
       }
     } else {
       if (hoveredNode) {
@@ -563,18 +579,33 @@ export const initLatentSpace = () => {
           });
         }
 
-        gsap.to(hoveredNode.scale, { 
-          x: hoveredNode.userData.type === 'anchor' ? 1 : 1, 
-          y: hoveredNode.userData.type === 'anchor' ? 1 : 1, 
-          z: hoveredNode.userData.type === 'anchor' ? 1 : 1, 
-          duration: 0.5 
+        gsap.to(hoveredNode.scale, {
+          x: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+          y: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+          z: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+          duration: 0.5
         });
         hoveredNode = null;
         document.body.style.cursor = 'default';
-        controls.autoRotate = true;
-        
-        // Hide Card
-        gsap.to(briefingCard, { autoAlpha: 0, x: 50, duration: 0.4, ease: "power2.in" });
+      }
+    }
+
+    if (activeNode) {
+      const vector = activeNode.position.clone();
+      const offset = activeNode.userData.type === 'anchor' ? 1.5 : 1.0;
+      vector.y += offset;
+      vector.project(camera);
+
+      const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+      const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
+
+      if (vector.z > 1.0) {
+        briefingCard.style.display = 'none';
+      } else {
+        briefingCard.style.display = 'block';
+        briefingCard.style.left = '0px';
+        briefingCard.style.top = '0px';
+        briefingCard.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -100%)`;
       }
     }
 
@@ -603,7 +634,7 @@ export const initLatentSpace = () => {
   }
 
   animate();
-  
+
   return { camera, controls, scene, renderer, composer, labelRenderer };
 };
 

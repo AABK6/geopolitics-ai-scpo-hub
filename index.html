@@ -295,17 +295,21 @@
 
     #briefing-card {
       position: absolute;
-      top: 50%;
-      right: 4rem;
-      transform: translateY(-50%) translateX(50px);
+      top: -9999px;
+      left: -9999px;
+      transform: translate3d(0, 0, 0) translate(-50%, -100%);
       width: 380px;
       background: rgba(10, 15, 25, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 2.5rem;
       backdrop-filter: blur(24px);
-      border-radius: 8px;
+      border-radius: 12px;
       opacity: 0;
       visibility: hidden;
+      pointer-events: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.1);
+      z-index: 100;
+      margin-top: -15px; /* Spacing above node */
     }
 
     .card-type {
@@ -618,7 +622,7 @@
         scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
       }
 
-      scrollTl.to("#ui-layer", { opacity: 1, pointerEvents: "auto" }, 0.6);
+      scrollTl.to("#ui-layer", { opacity: 1 }, 0.6);
 
     });
   </script>
