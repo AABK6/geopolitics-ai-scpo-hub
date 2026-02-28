@@ -370,7 +370,6 @@ export const initLatentSpace = () => {
   const cardType = document.getElementById('card-type');
   const cardTitle = document.getElementById('card-title');
   const cardBluf = document.getElementById('card-bluf');
-  const cardActions = document.getElementById('card-actions');
 
   const onMouseMove = (event) => {
     if (event.isPrimary === false) return; // Ignore multi-touch
@@ -379,52 +378,23 @@ export const initLatentSpace = () => {
   };
 
   const onClick = (event) => {
-    if (briefingCard && briefingCard.contains(event.target)) return;
-
-    // Evaluate intersection explicitly on click (fixes mobile/touch/automation missing mousemove)
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(meshes, true);
 
-    let clickedNode = null;
     if (intersects.length > 0) {
-      clickedNode = intersects[0].object;
+      let clickedNode = intersects[0].object;
       if (!clickedNode.userData || !clickedNode.userData.type) {
         clickedNode = clickedNode.parent;
       }
-    }
-
-    if (clickedNode) {
-      activeNode = clickedNode;
-      const data = activeNode.userData;
-      controls.autoRotate = false;
-
-      cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
-      cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#3b82f6'; // Map to gradient themes
-      cardTitle.textContent = data.title;
-      cardBluf.textContent = data.bluf;
-
-      cardActions.innerHTML = '';
-      if (data.type === 'anchor') {
-        cardActions.innerHTML = `<a href="${data.url}" class="card-action anchor-theme">Read Briefing</a>`;
-      } else {
-        cardActions.innerHTML = `
-          <a href="${data.previewUrl}" class="card-action">Preview</a>
-          <a href="${data.directUrl}" class="card-action secondary">Direct Link ↗</a>
-        `;
+      if (clickedNode && clickedNode.userData) {
+        const data = clickedNode.userData;
+        const targetUrl = data.type === 'anchor' ? data.url : data.directUrl;
+        if (targetUrl) {
+          window.location.href = targetUrl; // Direct navigation on click
+        }
       }
-
-      gsap.killTweensOf(briefingCard);
-      gsap.fromTo(briefingCard,
-        { autoAlpha: 0, scale: 0.9, y: 15 },
-        { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }
-      );
-    } else {
-      activeNode = null;
-      controls.autoRotate = true;
-      gsap.killTweensOf(briefingCard);
-      gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, duration: 0.3, ease: "power2.in" });
     }
   };
 
@@ -484,6 +454,20 @@ export const initLatentSpace = () => {
         hoveredNode = object;
         document.body.style.cursor = 'pointer';
 
+        // Update Toolkit Info and Show
+        const data = hoveredNode.userData;
+        cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
+        cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#3b82f6';
+        cardTitle.textContent = data.title;
+        cardBluf.textContent = data.bluf;
+
+        gsap.killTweensOf(briefingCard);
+        // Uses xPercent and yPercent to handle CSS translate(-50%, -100%) natively within GSAP
+        gsap.fromTo(briefingCard,
+          { autoAlpha: 0, scale: 0.95, y: 10, xPercent: -50, yPercent: -100 },
+          { autoAlpha: 1, scale: 1, y: 0, duration: 0.3, ease: "power2.out" }
+        );
+
         // Ripple Effect on Connected Lines
         if (hoveredNode.userData.connectedLines) {
           const nodeColor = new THREE.Color(hoveredNode.userData.color);
@@ -522,13 +506,17 @@ export const initLatentSpace = () => {
         });
         hoveredNode = null;
         document.body.style.cursor = 'default';
+
+        // Hide Tooltip
+        gsap.killTweensOf(briefingCard);
+        gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, y: 5, duration: 0.2, ease: "power2.in" });
       }
     }
 
-    if (activeNode) {
+    if (hoveredNode) {
       const vector = new THREE.Vector3();
-      activeNode.getWorldPosition(vector);
-      const offset = activeNode.userData.type === 'anchor' ? 1.5 : 1.0;
+      hoveredNode.getWorldPosition(vector);
+      const offset = hoveredNode.userData.type === 'anchor' ? 0.8 : 0.6;
       vector.y += offset;
       vector.project(camera);
 
@@ -536,12 +524,11 @@ export const initLatentSpace = () => {
       const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
 
       if (vector.z > 1.0) {
-        briefingCard.style.display = 'none';
+        briefingCard.style.visibility = 'hidden';
       } else {
-        briefingCard.style.display = 'block';
-        briefingCard.style.left = '0px';
-        briefingCard.style.top = '0px';
-        briefingCard.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -100%)`;
+        briefingCard.style.left = `${x}px`;
+        briefingCard.style.top = `${y}px`;
+        // Removed manual style.transform entirely so GSAP can handle scale/y offsets natively
       }
     }
 

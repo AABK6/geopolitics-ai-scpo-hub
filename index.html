@@ -344,26 +344,23 @@
       position: absolute;
       top: -9999px;
       left: -9999px;
-      transform: translate3d(0, 0, 0) translate(-50%, -100%);
-      width: 420px;
-      /* Slightly wider for elegance */
-      /* Premium Glassmorphism */
-      background: linear-gradient(145deg, rgba(20, 30, 48, 0.75) 0%, rgba(10, 15, 25, 0.85) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-top: 1px solid rgba(255, 255, 255, 0.25);
-      border-left: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 2.5rem;
-      backdrop-filter: blur(24px) saturate(1.2);
-      -webkit-backdrop-filter: blur(24px) saturate(1.2);
-      border-radius: 16px;
+      width: 280px;
+      /* Small and elegant */
+      /* Premium minimal glassmorphism */
+      background: rgba(10, 15, 25, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.5rem;
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      border-radius: 12px;
       opacity: 0;
       visibility: hidden;
-      pointer-events: auto;
-      /* Soft glowing drop shadow */
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+      /* Crucial: Let clicks pass through to the node */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       z-index: 100;
-      margin-top: -25px;
-      /* Spacing above node */
+      margin-top: -20px;
     }
 
     .card-type {
@@ -390,62 +387,22 @@
     }
 
     .card-title {
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
       font-family: 'Playfair Display', serif;
-      font-size: 2.25rem;
-      font-weight: 700;
-      line-height: 1.1;
-      color: #f8fafc;
-      letter-spacing: -0.02em;
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #ffffff;
+      letter-spacing: -0.01em;
     }
 
     .card-bluf {
-      margin-bottom: 2.5rem;
+      margin-bottom: 0;
       font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
+      font-size: 0.85rem;
+      line-height: 1.5;
       color: #cbd5e1;
       font-weight: 300;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .card-action {
-      flex: 1;
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      text-decoration: none;
-      /* Dynamic Gradient Button */
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-    }
-
-    .card-action:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
-      filter: brightness(1.1);
-    }
-
-    /* Used for anchor nodes styling via JS injection */
-    .card-action.anchor-theme {
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
-    }
-
-    .card-action.anchor-theme:hover {
-      box-shadow: 0 8px 25px rgba(234, 88, 12, 0.5);
     }
 
     .card-action.secondary {
@@ -613,7 +570,6 @@
       <span class="card-type" id="card-type">Module 01</span>
       <h2 class="card-title" id="card-title">Title</h2>
       <p class="card-bluf" id="card-bluf">Bottom line up front goes here.</p>
-      <div class="card-actions" id="card-actions"></div>
     </div>
   </div>
 
