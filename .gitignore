@@ -1,0 +1,6 @@
+output/
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
