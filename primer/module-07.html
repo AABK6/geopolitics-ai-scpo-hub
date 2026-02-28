@@ -6,7 +6,7 @@
   <title>Module 07: The New Ideological Map of AI Power | Geopolitics of AI</title>
   
   <link rel="stylesheet" href="../shared/design-system.css">
-  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="../shared/styles.css?v=20260228b">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -1738,7 +1738,6 @@
                 start: 'top 60%',
                 toggleActions: 'play none none none'
               },
-              opacity: 0,
               y: 20,
               duration: 0.6,
               stagger: 0.15,
@@ -1764,10 +1763,10 @@
         gsap.from('.coalition-card', {
           scrollTrigger: {
             trigger: '.network-section',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+            once: true
           },
-          opacity: 0,
           y: 30,
           scale: 0.95,
           duration: 0.5,
@@ -1832,6 +1831,8 @@
     /* Quote block styling */
     .quote-block {
       position: relative;
+      background-color: rgba(15, 23, 42, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.24);
     }
     .quote-block::before {
       content: '';

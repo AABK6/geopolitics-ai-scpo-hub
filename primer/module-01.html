@@ -6,7 +6,7 @@
   <title>Module 01: The Strategic Convergence | Geopolitics of AI</title>
   
   <link rel="stylesheet" href="../shared/design-system.css">
-  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="../shared/styles.css?v=20260228b">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,6 +22,34 @@
     .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
     .module-nav a:hover { color: #fff; }
+    .section-230-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgba(251, 146, 60, 0.35);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
+      box-shadow: 0 16px 48px rgba(2, 6, 23, 0.45);
+      padding: 2rem;
+    }
+    .section-230-box::before {
+      content: "";
+      position: absolute;
+      inset: -30% auto auto -10%;
+      width: 420px;
+      height: 420px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(251, 146, 60, 0.24), rgba(251, 146, 60, 0));
+      pointer-events: none;
+    }
+    .section-230-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(3rem, 9vw, 4.75rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #fbbf24;
+      text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
   </style>
 </head>
 <body>
@@ -94,18 +122,18 @@
         </div>
         
         <!-- Main Title -->
-        <h1 class="gsap-reveal heading-1 mb-6">
+        <h1 class="gsap-reveal heading-1 text-white mb-6">
           The Strategic Convergence
         </h1>
         
         <!-- Subtitle -->
-        <p class="gsap-reveal text-xl md:text-2xl text-slate-600 leading-relaxed max-w-3xl mx-auto mb-10" style="font-family: var(--font-body);">
+        <p class="gsap-reveal text-xl md:text-2xl text-slate-200 leading-relaxed max-w-3xl mx-auto mb-10" style="font-family: var(--font-body);">
           The Construction of the Liberal Digital Order <span class="year-badge ml-2">1990-2000</span>
         </p>
         
         <!-- Opening Statement -->
         <div class="gsap-reveal max-w-2xl mx-auto">
-          <p class="text-lg text-slate-500 leading-relaxed italic border-l-4 border-orange-500 pl-6">
+          <p class="text-lg text-slate-300 leading-relaxed italic border-l-4 border-orange-500 pl-6">
             How three intellectual currents fused into a decade of techno-liberal optimism, 
             shaping the architecture of the internet and the geopolitical assumptions that would 
             define the digital age.
@@ -262,7 +290,7 @@
           </div>
           
           <!-- Timeline -->
-          <div class="timeline gsap-fade" id="mainTimeline">
+          <div class="timeline" id="mainTimeline">
             
             <!-- 1990 -->
             <div class="timeline-item timeline-item--milestone">
@@ -597,7 +625,7 @@
           </div>
           
           <!-- Matt Blaze Discovery -->
-          <div class="gsap-reveal mb-16">
+          <div class="mb-16">
             <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-8 text-white relative overflow-hidden">
               <!-- Decorative -->
               <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
@@ -1337,19 +1365,18 @@
       });
       
       // Timeline items: animate each row when it enters the viewport
-      gsap.utils.toArray('#mainTimeline .timeline-item').forEach((item) => {
-        gsap.from(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 98%',
-            toggleActions: 'play none none none',
-            once: true
-          },
-          opacity: 0,
-          y: 36,
-          x: -10,
-          duration: 1.05,
-          ease: 'power3.out'
+        gsap.utils.toArray('#mainTimeline .timeline-item').forEach((item) => {
+          gsap.from(item, {
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 98%',
+              toggleActions: 'play none none none',
+              once: true
+            },
+            y: 36,
+            x: -10,
+            duration: 1.05,
+            ease: 'power3.out'
         });
       });
       

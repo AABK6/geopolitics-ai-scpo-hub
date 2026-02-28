@@ -6,7 +6,7 @@
   <title>Module 03: The Rupture | Geopolitics of AI</title>
   
   <link rel="stylesheet" href="../shared/design-system.css">
-  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="../shared/styles.css?v=20260228b">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -1439,10 +1439,10 @@
         gsap.from('.revelation-card', {
           scrollTrigger: {
             trigger: '.revelation-header',
-            start: 'top 70%',
-            toggleActions: 'play none none none'
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true
           },
-          opacity: 0,
           y: 60,
           duration: 0.6,
           stagger: 0.15,
@@ -1497,10 +1497,10 @@
         gsap.from('.camp-card', {
           scrollTrigger: {
             trigger: '.netmundial-header',
-            start: 'top 70%',
-            toggleActions: 'play none none none'
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true
           },
-          opacity: 0,
           y: 40,
           duration: 0.6,
           stagger: 0.15,
