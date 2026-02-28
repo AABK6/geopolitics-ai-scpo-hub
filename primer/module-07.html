@@ -17,7 +17,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
-    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; }
+    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
     /* Custom adjustments for standalone modules */
     .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
@@ -31,7 +31,6 @@
   </div>
   
   <main>
-    <div id="week2-part3">
 <!-- Week 2 Part 3: The New Ideological Map of AI Power -->
 <!-- Competing Frames and Worldviews -->
 
@@ -1609,7 +1608,7 @@
   <!-- Section Navigation -->
   <div class="section-nav relative z-10 px-6 md:px-12 lg:px-20 py-12 border-t border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <a href="#week2-part2" class="nav-prev flex items-center gap-3 px-6 py-3 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-colors group">
+      <a href="module-06.html" class="nav-prev flex items-center gap-3 px-6 py-3 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-colors group">
         <i data-lucide="arrow-left" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
         <div class="text-left">
           <span class="text-slate-500 text-xs block">Previous</span>
@@ -1617,7 +1616,7 @@
         </div>
       </a>
       
-      <a href="#week2-part4" class="nav-next flex items-center gap-3 px-6 py-3 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-xl transition-colors group">
+      <a href="module-08.html" class="nav-next flex items-center gap-3 px-6 py-3 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-xl transition-colors group">
         <div class="text-right">
           <span class="text-indigo-400 text-xs block">Next</span>
           <span class="text-white">Part 4: Institutional Design</span>
@@ -1714,32 +1713,38 @@
         });
         
         // Frame sections
-        document.querySelectorAll('.frame-section').forEach((section, index) => {
-          gsap.from(section.querySelector('.frame-header'), {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 75%',
-              toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            x: -30,
-            duration: 0.6,
-            ease: 'power2.out'
-          });
-          
+        document.querySelectorAll('.frame-section').forEach((section) => {
+          const frameHeader = section.querySelector('.frame-header');
+          if (frameHeader) {
+            gsap.from(frameHeader, {
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 75%',
+                toggleActions: 'play none none none'
+              },
+              opacity: 0,
+              x: -30,
+              duration: 0.6,
+              ease: 'power2.out'
+            });
+          }
+
           // Quote blocks
-          gsap.from(section.querySelectorAll('.quote-block'), {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 60%',
-              toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: 20,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power2.out'
-          });
+          const quoteBlocks = section.querySelectorAll('.quote-block');
+          if (quoteBlocks.length > 0) {
+            gsap.from(quoteBlocks, {
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 60%',
+                toggleActions: 'play none none none'
+              },
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+              stagger: 0.15,
+              ease: 'power2.out'
+            });
+          }
         });
         
         // Comparison table
@@ -1877,7 +1882,6 @@
     }
   </style>
 </section>
-    </div>
 
     <!-- SECTION: week2-part4.html -->
 

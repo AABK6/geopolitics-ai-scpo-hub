@@ -17,7 +17,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
-    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; }
+    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
     /* Custom adjustments for standalone modules */
     .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
     .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
@@ -31,7 +31,6 @@
   </div>
   
   <main>
-    <div id="week2-part2">
 <!-- Week 2 Part 2: National Revival Through Tech Power (Industrial Policy) -->
 <section id="week2-part2" class="min-h-screen bg-slate-950 text-slate-100 py-16 md:py-24 overflow-hidden">
   
@@ -772,7 +771,7 @@
 
         <div class="bg-gradient-to-br from-red-900/30 to-orange-900/20 border border-red-700/30 rounded-xl p-5 text-center">
           <div class="w-12 h-12 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <i data-lucide="maple-leaf" class="w-6 h-6 text-red-400"></i>
+            <i data-lucide="leaf" class="w-6 h-6 text-red-400"></i>
           </div>
           <p class="text-3xl font-bold text-red-400 mb-1">$1.7B</p>
           <p class="text-slate-400 text-sm">Canada AI Strategy</p>
@@ -1198,9 +1197,17 @@
   <!-- GSAP ScrollTrigger Animations -->
   <script>
     (function() {
+      const revealFallback = () => {
+        document.querySelectorAll('.opacity-0').forEach((el) => el.classList.remove('opacity-0'));
+        ['translate-y-6', 'translate-y-8', 'translate-x-8'].forEach((cls) => {
+          document.querySelectorAll(`.${cls}`).forEach((el) => el.classList.remove(cls));
+        });
+      };
+
       // Wait for GSAP and ScrollTrigger to be available
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         console.warn('GSAP or ScrollTrigger not loaded');
+        revealFallback();
         return;
       }
 
@@ -1484,7 +1491,6 @@
   </script>
 
 </section>
-    </div>
 
     <!-- SECTION: week2-part3.html -->
 
