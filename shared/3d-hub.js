@@ -54,159 +54,98 @@ export const initLatentSpace = () => {
   scene.add(backLight);
 
   // Camera setup
-  const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 5, 45);
+  // Use a FOV that scales responsively (handled better with OrbitControls on zoom, but base FOV helps)
+  const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 5, 40); // Pull slightly closer since network was scaled down
 
   // Controls
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.04;
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.1; // Reduced from 0.8
-  controls.maxDistance = 100;
-  controls.minDistance = 5;
-  controls.enablePan = false; // Prevent dragging scene off-screen
-  controls.enableZoom = false; // Fix trackpad scrolling
+  controls.autoRotateSpeed = 0.5; // Slightly faster to show off the 3D volume
+  controls.maxDistance = 60; // Pull limits in
+  controls.minDistance = 20;
+  controls.enablePan = true; // allow some panning flexibility
+  controls.enableZoom = true; // Re-enable zoom to compensate for small screens
   // Data Definition
-  const nodesData = [
 
+  // Rigid Layer Strategy
+  const networkStructure = [
     {
-      id: 'm1',
-      type: 'anchor',
-      title: 'The Strategic Convergence',
-      bluf: 'The "End of History" illusion and the Clintonian Wager.',
-      url: 'primer/module-01.html',
-      position: new THREE.Vector3(-14, 8, 0), // Layer 1 (Top Left)
-      color: 0x3b82f6, // Royal Blue
-      size: 1.5
+      x: -10, // Scaled in from -16
+      nodes: [
+        { id: 'm1', type: 'anchor', title: 'The Strategic Convergence', bluf: 'The "End of History" illusion and the Clintonian Wager.', url: 'primer/module-01.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'd1', isReal: false },
+        { id: 'm2', type: 'anchor', title: 'Architecture of Sovereignty', bluf: 'China\'s foundational rebuttal to the liberal digital order.', url: 'primer/module-02.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'd2', isReal: false },
+        { id: 'm3', type: 'anchor', title: 'The Rupture', bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust.', url: 'primer/module-03.html', color: 0x0284c7, size: 1.5, isReal: true },
+      ]
     },
     {
-      id: 'm2',
-      type: 'anchor',
-      title: 'Architecture of Sovereignty',
-      bluf: 'China\'s foundational rebuttal to the liberal digital order.',
-      url: 'primer/module-02.html',
-      position: new THREE.Vector3(-14, 0, 0), // Layer 1 (Mid Left)
-      color: 0x3b82f6,
-      size: 1.5
+      x: -3.5, // Scaled in from -5
+      nodes: [
+        { id: 'd3', isReal: false },
+        { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', bluf: 'The balkanization of the web into competing sovereign technology stacks.', url: 'primer/module-04.html', color: 0x0ea5e9, size: 1.5, isReal: true },
+        { id: 'p1', type: 'satellite', title: 'Group 1: Thermal Sovereignty', bluf: 'Analyzing the geopolitical leverage of data center cooling infrastructure.', directUrl: 'projects/group-1/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', bluf: 'The return of the production function: compute, energy, and hardware chokepoints.', url: 'primer/module-05.html', color: 0x0ea5e9, size: 1.5, isReal: true },
+        { id: 'd4', isReal: false },
+        { id: 'p2', type: 'satellite', title: 'Group 2: DeepSeek Asymmetry', bluf: 'The strategic impact of algorithmic efficiency targeting heavily constrained computing power.', directUrl: 'projects/group-2/index.html', color: 0xf8fafc, size: 0.8, isReal: true }
+      ]
     },
     {
-      id: 'm3',
-      type: 'anchor',
-      title: 'The Rupture',
-      bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust.',
-      url: 'primer/module-03.html',
-      position: new THREE.Vector3(-14, -8, 0), // Layer 1 (Bot Left)
-      color: 0x3b82f6,
-      size: 1.5
+      x: 3.5, // Scaled in from 6
+      nodes: [
+        { id: 'p3', type: 'satellite', title: 'Group 3: Subsea Realism', bluf: 'The physical chokepoints of global data transmission.', directUrl: 'projects/group-3/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'd5', isReal: false },
+        { id: 'p4', type: 'satellite', title: 'Group 4: The GPU Gap', bluf: 'Capital concentration and compute hoarding as national security imperatives.', directUrl: 'projects/group-4/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'd6', isReal: false },
+        { id: 'p5', type: 'satellite', title: 'Group 5: Compute Diplomacy', bluf: 'How access to raw compute is reshaping traditional diplomatic alliances.', directUrl: 'projects/group-5/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'd7', isReal: false }
+      ]
     },
     {
-      id: 'm4',
-      type: 'anchor',
-      title: 'The Splinternet Accelerates',
-      bluf: 'The balkanization of the web into competing sovereign technology stacks.',
-      url: 'primer/module-04.html',
-      position: new THREE.Vector3(0, 5, -2), // Layer 2 (Top Mid)
-      color: 0x0ea5e9, // Bright Sky Blue
-      size: 1.5
-    },
-    {
-      id: 'm5',
-      type: 'anchor',
-      title: 'Industrial Sovereignty',
-      bluf: 'The return of the production function: compute, energy, and hardware chokepoints.',
-      url: 'primer/module-05.html',
-      position: new THREE.Vector3(0, -5, 2), // Layer 2 (Bot Mid)
-      color: 0x0ea5e9,
-      size: 1.5
-    },
-    {
-      id: 'm6',
-      type: 'anchor',
-      title: 'National Revival Through Tech',
-      bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.',
-      url: 'primer/module-06.html',
-      position: new THREE.Vector3(14, 8, 0), // Layer 3 (Top Right)
-      color: 0xea580c, // Terracotta
-      size: 1.5
-    },
-    {
-      id: 'm7',
-      type: 'anchor',
-      title: 'New Ideological Map of AI',
-      bluf: 'Tracing competing intellectual frames—from realism to techno-accelerationism.',
-      url: 'primer/module-07.html',
-      position: new THREE.Vector3(14, 0, 0), // Layer 3 (Mid Right)
-      color: 0xea580c,
-      size: 1.5
-    },
-    {
-      id: 'm8',
-      type: 'anchor',
-      title: 'The Collision of Frames',
-      bluf: 'The core tradeoffs that will dictate the future global order.',
-      url: 'primer/module-08.html',
-      position: new THREE.Vector3(14, -8, 0), // Layer 3 (Bot Right)
-      color: 0xea580c,
-      size: 1.5
-    },
-    // --- Satellites ---
-    {
-      id: 'p1',
-      type: 'satellite',
-      title: 'Group 1: Thermal Sovereignty',
-      bluf: 'Analyzing the geopolitical leverage of data center cooling infrastructure.',
-      previewUrl: 'preview.html?project=group-1',
-      directUrl: 'projects/group-1/index.html',
-      position: new THREE.Vector3(-10, 11, -4), // Anchored near m1
-      color: 0xf8fafc,
-      size: 0.8
-    },
-    {
-      id: 'p2',
-      type: 'satellite',
-      title: 'Group 2: DeepSeek Asymmetry',
-      bluf: 'The strategic impact of algorithmic efficiency targeting heavily constrained computing power.',
-      previewUrl: 'preview.html?project=group-2',
-      directUrl: 'projects/group-2/index.html',
-      position: new THREE.Vector3(-3, -10, 4), // Anchored near m5/m3
-      color: 0xf8fafc,
-      size: 0.8
-    },
-    {
-      id: 'p3',
-      type: 'satellite',
-      title: 'Group 3: Subsea Realism',
-      bluf: 'The physical chokepoints of global data transmission.',
-      previewUrl: 'preview.html?project=group-3',
-      directUrl: 'projects/group-3/index.html',
-      position: new THREE.Vector3(-18, -2, -6), // Anchored near m2
-      color: 0xf8fafc,
-      size: 0.8
-    },
-    {
-      id: 'p4',
-      type: 'satellite',
-      title: 'Group 4: The GPU Gap',
-      bluf: 'Capital concentration and compute hoarding as national security imperatives.',
-      previewUrl: 'preview.html?project=group-4',
-      directUrl: 'projects/group-4/index.html',
-      position: new THREE.Vector3(4, 11, 4), // Anchored near m4
-      color: 0xf8fafc,
-      size: 0.8
-    },
-    {
-      id: 'p5',
-      type: 'satellite',
-      title: 'Group 5: Compute Diplomacy',
-      bluf: 'How access to raw compute is reshaping traditional diplomatic alliances.',
-      previewUrl: 'preview.html?project=group-5',
-      directUrl: 'projects/group-5/index.html',
-      position: new THREE.Vector3(10, 3, 5), // Anchored near m7
-      color: 0xf8fafc,
-      size: 0.8
+      x: 10, // Scaled in from 17
+      nodes: [
+        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.', url: 'primer/module-06.html', color: 0xea580c, size: 1.5, isReal: true },
+        { id: 'd8', isReal: false },
+        { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', bluf: 'Tracing competing intellectual frames—from realism to techno-accelerationism.', url: 'primer/module-07.html', color: 0xea580c, size: 1.5, isReal: true },
+        { id: 'd9', isReal: false },
+        { id: 'm8', type: 'anchor', title: 'The Collision of Frames', bluf: 'The core tradeoffs that will dictate the future global order.', url: 'primer/module-08.html', color: 0xea580c, size: 1.5, isReal: true }
+      ]
     }
   ];
+
+  const nodesData = [];
+  const layerStructure = [];
+
+  networkStructure.forEach((layer, layerIndex) => {
+    const nodeCount = layer.nodes.length;
+    const yRange = 16; // Scaled down from 24 to fit inside 100vh comfortably
+    const currentLayerMeshesData = [];
+
+    layer.nodes.forEach((nData, i) => {
+      // Stagger Z slightly for a very subtle 3D volume feel without breaking the planar look
+      const z = (i % 2 === 0 ? 1.5 : -1.5) + (layerIndex % 2 === 0 ? 0 : 1); // Reduced Z spread
+      const y = (yRange / 2) - (i * (yRange / (nodeCount - 1)));
+
+      const nodeObj = {
+        ...nData,
+        layer: layerIndex,
+        position: new THREE.Vector3(layer.x, y, z),
+      };
+
+      if (!nodeObj.isReal) {
+        nodeObj.type = 'dummy';
+        nodeObj.size = 0.5;
+        nodeObj.color = 0x94a3b8;
+      }
+
+      nodesData.push(nodeObj);
+      currentLayerMeshesData.push(nodeObj);
+    });
+    layerStructure.push(currentLayerMeshesData);
+  });
 
   const constellation = new THREE.Group();
   scene.add(constellation);
@@ -217,41 +156,51 @@ export const initLatentSpace = () => {
 
   // Replace chaotic shaders with premium architectural materials
   nodesData.forEach(data => {
-    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : data.size * 0.45;
-    // Perfect, high-resolution spheres instead of low-poly icosahedrons
-    const geometry = new THREE.SphereGeometry(nodeSize, 64, 64);
+    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : (data.type === 'satellite' ? data.size * 0.45 : data.size * 0.55); // Increased dummy node factor to 0.55
+    const geometry = new THREE.SphereGeometry(nodeSize, 32, 32);
     let material;
 
-    if (data.type === 'anchor') {
+    if (data.type === 'dummy') {
+      material = new THREE.MeshPhysicalMaterial({
+        color: 0xcbd5e1, // Brighter, slate-grey base so it reads against the dark background
+        metalness: 0.1,
+        roughness: 0.4, // Less rough so it catches some specular highlights from the lights
+        transmission: 0.4, // Less glass-like, more solid frosted
+        opacity: 0.8, // Drastically increased from 0.05
+        transparent: true,
+        emissive: 0x1e293b, // Glow slightly so it is always visible
+        emissiveIntensity: 0.3
+      });
+    } else if (data.type === 'anchor') {
       if (data.id.match(/m[1-4]/)) {
         // Architecture & Security nodes -> Polished Cobalt/Cyan
         material = new THREE.MeshPhysicalMaterial({
           color: 0x0284c7, // Deep Cyan base
           metalness: 0.6,
-          roughness: 0.15,
+          roughness: 0.1,
           clearcoat: 1.0,
-          clearcoatRoughness: 0.1,
           emissive: 0x0369a1,
-          emissiveIntensity: 0.3
+          emissiveIntensity: 0.4
         });
       } else {
         // Industry & Theory nodes -> Polished Terracotta / Copper
         material = new THREE.MeshPhysicalMaterial({
           color: 0xea580c,
           metalness: 0.6,
-          roughness: 0.2,
+          roughness: 0.1,
           clearcoat: 1.0,
-          clearcoatRoughness: 0.15,
           emissive: 0x9a3412,
-          emissiveIntensity: 0.2
+          emissiveIntensity: 0.3
         });
       }
     } else {
-      // Satellites -> Matte pearl finish
+      // Satellites -> Premium Emerald Green finish
       material = new THREE.MeshStandardMaterial({
-        color: 0xf8fafc,
-        metalness: 0.3,
-        roughness: 0.4
+        color: 0x10b981,
+        metalness: 0.4,
+        roughness: 0.3,
+        emissive: 0x059669,
+        emissiveIntensity: 0.3
       });
     }
 
@@ -286,25 +235,20 @@ export const initLatentSpace = () => {
   });
 
 
-  // Pipeline Connection Logic (Solid Cylinders instead of 1px ghostly Lines)
-  const createPipeline = (pt1, pt2, isAnchor) => {
+  // Pipeline Connection Logic (Dense Academic Web)
+  const createPipeline = (pt1, pt2) => {
     const distance = pt1.distanceTo(pt2);
-    // Extremely thin "fiber optic" traces, not thick plastic pipes
-    const geometry = new THREE.CylinderGeometry(0.02, 0.02, distance, 8);
-    // Rotate cylinder to point from pt1 to pt2
+    // Slightly thicker connecting lines
+    const geometry = new THREE.CylinderGeometry(0.025, 0.025, distance, 6);
     geometry.translate(0, distance / 2, 0);
     geometry.rotateX(Math.PI / 2);
 
-    // High-end glass/optical material for data throughput
-    const mat = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff,
-      transmission: 0.9,
-      opacity: isAnchor ? 0.6 : 0.2,
+    // Highly transparent glass lines for the passive state
+    const mat = new THREE.MeshBasicMaterial({
+      color: 0xcbd5e1, // Match dummy node color
+      opacity: 0.35, // Increased from 0.25 to make the network clearly visible
       transparent: true,
-      roughness: 0.1,
-      clearcoat: 1.0,
-      emissive: 0xffffff,
-      emissiveIntensity: isAnchor ? 0.4 : 0.1
+      blending: THREE.AdditiveBlending
     });
 
     const cylinder = new THREE.Mesh(geometry, mat);
@@ -313,49 +257,26 @@ export const initLatentSpace = () => {
     return cylinder;
   };
 
-  // Connect satellites to nearest anchor via smaller pipes
-  nodesData.filter(n => n.type === 'satellite').forEach(sat => {
-    let closestAnchorMesh = null;
-    let minDistance = Infinity;
+  // Build the dense network by connecting every node in Layer N to every node in Layer N+1
+  for (let l = 0; l < layerStructure.length - 1; l++) {
+    const layerA = layerStructure[l];
+    const layerB = layerStructure[l + 1];
 
-    meshes.filter(m => m.userData.type === 'anchor').forEach(anchorMesh => {
-      const dist = sat.position.distanceTo(anchorMesh.position);
-      if (dist < minDistance) {
-        minDistance = dist;
-        closestAnchorMesh = anchorMesh;
-      }
+    layerA.forEach(nodeAData => {
+      const meshA = meshes.find(m => m.userData.id === nodeAData.id);
+      layerB.forEach(nodeBData => {
+        const meshB = meshes.find(m => m.userData.id === nodeBData.id);
+
+        const pipe = createPipeline(meshA.position, meshB.position);
+        constellation.add(pipe);
+
+        // We track connections for REAL nodes so we can highlight them on hover
+        if (nodeAData.isReal || nodeBData.isReal) {
+          if (nodeAData.isReal) meshA.userData.connectedLines.push(pipe);
+          if (nodeBData.isReal) meshB.userData.connectedLines.push(pipe);
+        }
+      });
     });
-
-    if (closestAnchorMesh) {
-      const satMesh = meshes.find(m => m.userData.id === sat.id);
-      const pipe = createPipeline(satMesh.position, closestAnchorMesh.position, false);
-      constellation.add(pipe);
-
-      // Store references for interaction rip-effects
-      if (satMesh) satMesh.userData.connectedLines.push(pipe);
-      closestAnchorMesh.userData.connectedLines.push(pipe);
-    }
-  });
-
-  // Connect anchors Sequentially as heavily rigid Neural Net structural links
-  const anchorMeshes = meshes.filter(m => m.userData.type === 'anchor');
-  // Layer 1 -> Layer 2
-  for (let i = 0; i < 3; i++) {
-    for (let j = 3; j < 5; j++) {
-      const pipe = createPipeline(anchorMeshes[i].position, anchorMeshes[j].position, true);
-      constellation.add(pipe);
-      anchorMeshes[i].userData.connectedLines.push(pipe);
-      anchorMeshes[j].userData.connectedLines.push(pipe);
-    }
-  }
-  // Layer 2 -> Layer 3
-  for (let j = 3; j < 5; j++) {
-    for (let k = 5; k < 8; k++) {
-      const pipe = createPipeline(anchorMeshes[j].position, anchorMeshes[k].position, true);
-      constellation.add(pipe);
-      anchorMeshes[j].userData.connectedLines.push(pipe);
-      anchorMeshes[k].userData.connectedLines.push(pipe);
-    }
   }
 
 
@@ -388,7 +309,7 @@ export const initLatentSpace = () => {
       if (!clickedNode.userData || !clickedNode.userData.type) {
         clickedNode = clickedNode.parent;
       }
-      if (clickedNode && clickedNode.userData) {
+      if (clickedNode && clickedNode.userData && clickedNode.userData.isReal) {
         const data = clickedNode.userData;
         const targetUrl = data.type === 'anchor' ? data.url : data.directUrl;
         if (targetUrl) {
@@ -438,12 +359,12 @@ export const initLatentSpace = () => {
         object = object.parent;
       }
 
-      if (hoveredNode !== object) {
+      if (hoveredNode !== object && object.userData && object.userData.isReal) {
         // Reset previous hovered lines
         if (hoveredNode && hoveredNode.userData.connectedLines) {
           hoveredNode.userData.connectedLines.forEach(line => {
-            gsap.to(line.material, { opacity: 0.1, duration: 0.5 });
-            gsap.to(line.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
+            gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
+            gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 }); // Back to standard color
           });
         }
 
@@ -493,8 +414,8 @@ export const initLatentSpace = () => {
         // Reset lines
         if (hoveredNode.userData.connectedLines) {
           hoveredNode.userData.connectedLines.forEach(line => {
-            gsap.to(line.material, { opacity: 0.1, duration: 0.5 });
-            gsap.to(line.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
+            gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
+            gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 });
           });
         }
 
