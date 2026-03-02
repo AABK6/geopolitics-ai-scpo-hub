@@ -23,19 +23,3 @@ This repository hosts a custom-built digital platform for the **Geopolitics of A
 *   **Entry Point:** Every student project must have an `index.html` file as its primary entry point.
 *   **Relative Paths:** Ensure all assets (images, CSS, JS) in project folders use relative paths to work correctly within the Iframe wrapper and the 3D Hub router.
 *   **Local Preview:** Use `python3 -m http.server 8000` to view the full Hub locally.
-
-## Refinement Strategy: Hero Style + 3D Architecture
-
-The user has noted that the `index-original.html` contained rich information upfront (opening statements, core questions, instructors) that is currently less prominent in the 3D Hub. To reconcile the **impactful narrative** of the original with the **spatial sophistication** of the 3D nodes, consider these approaches:
-
-1.  **The "Narrative HUD" Overlay:**
-    *   Implement a transparent UI layer over the 3D canvas that hosts the "Opening Statement" and "Core Question" from the original hero.
-    *   Use GSAP to fade these elements out as soon as the user interacts with the 3D scene (e.g., on first drag or zoom).
-2.  **Scroll-Driven "Entrance" (Recommended):**
-    *   Initialize the page with a rich text hero section (title, instructors, BLUF statement) that covers the viewport.
-    *   As the user scrolls, use `ScrollTrigger` to:
-        *   Fade/Translate the text out of view.
-        *   Animate the 3D Camera from a "Macro" close-up of a central node (representing the core question) to a "Wide" view of the full constellation.
-3.  **The "Dive" Interaction:**
-    *   Keep the original Hero design almost intact but replace the static background with the 3D canvas.
-    *   The "Begin the Journey" CTA triggers a camera move that "dives" through the 3D space toward the first module, transitioning the UI from "Introduction" to "Active Exploration."

@@ -18,7 +18,7 @@ When a user clicks on a student project from the Hub, they are presented with tw
 The repository acts as a strict filing system to support a 3D interface without mixing student code with the master narrative.
 
 *   **The Root (The Command Center):** Contains the "Latent Space" 3D Hub landing page (`index.html`), shared design assets, global styles, and 3D rendering scripts.
-*   **Directory A: The Primer (Master Narrative):** Holds isolated, highly readable briefing pages (e.g., `Module-01-The-End-of-the-Beginning.html`). Instead of one massive scroll, the content is dismantled into distinct "chapters" with linear wayfinding (a "Proceed to Module 2" gateway at the bottom of Module 1).
+*   **Directory A: The Primer (Master Narrative):** Holds isolated, highly readable briefing pages (e.g., `module-01.html`, `module-02.html`). Instead of one massive scroll, the content is dismantled into distinct "chapters" with linear wayfinding (a "Proceed to Module 2" gateway at the bottom of Module 1).
 *   **Directory B: The Field Briefs (Student Projects):** The isolated sandbox containing the 5 group sub-folders.
 
 ## 3. The "Latent Space" Hub (UX & Presentation)
@@ -26,10 +26,10 @@ The landing page departs from standard university websites, presenting a highly 
 
 *   **Visual Metaphor:** A beautiful neural network graph or global supply chain topology, populated by glowing "Nodes" (content) connected by "Edges" (relationships).
 *   **The Nodes:**
-    *   **Anchor Nodes (Core):** Larger, pulsing spheres representing theoretical modules.
-    *   **Satellite Nodes (Applied):** Smaller, orbiting spheres representing the 5 student projects.
+    *   **Anchor Nodes (Core):** Larger spheres representing theoretical modules, featuring dynamic glassmorphism title tags floating directly above them.
+    *   **Satellite Nodes (Applied):** Smaller, emerald spheres representing the 5 student projects, with their own minimalist glass tags.
 *   **Navigation:** Users can click and drag to rotate the constellation and scroll to zoom.
-*   **Hover State:** Hovering over a node pauses the 3D motion and summons a sleek "Briefing Card" on the side of the screen. This card displays the title, a one-sentence analytical takeaway (BLUF), and a "Read Brief" button that transports the user to the reading page.
+*   **Hover State & Navigation:** Hovering over a node pauses the 3D motion and summons a minimalist glass "Briefing Card" on the side of the screen displaying a one-sentence analytical takeaway (BLUF). Clicking the node directly transports the user to the corresponding reading page or student sandbox.
 
 ## 4. The "Escape Hatch" (Accessibility)
 To ensure the site remains 100% accessible, mobile-friendly, and usable for immediate information retrieval, users are never trapped in the 3D interface.

@@ -8,7 +8,7 @@ The course material is hosted on a custom-built, open-web platform designed to r
 
 The platform has three main components:
 1. **The 3D Hub:** The landing page map showing how the theoretical modules (Anchor Nodes) and student research projects (Satellite Nodes) connect.
-2. **The Course Modules:** The core readings of the course, split into 8 digital chapters (e.g., *The Strategic Convergence*, *The Splinternet Accelerates*).
+2. **The Course Modules:** The core readings of the course, split into 8 digital chapters (e.g., *The Utopian Dawn*, *The Rebuttal*).
 3. **The Project Sandboxes:** Isolated directories where your group will push your final digital research project, hosted alongside the main course material.
 
 ---
