@@ -680,13 +680,23 @@
           trigger: "body",
           start: "top top",
           end: "50% top",
-          scrub: 2.5, // Increased inertia for smoother, slower feel
+          scrub: 1.5, // Faster scrub to prevent lag feeling
+          snap: {
+            snapTo: [0, 1], // Magnetic snapping: forces either full hero (0) or full 3D Hub (1)
+            duration: 0.5,
+            ease: "power2.inOut"
+          },
           onLeave: () => { if (controls) { controls.enabled = true; controls.autoRotate = true; } },
-          onEnterBack: () => { if (controls) { controls.enabled = false; controls.autoRotate = false; } }
+          onEnterBack: () => { if (controls) { controls.enabled = false; controls.autoRotate = false; } },
+          onUpdate: (self) => {
+            // Instantly disable the invisible hero shield so the 3D map is clickable
+            const hero = document.getElementById('hero-section');
+            if (hero) hero.style.pointerEvents = self.progress > 0.1 ? 'none' : 'auto';
+          }
         }
       });
 
-      scrollTl.to("#hero-section", { opacity: 0, y: -100, pointerEvents: "none" }, 0);
+      scrollTl.to("#hero-section", { opacity: 0, y: -100 }, 0);
       /* Brighten the background and slowly pan down to the data center racks */
       scrollTl.to("#hero-bg-image", {
         filter: "brightness(0.9) blur(1px)",
