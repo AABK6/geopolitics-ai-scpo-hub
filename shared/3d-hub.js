@@ -8,15 +8,16 @@ export const initLatentSpace = () => {
   const loadingOverlay = document.getElementById('loading-overlay');
   const fallbackUI = document.getElementById('fallback-ui');
 
+  const isMobile = window.innerWidth <= 768;
+
   // Ensure gsap is loaded globally via CDN
   const gsap = window.gsap;
 
 
   let renderer;
   try {
-    // Renderer setup
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0); // Ensure transparency
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -67,7 +68,15 @@ export const initLatentSpace = () => {
   controls.maxDistance = 60; // Pull limits in
   controls.minDistance = 20;
   controls.enablePan = true; // allow some panning flexibility
-  controls.enableZoom = true; // Re-enable zoom to compensate for small screens
+  controls.enableZoom = false; // Disable scroll wheel zooming to prevent trapping page scroll
+
+  if (isMobile) {
+    // Make 1-finger swipe directly pan the camera, aligning with typical vertical scroll expectations
+    controls.touches = {
+      ONE: THREE.TOUCH.PAN,
+      TWO: THREE.TOUCH.DOLLY_ROTATE
+    };
+  }
   // Data Definition
 
   // Rigid Layer Strategy
@@ -121,18 +130,23 @@ export const initLatentSpace = () => {
 
   networkStructure.forEach((layer, layerIndex) => {
     const nodeCount = layer.nodes.length;
-    const yRange = 16; // Scaled down from 24 to fit inside 100vh comfortably
+    const yRange = isMobile ? 12 : 16; // Tighter vertical spread on mobile
     const currentLayerMeshesData = [];
 
     layer.nodes.forEach((nData, i) => {
       // Stagger Z slightly for a very subtle 3D volume feel without breaking the planar look
       const z = (i % 2 === 0 ? 1.5 : -1.5) + (layerIndex % 2 === 0 ? 0 : 1); // Reduced Z spread
-      const y = (yRange / 2) - (i * (yRange / (nodeCount - 1)));
+      const internalSpread = (yRange / 2) - (i * (yRange / (nodeCount - 1)));
+
+      // Horizontal mode: Layers shift left/right (-10 to 10), nodes stack vertically
+      // Mobile mode: Layers shift top/down (+9 to -9), nodes stack horizontally
+      const px = isMobile ? internalSpread * 0.7 : layer.x;
+      const py = isMobile ? -layer.x * 0.9 : internalSpread;
 
       const nodeObj = {
         ...nData,
         layer: layerIndex,
-        position: new THREE.Vector3(layer.x, y, z),
+        position: new THREE.Vector3(px, py, z),
       };
 
       if (!nodeObj.isReal) {
@@ -232,7 +246,7 @@ export const initLatentSpace = () => {
       div.style.letterSpacing = '0.02em';
       div.style.lineHeight = '1.3';
       div.style.whiteSpace = 'normal'; // Allow text to wrap
-      div.style.maxWidth = isAnchor ? '135px' : '90px'; // Tighter wrapping
+      div.style.maxWidth = isAnchor ? (isMobile ? '100px' : '135px') : '90px'; // Tighter wrapping
       div.style.textAlign = 'center';
 
       // Glass Effect CSS
@@ -307,7 +321,7 @@ export const initLatentSpace = () => {
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2(-999, -999);
   let hoveredNode = null;
-  let activeNode = null;
+  let activeMobileNode = null;
 
   // UI Elements
   const briefingCard = document.getElementById('briefing-card');
@@ -315,6 +329,7 @@ export const initLatentSpace = () => {
 
   const onMouseMove = (event) => {
     if (event.isPrimary === false) return; // Ignore multi-touch
+    if (isMobile) return; // Ignore hover physics on mobile
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   };
@@ -325,6 +340,29 @@ export const initLatentSpace = () => {
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(meshes, true);
 
+    const unzoomMobile = () => {
+      activeMobileNode = null;
+      hoveredNode = null;
+
+      gsap.killTweensOf(briefingCard);
+      gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, duration: 0.2, ease: "power2.out" });
+
+      gsap.to(camera.position, {
+        x: 0,
+        y: 4,
+        z: 42,
+        duration: 1.0,
+        ease: "power2.out"
+      });
+      gsap.to(controls.target, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 1.0,
+        ease: "power2.out"
+      });
+    };
+
     if (intersects.length > 0) {
       let clickedNode = intersects[0].object;
       if (!clickedNode.userData || !clickedNode.userData.type) {
@@ -332,10 +370,59 @@ export const initLatentSpace = () => {
       }
       if (clickedNode && clickedNode.userData && clickedNode.userData.isReal) {
         const data = clickedNode.userData;
+
+        if (isMobile) {
+          if (activeMobileNode !== clickedNode) {
+            activeMobileNode = clickedNode;
+
+            const enterBtn = document.getElementById('mobile-enter-btn');
+            if (enterBtn) {
+              enterBtn.href = data.type === 'anchor' ? data.url : data.directUrl;
+            }
+
+            // Show floating card directly below node using GSAP
+            hoveredNode = clickedNode;
+            cardBluf.textContent = data.bluf;
+
+            gsap.killTweensOf(briefingCard);
+            gsap.fromTo(briefingCard,
+              { autoAlpha: 0, scale: 0.95, y: -15, xPercent: -50, yPercent: 0 },
+              { autoAlpha: 1, scale: 1, y: 0, duration: 0.4, ease: "power2.out" }
+            );
+
+            // Pan to center the node and its pill
+            gsap.to(camera.position, {
+              x: clickedNode.position.x,
+              y: clickedNode.position.y,
+              z: 28, // Less intense zoom on mobile so pill fits on screen
+              duration: 1.2,
+              ease: "power2.out"
+            });
+            gsap.to(controls.target, {
+              x: clickedNode.position.x,
+              y: clickedNode.position.y,
+              z: clickedNode.position.z,
+              duration: 1.2,
+              ease: "power2.out"
+            });
+
+            return; // Interrupt, don't navigate
+          } else {
+            // Clicking the same node again zooms out
+            unzoomMobile();
+            return;
+          }
+        }
+
         const targetUrl = data.type === 'anchor' ? data.url : data.directUrl;
         if (targetUrl) {
           window.location.href = targetUrl; // Direct navigation on click
         }
+      }
+    } else {
+      if (isMobile && activeMobileNode) {
+        // Clicking outside zooms out
+        unzoomMobile();
       }
     }
   };
@@ -370,93 +457,99 @@ export const initLatentSpace = () => {
       mesh.scale.set(scale, scale, scale);
     });
 
-    // Raycasting
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(meshes, true);
+    // Raycasting (Only track floating hover if Desktop)
+    if (!isMobile) {
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(meshes, true);
 
-    if (intersects.length > 0) {
-      let object = intersects[0].object;
-      if (!object.userData || !object.userData.type) {
-        object = object.parent;
-      }
-
-      if (hoveredNode !== object && object.userData && object.userData.isReal) {
-        // Reset previous hovered lines
-        if (hoveredNode && hoveredNode.userData.connectedLines) {
-          hoveredNode.userData.connectedLines.forEach(line => {
-            gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
-            gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 }); // Back to standard color
-          });
+      if (intersects.length > 0) {
+        let object = intersects[0].object;
+        if (!object.userData || !object.userData.type) {
+          object = object.parent;
         }
 
+        if (hoveredNode !== object && object.userData && object.userData.isReal) {
+          // Reset previous hovered lines
+          if (hoveredNode && hoveredNode.userData.connectedLines) {
+            hoveredNode.userData.connectedLines.forEach(line => {
+              gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
+              gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 }); // Back to standard color
+            });
+          }
+
+          if (hoveredNode) {
+            document.body.style.cursor = 'default';
+          }
+
+          hoveredNode = object;
+          document.body.style.cursor = 'pointer';
+
+          // Update Toolkit Info and Show
+          const data = hoveredNode.userData;
+          cardBluf.textContent = data.bluf;
+
+          gsap.killTweensOf(briefingCard);
+          // Uses xPercent and yPercent to handle CSS translate(-50%, -100%) natively within GSAP
+          gsap.fromTo(briefingCard,
+            { autoAlpha: 0, scale: 0.95, y: 10, xPercent: -50, yPercent: -100 },
+            { autoAlpha: 1, scale: 1, y: 0, duration: 0.3, ease: "power2.out" }
+          );
+
+          // Ripple Effect on Connected Lines
+          if (hoveredNode.userData.connectedLines) {
+            const nodeColor = new THREE.Color(hoveredNode.userData.color);
+            hoveredNode.userData.connectedLines.forEach((line, index) => {
+              gsap.to(line.material, {
+                opacity: 0.8,
+                duration: 0.4,
+                delay: index * 0.05,
+                repeat: 1,
+                yoyo: true,
+                ease: "power2.out"
+              });
+              gsap.to(line.material.color, {
+                r: nodeColor.r, g: nodeColor.g, b: nodeColor.b,
+                duration: 0.4,
+                delay: index * 0.05
+              });
+            });
+          }
+        }
+      } else {
         if (hoveredNode) {
+          // Reset lines
+          if (hoveredNode.userData.connectedLines) {
+            hoveredNode.userData.connectedLines.forEach(line => {
+              gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
+              gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 });
+            });
+          }
+
+          gsap.to(hoveredNode.scale, {
+            x: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+            y: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+            z: hoveredNode.userData.type === 'anchor' ? 1 : 1,
+            duration: 0.5
+          });
+          hoveredNode = null;
           document.body.style.cursor = 'default';
+
+          // Hide Tooltip
+          gsap.killTweensOf(briefingCard);
+          gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, duration: 0.2 });
         }
-
-        hoveredNode = object;
-        document.body.style.cursor = 'pointer';
-
-        // Update Toolkit Info and Show
-        const data = hoveredNode.userData;
-        cardBluf.textContent = data.bluf;
-
-        gsap.killTweensOf(briefingCard);
-        // Uses xPercent and yPercent to handle CSS translate(-50%, -100%) natively within GSAP
-        gsap.fromTo(briefingCard,
-          { autoAlpha: 0, scale: 0.95, y: 10, xPercent: -50, yPercent: -100 },
-          { autoAlpha: 1, scale: 1, y: 0, duration: 0.3, ease: "power2.out" }
-        );
-
-        // Ripple Effect on Connected Lines
-        if (hoveredNode.userData.connectedLines) {
-          const nodeColor = new THREE.Color(hoveredNode.userData.color);
-          hoveredNode.userData.connectedLines.forEach((line, index) => {
-            gsap.to(line.material, {
-              opacity: 0.8,
-              duration: 0.4,
-              delay: index * 0.05,
-              repeat: 1,
-              yoyo: true,
-              ease: "power2.out"
-            });
-            gsap.to(line.material.color, {
-              r: nodeColor.r, g: nodeColor.g, b: nodeColor.b,
-              duration: 0.4,
-              delay: index * 0.05
-            });
-          });
-        }
-      }
-    } else {
-      if (hoveredNode) {
-        // Reset lines
-        if (hoveredNode.userData.connectedLines) {
-          hoveredNode.userData.connectedLines.forEach(line => {
-            gsap.to(line.material, { opacity: 0.35, duration: 0.5 });
-            gsap.to(line.material.color, { r: 203 / 255, g: 213 / 255, b: 225 / 255, duration: 0.5 });
-          });
-        }
-
-        gsap.to(hoveredNode.scale, {
-          x: hoveredNode.userData.type === 'anchor' ? 1 : 1,
-          y: hoveredNode.userData.type === 'anchor' ? 1 : 1,
-          z: hoveredNode.userData.type === 'anchor' ? 1 : 1,
-          duration: 0.5
-        });
-        hoveredNode = null;
-        document.body.style.cursor = 'default';
-
-        // Hide Tooltip
-        gsap.killTweensOf(briefingCard);
-        gsap.to(briefingCard, { autoAlpha: 0, scale: 0.95, y: 5, duration: 0.2, ease: "power2.in" });
       }
     }
 
     if (hoveredNode) {
       const vector = new THREE.Vector3();
       hoveredNode.getWorldPosition(vector);
-      const offset = hoveredNode.userData.type === 'anchor' ? 0.8 : 0.6;
-      vector.y += offset;
+      if (isMobile) {
+        vector.y -= 1.0; // Place pill card slightly below the node on mobile
+      } else {
+        const offset = hoveredNode.userData.type === 'anchor' ? 0.8 : 0.6;
+        vector.y += offset; // Place above the node on desktop
+      }
       vector.project(camera);
 
       const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
@@ -478,8 +571,17 @@ export const initLatentSpace = () => {
       mesh.getWorldPosition(vector);
 
       // Offset directly ABOVE the node in 3D space. 
-      // Lowered slightly since we now transform -100% on Y.
-      vector.y += 1.0;
+      if (isMobile) {
+        if (mesh.userData.type === 'anchor') {
+          vector.x += 1.5; // Offset right
+          vector.y += 0.5;
+        } else {
+          vector.x -= 1.5; // Offset left
+          vector.y -= 0.5;
+        }
+      } else {
+        vector.y += 1.0;
+      }
 
       const dist = camera.position.distanceTo(vector);
       vector.project(camera);
