@@ -212,19 +212,39 @@ export const initLatentSpace = () => {
     meshes.push(mesh);
 
     // Typography Labels
-    if (data.type === 'anchor') {
+    if (data.type === 'anchor' || data.type === 'satellite') {
+      const isAnchor = data.type === 'anchor';
       const div = document.createElement('div');
       div.className = 'node-label';
-      div.textContent = '0' + data.id.replace('m', '');
 
-      // Update typography to a clean, modern sans-serif
-      div.style.color = '#ffffff'; // Pure white, zero transparency
+      if (isAnchor) {
+        const num = '0' + data.id.replace('m', '');
+        div.innerHTML = `<span style="font-weight: 700; opacity: 0.6; margin-right: 0.4rem;">${num}</span><span>${data.title}</span>`;
+      } else {
+        div.innerHTML = `<span>${data.title}</span>`;
+      }
+
+      // Update typography and add heavy glassmorphism container
+      div.style.color = '#ffffff'; // Pure white
       div.style.fontFamily = 'Inter, -apple-system, sans-serif';
-      div.style.fontSize = '2.2rem'; // Larger size
-      div.style.fontWeight = '500'; // Thicker weight
-      div.style.letterSpacing = '0.05em';
-      // Subtle shadow for legibility over lines
-      div.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.9)';
+      div.style.fontSize = isAnchor ? '0.75rem' : '0.60rem'; // Even smaller sizes
+      div.style.fontWeight = isAnchor ? '500' : '600';
+      div.style.letterSpacing = '0.02em';
+      div.style.lineHeight = '1.3';
+      div.style.whiteSpace = 'normal'; // Allow text to wrap
+      div.style.maxWidth = isAnchor ? '135px' : '90px'; // Tighter wrapping
+      div.style.textAlign = 'center';
+
+      // Glass Effect CSS
+      div.style.background = isAnchor ? 'rgba(8, 15, 30, 0.12)' : 'rgba(16, 185, 129, 0.10)'; // Even more transparent
+      div.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+      div.style.borderTop = '1px solid rgba(255, 255, 255, 0.3)';
+      div.style.backdropFilter = isAnchor ? 'blur(10px) saturate(1.2)' : 'blur(6px) saturate(1.1)';
+      div.style.WebkitBackdropFilter = isAnchor ? 'blur(10px) saturate(1.2)' : 'blur(6px) saturate(1.1)';
+      div.style.padding = isAnchor ? '0.25rem 0.75rem' : '0.15rem 0.5rem'; // Restored slight horizontal padding for pill shape
+      div.style.borderRadius = '9999px'; // Restored perfect pill shape
+      div.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)'; // Softer shadow
+
       div.style.opacity = '1';
       div.style.position = 'absolute';
       div.style.pointerEvents = 'none';
@@ -291,8 +311,6 @@ export const initLatentSpace = () => {
 
   // UI Elements
   const briefingCard = document.getElementById('briefing-card');
-  const cardType = document.getElementById('card-type');
-  const cardTitle = document.getElementById('card-title');
   const cardBluf = document.getElementById('card-bluf');
 
   const onMouseMove = (event) => {
@@ -380,9 +398,6 @@ export const initLatentSpace = () => {
 
         // Update Toolkit Info and Show
         const data = hoveredNode.userData;
-        cardType.innerHTML = data.type === 'anchor' ? 'Theoretical Foundation' : 'Intelligence Brief';
-        cardType.style.color = data.type === 'anchor' ? '#ea580c' : '#3b82f6';
-        cardTitle.textContent = data.title;
         cardBluf.textContent = data.bluf;
 
         gsap.killTweensOf(briefingCard);
@@ -462,8 +477,9 @@ export const initLatentSpace = () => {
       const vector = new THREE.Vector3();
       mesh.getWorldPosition(vector);
 
-      // Offset directly ABOVE the node in 3D space
-      vector.y += 1.4;
+      // Offset directly ABOVE the node in 3D space. 
+      // Lowered slightly since we now transform -100% on Y.
+      vector.y += 1.0;
 
       const dist = camera.position.distanceTo(vector);
       vector.project(camera);
@@ -477,12 +493,16 @@ export const initLatentSpace = () => {
       const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
       const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
 
-      // Exaggerated depth scaling
-      const scale = Math.max(0.4, 1 - (dist - 15) / 45); // Larger minimum scale
-      const targetOpacity = Math.max(0.4, 1 - (dist - 15) / 30); // Base opacity 1, doesn't fall below 0.4
+      // FIX: Camera is at z=40. So dist is usually ~40. 
+      // We must scale relative to 40 so they render at full size and opacity.
+      // We clamp the maximum scale to 1.2 so they never blow up massively when zooming in.
+      const baseDist = 40;
+      const rawScale = 1 - (dist - baseDist) / 60; // Slower scaling curve
+      const scale = Math.max(0.6, Math.min(1.2, rawScale));
+      const targetOpacity = Math.max(0.3, 1 - (dist - baseDist) / 40);
 
-      // Centered exactly above
-      element.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      // Grow upwards (-100% on Y) so multiple lines never overlap the node beneath
+      element.style.transform = `translate(-50%, -100%) scale(${scale})`;
       element.style.left = `${x}px`;
       element.style.top = `${y}px`;
       element.style.opacity = targetOpacity.toFixed(2);
