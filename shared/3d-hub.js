@@ -386,14 +386,14 @@ export const initLatentSpace = () => {
 
             gsap.killTweensOf(briefingCard);
             gsap.fromTo(briefingCard,
-              { autoAlpha: 0, scale: 0.95, y: -15, xPercent: -50, yPercent: 0 },
+              { autoAlpha: 0, scale: 0.95, y: -10, xPercent: -50, yPercent: 0 },
               { autoAlpha: 1, scale: 1, y: 0, duration: 0.4, ease: "power2.out" }
             );
 
             // Pan to center the node and its pill
             gsap.to(camera.position, {
               x: clickedNode.position.x,
-              y: clickedNode.position.y,
+              y: clickedNode.position.y - 1.5, // Slightly lower the camera to center BOTH node and pill
               z: 28, // Less intense zoom on mobile so pill fits on screen
               duration: 1.2,
               ease: "power2.out"
@@ -545,7 +545,7 @@ export const initLatentSpace = () => {
       const vector = new THREE.Vector3();
       hoveredNode.getWorldPosition(vector);
       if (isMobile) {
-        vector.y -= 1.0; // Place pill card slightly below the node on mobile
+        vector.y -= 0.7; // Place pill card tightly below the node on mobile
       } else {
         const offset = hoveredNode.userData.type === 'anchor' ? 0.8 : 0.6;
         vector.y += offset; // Place above the node on desktop

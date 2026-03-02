@@ -360,7 +360,7 @@
       pointer-events: none;
       /* Crucial: Let clicks pass through to the node */
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-      z-index: 100;
+      z-index: 10000 !important;
       margin-top: -20px;
     }
 
@@ -391,41 +391,53 @@
       }
 
       #briefing-card {
-        width: 85vw !important;
-        max-width: 320px !important;
+        width: max-content !important;
+        max-width: 95vw !important;
         box-sizing: border-box;
-        border-radius: 1.5rem !important;
-        /* Pill-shaped theme */
-        padding: 1.25rem !important;
+        border-radius: 9999px !important;
+        /* Perfect Pill */
+        padding: 0.5rem 0.5rem 0.5rem 1.25rem !important;
         pointer-events: auto !important;
-        /* Allow clicking the button */
         border: 1px solid rgba(255, 255, 255, 0.25) !important;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
-        background: rgba(15, 23, 42, 0.75) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+        background: rgba(15, 23, 42, 0.85) !important;
         backdrop-filter: blur(20px) saturate(1.5) !important;
         -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        /* Horizontal text and button */
+        align-items: center;
+        justify-content: space-between;
         gap: 1.0rem;
         z-index: 10000 !important;
-        /* Ensure it is in front of 2D node titles */
+        margin-top: 0 !important;
+      }
+
+      .card-bluf {
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+        text-align: left !important;
       }
 
       #mobile-enter-btn {
         display: block !important;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         color: #fff;
-        padding: 0.8rem;
+        padding: 0.5rem 1rem;
         text-align: center;
-        border-radius: 8px;
+        border-radius: 9999px;
+        /* Pill button */
         text-decoration: none;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.85rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
         text-transform: uppercase;
-        width: 100%;
-        box-sizing: border-box;
+        white-space: nowrap;
+        /* Keep on one line */
+        width: auto !important;
+        flex-shrink: 0;
+        /* Prevent the button from getting squished by the text */
       }
     }
 
@@ -686,10 +698,10 @@
 
       if (camera && controls) {
         if (isMobileConfig) {
-          // Mobile specific framing: Pan to the top of the vertical stack
-          scrollTl.to(camera.position, { x: 0, y: 18, z: 45 }, 0);
-          const targetObj = { x: 0, y: 8, z: 0 };
-          scrollTl.to(targetObj, { x: 0, y: 8, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
+          // Mobile specific framing: Pan to the center of the vertical stack
+          scrollTl.to(camera.position, { x: 0, y: 0, z: 42 }, 0);
+          const targetObj = { x: 0, y: 0, z: 0 };
+          scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
         } else {
           // Desktop framing
           scrollTl.to(camera.position, { x: 0, y: 5, z: 42 }, 0); // Pulled back for tighter FOV

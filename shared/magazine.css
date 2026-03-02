@@ -183,3 +183,40 @@ header.magazine-header {
   margin-bottom: 0.5rem;
   font-weight: 700;
 }
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .magazine-container {
+    padding: 1.5rem;
+  }
+
+  .magazine-logo {
+    font-size: 2.5rem;
+  }
+
+  .magazine-tagline {
+    font-size: 0.65rem;
+  }
+
+  .feature-title {
+    font-size: 2.2rem;
+  }
+
+  .feature-excerpt {
+    font-size: 1.1rem;
+  }
+
+  .editorial-grid {
+    gap: 3rem;
+  }
+
+  .projects-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+  }
+
+  .projects-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
