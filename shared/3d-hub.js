@@ -75,9 +75,9 @@ export const initLatentSpace = () => {
     {
       x: -10, // Scaled in from -16
       nodes: [
-        { id: 'm1', type: 'anchor', title: 'The Strategic Convergence', bluf: 'The "End of History" illusion and the Clintonian Wager.', url: 'primer/module-01.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'm1', type: 'anchor', title: 'The Utopian Dawn', bluf: 'The "End of History" illusion and the Clintonian Wager.', url: 'primer/module-01.html', color: 0x0284c7, size: 1.5, isReal: true },
         { id: 'd1', isReal: false },
-        { id: 'm2', type: 'anchor', title: 'Architecture of Sovereignty', bluf: 'China\'s foundational rebuttal to the liberal digital order.', url: 'primer/module-02.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'm2', type: 'anchor', title: 'The Rebuttal', bluf: 'China\'s foundational rebuttal and the architecture of sovereignty.', url: 'primer/module-02.html', color: 0x0284c7, size: 1.5, isReal: true },
         { id: 'd2', isReal: false },
         { id: 'm3', type: 'anchor', title: 'The Rupture', bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust.', url: 'primer/module-03.html', color: 0x0284c7, size: 1.5, isReal: true },
       ]
@@ -87,27 +87,27 @@ export const initLatentSpace = () => {
       nodes: [
         { id: 'd3', isReal: false },
         { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', bluf: 'The balkanization of the web into competing sovereign technology stacks.', url: 'primer/module-04.html', color: 0x0ea5e9, size: 1.5, isReal: true },
-        { id: 'p1', type: 'satellite', title: 'Group 1: Thermal Sovereignty', bluf: 'Analyzing the geopolitical leverage of data center cooling infrastructure.', directUrl: 'projects/group-1/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
-        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', bluf: 'The return of the production function: compute, energy, and hardware chokepoints.', url: 'primer/module-05.html', color: 0x0ea5e9, size: 1.5, isReal: true },
+        { id: 'p1', type: 'satellite', title: 'Group 1', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-1/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'p3', type: 'satellite', title: 'Group 3', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-3/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'satellite', title: 'Group 2: DeepSeek Asymmetry', bluf: 'The strategic impact of algorithmic efficiency targeting heavily constrained computing power.', directUrl: 'projects/group-2/index.html', color: 0xf8fafc, size: 0.8, isReal: true }
+        { id: 'p2', type: 'satellite', title: 'Group 2', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-2/index.html', color: 0xf8fafc, size: 0.8, isReal: true }
       ]
     },
     {
       x: 3.5, // Scaled in from 6
       nodes: [
-        { id: 'p3', type: 'satellite', title: 'Group 3: Subsea Realism', bluf: 'The physical chokepoints of global data transmission.', directUrl: 'projects/group-3/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', bluf: 'The return of the production function: compute, energy, and hardware chokepoints.', url: 'primer/module-05.html', color: 0x0ea5e9, size: 1.5, isReal: true },
         { id: 'd5', isReal: false },
-        { id: 'p4', type: 'satellite', title: 'Group 4: The GPU Gap', bluf: 'Capital concentration and compute hoarding as national security imperatives.', directUrl: 'projects/group-4/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.', url: 'primer/module-06.html', color: 0xea580c, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
-        { id: 'p5', type: 'satellite', title: 'Group 5: Compute Diplomacy', bluf: 'How access to raw compute is reshaping traditional diplomatic alliances.', directUrl: 'projects/group-5/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'p5', type: 'satellite', title: 'Group 5', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-5/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
         { id: 'd7', isReal: false }
       ]
     },
     {
       x: 10, // Scaled in from 17
       nodes: [
-        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.', url: 'primer/module-06.html', color: 0xea580c, size: 1.5, isReal: true },
+        { id: 'p4', type: 'satellite', title: 'Group 4', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-4/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
         { id: 'd8', isReal: false },
         { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', bluf: 'Tracing competing intellectual frames—from realism to techno-accelerationism.', url: 'primer/module-07.html', color: 0xea580c, size: 1.5, isReal: true },
         { id: 'd9', isReal: false },
@@ -216,14 +216,17 @@ export const initLatentSpace = () => {
       const div = document.createElement('div');
       div.className = 'node-label';
       div.textContent = '0' + data.id.replace('m', '');
-      div.style.color = 'rgba(255, 255, 255, 0.9)'; // Crisper white instead of pure blue/orange
+
+      // Update typography to a clean, modern sans-serif
+      div.style.color = '#ffffff'; // Pure white, zero transparency
       div.style.fontFamily = 'Inter, -apple-system, sans-serif';
-      div.style.fontSize = '2.2rem';
-      div.style.fontWeight = '300'; // Thin, elegant weight
-      div.style.opacity = '0.7';
-      div.style.letterSpacing = '-0.04em';
+      div.style.fontSize = '2.2rem'; // Larger size
+      div.style.fontWeight = '500'; // Thicker weight
+      div.style.letterSpacing = '0.05em';
+      // Subtle shadow for legibility over lines
+      div.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.9)';
+      div.style.opacity = '1';
       div.style.position = 'absolute';
-      div.style.transform = 'translate(-50%, -50%)';
       div.style.pointerEvents = 'none';
 
       if (uiLayer) {
@@ -459,6 +462,9 @@ export const initLatentSpace = () => {
       const vector = new THREE.Vector3();
       mesh.getWorldPosition(vector);
 
+      // Offset directly ABOVE the node in 3D space
+      vector.y += 1.4;
+
       const dist = camera.position.distanceTo(vector);
       vector.project(camera);
 
@@ -472,14 +478,16 @@ export const initLatentSpace = () => {
       const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
 
       // Exaggerated depth scaling
-      const scale = Math.max(0.2, 1 - (dist - 15) / 30);
-      const targetOpacity = Math.max(0.1, 0.65 - (dist - 20) / 40);
+      const scale = Math.max(0.4, 1 - (dist - 15) / 45); // Larger minimum scale
+      const targetOpacity = Math.max(0.4, 1 - (dist - 15) / 30); // Base opacity 1, doesn't fall below 0.4
 
-      element.style.transform = `translate(-50%, -150%) scale(${scale})`;
+      // Centered exactly above
+      element.style.transform = `translate(-50%, -50%) scale(${scale})`;
       element.style.left = `${x}px`;
       element.style.top = `${y}px`;
       element.style.opacity = targetOpacity.toFixed(2);
-      element.style.zIndex = Math.round((100 - dist) * 10);
+      // Guarantee they sit on top of everything
+      element.style.zIndex = Math.round((100 - dist) * 10) + 1000;
     });
 
     controls.update();
