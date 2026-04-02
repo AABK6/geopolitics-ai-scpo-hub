@@ -14,6 +14,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
@@ -1203,6 +1204,22 @@
           document.querySelectorAll(`.${cls}`).forEach((el) => el.classList.remove(cls));
         });
       };
+
+      const motionPolicy = window.AIGeoMotionPolicy;
+      const canAnimate = motionPolicy
+        ? motionPolicy.prepareGSAPPage({
+            reveal: {
+              removeTransforms: ['translate-y-6', 'translate-y-8', 'translate-x-8']
+            }
+          })
+        : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+      if (!canAnimate) {
+        if (!motionPolicy) {
+          revealFallback();
+        }
+        return;
+      }
 
       // Wait for GSAP and ScrollTrigger to be available
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {

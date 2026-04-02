@@ -14,6 +14,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
@@ -1488,6 +1489,15 @@
   <!-- GSAP ScrollTrigger Animations -->
   <script>
     (function() {
+      const motionPolicy = window.AIGeoMotionPolicy;
+      const canAnimate = motionPolicy
+        ? motionPolicy.prepareGSAPPage()
+        : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+      if (!canAnimate) {
+        return;
+      }
+
       // Wait for GSAP and ScrollTrigger to be available
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         console.warn('GSAP or ScrollTrigger not loaded');

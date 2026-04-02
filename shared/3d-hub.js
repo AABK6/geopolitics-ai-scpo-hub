@@ -84,43 +84,43 @@ export const initLatentSpace = () => {
     {
       x: -10, // Scaled in from -16
       nodes: [
-        { id: 'm1', type: 'anchor', title: 'The Utopian Dawn', bluf: 'The "End of History" illusion and the Clintonian Wager.', url: 'primer/module-01.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'm1', type: 'anchor', title: 'The Utopian Dawn', shortLabel: '01', bluf: 'The "End of History" illusion and the Clintonian wager that digital openness would dissolve borders.', url: 'primer/module-01.html', color: 0x5e84c6, size: 1.5, isReal: true },
         { id: 'd1', isReal: false },
-        { id: 'm2', type: 'anchor', title: 'The Rebuttal', bluf: 'China\'s foundational rebuttal and the architecture of sovereignty.', url: 'primer/module-02.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'm2', type: 'anchor', title: 'The Rebuttal', shortLabel: '02', bluf: 'China\'s foundational rebuttal and the architecture of sovereignty built against liberal internet universalism.', url: 'primer/module-02.html', color: 0x5e84c6, size: 1.5, isReal: true },
         { id: 'd2', isReal: false },
-        { id: 'm3', type: 'anchor', title: 'The Rupture', bluf: 'The 2013 Snowden revelations and the resulting collapse of global trust.', url: 'primer/module-03.html', color: 0x0284c7, size: 1.5, isReal: true },
+        { id: 'm3', type: 'anchor', title: 'The Rupture', shortLabel: '03', bluf: 'The 2013 Snowden revelations and the collapse of trust that turned infrastructure into a sovereignty problem.', url: 'primer/module-03.html', color: 0x5e84c6, size: 1.5, isReal: true },
       ]
     },
     {
       x: -3.5, // Scaled in from -5
       nodes: [
         { id: 'd3', isReal: false },
-        { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', bluf: 'The balkanization of the web into competing sovereign technology stacks.', url: 'primer/module-04.html', color: 0x0ea5e9, size: 1.5, isReal: true },
-        { id: 'p1', type: 'satellite', title: 'Group 1', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-1/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
-        { id: 'p3', type: 'satellite', title: 'Group 3', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-3/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'm4', type: 'anchor', title: 'The Splinternet Accelerates', shortLabel: '04', bluf: 'The balkanization of the web into competing sovereign stacks and the end of seamless digital globalization.', url: 'primer/module-04.html', color: 0x5e84c6, size: 1.5, isReal: true },
+        { id: 'p1', type: 'research', title: 'Group 1', shortLabel: 'G1', bluf: 'Topic forthcoming. Student investigation in progress.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p3', type: 'research', title: 'Group 3', shortLabel: 'G3', bluf: 'Topic forthcoming. Student investigation in progress.', directUrl: 'projects/group-3/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'satellite', title: 'Group 2', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-2/index.html', color: 0xf8fafc, size: 0.8, isReal: true }
+        { id: 'p2', type: 'research', title: 'Group 2', shortLabel: 'G2', bluf: 'Topic forthcoming. Student investigation in progress.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
       x: 3.5, // Scaled in from 6
       nodes: [
-        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', bluf: 'The return of the production function: compute, energy, and hardware chokepoints.', url: 'primer/module-05.html', color: 0x0ea5e9, size: 1.5, isReal: true },
+        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', shortLabel: '05', bluf: 'The return of the production function: compute, energy, hardware, and supply-chain chokepoints.', url: 'primer/module-05.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd5', isReal: false },
-        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy.', url: 'primer/module-06.html', color: 0xea580c, size: 1.5, isReal: true },
+        { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
-        { id: 'p5', type: 'satellite', title: 'Group 5', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-5/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'p5', type: 'research', title: 'Group 5', shortLabel: 'G5', bluf: 'Topic forthcoming. Student investigation in progress.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd7', isReal: false }
       ]
     },
     {
       x: 10, // Scaled in from 17
       nodes: [
-        { id: 'p4', type: 'satellite', title: 'Group 4', bluf: 'Research topic pending. Student sandbox environment.', directUrl: 'projects/group-4/index.html', color: 0xf8fafc, size: 0.8, isReal: true },
+        { id: 'p4', type: 'research', title: 'Group 4', shortLabel: 'G4', bluf: 'Topic forthcoming. Student investigation in progress.', directUrl: 'projects/group-4/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd8', isReal: false },
-        { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', bluf: 'Tracing competing intellectual frames—from realism to techno-accelerationism.', url: 'primer/module-07.html', color: 0xea580c, size: 1.5, isReal: true },
+        { id: 'm7', type: 'anchor', title: 'New Ideological Map of AI', shortLabel: '07', bluf: 'Tracing competing intellectual frames, from realism to techno-accelerationism, that now shape policy imagination.', url: 'primer/module-07.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd9', isReal: false },
-        { id: 'm8', type: 'anchor', title: 'The Collision of Frames', bluf: 'The core tradeoffs that will dictate the future global order.', url: 'primer/module-08.html', color: 0xea580c, size: 1.5, isReal: true }
+        { id: 'm8', type: 'anchor', title: 'The Collision of Frames', shortLabel: '08', bluf: 'The core tradeoffs that will dictate the future global order: openness, enclosure, legitimacy, and power.', url: 'primer/module-08.html', color: 0xc56e42, size: 1.5, isReal: true }
       ]
     }
   ];
@@ -140,8 +140,8 @@ export const initLatentSpace = () => {
 
       // Horizontal mode: Layers shift left/right (-10 to 10), nodes stack vertically
       // Mobile mode: Layers shift top/down (+9 to -9), nodes stack horizontally
-      const px = isMobile ? internalSpread * 0.7 : layer.x;
-      const py = isMobile ? -layer.x * 0.9 : internalSpread;
+      const px = isMobile ? internalSpread * 0.82 : layer.x;
+      const py = isMobile ? -layer.x * 0.8 : internalSpread;
 
       const nodeObj = {
         ...nData,
@@ -170,7 +170,7 @@ export const initLatentSpace = () => {
 
   // Replace chaotic shaders with premium architectural materials
   nodesData.forEach(data => {
-    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : (data.type === 'satellite' ? data.size * 0.45 : data.size * 0.55); // Increased dummy node factor to 0.55
+    const nodeSize = data.type === 'anchor' ? data.size * 0.55 : (data.type === 'research' ? data.size * 0.58 : data.size * 0.55);
     const geometry = new THREE.SphereGeometry(nodeSize, 32, 32);
     let material;
 
@@ -187,34 +187,32 @@ export const initLatentSpace = () => {
       });
     } else if (data.type === 'anchor') {
       if (data.id.match(/m[1-4]/)) {
-        // Architecture & Security nodes -> Polished Cobalt/Cyan
         material = new THREE.MeshPhysicalMaterial({
-          color: 0x0284c7, // Deep Cyan base
-          metalness: 0.6,
-          roughness: 0.1,
-          clearcoat: 1.0,
-          emissive: 0x0369a1,
-          emissiveIntensity: 0.4
+          color: 0x5e84c6,
+          metalness: 0.48,
+          roughness: 0.16,
+          clearcoat: 0.9,
+          emissive: 0x1d3b68,
+          emissiveIntensity: 0.2
         });
       } else {
-        // Industry & Theory nodes -> Polished Terracotta / Copper
         material = new THREE.MeshPhysicalMaterial({
-          color: 0xea580c,
-          metalness: 0.6,
-          roughness: 0.1,
-          clearcoat: 1.0,
-          emissive: 0x9a3412,
-          emissiveIntensity: 0.3
+          color: 0xc56e42,
+          metalness: 0.5,
+          roughness: 0.14,
+          clearcoat: 0.9,
+          emissive: 0x6a331a,
+          emissiveIntensity: 0.18
         });
       }
     } else {
-      // Satellites -> Premium Emerald Green finish
-      material = new THREE.MeshStandardMaterial({
-        color: 0x10b981,
-        metalness: 0.4,
-        roughness: 0.3,
-        emissive: 0x059669,
-        emissiveIntensity: 0.3
+      material = new THREE.MeshPhysicalMaterial({
+        color: 0x7fa26d,
+        metalness: 0.28,
+        roughness: 0.34,
+        clearcoat: 0.7,
+        emissive: 0x243820,
+        emissiveIntensity: 0.16
       });
     }
 
@@ -226,38 +224,38 @@ export const initLatentSpace = () => {
     meshes.push(mesh);
 
     // Typography Labels
-    if (data.type === 'anchor' || data.type === 'satellite') {
+    if (data.type === 'anchor' || data.type === 'research') {
       const isAnchor = data.type === 'anchor';
       const div = document.createElement('div');
       div.className = 'node-label';
 
       if (isAnchor) {
-        const num = '0' + data.id.replace('m', '');
-        div.innerHTML = `<span style="font-weight: 700; opacity: 0.6; margin-right: 0.4rem;">${num}</span><span>${data.title}</span>`;
+        div.innerHTML = isMobile
+          ? `<span>${data.shortLabel}</span>`
+          : `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.title}</span>`;
       } else {
-        div.innerHTML = `<span>${data.title}</span>`;
+        div.innerHTML = isMobile
+          ? `<span>${data.shortLabel}</span>`
+          : `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.title}</span>`;
       }
 
-      // Update typography and add heavy glassmorphism container
-      div.style.color = '#ffffff'; // Pure white
+      div.style.color = '#f6efe5';
       div.style.fontFamily = 'Inter, -apple-system, sans-serif';
-      div.style.fontSize = isAnchor ? '0.75rem' : '0.60rem'; // Even smaller sizes
-      div.style.fontWeight = isAnchor ? '500' : '600';
-      div.style.letterSpacing = '0.02em';
-      div.style.lineHeight = '1.3';
-      div.style.whiteSpace = 'normal'; // Allow text to wrap
-      div.style.maxWidth = isAnchor ? (isMobile ? '100px' : '135px') : '90px'; // Tighter wrapping
+      div.style.fontSize = isMobile ? '0.62rem' : (isAnchor ? '0.74rem' : '0.68rem');
+      div.style.fontWeight = '600';
+      div.style.letterSpacing = isMobile ? '0.12em' : '0.03em';
+      div.style.lineHeight = '1.18';
+      div.style.whiteSpace = isMobile ? 'nowrap' : 'normal';
+      div.style.maxWidth = isMobile ? 'none' : (isAnchor ? '144px' : '124px');
       div.style.textAlign = 'center';
 
-      // Glass Effect CSS
-      div.style.background = isAnchor ? 'rgba(8, 15, 30, 0.12)' : 'rgba(16, 185, 129, 0.10)'; // Even more transparent
-      div.style.border = '1px solid rgba(255, 255, 255, 0.15)';
-      div.style.borderTop = '1px solid rgba(255, 255, 255, 0.3)';
-      div.style.backdropFilter = isAnchor ? 'blur(10px) saturate(1.2)' : 'blur(6px) saturate(1.1)';
-      div.style.WebkitBackdropFilter = isAnchor ? 'blur(10px) saturate(1.2)' : 'blur(6px) saturate(1.1)';
-      div.style.padding = isAnchor ? '0.25rem 0.75rem' : '0.15rem 0.5rem'; // Restored slight horizontal padding for pill shape
-      div.style.borderRadius = '9999px'; // Restored perfect pill shape
-      div.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)'; // Softer shadow
+      div.style.background = isAnchor ? 'rgba(19, 15, 12, 0.62)' : 'rgba(39, 53, 33, 0.82)';
+      div.style.border = isAnchor ? '1px solid rgba(243, 236, 224, 0.16)' : '1px solid rgba(188, 214, 178, 0.22)';
+      div.style.backdropFilter = 'blur(6px)';
+      div.style.WebkitBackdropFilter = 'blur(6px)';
+      div.style.padding = isMobile ? '0.22rem 0.48rem' : (isAnchor ? '0.28rem 0.78rem' : '0.24rem 0.68rem');
+      div.style.borderRadius = '9999px';
+      div.style.boxShadow = '0 10px 22px rgba(0, 0, 0, 0.22)';
 
       div.style.opacity = '1';
       div.style.position = 'absolute';
@@ -326,6 +324,29 @@ export const initLatentSpace = () => {
   // UI Elements
   const briefingCard = document.getElementById('briefing-card');
   const cardBluf = document.getElementById('card-bluf');
+  const cardTitle = document.getElementById('card-title');
+  const cardType = document.getElementById('card-type');
+  const cardStatus = document.getElementById('card-status');
+  const mobileEnterBtn = document.getElementById('mobile-enter-btn');
+
+  const describeNode = (data) => ({
+    typeLabel: data.type === 'research' ? 'Research node' : 'Module',
+    shortCode: data.shortLabel || '',
+    actionLabel: data.type === 'research' ? 'Open Research' : 'Open Module'
+  });
+
+  const updateBriefingCard = (data) => {
+    if (!data) return;
+    const meta = describeNode(data);
+    if (cardTitle) cardTitle.textContent = data.title;
+    if (cardType) cardType.textContent = meta.typeLabel;
+    if (cardStatus) cardStatus.textContent = meta.shortCode;
+    if (cardBluf) cardBluf.textContent = data.bluf;
+    if (mobileEnterBtn) {
+      mobileEnterBtn.textContent = meta.actionLabel;
+      mobileEnterBtn.href = data.type === 'anchor' ? data.url : data.directUrl;
+    }
+  };
 
   const onMouseMove = (event) => {
     if (event.isPrimary === false) return; // Ignore multi-touch
@@ -375,14 +396,9 @@ export const initLatentSpace = () => {
           if (activeMobileNode !== clickedNode) {
             activeMobileNode = clickedNode;
 
-            const enterBtn = document.getElementById('mobile-enter-btn');
-            if (enterBtn) {
-              enterBtn.href = data.type === 'anchor' ? data.url : data.directUrl;
-            }
-
             // Show floating card directly below node using GSAP
             hoveredNode = clickedNode;
-            cardBluf.textContent = data.bluf;
+            updateBriefingCard(data);
 
             gsap.killTweensOf(briefingCard);
             gsap.fromTo(briefingCard,
@@ -486,7 +502,7 @@ export const initLatentSpace = () => {
 
           // Update Toolkit Info and Show
           const data = hoveredNode.userData;
-          cardBluf.textContent = data.bluf;
+          updateBriefingCard(data);
 
           gsap.killTweensOf(briefingCard);
           // Uses xPercent and yPercent to handle CSS translate(-50%, -100%) natively within GSAP
@@ -545,10 +561,10 @@ export const initLatentSpace = () => {
       const vector = new THREE.Vector3();
       hoveredNode.getWorldPosition(vector);
       if (isMobile) {
-        vector.y -= 0.7; // Place pill card tightly below the node on mobile
+        vector.y -= 0.72;
       } else {
-        const offset = hoveredNode.userData.type === 'anchor' ? 0.8 : 0.6;
-        vector.y += offset; // Place above the node on desktop
+        const offset = hoveredNode.userData.type === 'anchor' ? 0.86 : 0.72;
+        vector.y += offset;
       }
       vector.project(camera);
 
@@ -570,17 +586,10 @@ export const initLatentSpace = () => {
       const vector = new THREE.Vector3();
       mesh.getWorldPosition(vector);
 
-      // Offset directly ABOVE the node in 3D space. 
       if (isMobile) {
-        if (mesh.userData.type === 'anchor') {
-          vector.x += 1.5; // Offset right
-          vector.y += 0.5;
-        } else {
-          vector.x -= 1.5; // Offset left
-          vector.y -= 0.5;
-        }
+        vector.y += mesh.userData.type === 'anchor' ? 0.9 : 0.6;
       } else {
-        vector.y += 1.0;
+        vector.y += mesh.userData.type === 'anchor' ? 1.05 : 0.82;
       }
 
       const dist = camera.position.distanceTo(vector);
@@ -595,13 +604,10 @@ export const initLatentSpace = () => {
       const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
       const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
 
-      // FIX: Camera is at z=40. So dist is usually ~40. 
-      // We must scale relative to 40 so they render at full size and opacity.
-      // We clamp the maximum scale to 1.2 so they never blow up massively when zooming in.
-      const baseDist = 40;
-      const rawScale = 1 - (dist - baseDist) / 60; // Slower scaling curve
-      const scale = Math.max(0.6, Math.min(1.2, rawScale));
-      const targetOpacity = Math.max(0.3, 1 - (dist - baseDist) / 40);
+      const baseDist = isMobile ? 45 : 40;
+      const rawScale = 1 - (dist - baseDist) / 65;
+      const scale = Math.max(isMobile ? 0.72 : 0.6, Math.min(isMobile ? 1.0 : 1.16, rawScale));
+      const targetOpacity = Math.max(isMobile ? 0.68 : 0.34, 1 - (dist - baseDist) / 42);
 
       // Grow upwards (-100% on Y) so multiple lines never overlap the node beneath
       element.style.transform = `translate(-50%, -100%) scale(${scale})`;
