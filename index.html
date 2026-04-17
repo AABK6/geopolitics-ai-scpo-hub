@@ -40,30 +40,23 @@
     <a href="magazine.html" class="escape-hatch">Open Editorial Overview</a>
   </div>
 
-  <section id="hero-section">
-    <div class="hero-grid">
-      <div class="hero-content">
+  <section id="hero-section" style="text-align: center;">
+    <div class="hero-content" style="display: flex; flex-direction: column; align-items: center; margin: 0 auto;">
         <div class="hero-badge" id="hero-badge">
           <i data-lucide="landmark" style="width: 14px; height: 14px;"></i>
           <span>Sciences Po Paris — Spring 2026</span>
         </div>
 
-        <p class="hero-kicker" id="hero-kicker">Networked Syllabus</p>
+        <h1 class="hero-title" id="hero-title">
+          <span class="hero-title-line" id="title-line-1">The Geopolitics of</span><br>
+          <span class="hero-title-line hero-title-accent" id="title-line-2">Artificial Intelligence</span>
+        </h1>
 
-        <h1 class="hero-title" id="hero-title">The Geopolitics of AI</h1>
-
-        <p class="hero-subtitle" id="hero-subtitle">AI did not erase borders. It reorganized power, sovereignty, and world order.</p>
+        <p class="hero-subtitle" id="hero-subtitle">Sovereignty, Power, and the Future of World Order</p>
 
         <p class="hero-statement" id="hero-statement">
-          This course follows that transformation across <strong>eight core modules</strong> and
-          <strong>five cohort research nodes</strong>, treating student projects not as side content, but as live outputs of the
-          same intellectual system.
+          From the <strong>cyber-utopianism</strong> of the 1990s to the era of <strong>techno-nationalism</strong>— follow the dramatic transformation of how nations compete, cooperate, and conflict in the digital age.
         </p>
-
-        <div class="hero-actions" id="hero-actions">
-          <button type="button" class="hero-action primary" id="enter-network-btn">Enter Networked Syllabus</button>
-          <a href="magazine.html" class="hero-action secondary">Open Editorial Overview</a>
-        </div>
 
         <div class="core-question-box" id="core-question">
           <div class="core-question-label">
@@ -71,7 +64,7 @@
             <span>The Central Question</span>
           </div>
           <p class="core-question-text">
-            How did the internet move from borderless "liberation technology" to contested infrastructure at the center of state sovereignty?
+            How did the internet transform from a borderless "Liberation Technology" into the primary battlefield of 21st-century state sovereignty?
           </p>
         </div>
 
@@ -86,45 +79,6 @@
           </div>
         </div>
       </div>
-
-      <aside class="hero-register" id="hero-register">
-        <p class="register-eyebrow">Seminar Arc</p>
-        <h2 class="register-title">From open networks to contested infrastructure.</h2>
-        <p class="register-copy">
-          The seminar follows one argument: the internet did not dissolve power. It became one of its main terrains.
-        </p>
-
-        <div class="register-rows">
-          <div class="register-row">
-            <span class="legend-dot core"></span>
-            <div>
-              <span class="register-label">Opening Wager</span>
-              <strong>The first modules begin with the promise of borderless openness.</strong>
-            </div>
-          </div>
-
-          <div class="register-row">
-            <span class="legend-dot tension"></span>
-            <div>
-              <span class="register-label">Strategic Turn</span>
-              <strong>Later modules follow sovereignty, industry, infrastructure, and rivalry.</strong>
-            </div>
-          </div>
-
-          <div class="register-row">
-            <span class="legend-dot research"></span>
-            <div>
-              <span class="register-label">Cohort Inquiry</span>
-              <strong>Research nodes publish where the seminar remains open.</strong>
-            </div>
-          </div>
-        </div>
-
-        <p class="network-note">
-          Early research nodes stay visibly in progress until student work is published.
-        </p>
-      </aside>
-    </div>
 
     <div class="scroll-indicator">
       <div class="scroll-indicator-line"></div>
@@ -143,29 +97,6 @@
       <a href="magazine.html" class="escape-hatch">Editorial Overview</a>
     </div>
 
-    <div class="map-legend" id="map-legend">
-      <div class="map-legend-kicker">Read A Node</div>
-      <div class="map-legend-title">Hover or tap to open a briefing.</div>
-
-      <div class="map-legend-grid">
-        <div class="map-legend-item">
-          <span class="legend-dot core"></span>
-          <div>
-            <strong>Core modules</strong>
-            <p>Course readings</p>
-          </div>
-        </div>
-
-        <div class="map-legend-item">
-          <span class="legend-dot research"></span>
-          <div>
-            <strong>Research nodes</strong>
-            <p>Student investigations</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div id="briefing-card">
       <div class="card-type-row">
         <div class="card-type" id="card-type">Core Module</div>
@@ -177,141 +108,7 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initLatentSpace } from './shared/3d-hub.js';
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const revealHeroNow = () => {
-        const revealTargets = [
-          '#hero-badge',
-          '#hero-kicker',
-          '#hero-title',
-          '#hero-subtitle',
-          '#hero-statement',
-          '#hero-actions',
-          '#core-question',
-          '#hero-instructors',
-          '#hero-register'
-        ];
-        revealTargets.forEach((selector) => {
-          const element = document.querySelector(selector);
-          if (!element) return;
-          element.style.opacity = '1';
-          element.style.transform = 'none';
-        });
-      };
-
-      const hideLoadingOverlayNow = () => {
-        const loadingOverlay = document.getElementById('loading-overlay');
-        if (!loadingOverlay) return;
-        loadingOverlay.style.opacity = '0';
-        loadingOverlay.style.display = 'none';
-      };
-
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
-
-      const jumpToNetwork = (behavior = 'smooth') => {
-        window.scrollTo({ top: window.innerHeight * 0.95, behavior });
-      };
-
-      const enterNetworkBtn = document.getElementById('enter-network-btn');
-      if (enterNetworkBtn) {
-        enterNetworkBtn.addEventListener('click', () => {
-          jumpToNetwork('smooth');
-        });
-      }
-
-      let latentSpace = null;
-      try {
-        latentSpace = initLatentSpace();
-      } catch (error) {
-        console.error('Latent space initialization failed:', error);
-        hideLoadingOverlayNow();
-      }
-      const { camera, controls, renderer } = latentSpace || {};
-
-      if (latentSpace) {
-        camera.position.set(-30, 8, 25);
-        controls.target.set(-12, 4, 0);
-        controls.enabled = false;
-        controls.autoRotate = false;
-      }
-
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        revealHeroNow();
-        return;
-      }
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Entrance
-      const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      introTl.fromTo('#hero-badge', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.5 })
-        .fromTo('#hero-kicker', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-        .fromTo('#hero-title', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1 }, '-=0.35')
-        .fromTo('#hero-subtitle', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.55')
-        .fromTo('#hero-statement', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
-        .fromTo('#hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.45')
-        .fromTo('#core-question', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8 }, '-=0.4')
-        .fromTo('#hero-instructors', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-        .fromTo('#hero-register', { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.8 }, '-=1.25');
-
-      // Scroll
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "body",
-          start: "top top",
-          end: "55% top",
-          scrub: 1.2, // Faster scrub to prevent lag feeling
-          snap: {
-            snapTo: [0, 1], // Magnetic snapping: forces either full hero (0) or full 3D Hub (1)
-            duration: 0.5,
-            ease: "power2.inOut"
-          },
-          onLeave: () => { if (controls) { controls.enabled = true; controls.autoRotate = true; } },
-          onEnterBack: () => { if (controls) { controls.enabled = false; controls.autoRotate = false; } },
-          onUpdate: (self) => {
-            // Instantly disable the invisible hero shield so the 3D map is clickable
-            const hero = document.getElementById('hero-section');
-            if (hero) hero.style.pointerEvents = self.progress > 0.18 ? 'none' : 'auto';
-          }
-        }
-      });
-
-      scrollTl.to("#hero-section", { opacity: 0, y: -90 }, 0);
-      /* Brighten the background and slowly pan down to the data center racks */
-      scrollTl.to("#hero-bg-image", {
-        filter: "brightness(0.94) blur(0.8px) saturate(0.96)",
-        backgroundPosition: "50% 72%" // Slows down scroll mapping by travelling less distance
-      }, 0);
-      scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1.08) contrast(1.08)", opacity: 1, pointerEvents: "auto" }, 0);
-
-      const isMobileConfig = window.innerWidth <= 768;
-
-      if (camera && controls) {
-        if (isMobileConfig) {
-          // Mobile specific framing: Pan to the center of the vertical stack
-          scrollTl.to(camera.position, { x: 0, y: 0, z: 42 }, 0);
-          const targetObj = { x: 0, y: 0, z: 0 };
-          scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
-        } else {
-          // Desktop framing
-          scrollTl.to(camera.position, { x: 0, y: 5, z: 42 }, 0); // Pulled back for tighter FOV
-          const targetObj = { x: -12, y: 4, z: 0 };
-          scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
-        }
-      }
-
-      scrollTl.to("#ui-layer", { opacity: 1 }, 0.56);
-
-      if (window.location.hash === '#network') {
-        requestAnimationFrame(() => jumpToNetwork('auto'));
-      }
-
-    });
-  </script>
+  <script type="module" src="shared/hub-interactions.js"></script>
 </body>
 
 </html>
