@@ -91,10 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
   scrollTl.to("#hero-section", { opacity: 0, y: -90 }, 0);
   /* Brighten the background and slowly pan down to the data center racks */
   scrollTl.to("#hero-bg-image", {
-    filter: "brightness(0.94) blur(0.8px) saturate(0.96)",
+    filter: "brightness(1.3) blur(0.8px) saturate(0.96)",
     backgroundPosition: "50% 72%" // Slows down scroll mapping by travelling less distance
   }, 0);
-  scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1.08) contrast(1.08)", opacity: 1, pointerEvents: "auto" }, 0);
+  scrollTl.to("#canvas-container", { filter: "blur(0px) brightness(1.25) contrast(1.08)", opacity: 1, pointerEvents: "auto" }, 0);
 
   const isMobileConfig = window.innerWidth <= 768;
 

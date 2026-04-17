@@ -38,7 +38,7 @@ export const initLatentSpace = () => {
   // Scene setup
   const scene = new THREE.Scene();
   // Removed fog to allow crisp visibility of HTML background image (chapel data center)
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Lowered ambient for contrast
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.25); // Lowered ambient for contrast
   scene.add(ambientLight);
 
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1c2e45, 0.5);
