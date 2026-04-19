@@ -4,3 +4,7 @@ output/
 *.bak
 *.swp
 *.swo
+.edge-profile/
+_main_index_*.html
+patch.py
+patch2.py
