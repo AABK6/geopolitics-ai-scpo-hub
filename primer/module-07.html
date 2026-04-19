@@ -19,16 +19,30 @@
   
   <style>
     :root {
-      --ink-strong: #131722;
-      --ink: #171c28;
-      --ink-soft: rgba(23, 28, 40, 0.82);
-      --line: rgba(210, 218, 230, 0.14);
-      --line-strong: rgba(210, 218, 230, 0.22);
-      --text-main: #edf1f7;
-      --text-soft: #9ca6b7;
-      --text-faint: #727d8e;
-      --paper-accent: #d8d1c4;
-      --active-frame-rgb: 216, 209, 196;
+      --ink-strong: #fbf7f1;
+      --ink: #f4ede3;
+      --ink-soft: rgba(255, 252, 246, 0.86);
+      --line: rgba(89, 74, 57, 0.12);
+      --line-strong: rgba(89, 74, 57, 0.24);
+      --text-main: #28231d;
+      --text-soft: #5d554a;
+      --text-faint: #8a7f70;
+      --paper-accent: #53463a;
+      --frame-accent: var(--active-frame-rgb);
+      --frame-ink: var(--paper-accent);
+      --active-frame-rgb: 122, 96, 70;
+      --frame-realist-rgb: 155, 62, 47;
+      --frame-restorationist-rgb: 140, 99, 17;
+      --frame-eacc-rgb: 48, 114, 74;
+      --frame-corporate-rgb: 54, 96, 150;
+      --frame-safety-rgb: 116, 78, 151;
+      --frame-dislocation-rgb: 34, 112, 123;
+      --frame-realist-ink: #9b3e30;
+      --frame-restorationist-ink: #8c6211;
+      --frame-eacc-ink: #30724a;
+      --frame-corporate-ink: #366097;
+      --frame-safety-ink: #744e97;
+      --frame-dislocation-ink: #22707b;
       --font-display: 'Gelasio', Georgia, 'Times New Roman', serif;
       --font-body: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif;
       --font-mono: 'JetBrains Mono', Consolas, monospace;
@@ -53,8 +67,8 @@
 
     body {
       background:
-        radial-gradient(circle at top, rgba(166, 151, 124, 0.08), transparent 34%),
-        linear-gradient(180deg, #121722 0%, #151922 44%, #181c24 100%);
+        radial-gradient(circle at top, rgba(176, 132, 82, 0.04), transparent 38%),
+        linear-gradient(180deg, #fcfaf6 0%, #faf7f1 52%, #f6f1e8 100%);
       color: var(--text-main);
       font-family: var(--font-body);
       font-size: var(--type-body);
@@ -71,19 +85,19 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(19, 23, 34, 0.94);
+      background: rgba(252, 249, 244, 0.97);
       border-bottom: 1px solid var(--line);
       padding: 1rem 2rem;
       display: grid;
       grid-template-columns: auto minmax(15rem, 1fr) auto;
       gap: 1rem;
       align-items: center;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(5px);
     }
 
     .module-nav a {
       order: 1;
-      color: #b2bbca;
+      color: #6f665b;
       text-transform: uppercase;
       font-size: var(--type-label);
       letter-spacing: 0.12em;
@@ -121,7 +135,7 @@
       font-size: 0.66rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-faint);
+      color: var(--text-soft);
       white-space: nowrap;
     }
 
@@ -146,17 +160,17 @@
     .reading-status-step {
       height: 3px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(95, 79, 60, 0.12);
       transform-origin: center;
       transition: background-color 0.28s ease, transform 0.28s ease, opacity 0.28s ease;
     }
 
     .reading-status-step.is-complete {
-      background: rgba(var(--active-frame-rgb), 0.36);
+      background: rgba(var(--active-frame-rgb), 0.5);
     }
 
     .reading-status-step.is-active {
-      background: rgba(var(--active-frame-rgb), 0.92);
+      background: rgba(var(--active-frame-rgb), 0.94);
       transform: scaleY(1.5);
     }
 
@@ -191,8 +205,77 @@
       }
     }
 
-    #week2-part3 > .absolute.inset-0.opacity-10 { opacity: 0.035; }
+    #week2-part3 {
+      background:
+        linear-gradient(90deg, rgba(109, 92, 73, 0.012) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 254, 251, 0.98), rgba(249, 244, 236, 0.99)),
+        #faf7f1 !important;
+      background-size: 96px 96px, auto, auto;
+      color: var(--text-main);
+    }
+
+    #week2-part3 > .absolute.inset-0.opacity-10 { opacity: 0.004; }
     #week2-part3 .ideology-nodes { display: none; }
+
+    #week2-part3 .text-white,
+    #week2-part3 .group:hover .group-hover\:text-white {
+      color: var(--text-main) !important;
+    }
+
+    #week2-part3 .text-slate-200 { color: #342d26 !important; }
+    #week2-part3 .text-slate-300 { color: #433a31 !important; }
+    #week2-part3 .text-slate-400 { color: #5a5044 !important; }
+    #week2-part3 .text-slate-500 { color: #6f6456 !important; }
+    #week2-part3 .text-slate-600 { color: #857867 !important; }
+
+    #week2-part3 [class*="bg-slate-950"],
+    #week2-part3 [class*="bg-slate-900"],
+    #week2-part3 [class*="bg-slate-800"] {
+      background-color: rgba(255, 253, 249, 0.92) !important;
+    }
+
+    #week2-part3 [class*="bg-slate-700"] {
+      background-color: rgba(118, 101, 79, 0.08) !important;
+    }
+
+    #week2-part3 [class*="bg-gradient"] {
+      background-image: none !important;
+    }
+
+    #week2-part3 [class*="border-slate-"] {
+      border-color: var(--line) !important;
+    }
+
+    #week2-part3 .text-red-400,
+    #week2-part3 .text-red-300 { color: #9b3e30 !important; }
+    #week2-part3 [class*="bg-red-"] { background-color: rgba(155, 62, 47, 0.15) !important; }
+    #week2-part3 [class*="border-red-"] { border-color: rgba(155, 62, 47, 0.4) !important; }
+
+    #week2-part3 .text-amber-400,
+    #week2-part3 .text-amber-300,
+    #week2-part3 .text-amber-200 { color: #8c6211 !important; }
+    #week2-part3 [class*="bg-amber-"] { background-color: rgba(140, 99, 17, 0.15) !important; }
+    #week2-part3 [class*="border-amber-"] { border-color: rgba(140, 99, 17, 0.4) !important; }
+
+    #week2-part3 .text-emerald-400,
+    #week2-part3 .text-emerald-300 { color: #30724a !important; }
+    #week2-part3 [class*="bg-emerald-"] { background-color: rgba(48, 114, 74, 0.15) !important; }
+    #week2-part3 [class*="border-emerald-"] { border-color: rgba(48, 114, 74, 0.4) !important; }
+
+    #week2-part3 .text-blue-400,
+    #week2-part3 .text-blue-300 { color: #366097 !important; }
+    #week2-part3 [class*="bg-blue-"] { background-color: rgba(54, 96, 150, 0.15) !important; }
+    #week2-part3 [class*="border-blue-"] { border-color: rgba(54, 96, 150, 0.4) !important; }
+
+    #week2-part3 .text-purple-400,
+    #week2-part3 .text-purple-300 { color: #744e97 !important; }
+    #week2-part3 [class*="bg-purple-"] { background-color: rgba(116, 78, 151, 0.15) !important; }
+    #week2-part3 [class*="border-purple-"] { border-color: rgba(116, 78, 151, 0.4) !important; }
+
+    #week2-part3 .text-cyan-400,
+    #week2-part3 .text-cyan-300 { color: #22707b !important; }
+    #week2-part3 [class*="bg-cyan-"] { background-color: rgba(34, 112, 123, 0.15) !important; }
+    #week2-part3 [class*="border-cyan-"] { border-color: rgba(34, 112, 123, 0.4) !important; }
 
     .section-header,
     .intro-section,
@@ -222,14 +305,12 @@
       font-weight: 700 !important;
     }
 
-    .title-text .text-transparent {
-      background: none !important;
-      color: var(--paper-accent) !important;
-      -webkit-text-fill-color: var(--paper-accent) !important;
+    .title-highlight {
+      color: var(--paper-accent);
     }
 
     .subtitle-text {
-      color: var(--text-soft) !important;
+      color: #463c32 !important;
       max-width: 42ch;
       font-size: clamp(1.08rem, 1.4vw, 1.32rem) !important;
       line-height: 1.55;
@@ -239,7 +320,7 @@
       max-width: 66ch;
       font-size: var(--type-lead) !important;
       line-height: 1.72 !important;
-      color: #d5dbe6 !important;
+      color: #3f362d !important;
     }
 
     .question-card h3 {
@@ -258,25 +339,55 @@
       width: 4.5rem !important;
       height: 1px !important;
       border-radius: 0 !important;
-      background: rgba(216, 209, 196, 0.45) !important;
+      background: rgba(95, 78, 63, 0.28) !important;
     }
 
     .week-badge {
-      background: rgba(255, 255, 255, 0.03) !important;
-      border-color: var(--line) !important;
+      background: rgba(255, 253, 249, 0.78) !important;
+      border-color: rgba(95, 78, 63, 0.16) !important;
+    }
+
+    [data-frame="realist"] {
+      --frame-accent: var(--frame-realist-rgb);
+      --frame-ink: var(--frame-realist-ink);
+    }
+
+    [data-frame="restorationist"] {
+      --frame-accent: var(--frame-restorationist-rgb);
+      --frame-ink: var(--frame-restorationist-ink);
+    }
+
+    [data-frame="eacc"] {
+      --frame-accent: var(--frame-eacc-rgb);
+      --frame-ink: var(--frame-eacc-ink);
+    }
+
+    [data-frame="corporate"] {
+      --frame-accent: var(--frame-corporate-rgb);
+      --frame-ink: var(--frame-corporate-ink);
+    }
+
+    [data-frame="safety"] {
+      --frame-accent: var(--frame-safety-rgb);
+      --frame-ink: var(--frame-safety-ink);
+    }
+
+    [data-frame="dislocation"] {
+      --frame-accent: var(--frame-dislocation-rgb);
+      --frame-ink: var(--frame-dislocation-ink);
     }
 
     .intro-card,
     .comparison-table,
     .network-diagram {
-      background: var(--ink-soft) !important;
+      background: rgba(255, 255, 253, 0.98) !important;
       border-color: var(--line) !important;
       backdrop-filter: none !important;
       box-shadow: none !important;
     }
 
     .question-card {
-      background: transparent !important;
+      background: rgba(255, 255, 252, 0.96) !important;
       border: 1px solid var(--line);
       border-left-width: 1px !important;
       border-radius: 0.9rem;
@@ -286,14 +397,25 @@
     .frame-card {
       position: relative;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.03) !important;
-      border-color: var(--line) !important;
+      background:
+        linear-gradient(180deg, rgba(var(--frame-accent), 0.26) 0%, rgba(var(--frame-accent), 0.11) 36%, rgba(255, 255, 253, 0.99) 36%, rgba(255, 255, 253, 0.99) 100%) !important;
+      border-color: rgba(var(--frame-accent), 0.38) !important;
       box-shadow: none !important;
       transition: border-color 0.28s ease, background-color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
     }
 
+    .frame-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 5px;
+      background: rgba(var(--frame-accent), 0.96);
+    }
+
     .frame-card:hover {
-      border-color: var(--line-strong) !important;
+      border-color: rgba(var(--frame-accent), 0.62) !important;
       transform: none !important;
     }
 
@@ -304,48 +426,58 @@
       right: 1rem;
       bottom: 0.8rem;
       height: 1px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(86, 75, 62, 0.14);
       transform: scaleX(0.42);
       transform-origin: left center;
       transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
-    .frame-card > div:first-child {
-      background: transparent !important;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .frame-card-icon {
+      background: rgba(var(--frame-accent), 0.28) !important;
+      border: 1px solid rgba(var(--frame-accent), 0.44);
       transition: background-color 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
     }
 
-    .frame-card:hover > div:first-child { transform: none !important; }
+    .frame-card:hover .frame-card-icon { transform: none !important; }
+
+    .frame-card-icon i {
+      color: var(--frame-ink) !important;
+    }
 
     .frame-card.is-active,
     .frame-card.is-active:hover {
-      border-color: rgba(var(--frame-accent), 0.58) !important;
-      background: linear-gradient(180deg, rgba(var(--frame-accent), 0.13), rgba(255, 255, 255, 0.03)) !important;
-      box-shadow: 0 22px 46px -34px rgba(var(--frame-accent), 0.52) !important;
-      transform: translateY(-2px) !important;
+      border-color: rgba(var(--frame-accent), 0.68) !important;
+      background:
+        linear-gradient(180deg, rgba(var(--frame-accent), 0.38) 0%, rgba(var(--frame-accent), 0.16) 36%, rgba(255, 255, 253, 1) 36%, rgba(255, 255, 253, 1) 100%) !important;
+      box-shadow: 0 18px 36px -30px rgba(var(--frame-accent), 0.28) !important;
+      transform: none !important;
     }
 
     .frame-card.is-active::after {
-      background: rgba(var(--frame-accent), 0.88);
+      background: rgba(var(--frame-accent), 0.92);
       transform: scaleX(1);
     }
 
-    .frame-card.is-active > div:first-child,
-    .frame-card.is-active:hover > div:first-child {
-      background: rgba(var(--frame-accent), 0.11) !important;
-      border-color: rgba(var(--frame-accent), 0.34);
-      transform: translateY(-1px) scale(1.03);
+    .frame-card.is-active .frame-card-icon,
+    .frame-card.is-active:hover .frame-card-icon {
+      background: rgba(var(--frame-accent), 0.38) !important;
+      border-color: rgba(var(--frame-accent), 0.56);
+      transform: none;
     }
 
-    .frame-card.is-active p {
-      color: rgba(var(--frame-accent), 0.95) !important;
+    .frame-card.is-active h3 {
+      color: var(--text-main) !important;
     }
 
-    .frame-card p {
-      color: var(--text-faint) !important;
+    .frame-card .frame-card-label {
+      color: var(--frame-ink) !important;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      opacity: 0.92;
+    }
+
+    .frame-card h3 {
+      color: #201b16 !important;
     }
 
     .frame-section {
@@ -360,13 +492,16 @@
       content: "";
       position: absolute;
       pointer-events: none;
-      opacity: 0;
+      opacity: 0.42;
       transition: opacity 0.4s ease;
     }
 
     .frame-section::before {
-      inset: 1.5rem 0;
-      background: linear-gradient(90deg, rgba(var(--frame-accent), 0.08) 0%, rgba(var(--frame-accent), 0.04) 24%, transparent 58%);
+      left: clamp(1rem, 3vw, 3rem);
+      top: clamp(3.75rem, 7vw, 5.5rem);
+      width: min(36rem, 42vw);
+      height: clamp(9rem, 18vw, 13rem);
+      background: radial-gradient(circle at left top, rgba(var(--frame-accent), 0.18), rgba(var(--frame-accent), 0.08) 46%, transparent 74%);
       z-index: -1;
     }
 
@@ -374,50 +509,92 @@
       left: clamp(1.5rem, 4vw, 4.5rem);
       top: clamp(4.5rem, 8vw, 6rem);
       bottom: clamp(4.5rem, 8vw, 6rem);
-      width: 1px;
-      background: linear-gradient(180deg, transparent, rgba(var(--frame-accent), 0.52), transparent);
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(var(--frame-accent), 0.72), transparent);
     }
 
     .frame-section.is-active::before,
     .frame-section.is-active::after {
-      opacity: 1;
+      opacity: 0.92;
     }
 
     .frame-header {
-      align-items: end !important;
-      gap: 1rem !important;
+      align-items: center !important;
+      gap: 1.25rem !important;
       margin-bottom: clamp(2.25rem, 5vw, 4rem) !important;
       transition: transform 0.32s ease;
     }
 
-    .frame-header > div:first-child { display: none; }
+    .frame-header > div:first-child {
+      display: flex !important;
+      background: linear-gradient(180deg, rgba(var(--frame-accent), 0.22), rgba(var(--frame-accent), 0.1)) !important;
+      border: 1px solid rgba(var(--frame-accent), 0.34) !important;
+      box-shadow: 0 14px 24px -22px rgba(var(--frame-accent), 0.62);
+    }
+
+    .frame-header > div:first-child i {
+      color: var(--frame-ink) !important;
+    }
 
     .frame-header h2 {
       font-size: var(--type-heading) !important;
       line-height: 1.02 !important;
       letter-spacing: -0.038em;
       margin-bottom: 0.35rem;
+      color: var(--frame-ink) !important;
+      text-wrap: balance;
     }
 
     .frame-header p {
+      font-family: var(--font-body);
+      font-size: 0.98rem !important;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--frame-ink) !important;
+      max-width: 40ch;
+      text-wrap: balance;
+      opacity: 0.82;
+      filter: saturate(1.08);
+      transition: color 0.28s ease, opacity 0.28s ease;
+    }
+
+    .frame-header p::before {
+      content: "";
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      margin-bottom: 0.72rem;
+      background: rgba(var(--frame-accent), 0.5);
+      opacity: 1;
+    }
+
+    .frame-kicker {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.62rem;
+      margin-bottom: 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--frame-accent), 0.24);
+      background: rgba(var(--frame-accent), 0.12);
+      color: var(--frame-ink) !important;
       font-family: var(--font-mono);
       font-size: var(--type-label) !important;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-faint) !important;
-      transition: color 0.28s ease;
+      font-weight: 600;
     }
 
     .frame-section.is-active .frame-header {
       transform: translateX(0.18rem);
     }
 
-    .frame-section.is-active .frame-header span {
-      color: rgba(var(--frame-accent), 0.96) !important;
+    .frame-section.is-active .frame-kicker {
+      color: rgba(var(--frame-accent), 0.88) !important;
     }
 
     .frame-section.is-active .frame-header p {
-      color: #cbd4e0 !important;
+      color: var(--frame-ink) !important;
+      opacity: 1;
     }
 
     .frame-section .max-w-4xl {
@@ -444,7 +621,7 @@
       display: grid;
       gap: clamp(1.5rem, 3vw, 2.25rem);
       padding-top: clamp(1.5rem, 3vw, 2rem) !important;
-      border-top: 1px solid var(--line) !important;
+      border-top: 1px solid rgba(var(--frame-accent), 0.28) !important;
       transition: border-color 0.32s ease, background-color 0.32s ease;
     }
 
@@ -456,18 +633,18 @@
         padding-top: 0 !important;
         padding-left: clamp(1.25rem, 2vw, 1.75rem);
         border-top: none !important;
-        border-left: 1px solid var(--line);
+        border-left: 1px solid rgba(var(--frame-accent), 0.28);
       }
     }
 
     .frame-section.is-active .max-w-4xl > :last-child {
       background: transparent;
-      border-top-color: rgba(var(--frame-accent), 0.34) !important;
+      border-top-color: rgba(var(--frame-accent), 0.46) !important;
     }
 
     @media (min-width: 1024px) {
       .frame-section.is-active .max-w-4xl > :last-child {
-        border-left-color: rgba(var(--frame-accent), 0.38) !important;
+        border-left-color: rgba(var(--frame-accent), 0.46) !important;
       }
     }
 
@@ -506,7 +683,7 @@
       letter-spacing: -0.022em;
       text-transform: none;
       font-weight: 600;
-      color: #f1f3f8 !important;
+      color: var(--text-main) !important;
       margin-bottom: 1.15rem !important;
     }
 
@@ -517,7 +694,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 500;
-      color: var(--text-soft) !important;
+      color: var(--frame-ink) !important;
       margin-bottom: 1rem !important;
     }
 
@@ -544,7 +721,7 @@
     .frame-section .max-w-4xl > :first-child > div:first-child li,
     .frame-section .max-w-4xl > :first-child > div:first-child span:not(.text-red-400):not(.text-amber-400):not(.text-emerald-400):not(.text-blue-400):not(.text-purple-400):not(.text-cyan-400) {
       font-size: 1.05rem;
-      color: #d8deea !important;
+      color: #473f36 !important;
     }
 
     .frame-section .max-w-4xl > :first-child p.text-sm,
@@ -592,7 +769,7 @@
 
     .frame-section .max-w-4xl > :last-child > div {
       padding-top: clamp(1.1rem, 2vw, 1.45rem) !important;
-      border-top: 1px solid var(--line) !important;
+      border-top: 1px solid rgba(var(--frame-accent), 0.16) !important;
     }
 
     .frame-section .max-w-4xl > :last-child > div:first-child {
@@ -601,7 +778,7 @@
     }
 
     .quote-block {
-      border: 1px solid rgba(var(--frame-accent), 0.18) !important;
+      border: 1px solid rgba(var(--frame-accent), 0.42) !important;
       border-left-width: 1px !important;
       border-radius: 1rem;
       padding: clamp(1rem, 2vw, 1.35rem) !important;
@@ -612,7 +789,7 @@
     }
 
     .frame-section .quote-block {
-      background: rgba(var(--frame-accent), 0.035);
+      background: linear-gradient(180deg, rgba(var(--frame-accent), 0.12), rgba(255, 252, 246, 0.98) 78%);
       box-shadow: none;
     }
 
@@ -626,7 +803,7 @@
       line-height: 1.46 !important;
       font-weight: 400 !important;
       letter-spacing: -0.015em;
-      color: #f0f2f7 !important;
+      color: var(--text-main) !important;
     }
 
     .quote-block cite {
@@ -649,16 +826,18 @@
     }
 
     .frame-sources {
-      padding-top: clamp(2rem, 4vw, 3.25rem);
-      padding-bottom: clamp(2rem, 4vw, 3.25rem);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.015);
+      padding-top: clamp(1.15rem, 2.2vw, 1.55rem);
+      padding-bottom: clamp(1.3rem, 2.5vw, 1.8rem);
+      border-top: 1px solid rgba(var(--frame-accent), 0.28);
+      border-bottom: 1px solid rgba(var(--frame-accent), 0.22);
+      background:
+        linear-gradient(90deg, rgba(var(--frame-accent), 0.06), rgba(255, 255, 253, 0) 18rem),
+        linear-gradient(180deg, rgba(var(--frame-accent), 0.12) 0%, rgba(255, 255, 253, 0.97) 18%, rgba(var(--frame-accent), 0.04) 100%);
     }
 
     .frame-sources .max-w-7xl {
       display: grid;
-      gap: clamp(1.25rem, 3vw, 2rem);
+      gap: clamp(0.7rem, 1.8vw, 1rem);
     }
 
     .frame-sources h3 {
@@ -666,39 +845,61 @@
       font-size: var(--type-label);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(var(--frame-accent), 0.95);
+      color: var(--frame-ink);
+      width: fit-content;
+      padding: 0.34rem 0.72rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--frame-accent), 0.22);
+      background: rgba(var(--frame-accent), 0.1);
     }
 
     .frame-sources .source-list {
       display: grid;
-      gap: 0.35rem 1.25rem;
+      gap: 0.6rem 1rem;
     }
 
     .frame-sources .source-item {
-      border-bottom: 1px solid var(--line);
+      border: 1px solid rgba(var(--frame-accent), 0.16);
       line-height: 1.55;
+      border-radius: 0.8rem;
+      padding: 0.72rem 0.85rem 0.78rem;
+      background: rgba(var(--frame-accent), 0.05);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .frame-sources .source-item:hover,
+    .frame-sources .source-item:focus-visible {
+      background: rgba(var(--frame-accent), 0.16);
+      border-color: rgba(var(--frame-accent), 0.34);
+    }
+
+    .frame-sources .source-item:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--frame-accent), 0.2);
     }
 
     .frame-sources .source-item .font-medium {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.35;
       letter-spacing: -0.01em;
+      color: var(--text-main) !important;
     }
 
     .frame-sources .source-item .text-slate-500 {
-      font-size: var(--type-caption);
-      line-height: 1.55;
-      margin-top: 0.18rem;
+      font-size: 0.79rem;
+      line-height: 1.5;
+      margin-top: 0.14rem;
+      color: var(--text-soft) !important;
     }
 
     @media (min-width: 900px) {
       .frame-sources .max-w-7xl {
-        grid-template-columns: minmax(11rem, 0.36fr) minmax(0, 1.64fr);
+        grid-template-columns: 1fr;
         align-items: start;
       }
 
       .frame-sources .source-list {
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
@@ -759,6 +960,40 @@
       text-transform: uppercase;
     }
 
+    .comparison-table thead th:first-child {
+      background: rgba(95, 78, 63, 0.08);
+    }
+
+    .comparison-table thead th:nth-child(2) {
+      background: rgba(var(--frame-realist-rgb), 0.2);
+      color: var(--frame-realist-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(3) {
+      background: rgba(var(--frame-restorationist-rgb), 0.2);
+      color: var(--frame-restorationist-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(4) {
+      background: rgba(var(--frame-eacc-rgb), 0.2);
+      color: var(--frame-eacc-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(5) {
+      background: rgba(var(--frame-corporate-rgb), 0.2);
+      color: var(--frame-corporate-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(6) {
+      background: rgba(var(--frame-safety-rgb), 0.2);
+      color: var(--frame-safety-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(7) {
+      background: rgba(var(--frame-dislocation-rgb), 0.2);
+      color: var(--frame-dislocation-ink) !important;
+    }
+
     .comparison-table {
       font-variant-numeric: tabular-nums;
     }
@@ -768,16 +1003,26 @@
       line-height: 1.45;
     }
 
+    .comparison-table .text-slate-300,
+    .comparison-table .text-white {
+      color: var(--text-main) !important;
+    }
+
+    .comparison-table .text-slate-400,
+    .comparison-table .text-slate-500 {
+      color: var(--text-soft) !important;
+    }
+
     .comparison-table tbody td:first-child {
       width: 15rem;
     }
 
     .network-diagram {
-      background: transparent !important;
+      background: rgba(255, 253, 249, 0.94) !important;
       border-color: var(--line) !important;
-      border-width: 1px 0 !important;
-      border-radius: 0 !important;
-      padding: clamp(1.35rem, 3vw, 2rem) 0 !important;
+      border-width: 1px !important;
+      border-radius: 1.1rem !important;
+      padding: clamp(1.35rem, 3vw, 2rem) !important;
     }
 
     .network-diagram > .grid {
@@ -829,6 +1074,32 @@
       letter-spacing: -0.015em;
     }
 
+    .coalition-card .text-white,
+    .coalition-card .text-slate-300 {
+      color: var(--text-main) !important;
+    }
+
+    .coalition-card .text-slate-400,
+    .coalition-card .text-slate-500 {
+      color: var(--text-soft) !important;
+    }
+
+    .coalition-dot {
+      box-shadow: inset 0 0 0 1px rgba(255, 252, 246, 0.58);
+    }
+
+    .coalition-dot--security {
+      background: linear-gradient(90deg, rgba(var(--frame-realist-rgb), 0.86), rgba(var(--frame-restorationist-rgb), 0.86));
+    }
+
+    .coalition-dot--acceleration {
+      background: linear-gradient(90deg, rgba(var(--frame-eacc-rgb), 0.84), rgba(var(--frame-corporate-rgb), 0.84));
+    }
+
+    .coalition-dot--governance {
+      background: linear-gradient(90deg, rgba(var(--frame-safety-rgb), 0.82), rgba(var(--frame-dislocation-rgb), 0.82));
+    }
+
     .section-nav {
       border-top-color: var(--line) !important;
     }
@@ -837,12 +1108,31 @@
     .nav-next {
       min-width: min(100%, 22rem);
       justify-content: space-between;
-      background: transparent !important;
+      background: rgba(255, 252, 246, 0.92) !important;
       border: 1px solid var(--line);
     }
 
     .nav-next {
-      border-color: rgba(216, 209, 196, 0.22);
+      background: rgba(63, 95, 134, 0.08) !important;
+      border-color: rgba(63, 95, 134, 0.22);
+    }
+
+    .nav-prev .text-slate-500,
+    .nav-next .text-indigo-400 {
+      color: var(--text-soft) !important;
+    }
+
+    .nav-prev .text-slate-300,
+    .nav-next .text-white {
+      color: var(--text-main) !important;
+    }
+
+    .nav-prev i {
+      color: var(--text-soft) !important;
+    }
+
+    .nav-next i {
+      color: #3f5f86 !important;
     }
 
     @media (min-width: 1280px) {
@@ -961,7 +1251,7 @@
       <!-- Title -->
       <h1 class="title-text text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
         The New Ideological 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Map of AI Power</span>
+        <span class="title-highlight">Map of AI Power</span>
       </h1>
       
       <!-- Subtitle -->
@@ -970,7 +1260,7 @@
       </p>
       
       <!-- Decorative Line -->
-      <div class="header-line w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+      <div class="header-line"></div>
     </div>
   </div>
 
@@ -1064,73 +1354,73 @@
       <!-- Frame Cards Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <!-- Realist -->
-        <a href="#frame-realist" aria-label="Jump to Frame 1: The Realist Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-red-900/30 to-red-800/10 border border-red-500/30 rounded-xl p-5 hover:border-red-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 248, 113, 113;">
-          <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="sword" class="w-6 h-6 text-red-400"></i>
+        <a href="#frame-realist" aria-label="Jump to Frame 1: The Realist Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="realist">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="sword" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Realist</h3>
-          <p class="text-red-300 text-xs">National Power</p>
+          <h3 class="font-semibold mb-1">Realist</h3>
+          <p class="frame-card-label text-xs">National Power</p>
         </a>
         
         <!-- Restorationist -->
-        <a href="#frame-restorationist" aria-label="Jump to Frame 2: The Restorationist Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-amber-900/30 to-amber-800/10 border border-amber-500/30 rounded-xl p-5 hover:border-amber-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 251, 191, 36;">
-          <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="crown" class="w-6 h-6 text-amber-400"></i>
+        <a href="#frame-restorationist" aria-label="Jump to Frame 2: The Restorationist Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="restorationist">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="crown" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Restorationist</h3>
-          <p class="text-amber-300 text-xs">State Capacity</p>
+          <h3 class="font-semibold mb-1">Restorationist</h3>
+          <p class="frame-card-label text-xs">State Capacity</p>
         </a>
         
         <!-- e/acc -->
-        <a href="#frame-eacc" aria-label="Jump to Frame 3: The Acceleration Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-emerald-900/30 to-emerald-800/10 border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 52, 211, 153;">
-          <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="rocket" class="w-6 h-6 text-emerald-400"></i>
+        <a href="#frame-eacc" aria-label="Jump to Frame 3: The Acceleration Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="eacc">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="rocket" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">e/acc</h3>
-          <p class="text-emerald-300 text-xs">Acceleration</p>
+          <h3 class="font-semibold mb-1">e/acc</h3>
+          <p class="frame-card-label text-xs">Acceleration</p>
         </a>
         
         <!-- Corporate Utopian -->
-        <a href="#frame-corporate" aria-label="Jump to Frame 4: The Corporate Utopian Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-blue-900/30 to-blue-800/10 border border-blue-500/30 rounded-xl p-5 hover:border-blue-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 96, 165, 250;">
-          <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="building" class="w-6 h-6 text-blue-400"></i>
+        <a href="#frame-corporate" aria-label="Jump to Frame 4: The Corporate Utopian Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="corporate">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="building" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Corporate</h3>
-          <p class="text-blue-300 text-xs">Utopian Scale</p>
+          <h3 class="font-semibold mb-1">Corporate</h3>
+          <p class="frame-card-label text-xs">Utopian Scale</p>
         </a>
         
         <!-- Safety -->
-        <a href="#frame-safety" aria-label="Jump to Frame 5: The Safety Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-purple-900/30 to-purple-800/10 border border-purple-500/30 rounded-xl p-5 hover:border-purple-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 192, 132, 252;">
-          <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="shield-check" class="w-6 h-6 text-purple-400"></i>
+        <a href="#frame-safety" aria-label="Jump to Frame 5: The Safety Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="safety">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Safety</h3>
-          <p class="text-purple-300 text-xs">Scientific Int'l</p>
+          <h3 class="font-semibold mb-1">Safety</h3>
+          <p class="frame-card-label text-xs">Scientific Int'l</p>
         </a>
         
         <!-- Dislocation -->
-        <a href="#frame-dislocation" aria-label="Jump to Frame 6: The Dislocation Frame" class="frame-card group block cursor-pointer bg-gradient-to-br from-cyan-900/30 to-cyan-800/10 border border-cyan-500/30 rounded-xl p-5 hover:border-cyan-500/60 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" style="--frame-accent: 34, 211, 238;">
-          <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="git-branch" class="w-6 h-6 text-cyan-400"></i>
+        <a href="#frame-dislocation" aria-label="Jump to Frame 6: The Dislocation Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="dislocation">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="git-branch" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Dislocation</h3>
-          <p class="text-cyan-300 text-xs">Labor & Legitimacy</p>
+          <h3 class="font-semibold mb-1">Dislocation</h3>
+          <p class="frame-card-label text-xs">Labor & Legitimacy</p>
         </a>
       </div>
     </div>
   </div>
 
   <!-- FRAME 1: Realist -->
-  <div id="frame-realist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="1" data-frame-title="The Realist Frame" style="--frame-accent: 248, 113, 113;">
+  <div id="frame-realist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="realist" data-frame-index="1" data-frame-title="The Realist Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center">
           <i data-lucide="sword" class="w-8 h-8 text-red-400"></i>
         </div>
         <div>
-          <span class="text-red-400 text-sm font-medium tracking-wider uppercase">Frame 1</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Realist Frame</h2>
-          <p class="text-slate-400">AI as National Power Amplifier</p>
+          <span class="frame-kicker">Frame 1</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Realist Frame</h2>
+          <p>AI as National Power Amplifier</p>
         </div>
       </div>
       
@@ -1264,24 +1554,24 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 248, 113, 113;" aria-labelledby="sources-realist">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="realist" aria-labelledby="sources-realist">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-realist">Sources for Frame 1</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-red-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500/30" href="https://ageofaibook.com/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Kissinger, Schmidt, and Huttenlocher, <span class="italic">The Age of AI and Our Human Future</span></div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://ageofaibook.com/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Kissinger, Schmidt, and Huttenlocher, <span class="italic">The Age of AI and Our Human Future</span></div>
           <div class="text-slate-500">Opacity, verification, and AI as a security dilemma.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-red-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500/30" href="https://yalebooks.yale.edu/9780300262643/the-strategy-of-denial/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Colby, <span class="italic">The Strategy of Denial</span></div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://yalebooks.yale.edu/9780300262643/the-strategy-of-denial/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Colby, <span class="italic">The Strategy of Denial</span></div>
           <div class="text-slate-500">Realist defense-prioritization logic and China-centered denial strategy.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-red-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500/30" href="https://reports.nscai.gov/final-report/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">NSCAI Final Report (2021)</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://reports.nscai.gov/final-report/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NSCAI Final Report (2021)</div>
           <div class="text-slate-500">U.S. national-security framing of AI capacity and competition.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-red-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500/30" href="https://www.whitehouse.gov/presidential-actions/2025/11/launching-the-genesis-mission/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">The White House, Launching the Genesis Mission</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/11/launching-the-genesis-mission/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">The White House, Launching the Genesis Mission</div>
           <div class="text-slate-500">State-led AI mobilization in the realist policy grammar.</div>
         </a>
       </div>
@@ -1289,16 +1579,16 @@
   </div>
 
   <!-- FRAME 2: Restorationist -->
-  <div id="frame-restorationist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="2" data-frame-title="The Restorationist Frame" style="--frame-accent: 251, 191, 36;">
+  <div id="frame-restorationist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="restorationist" data-frame-index="2" data-frame-title="The Restorationist Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
           <i data-lucide="crown" class="w-8 h-8 text-amber-400"></i>
         </div>
         <div>
-          <span class="text-amber-400 text-sm font-medium tracking-wider uppercase">Frame 2</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Tech-Right / Restorationist</h2>
-          <p class="text-slate-400">From Libertarian "Exit" to Restorationist "Capture"</p>
+          <span class="frame-kicker">Frame 2</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Tech-Right / Restorationist</h2>
+          <p>From Libertarian "Exit" to Restorationist "Capture"</p>
         </div>
       </div>
       
@@ -1461,28 +1751,28 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 251, 191, 36;" aria-labelledby="sources-restorationist">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="restorationist" aria-labelledby="sources-restorationist">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-restorationist">Sources for Frame 2</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-amber-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30" href="https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Federal Register, Executive Order 14179</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Federal Register, Executive Order 14179</div>
           <div class="text-slate-500">American leadership, deregulation, and ideological framing.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-amber-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30" href="https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">The White House, Executive Order 14319</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">The White House, Executive Order 14319</div>
           <div class="text-slate-500">Federal procurement and the "Preventing Woke AI" frame.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-amber-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30" href="https://www.whitehouse.gov/presidential-actions/2025/01/establishing-and-implementing-the-presidents-department-of-government-efficiency/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Executive Order 14158 on DOGE</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/01/establishing-and-implementing-the-presidents-department-of-government-efficiency/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Executive Order 14158 on DOGE</div>
           <div class="text-slate-500">Administrative modernization as technology-and-software efficiency.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-amber-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30" href="https://www.whitehouse.gov/fact-sheets/2025/07/fact-sheet-president-donald-j-trump-signs-executive-order-to-prevent-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">White House fact sheet on Preventing Woke AI</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/fact-sheets/2025/07/fact-sheet-president-donald-j-trump-signs-executive-order-to-prevent-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">White House fact sheet on Preventing Woke AI</div>
           <div class="text-slate-500">Procurement-level statement of the ideological neutrality doctrine.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-amber-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30" href="https://www.amazon.com/Technological-Republic-Belief-Future-West/dp/0593541366" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Karp and Zamiska, <span class="italic">The Technological Republic</span></div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.amazon.com/Technological-Republic-Belief-Future-West/dp/0593541366" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Karp and Zamiska, <span class="italic">The Technological Republic</span></div>
           <div class="text-slate-500">State-tech fusion and the restorationist diagnosis of Western incapacity.</div>
         </a>
       </div>
@@ -1490,16 +1780,16 @@
   </div>
 
   <!-- FRAME 3: e/acc -->
-  <div id="frame-eacc" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="3" data-frame-title="e/acc" style="--frame-accent: 52, 211, 153;">
+  <div id="frame-eacc" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="eacc" data-frame-index="3" data-frame-title="e/acc">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
           <i data-lucide="rocket" class="w-8 h-8 text-emerald-400"></i>
         </div>
         <div>
-          <span class="text-emerald-400 text-sm font-medium tracking-wider uppercase">Frame 3</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Acceleration Frame (e/acc)</h2>
-          <p class="text-slate-400">Speed Saves Lives</p>
+          <span class="frame-kicker">Frame 3</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Acceleration Frame (e/acc)</h2>
+          <p>Speed Saves Lives</p>
         </div>
       </div>
       
@@ -1688,20 +1978,20 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 52, 211, 153;" aria-labelledby="sources-eacc">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="eacc" aria-labelledby="sources-eacc">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-eacc">Sources for Frame 3</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-emerald-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/30" href="https://a16z.com/the-techno-optimist-manifesto/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Andreessen, <span class="italic">The Techno-Optimist Manifesto</span></div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://a16z.com/the-techno-optimist-manifesto/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Andreessen, <span class="italic">The Techno-Optimist Manifesto</span></div>
           <div class="text-slate-500">Representative text for abundance-through-acceleration.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-emerald-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/30" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">California SB 1047 bill status</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">California SB 1047 bill status</div>
           <div class="text-slate-500">The legislative front used here to show accelerationist opposition to frontier obligations.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-emerald-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/30" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">CDT legal analysis of the SB 1047 veto</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">CDT legal analysis of the SB 1047 veto</div>
           <div class="text-slate-500">Context on why the bill became a symbolic fight over safety obligations and innovation policy.</div>
         </a>
       </div>
@@ -1709,16 +1999,16 @@
   </div>
 
   <!-- FRAME 4: Corporate Utopian -->
-  <div id="frame-corporate" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="4" data-frame-title="The Corporate Frame" style="--frame-accent: 96, 165, 250;">
+  <div id="frame-corporate" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="corporate" data-frame-index="4" data-frame-title="The Corporate Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
           <i data-lucide="building" class="w-8 h-8 text-blue-400"></i>
         </div>
         <div>
-          <span class="text-blue-400 text-sm font-medium tracking-wider uppercase">Frame 4</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Corporate Utopian Frame</h2>
-          <p class="text-slate-400">AGI for Humanity</p>
+          <span class="frame-kicker">Frame 4</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Corporate Utopian Frame</h2>
+          <p>AGI for Humanity</p>
         </div>
       </div>
       
@@ -1895,28 +2185,28 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 96, 165, 250;" aria-labelledby="sources-corporate">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="corporate" aria-labelledby="sources-corporate">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-corporate">Sources for Frame 4</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-blue-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30" href="https://ia.samaltman.com/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Sam Altman, <span class="italic">The Intelligence Age</span></div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://ia.samaltman.com/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Sam Altman, <span class="italic">The Intelligence Age</span></div>
           <div class="text-slate-500">Prosperity, universal benefit, and conviction in scale.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-blue-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30" href="https://openai.com/index/stargate-sb-energy-partnership/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">OpenAI and SB Energy 1.2 GW partnership</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/stargate-sb-energy-partnership/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI and SB Energy 1.2 GW partnership</div>
           <div class="text-slate-500">The infrastructure trap behind corporate-scale AI.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-blue-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30" href="https://openai.com/index/openai-for-india/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">OpenAI for India</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/openai-for-india/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI for India</div>
           <div class="text-slate-500">Managed sovereignty packaged as national AI capability.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-blue-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30" href="https://openai.com/index/servicenow-powers-actionable-enterprise-ai-with-openai/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">ServiceNow and OpenAI enterprise AI partnership</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/servicenow-powers-actionable-enterprise-ai-with-openai/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">ServiceNow and OpenAI enterprise AI partnership</div>
           <div class="text-slate-500">Enterprise workflow colonization in the corporate frame.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-blue-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/30" href="https://openai.com/index/our-agreement-with-the-department-of-war/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">OpenAI agreement with the Department of War</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/our-agreement-with-the-department-of-war/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI agreement with the Department of War</div>
           <div class="text-slate-500">The fusion of corporate mission, enterprise logic, and hard geopolitics.</div>
         </a>
       </div>
@@ -1924,16 +2214,16 @@
   </div>
 
   <!-- FRAME 5: Safety -->
-  <div id="frame-safety" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="5" data-frame-title="The Safety Frame" style="--frame-accent: 192, 132, 252;">
+  <div id="frame-safety" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="safety" data-frame-index="5" data-frame-title="The Safety Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center">
           <i data-lucide="shield-check" class="w-8 h-8 text-purple-400"></i>
         </div>
         <div>
-          <span class="text-purple-400 text-sm font-medium tracking-wider uppercase">Frame 5</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Safety / Scientific Internationalist</h2>
-          <p class="text-slate-400">Transboundary risk, safety science, and verification under uncertainty</p>
+          <span class="frame-kicker">Frame 5</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Safety / Scientific Internationalist</h2>
+          <p>Transboundary risk, safety science, and verification under uncertainty</p>
         </div>
       </div>
       
@@ -2157,36 +2447,36 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 192, 132, 252;" aria-labelledby="sources-safety">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="safety" aria-labelledby="sources-safety">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-safety">Sources for Frame 5</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://www.nist.gov/caisi" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">NIST, Center for AI Standards and Innovation (CAISI)</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.nist.gov/caisi" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NIST, Center for AI Standards and Innovation (CAISI)</div>
           <div class="text-slate-500">The U.S. institutional shift from AISI toward standards and innovation.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">International AI Safety Report 2026</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">International AI Safety Report 2026</div>
           <div class="text-slate-500">Bengio-led evidence base for frontier-risk evaluation.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Bletchley Declaration</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Bletchley Declaration</div>
           <div class="text-slate-500">Baseline recognition of serious frontier-AI risks.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://www.gov.uk/government/publications/seoul-declaration-for-safe-innovative-and-inclusive-ai-ai-seoul-summit-2024/seoul-statement-of-intent-toward-international-cooperation-on-ai-safety-science-ai-seoul-summit-2024-annex" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Seoul Statement of Intent toward AI Safety Science</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.gov.uk/government/publications/seoul-declaration-for-safe-innovative-and-inclusive-ai-ai-seoul-summit-2024/seoul-statement-of-intent-toward-international-cooperation-on-ai-safety-science-ai-seoul-summit-2024-annex" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Seoul Statement of Intent toward AI Safety Science</div>
           <div class="text-slate-500">International cooperation on safety science, openness, transparency, and reciprocity.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://www.nist.gov/document/aisi-pilot-testing-exercise-blog" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">NIST, International Network of AI Safety Institutes San Francisco Convening</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.nist.gov/document/aisi-pilot-testing-exercise-blog" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NIST, International Network of AI Safety Institutes San Francisco Convening</div>
           <div class="text-slate-500">Evaluation cooperation across national AI safety institutes.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">California SB 1047 bill status</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">California SB 1047 bill status</div>
           <div class="text-slate-500">The legislative front in the safety-regulation conflict.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-purple-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500/30" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">CDT legal analysis of the SB 1047 veto</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">CDT legal analysis of the SB 1047 veto</div>
           <div class="text-slate-500">Regulatory stakes of the veto in the safety-regulation conflict.</div>
         </a>
       </div>
@@ -2194,16 +2484,16 @@
   </div>
 
   <!-- FRAME 6: Dislocation -->
-  <div id="frame-dislocation" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame-index="6" data-frame-title="The Dislocation Frame" style="--frame-accent: 34, 211, 238;">
+  <div id="frame-dislocation" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="dislocation" data-frame-index="6" data-frame-title="The Dislocation Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center">
           <i data-lucide="git-branch" class="w-8 h-8 text-cyan-400"></i>
         </div>
         <div>
-          <span class="text-cyan-400 text-sm font-medium tracking-wider uppercase">Frame 6</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Dislocation Frame</h2>
-          <p class="text-slate-400">Labor, Legitimacy, and Social Order</p>
+          <span class="frame-kicker">Frame 6</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Dislocation Frame</h2>
+          <p>Labor, Legitimacy, and Social Order</p>
         </div>
       </div>
       
@@ -2405,28 +2695,28 @@
     </div>
   </div>
 
-  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" style="--frame-accent: 34, 211, 238;" aria-labelledby="sources-dislocation">
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="dislocation" aria-labelledby="sources-dislocation">
     <div class="max-w-7xl mx-auto">
       <h3 id="sources-dislocation">Sources for Frame 6</h3>
       <div class="source-list text-sm">
-        <a class="source-item group block py-3 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/30" href="https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">IMF, AI Will Transform the Global Economy (Jan 2024)</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">IMF, AI Will Transform the Global Economy (Jan 2024)</div>
           <div class="text-slate-500">Baseline labor-market exposure and inequality framing.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/30" href="https://www.theguardian.com/technology/2026/jan/23/ai-tsunami-labour-market-youth-employment-says-head-of-imf-davos" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Guardian, Young will suffer most when AI 'tsunami' hits jobs</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.theguardian.com/technology/2026/jan/23/ai-tsunami-labour-market-youth-employment-says-head-of-imf-davos" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Guardian, Young will suffer most when AI 'tsunami' hits jobs</div>
           <div class="text-slate-500">Georgieva's Davos warning about entry-level roles and youth employment.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/30" href="https://www.darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Dario Amodei, The Adolescence of Technology</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Dario Amodei, The Adolescence of Technology</div>
           <div class="text-slate-500">Civilizational-risk and economic-disruption framing under rapid deployment.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/30" href="https://www.axios.com/2025/05/28/ai-jobs-white-collar-unemployment-anthropic" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">Axios, Behind the Curtain: A white-collar bloodbath</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.axios.com/2025/05/28/ai-jobs-white-collar-unemployment-anthropic" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Axios, Behind the Curtain: A white-collar bloodbath</div>
           <div class="text-slate-500">Source for Amodei's entry-level white-collar displacement warning.</div>
         </a>
-        <a class="source-item group block py-3 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/30" href="https://time.com/7266504/people-vs-ai/" target="_blank" rel="noreferrer noopener">
-          <div class="font-medium text-slate-200 group-hover:text-white">TIME, The People vs. AI</div>
+        <a class="source-item group block py-3 focus:outline-none" href="https://time.com/7266504/people-vs-ai/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">TIME, The People vs. AI</div>
           <div class="text-slate-500">Public backlash, labor anxiety, and social legitimacy of deployment.</div>
         </a>
       </div>
@@ -2520,9 +2810,9 @@
       <div class="network-diagram bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-2xl p-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Coalition 1: National Security -->
-          <div class="coalition-card bg-gradient-to-br from-red-900/20 to-amber-900/20 border border-red-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-red-400 to-amber-400"></span>
+              <span class="coalition-dot coalition-dot--security w-3 h-3 rounded-full"></span>
               National Security Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -2542,9 +2832,9 @@
           </div>
           
           <!-- Coalition 2: Tech Acceleration -->
-          <div class="coalition-card bg-gradient-to-br from-emerald-900/20 to-blue-900/20 border border-emerald-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-emerald-400 to-blue-400"></span>
+              <span class="coalition-dot coalition-dot--acceleration w-3 h-3 rounded-full"></span>
               Tech Acceleration Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -2564,9 +2854,9 @@
           </div>
           
           <!-- Coalition 3: Governance & Safety -->
-          <div class="coalition-card bg-gradient-to-br from-purple-900/20 to-cyan-900/20 border border-purple-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-cyan-400"></span>
+              <span class="coalition-dot coalition-dot--governance w-3 h-3 rounded-full"></span>
               Governance Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -2695,7 +2985,7 @@
         }
 
         activeFrameId = 'overview';
-        moduleNav?.style.setProperty('--active-frame-rgb', '216, 209, 196');
+        moduleNav?.style.setProperty('--active-frame-rgb', '122, 96, 70');
         frameSections.forEach((section) => section.classList.remove('is-active'));
         frameCards.forEach((card) => {
           card.classList.remove('is-active');
@@ -2724,7 +3014,7 @@
 
         activeFrameId = section.id;
 
-        const accent = section.style.getPropertyValue('--frame-accent').trim() || '216, 209, 196';
+        const accent = getComputedStyle(section).getPropertyValue('--frame-accent').trim() || '122, 96, 70';
         const frameIndex = Number(section.dataset.frameIndex || frameSections.indexOf(section) + 1);
 
         moduleNav?.style.setProperty('--active-frame-rgb', accent);
@@ -3019,14 +3309,14 @@
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: rgba(23, 28, 40, 0.45);
+      background: rgba(232, 222, 208, 0.74);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(156, 166, 183, 0.38);
+      background: rgba(103, 91, 76, 0.30);
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(156, 166, 183, 0.58);
+      background: rgba(103, 91, 76, 0.46);
     }
 
     /* Comparison table styling */
@@ -3035,7 +3325,7 @@
       transition: background-color 0.2s ease;
     }
     .comparison-table tbody tr:hover td {
-      background-color: rgba(255, 255, 255, 0.03);
+      background-color: rgba(98, 84, 68, 0.035);
     }
     
     /* Navigation hover */
@@ -3044,7 +3334,7 @@
     }
     .nav-prev:hover,
     .nav-next:hover {
-      background: rgba(255, 255, 255, 0.035) !important;
+      background: rgba(98, 84, 68, 0.055) !important;
     }
     
     /* Responsive adjustments */
@@ -3071,6 +3361,6 @@
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
-  </script>
+</script>
 </body>
 </html>
