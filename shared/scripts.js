@@ -73,6 +73,15 @@ function initGSAP() {
     return;
   }
 
+  if (window.AIGeoMotionPolicy) {
+    window.AIGeoMotionPolicy.initGSAP({
+      ease: 'power3.out',
+      duration: 0.8,
+      timeScale: 0.75
+    });
+    return;
+  }
+
   // Register ScrollTrigger plugin
   if (typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);

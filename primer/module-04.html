@@ -3,1432 +3,2284 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf9f7">
   <title>Module 04: The Splinternet Accelerates | Geopolitics of AI</title>
-  
   <link rel="stylesheet" href="../shared/design-system.css">
   <link rel="stylesheet" href="../shared/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="../shared/motion-policy.js"></script>
   <style>
-    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    /* Custom adjustments for standalone modules */
-    .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
-    .module-nav a:hover { color: #fff; }
+    :root {
+      --module-ink: #182235;
+      --module-ink-soft: #4c5a71;
+      --module-paper: #fcfaf7;
+      --module-paper-deep: #f3ede5;
+      --module-shadow: 0 22px 60px rgba(24, 34, 53, 0.08);
+      --module-blue: #2b5d88;
+      --module-blue-soft: #edf5fb;
+      --module-rust: #a34f2c;
+      --module-rust-soft: #fff1e8;
+      --module-amber: #9b6a16;
+      --module-amber-soft: #fff7e5;
+      --module-plum: #675280;
+      --module-plum-soft: #f5f0fa;
+      --module-sage: #446858;
+      --module-sage-soft: #eef6f1;
+      --meaning-exclusion: var(--module-blue);
+      --meaning-exclusion-soft: var(--module-blue-soft);
+      --meaning-exclusion-border: rgba(43, 93, 136, 0.18);
+      --meaning-standards: var(--module-rust);
+      --meaning-standards-soft: var(--module-rust-soft);
+      --meaning-standards-border: rgba(163, 79, 44, 0.18);
+      --meaning-insulation: var(--module-sage);
+      --meaning-insulation-soft: var(--module-sage-soft);
+      --meaning-insulation-border: rgba(68, 104, 88, 0.18);
+      --meaning-market: var(--module-amber);
+      --meaning-market-soft: var(--module-amber-soft);
+      --meaning-market-border: rgba(155, 106, 22, 0.2);
+      --meaning-regulation: var(--module-plum);
+      --meaning-regulation-soft: var(--module-plum-soft);
+      --meaning-regulation-border: rgba(103, 82, 128, 0.18);
+      --module-max: min(1360px, calc(100vw - 2rem));
+    }
+
+    .theme-exclusion {
+      --semantic-accent: var(--meaning-exclusion);
+      --semantic-soft: var(--meaning-exclusion-soft);
+      --semantic-border: var(--meaning-exclusion-border);
+      --card-accent: var(--meaning-exclusion);
+      --event-accent: var(--meaning-exclusion);
+      --event-border: var(--meaning-exclusion-border);
+      --case-accent: var(--meaning-exclusion);
+      --case-soft: var(--meaning-exclusion-soft);
+      --case-border: var(--meaning-exclusion-border);
+      --stack-accent: var(--meaning-exclusion);
+    }
+
+    .theme-standards {
+      --semantic-accent: var(--meaning-standards);
+      --semantic-soft: var(--meaning-standards-soft);
+      --semantic-border: var(--meaning-standards-border);
+      --card-accent: var(--meaning-standards);
+      --event-accent: var(--meaning-standards);
+      --event-border: var(--meaning-standards-border);
+      --case-accent: var(--meaning-standards);
+      --case-soft: var(--meaning-standards-soft);
+      --case-border: var(--meaning-standards-border);
+      --stack-accent: var(--meaning-standards);
+    }
+
+    .theme-insulation {
+      --semantic-accent: var(--meaning-insulation);
+      --semantic-soft: var(--meaning-insulation-soft);
+      --semantic-border: var(--meaning-insulation-border);
+      --card-accent: var(--meaning-insulation);
+      --event-accent: var(--meaning-insulation);
+      --event-border: var(--meaning-insulation-border);
+      --case-accent: var(--meaning-insulation);
+      --case-soft: var(--meaning-insulation-soft);
+      --case-border: var(--meaning-insulation-border);
+      --stack-accent: var(--meaning-insulation);
+    }
+
+    .theme-market {
+      --semantic-accent: var(--meaning-market);
+      --semantic-soft: var(--meaning-market-soft);
+      --semantic-border: var(--meaning-market-border);
+      --card-accent: var(--meaning-market);
+      --event-accent: var(--meaning-market);
+      --event-border: var(--meaning-market-border);
+      --case-accent: var(--meaning-market);
+      --case-soft: var(--meaning-market-soft);
+      --case-border: var(--meaning-market-border);
+      --stack-accent: var(--meaning-market);
+    }
+
+    .theme-regulation {
+      --semantic-accent: var(--meaning-regulation);
+      --semantic-soft: var(--meaning-regulation-soft);
+      --semantic-border: var(--meaning-regulation-border);
+      --card-accent: var(--meaning-regulation);
+      --event-accent: var(--meaning-regulation);
+      --event-border: var(--meaning-regulation-border);
+      --case-accent: var(--meaning-regulation);
+      --case-soft: var(--meaning-regulation-soft);
+      --case-border: var(--meaning-regulation-border);
+      --stack-accent: var(--meaning-regulation);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-padding-top: 7rem;
+    }
+
+    body.module04-page {
+      margin: 0;
+      color: var(--module-ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(249, 115, 22, 0.09), transparent 22%),
+        radial-gradient(circle at 100% 8%, rgba(34, 197, 94, 0.08), transparent 26%),
+        linear-gradient(180deg, #fdfbf7 0%, #f5efe7 48%, #fbfaf7 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body.module04-page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 78%);
+      opacity: 0.75;
+    }
+
+    body.module04-page::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(24, 34, 53, 0.045) 0.8px, transparent 0.8px);
+      background-size: 18px 18px;
+      opacity: 0.1;
+      mix-blend-mode: multiply;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .module-shell {
+      width: var(--module-max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: var(--module-max);
+      margin: 0 auto;
+      padding: 1rem 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .module-nav__link,
+    .module-nav__meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(24, 34, 53, 0.08);
+    }
+
+    .module-nav__link {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+      transition: transform 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .module-nav__link:hover {
+      transform: translateY(-1px);
+      color: var(--module-ink);
+      border-color: rgba(24, 34, 53, 0.16);
+    }
+
+    .module-nav__meta {
+      flex: 0 1 auto;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.78fr);
+      gap: clamp(2rem, 4.8vw, 4.4rem);
+      padding: clamp(2rem, 5vw, 4.2rem) clamp(2rem, 5vw, 4.2rem) clamp(1.8rem, 4vw, 3rem);
+      margin-top: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 2rem;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 252, 248, 0.82)),
+        linear-gradient(180deg, rgba(243, 237, 229, 0.8), rgba(255, 255, 255, 0));
+      box-shadow: var(--module-shadow);
+      overflow: hidden;
+      align-items: start;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -8rem -8rem auto;
+      width: 20rem;
+      height: 20rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(163, 79, 44, 0.16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -6rem auto auto -6rem;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(43, 93, 136, 0.12), transparent 72%);
+      pointer-events: none;
+    }
+
+    .hero__copy {
+      display: grid;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      align-content: start;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0 0 1rem;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--module-rust);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 2.5rem;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+
+    .hero__title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(2.9rem, 7vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--module-ink);
+      max-width: 11ch;
+    }
+
+    .hero__title span {
+      display: block;
+      color: var(--module-rust);
+    }
+
+    .hero__thesis {
+      max-width: 21ch;
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.55rem, 2.45vw, 2.15rem);
+      line-height: 1.16;
+      letter-spacing: -0.03em;
+      color: var(--module-ink);
+    }
+
+    .hero__subdek {
+      max-width: 54ch;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.72;
+      color: var(--module-ink-soft);
+    }
+
+    .hero__summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+      margin-top: 0.15rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(76, 90, 113, 0.14);
+      max-width: 56rem;
+    }
+
+    .summary-card {
+      padding: 0 0 0 1rem;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-left: 1px solid rgba(76, 90, 113, 0.18);
+      box-shadow: none;
+    }
+
+    .summary-card__label {
+      display: block;
+      margin-bottom: 0.45rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .summary-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--module-ink);
+    }
+
+    .hero__stats {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.22fr) minmax(0, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.15rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(76, 90, 113, 0.14);
+      align-items: start;
+    }
+
+    .hero__stats-label {
+      margin: 0;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .hero__stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .stat-chip {
+      padding: 0.1rem 0.9rem 0 0.9rem;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-left: 1px solid rgba(76, 90, 113, 0.12);
+    }
+
+    .stat-chip:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .stat-chip strong {
+      display: block;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--module-ink);
+      letter-spacing: -0.03em;
+    }
+
+    .stat-chip span {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.76rem;
+      line-height: 1.5;
+      color: var(--module-ink-soft);
+    }
+
+    .hero__diagram {
+      position: relative;
+      display: grid;
+      gap: 0.85rem;
+      align-content: start;
+      padding: 1.15rem 1.15rem 1.2rem;
+      border-radius: 1.4rem;
+      background:
+        linear-gradient(160deg, rgba(255, 247, 237, 0.95), rgba(255, 255, 255, 0.85)),
+        url("../images/splinternet-map.jpg") center / cover no-repeat;
+      border: 1px solid rgba(163, 79, 44, 0.14);
+      min-height: 100%;
+      overflow: hidden;
+    }
+
+    .hero__diagram::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 252, 248, 0.92), rgba(255, 252, 248, 0.74)),
+        linear-gradient(90deg, rgba(24, 34, 53, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(24, 34, 53, 0.04) 1px, transparent 1px);
+      background-size: auto, 42px 42px, 42px 42px;
+      pointer-events: none;
+    }
+
+    .hero__diagram > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .diagram__label {
+      margin: 0;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--module-rust);
+    }
+
+    .diagram__title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+    }
+
+    .diagram__intro {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.58;
+      color: var(--module-ink-soft);
+      max-width: 30ch;
+    }
+
+    .diagram-flow {
+      position: relative;
+      display: grid;
+      gap: 0.75rem;
+      padding-top: 0.8rem;
+    }
+
+    .diagram-flow::before,
+    .diagram-flow::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(43, 93, 136, 0.22), rgba(163, 79, 44, 0.4));
+      transform: translateX(-50%);
+    }
+
+    .diagram-flow::before {
+      top: 3.25rem;
+      height: 2rem;
+    }
+
+    .diagram-flow::after {
+      bottom: 3.4rem;
+      height: 2rem;
+    }
+
+    .diagram-node {
+      padding: 0.78rem 0.85rem 0.88rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(76, 90, 113, 0.12);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 8px 20px rgba(24, 34, 53, 0.05);
+    }
+
+    .diagram-node strong {
+      display: block;
+      margin-bottom: 0.28rem;
+      font-size: 0.92rem;
+      color: var(--module-ink);
+    }
+
+    .diagram-node p {
+      margin: 0;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--module-ink-soft);
+    }
+
+    .diagram-node--root {
+      background: rgba(236, 245, 251, 0.92);
+      border-color: rgba(43, 93, 136, 0.16);
+    }
+
+    .diagram-node--result {
+      background: rgba(255, 241, 232, 0.92);
+      border-color: rgba(163, 79, 44, 0.16);
+    }
+
+    .diagram-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .diagram-node--blue {
+      background: var(--module-blue-soft);
+      border-color: rgba(43, 93, 136, 0.16);
+    }
+
+    .diagram-node--rust {
+      background: var(--module-rust-soft);
+      border-color: rgba(163, 79, 44, 0.16);
+    }
+
+    .diagram-node--sage {
+      background: var(--module-sage-soft);
+      border-color: rgba(68, 104, 88, 0.16);
+    }
+
+    .hero-note {
+      margin: 0;
+      padding: 0.8rem 0 0;
+      border-radius: 0;
+      border-top: 1px solid rgba(76, 90, 113, 0.12);
+      background: none;
+      font-size: 0.83rem;
+      line-height: 1.6;
+      color: var(--module-ink-soft);
+    }
+
+    .module-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    .module-outline {
+      position: sticky;
+      top: 6.25rem;
+    }
+
+    .module-outline__card {
+      padding: 0 0 0 1rem;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-left: 1px solid rgba(76, 90, 113, 0.14);
+      box-shadow: none;
+    }
+
+    .module-outline__label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .module-outline__card nav {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .module-outline__card a {
+      display: block;
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.95rem;
+      text-decoration: none;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      color: var(--module-ink-soft);
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .module-outline__card a:hover,
+    .module-outline__card a.is-active {
+      background: rgba(24, 34, 53, 0.06);
+      color: var(--module-ink);
+      transform: translateX(2px);
+    }
+
+    .module-outline__note {
+      margin: 1rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(76, 90, 113, 0.12);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: var(--module-ink-soft);
+    }
+
+    .module-content {
+      min-width: 0;
+    }
+
+    .lesson-section {
+      padding: clamp(2.8rem, 5vw, 4.6rem) 0;
+      border-top: 1px solid rgba(76, 90, 113, 0.12);
+    }
+
+    .lesson-section:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0 0 0.8rem;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--module-rust);
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4.6vw, 3.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--module-ink);
+    }
+
+    .section-copy {
+      margin: 0;
+      max-width: 64ch;
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: var(--module-ink-soft);
+    }
+
+    .semantic-key {
+      display: grid;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .semantic-key__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .semantic-key__label::before {
+      content: "";
+      width: 2.25rem;
+      height: 1px;
+      background: rgba(76, 90, 113, 0.24);
+    }
+
+    .semantic-key__items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .semantic-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--semantic-border, rgba(76, 90, 113, 0.14));
+      background: var(--semantic-soft, rgba(255, 255, 255, 0.82));
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--semantic-accent, var(--module-ink));
+    }
+
+    .logic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .logic-card {
+      position: relative;
+      padding: 1rem 0.25rem 0 0;
+      border-radius: 0;
+      border: 0;
+      background: none;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .logic-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 3.5rem;
+      height: 2px;
+      background: var(--card-accent, var(--module-rust));
+    }
+
+    .logic-card__index {
+      display: inline-block;
+      width: auto;
+      height: auto;
+      margin-bottom: 0.85rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--card-accent, var(--module-rust));
+      background: none;
+    }
+
+    .logic-card h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.35rem;
+      line-height: 1.1;
+      color: var(--module-ink);
+    }
+
+    .logic-card p {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.68;
+      color: var(--module-ink-soft);
+    }
+
+    .logic-card ul {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .logic-card li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--module-ink);
+    }
+
+    .logic-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 50%;
+      background: var(--card-accent, var(--module-rust));
+    }
+
+    .logic-card--blue {
+      --card-accent: var(--module-blue);
+    }
+
+    .logic-card--rust {
+      --card-accent: var(--module-rust);
+    }
+
+    .logic-card--sage {
+      --card-accent: var(--module-sage);
+    }
+
+    .teaching-band {
+      margin-top: 1rem;
+      padding: 1rem 0;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-top: 1px solid rgba(76, 90, 113, 0.12);
+      border-bottom: 1px solid rgba(76, 90, 113, 0.12);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--module-ink-soft);
+    }
+
+    .timeline-shell {
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .timeline-hint {
+      margin: 0 0 1rem;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .timeline-track {
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(15rem, 1fr);
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.75rem 0.25rem 0.35rem;
+      scroll-snap-type: x proximity;
+    }
+
+    .timeline-track::before {
+      content: "";
+      position: absolute;
+      left: 0.6rem;
+      right: 0.6rem;
+      top: 3.4rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(43, 93, 136, 0.32), rgba(163, 79, 44, 0.42));
+    }
+
+    .timeline-event {
+      position: relative;
+      min-height: 13rem;
+      padding: 1.2rem 1rem 1.05rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--event-border, rgba(76, 90, 113, 0.1));
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 24px rgba(24, 34, 53, 0.05);
+      scroll-snap-align: start;
+    }
+
+    .timeline-event::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 2.6rem;
+      width: 0.78rem;
+      height: 0.78rem;
+      border-radius: 50%;
+      background: var(--event-accent, var(--module-rust));
+      box-shadow: 0 0 0 0.45rem rgba(255, 255, 255, 0.95);
+    }
+
+    .timeline-event__date {
+      display: block;
+      margin-bottom: 0.55rem;
+      font-size: 0.74rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--event-accent, var(--module-rust));
+    }
+
+    .timeline-event__logic {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.28rem 0.56rem;
+      border-radius: 999px;
+      border: 1px solid var(--event-border, rgba(76, 90, 113, 0.12));
+      background: var(--semantic-soft, rgba(255, 255, 255, 0.92));
+      font-size: 0.64rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--event-accent, var(--module-rust));
+    }
+
+    .timeline-event h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      color: var(--module-ink);
+    }
+
+    .timeline-event p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.62;
+      color: var(--module-ink-soft);
+    }
+
+    .timeline-event--blue {
+      --event-accent: var(--module-blue);
+    }
+
+    .timeline-event--rust {
+      --event-accent: var(--module-rust);
+    }
+
+    .timeline-event--amber {
+      --event-accent: var(--module-amber);
+    }
+
+    .timeline-event--plum {
+      --event-accent: var(--module-plum);
+    }
+
+    .timeline-event--sage {
+      --event-accent: var(--module-sage);
+    }
+
+    .case-jumps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .case-jumps a {
+      padding: 0.7rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid rgba(76, 90, 113, 0.12);
+      background: rgba(255, 255, 255, 0.76);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--module-ink-soft);
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .case-jumps a:hover {
+      background: rgba(24, 34, 53, 0.05);
+      border-color: rgba(24, 34, 53, 0.16);
+      color: var(--module-ink);
+    }
+
+    .case-stack {
+      display: grid;
+      gap: 1.3rem;
+    }
+
+    .case-study {
+      position: relative;
+      padding: 1.8rem 0 0;
+      border-radius: 0;
+      border: 0;
+      border-top: 1px solid rgba(76, 90, 113, 0.14);
+      background: none;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .case-study::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 4rem;
+      height: 2px;
+      background: var(--case-accent, var(--module-rust));
+    }
+
+    .case-study__header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 1.15rem;
+    }
+
+    .case-study__meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(76, 90, 113, 0.12);
+      background: rgba(24, 34, 53, 0.04);
+      color: var(--module-ink-soft);
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .meta-pill--semantic {
+      border-color: var(--case-border, rgba(76, 90, 113, 0.12));
+      background: var(--case-soft, rgba(255, 255, 255, 0.82));
+      color: var(--case-accent, var(--module-rust));
+    }
+
+    .case-study h3 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--module-ink);
+    }
+
+    .case-study__prompt {
+      max-width: 24ch;
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--module-ink-soft);
+    }
+
+    .case-study__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.88fr);
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .case-study__lede {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--module-ink-soft);
+    }
+
+    .case-study__lede strong {
+      color: var(--module-ink);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .detail-card {
+      padding: 0.95rem 1rem;
+      border-radius: 0.95rem;
+      border: 1px solid rgba(76, 90, 113, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .detail-card__label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--case-accent, var(--module-rust));
+    }
+
+    .detail-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--module-ink);
+    }
+
+    .detail-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .detail-card li {
+      position: relative;
+      padding-left: 0.95rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--module-ink);
+    }
+
+    .detail-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: var(--case-accent, var(--module-rust));
+    }
+
+    .annotation-panel {
+      padding: 1rem;
+      border-radius: 0.95rem;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(76, 90, 113, 0.12);
+    }
+
+    .annotation-panel dl {
+      margin: 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .annotation-panel dt {
+      margin: 0;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--case-accent, var(--module-rust));
+    }
+
+    .annotation-panel dd {
+      margin: 0.3rem 0 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--module-ink);
+    }
+
+    .question-box {
+      margin-top: 1rem;
+      padding: 0 0 0 1rem;
+      border-radius: 0;
+      border: 0;
+      border-left: 2px solid var(--case-accent, var(--module-rust));
+      background: none;
+    }
+
+    .question-box strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--case-accent, var(--module-rust));
+    }
+
+    .question-box p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--module-ink-soft);
+    }
+
+    .case-study--blue {
+      --case-accent: var(--module-blue);
+    }
+
+    .case-study--rust {
+      --case-accent: var(--module-rust);
+    }
+
+    .case-study--amber {
+      --case-accent: var(--module-amber);
+    }
+
+    .case-study--plum {
+      --case-accent: var(--module-plum);
+    }
+
+    .case-study--sage {
+      --case-accent: var(--module-sage);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .stack-card {
+      padding: 1rem 0.25rem 0 0;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-top: 2px solid var(--stack-accent, var(--module-rust));
+      box-shadow: none;
+    }
+
+    .stack-card__label {
+      display: inline-flex;
+      margin-bottom: 0.75rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stack-accent, var(--module-rust));
+    }
+
+    .stack-card h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.25rem;
+      line-height: 1.18;
+      color: var(--module-ink);
+    }
+
+    .stack-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--module-ink-soft);
+    }
+
+    .stack-card ul {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .stack-card li {
+      position: relative;
+      padding-left: 0.95rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--module-ink);
+    }
+
+    .stack-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: var(--stack-accent, var(--module-rust));
+    }
+
+    .stack-card--blue {
+      --stack-accent: var(--module-blue);
+    }
+
+    .stack-card--rust {
+      --stack-accent: var(--module-rust);
+    }
+
+    .stack-card--plum {
+      --stack-accent: var(--module-plum);
+    }
+
+    .matrix-shell {
+      overflow-x: auto;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(76, 90, 113, 0.12);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 18px 40px rgba(24, 34, 53, 0.05);
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    .matrix caption {
+      padding: 1rem 1.2rem 0;
+      text-align: left;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 1rem 1.15rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(76, 90, 113, 0.1);
+    }
+
+    .matrix thead th {
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--module-ink-soft);
+      background: rgba(24, 34, 53, 0.04);
+    }
+
+    .matrix tbody th {
+      width: 18%;
+      font-size: 0.9rem;
+      color: var(--module-ink);
+    }
+
+    .matrix td {
+      font-size: 0.92rem;
+      line-height: 1.62;
+      color: var(--module-ink-soft);
+    }
+
+    .transition-card {
+      margin-top: 1rem;
+      padding: 1.35rem;
+      border-radius: 1.45rem;
+      background:
+        linear-gradient(135deg, rgba(24, 34, 53, 0.96), rgba(40, 51, 71, 0.96)),
+        url("../images/sovereignty-architecture.jpg") center / cover no-repeat;
+      color: #f7f9fb;
+      box-shadow: 0 24px 56px rgba(24, 34, 53, 0.14);
+    }
+
+    .transition-card__label {
+      display: inline-flex;
+      margin-bottom: 0.7rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(251, 146, 60, 0.92);
+    }
+
+    .transition-card h3 {
+      margin: 0 0 0.6rem;
+      font-family: var(--font-heading);
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      color: white;
+    }
+
+    .transition-card p {
+      margin: 0;
+      max-width: 64ch;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(241, 245, 249, 0.82);
+    }
+
+    .transition-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: white;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .sources-card {
+      padding: 0.75rem 0 0;
+      border-radius: 0;
+      background: none;
+      border: 0;
+      border-top: 1px solid rgba(76, 90, 113, 0.14);
+      box-shadow: none;
+    }
+
+    .sources-card h3 {
+      margin: 0 0 0.8rem;
+      font-size: 1rem;
+      color: var(--module-ink);
+    }
+
+    .sources-card ol {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .sources-card li {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--module-ink-soft);
+    }
+
+    .reveal,
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .module-layout,
+      .section-head,
+      .case-study__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .module-outline {
+        position: static;
+      }
+
+      .hero__diagram {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero__summary,
+      .logic-grid,
+      .stack-grid,
+      .sources-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__stats {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .hero__stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .case-study__header {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-row {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-flow::before,
+      .diagram-flow::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .module-nav {
+        flex-wrap: wrap;
+      }
+
+      .module-nav__meta {
+        order: -1;
+        width: 100%;
+      }
+
+      .hero {
+        padding: 1.35rem;
+        border-radius: 1.5rem;
+      }
+
+      .module-outline__card {
+        padding: 0.5rem 0 0 0.85rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero__stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
-<body>
-  <div class="module-nav">
-    <a href="../magazine.html">← Back to Hub</a>
-    <a href="module-05.html">Next: Module 05 →</a>
-  </div>
-  
-  <main>
-<!-- WEEK 1 - PART IV: The Splinternet Accelerates (2019-2024) -->
-<!-- Section ID: week1-part4 -->
+<body class="module04-page">
+  <a class="skip-link" href="#module-content">Skip to content</a>
 
-<section id="week1-part4" class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white py-16 md:py-24 relative overflow-hidden">
-  
-  <!-- Background Elements -->
-  <div class="absolute inset-0 opacity-5">
-    <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(239, 68, 68, 0.3) 0%, transparent 50%);"></div>
-  </div>
-  
-  <!-- Animated Grid Background -->
-  <div class="absolute inset-0 opacity-10">
-    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="splinternet-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" stroke-width="0.5" class="text-slate-400"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#splinternet-grid)"/>
-    </svg>
-  </div>
+  <nav class="module-nav" aria-label="Module navigation">
+    <a class="module-nav__link" href="../magazine.html">&larr; Back to hub</a>
+    <div class="module-nav__meta">Week 1 / Part IV / Module 04</div>
+    <a class="module-nav__link" href="module-05.html">Next module &rarr;</a>
+  </nav>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    
-    <!-- Section Header -->
-    <div class="text-center mb-16 md:mb-24 splinternet-header">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/20 to-red-600/20 border border-blue-500/30 mb-6">
-        <i data-lucide="globe" class="w-4 h-4 text-blue-400"></i>
-        <span class="text-sm font-medium text-blue-300 tracking-wider uppercase">Week 1 · Part IV</span>
-      </div>
-      
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 bg-clip-text text-transparent">
-        The Splinternet Accelerates
-      </h1>
-      
-      <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light">
-        Techno-Nationalism and the Era of Exclusion <span class="text-slate-500">(2019-2024)</span>
-      </p>
-      
-      <div class="mt-8 flex justify-center">
-        <div class="w-32 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 rounded-full"></div>
-      </div>
-    </div>
-
-    <!-- Introduction Quote -->
-    <div class="max-w-4xl mx-auto mb-20 splinternet-intro">
-      <blockquote class="relative">
-        <div class="absolute -top-4 -left-4 text-6xl text-blue-500/30 font-serif">"</div>
-        <p class="text-xl md:text-2xl text-slate-300 italic leading-relaxed pl-8 border-l-4 border-blue-500">
-          The era of the global, open internet is over. We are now witnessing the emergence of competing digital spheres of influence, each with its own infrastructure, standards, and values.
+  <main id="module-content" class="module-shell">
+    <header class="hero reveal">
+      <div class="hero__copy">
+        <p class="eyebrow">The Splinternet, 2019-2024</p>
+        <h1 class="hero__title">The Splinternet <span>Accelerates</span></h1>
+        <p class="hero__thesis">
+          From 2019 onward, the internet stops functioning like a neutral global commons and hardens into a contested architecture of exclusion, standards struggle, and sovereign fallback systems.
         </p>
-        <footer class="mt-4 pl-8 text-slate-500">
-          — <cite>Parag Khanna, <em>The Future is Asian</em> (2021)</cite>
-        </footer>
-      </blockquote>
-    </div>
-
-    <!-- Visual Map: Splinternet Geography -->
-    <div class="mb-20 splinternet-map">
-      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
-        <span class="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">The Fractured Digital Landscape</span>
-      </h2>
-      
-      <div class="relative bg-slate-900/50 rounded-2xl p-8 border border-slate-700/50 backdrop-blur-sm">
-        <!-- Abstract World Map Visualization -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <!-- US/Blue Stack -->
-          <div class="blue-stack-region group">
-            <div class="bg-gradient-to-br from-blue-900/40 to-blue-800/20 rounded-xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
-                  <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-bold text-blue-300">"Blue" Stack</h3>
-                  <p class="text-xs text-blue-400/70">US & Allies</p>
-                </div>
-              </div>
-              <ul class="space-y-2 text-sm text-slate-300">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-blue-400"></i> Clean Network Initiative</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-blue-400"></i> Wintel/Android Ecosystem</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-blue-400"></i> AWS/Azure/Google Cloud</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-blue-400"></i> Five Eyes Intelligence</li>
-              </ul>
-              <div class="mt-4 pt-4 border-t border-blue-500/20">
-                <span class="text-xs text-blue-400/60">Key Players: USA, UK, Australia, Japan, South Korea</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- China/Red Stack -->
-          <div class="red-stack-region group">
-            <div class="bg-gradient-to-br from-red-900/40 to-red-800/20 rounded-xl p-6 border border-red-500/30 hover:border-red-400/50 transition-all duration-300">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
-                  <i data-lucide="server" class="w-6 h-6 text-red-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-bold text-red-300">"Red" Stack</h3>
-                  <p class="text-xs text-red-400/70">China & Belt & Road</p>
-                </div>
-              </div>
-              <ul class="space-y-2 text-sm text-slate-300">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-red-400"></i> Digital Silk Road</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-red-400"></i> BAT Ecosystem</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-red-400"></i> Huawei 5G Infrastructure</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-red-400"></i> New IP Proposal</li>
-              </ul>
-              <div class="mt-4 pt-4 border-t border-red-500/20">
-                <span class="text-xs text-red-400/60">Key Players: China, Pakistan, Cambodia, Ethiopia</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Regulatory Bloc -->
-          <div class="regulatory-bloc-region group">
-            <div class="bg-gradient-to-br from-purple-900/40 to-purple-800/20 rounded-xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-                  <i data-lucide="scale" class="w-6 h-6 text-purple-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-bold text-purple-300">Regulatory Bloc</h3>
-                  <p class="text-xs text-purple-400/70">EU, India, Emerging Markets</p>
-                </div>
-              </div>
-              <ul class="space-y-2 text-sm text-slate-300">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-purple-400"></i> GDPR & DSA Framework</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-purple-400"></i> Data Localization Laws</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-purple-400"></i> Digital Sovereignty</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-purple-400"></i> Multi-alignment Strategy</li>
-              </ul>
-              <div class="mt-4 pt-4 border-t border-purple-500/20">
-                <span class="text-xs text-purple-400/60">Key Players: EU, India, Brazil, Indonesia, Nigeria</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Connection Lines Visualization -->
-        <div class="mt-8 flex justify-center">
-          <div class="flex items-center gap-4 text-sm text-slate-500">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-blue-500"></span> Allied
-            </span>
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-red-500"></span> Contested
-            </span>
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-yellow-500"></span> Neutral/Multi-aligned
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Timeline: 2019-2024 -->
-    <div class="mb-20 splinternet-timeline">
-      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
-        <span class="bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-transparent">Timeline of Fragmentation</span>
-      </h2>
-      
-      <div class="relative">
-        <!-- Timeline Line -->
-        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-red-500 md:-translate-x-1/2"></div>
-        
-        <!-- Timeline Events -->
-        <div class="space-y-12">
-          
-          <!-- May 2019 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-blue-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-blue-400 text-sm font-semibold">May 2019</span>
-                <h4 class="font-bold text-white mt-1">Executive Order 13873</h4>
-                <p class="text-slate-400 text-sm mt-2">President Trump declares national emergency over foreign adversary threats to ICT supply chain. Sets stage for Huawei ban.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2019 - New IP -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-red-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pl-12">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-red-400 text-sm font-semibold">2019</span>
-                <h4 class="font-bold text-white mt-1">Huawei's "New IP" Proposal</h4>
-                <p class="text-slate-400 text-sm mt-2">Submitted to ITU, proposing redesigned internet protocol with "intrinsic security"—criticized as enabling surveillance.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- November 2019 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-orange-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-orange-400 text-sm font-semibold">November 2019</span>
-                <h4 class="font-bold text-white mt-1">Russia's Sovereign Internet Law</h4>
-                <p class="text-slate-400 text-sm mt-2">"Runet" autonomy law takes effect, mandating TSPU installation and annual disconnect tests.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- August 2020 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-blue-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pl-12">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-blue-400 text-sm font-semibold">August 2020</span>
-                <h4 class="font-bold text-white mt-1">Clean Network Initiative</h4>
-                <p class="text-slate-400 text-sm mt-2">Secretary Pompeo announces five-layer framework to exclude "untrusted" Chinese vendors from global networks.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- June 2020 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-purple-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-purple-400 text-sm font-semibold">June 2020</span>
-                <h4 class="font-bold text-white mt-1">India's "Digital Strike"</h4>
-                <p class="text-slate-400 text-sm mt-2">59 Chinese apps banned under Section 69A following Galwan Valley clash. TikTok, WeChat removed from Indian market.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2022 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-green-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pl-12">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-green-400 text-sm font-semibold">2022</span>
-                <h4 class="font-bold text-white mt-1">EU Digital Services Act</h4>
-                <p class="text-slate-400 text-sm mt-2">Landmark regulation establishing platform accountability, content moderation standards, and algorithmic transparency.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2024 -->
-          <div class="timeline-event relative pl-12 md:pl-0">
-            <div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-red-600 border-4 border-slate-900 md:-translate-x-1/2 flex items-center justify-center">
-              <span class="w-2 h-2 rounded-full bg-white"></span>
-            </div>
-            <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
-              <div class="bg-slate-800/50 rounded-lg p-5 border border-slate-700/50">
-                <span class="text-red-400 text-sm font-semibold">2024</span>
-                <h4 class="font-bold text-white mt-1">Iran's Starlink Blackout</h4>
-                <p class="text-slate-400 text-sm mt-2">National Information Network achieves electromagnetic spectrum sovereignty, blocking Starlink during protests.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 1: Clean Network Initiative -->
-    <div class="mb-20 clean-network-section">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-500/20">
-          <i data-lucide="shield" class="w-8 h-8 text-white"></i>
-        </div>
-        <div>
-          <span class="text-blue-400 text-sm font-semibold uppercase tracking-wider">United States</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">The "Clean Network" Initiative</h2>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <p class="text-slate-300 leading-relaxed">
-              On August 5, 2020, Secretary of State Mike Pompeo announced the expansion of the Clean Network program, a comprehensive effort to safeguard America's sensitive information from "aggressive intrusions by malign actors, such as the Chinese Communist Party."
-            </p>
-          </div>
-
-          <!-- Pompeo Quote -->
-          <blockquote class="bg-blue-900/20 border-l-4 border-blue-500 rounded-r-xl p-6">
-            <p class="text-lg text-blue-100 italic">
-              "The Clean Network program is the Trump Administration's comprehensive approach to guarding our citizens' privacy and our companies' most sensitive information from aggressive intrusions by malign actors, such as the Chinese Communist Party."
-            </p>
-            <footer class="mt-4 text-blue-400 text-sm">
-              — <cite>Secretary Mike Pompeo, August 5, 2020</cite>
-            </footer>
-          </blockquote>
-
-          <div class="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-              <i data-lucide="file-text" class="w-5 h-5 text-blue-400"></i>
-              Executive Order 13873 (May 2019)
-            </h4>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              Declared a national emergency regarding threats to information and communications technology and services (ICTS) supply chain. Authorized Commerce Secretary to prohibit transactions involving foreign adversary technology.
-            </p>
-          </div>
-        </div>
-
-        <!-- Five Layers of Clean Network -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-semibold text-white mb-4">Five Layers of Network Security</h3>
-          
-          <div class="clean-layer group">
-            <div class="flex items-start gap-4 bg-slate-800/40 rounded-lg p-4 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="radio-tower" class="w-5 h-5 text-blue-400"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-blue-300">Clean Carrier</h4>
-                <p class="text-sm text-slate-400 mt-1">Ensure untrusted PRC carriers are not connected with US telecommunications networks</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="clean-layer group">
-            <div class="flex items-start gap-4 bg-slate-800/40 rounded-lg p-4 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="store" class="w-5 h-5 text-blue-400"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-blue-300">Clean Store</h4>
-                <p class="text-sm text-slate-400 mt-1">Remove untrusted applications from US mobile app stores (TikTok, WeChat)</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="clean-layer group">
-            <div class="flex items-start gap-4 bg-slate-800/40 rounded-lg p-4 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="smartphone" class="w-5 h-5 text-blue-400"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-blue-300">Clean Apps</h4>
-                <p class="text-sm text-slate-400 mt-1">Prevent untrusted PRC smartphone manufacturers from pre-installing trusted apps</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="clean-layer group">
-            <div class="flex items-start gap-4 bg-slate-800/40 rounded-lg p-4 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="cloud" class="w-5 h-5 text-blue-400"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-blue-300">Clean Cloud</h4>
-                <p class="text-sm text-slate-400 mt-1">Prevent US citizens' most sensitive personal information and businesses' valuable intellectual property from being stored on cloud-based systems accessible to foreign adversaries</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="clean-layer group">
-            <div class="flex items-start gap-4 bg-slate-800/40 rounded-lg p-4 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300">
-              <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="anchor" class="w-5 h-5 text-blue-400"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-blue-300">Clean Cable</h4>
-                <p class="text-sm text-slate-400 mt-1">Ensure undersea cables connecting US to global internet are not subverted for intelligence gathering by PRC at hyper-scale</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Huawei 5G Dilemma -->
-      <div class="mt-8 bg-gradient-to-r from-red-900/20 to-orange-900/20 rounded-xl p-6 border border-red-500/30">
-        <h4 class="font-semibold text-red-300 mb-3 flex items-center gap-2">
-          <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-          The Huawei 5G Dilemma
-        </h4>
-        <p class="text-slate-300 text-sm leading-relaxed">
-          The Clean Network directly targeted Huawei's dominance in 5G infrastructure. By 2020, Huawei had secured 91 commercial 5G contracts globally. The US pressured allies to exclude Huawei, creating a bifurcation: countries choosing "Blue" (Nokia, Ericsson) vs "Red" (Huawei, ZTE) 5G infrastructure. This division extends beyond telecommunications into AI, cloud computing, and semiconductor supply chains.
+        <p class="hero__subdek">
+          This module follows that shift across vendors, protocols, apps, routing systems, and satellite access so students can see where geopolitical control is actually asserted.
         </p>
-        <div class="mt-4 flex flex-wrap gap-4 text-xs">
-          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-300">UK Ban: July 2020</span>
-          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-300">Australia Ban: 2018</span>
-          <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-300">Germany: Partial Restrictions</span>
-          <span class="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-300">India: Trial Exclusion</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Section 2: ITU/New IP Battle -->
-    <div class="mb-20 itu-section">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-red-600 to-orange-700 flex items-center justify-center shadow-lg shadow-red-500/20">
-          <i data-lucide="network" class="w-8 h-8 text-white"></i>
-        </div>
-        <div>
-          <span class="text-red-400 text-sm font-semibold uppercase tracking-wider">Geopolitics of Standards</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">Battle for the ITU</h2>
+        <div class="hero__summary" aria-label="How to approach the lesson">
+          <article class="summary-card">
+            <span class="summary-card__label">Reading lens</span>
+            <p>Track how the same political goal reappears at different layers: vendors, protocols, consumer apps, domestic routing, and emergency communications.</p>
+          </article>
+          <article class="summary-card">
+            <span class="summary-card__label">Bridge to AI</span>
+            <p>Once cloud, data, and standards become securitized, AI sovereignty follows the same logic of trusted ecosystems, restrictions, and fallback capacity.</p>
+          </article>
         </div>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-8">
-        <div>
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 mb-6">
-            <h3 class="font-semibold text-white mb-3">The "New IP" Proposal</h3>
-            <p class="text-slate-300 text-sm leading-relaxed mb-4">
-              In 2019, Huawei, China Unicom, and China's Ministry of Industry and Information Technology submitted a proposal to the ITU-T (International Telecommunication Union - Telecommunication Standardization Sector) for a "New IP" architecture. The proposal aimed to redesign the internet protocol stack for the 5G and IoT era.
-            </p>
-            <div class="bg-red-900/20 rounded-lg p-4 border border-red-500/30">
-              <h4 class="text-red-300 text-sm font-semibold mb-2">Core Arguments</h4>
-              <ul class="space-y-2 text-sm text-slate-400">
-                <li class="flex items-start gap-2">
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-red-400 mt-0.5"></i>
-                  Current TCP/IP lacks "intrinsic security"
-                </li>
-                <li class="flex items-start gap-2">
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-red-400 mt-0.5"></i>
-                  Need for deterministic routing and quality of service
-                </li>
-                <li class="flex items-start gap-2">
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-red-400 mt-0.5"></i>
-                  Centralized control for "stability"
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Intrinsic Security vs Surveillance -->
-          <div class="bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-xl p-6 border border-amber-500/30">
-            <h4 class="font-semibold text-amber-300 mb-4 flex items-center gap-2">
-              <i data-lucide="scale" class="w-5 h-5"></i>
-              Intrinsic Security vs Intrinsic Surveillance
-            </h4>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="bg-slate-900/50 rounded-lg p-4">
-                <h5 class="text-green-400 text-sm font-semibold mb-2">Proponents View</h5>
-                <p class="text-xs text-slate-400">Built-in authentication and traceability protect against cyberattacks and criminal activity</p>
-              </div>
-              <div class="bg-slate-900/50 rounded-lg p-4">
-                <h5 class="text-red-400 text-sm font-semibold mb-2">Critics View</h5>
-                <p class="text-xs text-slate-400">Enables state surveillance, breaks end-to-end principle, creates kill switches</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h3 class="font-semibold text-white mb-4">Diplomatic Mobilization</h3>
-            
-            <div class="space-y-4">
-              <div class="flex items-center gap-3 p-3 bg-blue-900/20 rounded-lg border border-blue-500/30">
-                <i data-lucide="shield-check" class="w-5 h-5 text-blue-400"></i>
-                <div>
-                  <span class="text-blue-300 text-sm font-medium">US & Allies Opposition</span>
-                  <p class="text-xs text-slate-400">Coordinated campaign at ITU to block New IP standardization</p>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3 p-3 bg-purple-900/20 rounded-lg border border-purple-500/30">
-                <i data-lucide="users" class="w-5 h-5 text-purple-400"></i>
-                <div>
-                  <span class="text-purple-300 text-sm font-medium">European Position</span>
-                  <p class="text-xs text-slate-400">Advocated for multistakeholder governance over state-controlled standards</p>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3 p-3 bg-green-900/20 rounded-lg border border-green-500/30">
-                <i data-lucide="globe-2" class="w-5 h-5 text-green-400"></i>
-                <div>
-                  <span class="text-green-300 text-sm font-medium">Developing Nations</span>
-                  <p class="text-xs text-slate-400">Many African and Asian nations supported Chinese proposals due to infrastructure investments</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-6 border-t border-slate-700/50">
-              <h4 class="text-sm font-semibold text-white mb-3">ITU Voting Dynamics (2020)</h4>
-              <div class="space-y-2">
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-slate-400">Opposed to New IP</span>
-                  <span class="text-blue-400 font-semibold">~35 countries</span>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-slate-400">Supported New IP</span>
-                  <span class="text-red-400 font-semibold">~25 countries</span>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-slate-400">Abstained/Neutral</span>
-                  <span class="text-slate-400 font-semibold">~100+ countries</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Key Quote -->
-          <blockquote class="mt-6 bg-slate-900/50 border-l-4 border-orange-500 rounded-r-xl p-5">
-            <p class="text-slate-300 italic text-sm">
-              "The New IP proposal represents a fundamental shift from the multistakeholder model that has governed the internet for decades toward a multilateral, state-controlled approach."
-            </p>
-            <footer class="mt-3 text-slate-500 text-xs">
-              — <cite>Internet Society Analysis, 2020</cite>
-            </footer>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 3: India's Digital Strike -->
-    <div class="mb-20 india-section">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-600 to-amber-700 flex items-center justify-center shadow-lg shadow-orange-500/20">
-          <i data-lucide="smartphone" class="w-8 h-8 text-white"></i>
-        </div>
-        <div>
-          <span class="text-orange-400 text-sm font-semibold uppercase tracking-wider">India</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">The "Digital Strike"</h2>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-6">
-        <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <div class="flex items-center gap-3 mb-4">
-              <span class="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-semibold">June 29, 2020</span>
-              <span class="text-slate-500 text-sm">Ministry of Electronics and IT</span>
-            </div>
-            <p class="text-slate-300 leading-relaxed mb-4">
-              Following deadly clashes in the Galwan Valley that killed 20 Indian soldiers, the Indian government invoked <strong>Section 69A of the Information Technology Act</strong> to ban 59 Chinese mobile applications, citing threats to "sovereignty and integrity of India, defence of India, security of state and public order."
-            </p>
-            
-            <!-- Banned Apps Grid -->
-            <div class="bg-slate-900/50 rounded-lg p-4">
-              <h4 class="text-sm font-semibold text-white mb-3">Key Banned Applications</h4>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div class="bg-slate-800 rounded-lg p-3 text-center">
-                  <i data-lucide="music" class="w-6 h-6 text-pink-400 mx-auto mb-1"></i>
-                  <span class="text-xs text-slate-300">TikTok</span>
-                  <span class="block text-xs text-slate-500">200M+ users</span>
-                </div>
-                <div class="bg-slate-800 rounded-lg p-3 text-center">
-                  <i data-lucide="message-circle" class="w-6 h-6 text-green-400 mx-auto mb-1"></i>
-                  <span class="text-xs text-slate-300">WeChat</span>
-                  <span class="block text-xs text-slate-500">Popular</span>
-                </div>
-                <div class="bg-slate-800 rounded-lg p-3 text-center">
-                  <i data-lucide="shopping-bag" class="w-6 h-6 text-orange-400 mx-auto mb-1"></i>
-                  <span class="text-xs text-slate-300">Shein</span>
-                  <span class="block text-xs text-slate-500">E-commerce</span>
-                </div>
-                <div class="bg-slate-800 rounded-lg p-3 text-center">
-                  <i data-lucide="share-2" class="w-6 h-6 text-blue-400 mx-auto mb-1"></i>
-                  <span class="text-xs text-slate-300">ShareIt</span>
-                  <span class="block text-xs text-slate-500">File sharing</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section 69A -->
-          <div class="bg-gradient-to-r from-orange-900/20 to-amber-900/20 rounded-xl p-6 border border-orange-500/30">
-            <h4 class="font-semibold text-orange-300 mb-3 flex items-center gap-2">
-              <i data-lucide="gavel" class="w-5 h-5"></i>
-              Section 69A of the IT Act, 2000
-            </h4>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              Empowers the government to block public access to any information online if it deems it necessary in the interest of sovereignty and integrity of India, defence of India, security of the state, friendly relations with foreign states, or public order. The provision has been used increasingly since 2020, with over 300 apps banned by 2024.
-            </p>
-          </div>
-
-          <!-- Economic Aftermath -->
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h4 class="font-semibold text-white mb-4">Economic Aftermath: The Rise of Indian Alternatives</h4>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="space-y-3">
-                <div class="flex items-center gap-3 p-3 bg-green-900/20 rounded-lg border border-green-500/30">
-                  <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <i data-lucide="trending-up" class="w-5 h-5 text-green-400"></i>
-                  </div>
-                  <div>
-                    <span class="text-green-300 text-sm font-medium">ShareChat</span>
-                    <p class="text-xs text-slate-400">Regional language platform, 180M+ users</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3 p-3 bg-purple-900/20 rounded-lg border border-purple-500/30">
-                  <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                    <i data-lucide="video" class="w-5 h-5 text-purple-400"></i>
-                  </div>
-                  <div>
-                    <span class="text-purple-300 text-sm font-medium">Moj</span>
-                    <p class="text-xs text-slate-400">Short video, 160M+ downloads</p>
-                  </div>
-                </div>
-              </div>
-              <div class="space-y-3">
-                <div class="flex items-center gap-3 p-3 bg-blue-900/20 rounded-lg border border-blue-500/30">
-                  <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                    <i data-lucide="play-circle" class="w-5 h-5 text-blue-400"></i>
-                  </div>
-                  <div>
-                    <span class="text-blue-300 text-sm font-medium">Josh</span>
-                    <p class="text-xs text-slate-400">VerSe Innovation, 150M+ users</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg border border-slate-500/30">
-                  <div class="w-10 h-10 rounded-full bg-slate-500/20 flex items-center justify-center">
-                    <i data-lucide="globe" class="w-5 h-5 text-slate-400"></i>
-                  </div>
-                  <div>
-                    <span class="text-slate-300 text-sm font-medium">Global Players</span>
-                    <p class="text-xs text-slate-400">Instagram Reels, YouTube Shorts</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Statistics Sidebar -->
-        <div class="space-y-4">
-          <div class="bg-gradient-to-br from-orange-900/40 to-red-900/40 rounded-xl p-6 border border-orange-500/30">
-            <h4 class="font-semibold text-orange-300 mb-4">Impact Statistics</h4>
-            <div class="space-y-4">
-              <div class="text-center p-4 bg-slate-900/50 rounded-lg">
-                <span class="text-3xl font-bold text-orange-400">59</span>
-                <p class="text-xs text-slate-400 mt-1">Apps Banned (June 2020)</p>
-              </div>
-              <div class="text-center p-4 bg-slate-900/50 rounded-lg">
-                <span class="text-3xl font-bold text-red-400">300+</span>
-                <p class="text-xs text-slate-400 mt-1">Total Apps Banned (by 2024)</p>
-              </div>
-              <div class="text-center p-4 bg-slate-900/50 rounded-lg">
-                <span class="text-3xl font-bold text-amber-400">$2.5B</span>
-                <p class="text-xs text-slate-400 mt-1">Estimated TikTok India Value</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Timeline Mini -->
-          <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-            <h4 class="text-sm font-semibold text-white mb-3">Expansion Timeline</h4>
-            <div class="space-y-3 text-xs">
-              <div class="flex gap-3">
-                <span class="text-orange-400 font-mono">Jun '20</span>
-                <span class="text-slate-400">59 apps banned</span>
-              </div>
-              <div class="flex gap-3">
-                <span class="text-orange-400 font-mono">Sep '20</span>
-                <span class="text-slate-400">118 more apps</span>
-              </div>
-              <div class="flex gap-3">
-                <span class="text-orange-400 font-mono">Nov '20</span>
-                <span class="text-slate-400">43 additional apps</span>
-              </div>
-              <div class="flex gap-3">
-                <span class="text-orange-400 font-mono">2021-24</span>
-                <span class="text-slate-400">Gaming, fintech apps added</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 4: Russia's Sovereign Internet -->
-    <div class="mb-20 russia-section">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-600 to-orange-700 flex items-center justify-center shadow-lg shadow-yellow-500/20">
-          <i data-lucide="power-off" class="w-8 h-8 text-white"></i>
-        </div>
-        <div>
-          <span class="text-yellow-400 text-sm font-semibold uppercase tracking-wider">Russia</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">Sovereign Internet Law</h2>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h3 class="font-semibold text-white mb-3">The "Runet" Autonomy Vision</h3>
-            <p class="text-slate-300 text-sm leading-relaxed mb-4">
-              Signed into law by President Putin in May 2019 and effective November 2019, the Sovereign Internet Law (Federal Law No. 90-FZ) mandates the creation of a national domain name system and requires ISPs to install government-provided equipment to enable centralized control and filtering of internet traffic.
-            </p>
-            
-            <!-- Key Provisions -->
-            <div class="space-y-3">
-              <div class="flex items-start gap-3 p-3 bg-yellow-900/20 rounded-lg border border-yellow-500/30">
-                <i data-lucide="server" class="w-5 h-5 text-yellow-400 mt-0.5"></i>
-                <div>
-                  <span class="text-yellow-300 text-sm font-medium">National DNS</span>
-                  <p class="text-xs text-slate-400">Mirror root DNS servers for .ru and .рф domains</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3 p-3 bg-yellow-900/20 rounded-lg border border-yellow-500/30">
-                <i data-lucide="filter" class="w-5 h-5 text-yellow-400 mt-0.5"></i>
-                <div>
-                  <span class="text-yellow-300 text-sm font-medium">TSPU Installation</span>
-                  <p class="text-xs text-slate-400">Technical Means to Counter Threats - deep packet inspection</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3 p-3 bg-yellow-900/20 rounded-lg border border-yellow-500/30">
-                <i data-lucide="activity" class="w-5 h-5 text-yellow-400 mt-0.5"></i>
-                <div>
-                  <span class="text-yellow-300 text-sm font-medium">Annual Tests</span>
-                  <p class="text-xs text-slate-400">Mandatory "disconnect tests" to verify Runet autonomy</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Disconnect Tests -->
-          <div class="bg-gradient-to-br from-red-900/20 to-orange-900/20 rounded-xl p-6 border border-red-500/30">
-            <h4 class="font-semibold text-red-300 mb-4 flex items-center gap-2">
-              <i data-lucide="alert-circle" class="w-5 h-5"></i>
-              Annual "Disconnect Tests"
-            </h4>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-lg">
-                <span class="text-slate-300 text-sm">December 2019</span>
-                <span class="text-green-400 text-xs">First test (limited)</span>
-              </div>
-              <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-lg">
-                <span class="text-slate-300 text-sm">July 2021</span>
-                <span class="text-green-400 text-xs">Full-scale test</span>
-              </div>
-              <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-lg">
-                <span class="text-slate-300 text-sm">2022-2024</span>
-                <span class="text-yellow-400 text-xs">Ongoing exercises</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-500 mt-3">
-              Tests simulate disconnecting from global internet while maintaining domestic connectivity
-            </p>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <!-- TSPU Deep Dive -->
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h4 class="font-semibold text-white mb-4">TSPU: Technical Means to Combat Threats</h4>
-            
-            <div class="relative mb-6">
-              <!-- Diagram -->
-              <div class="flex flex-col items-center gap-4">
-                <div class="w-full bg-blue-900/30 rounded-lg p-4 text-center border border-blue-500/30">
-                  <span class="text-blue-300 text-sm">Global Internet</span>
-                </div>
-                <i data-lucide="arrow-down" class="w-6 h-6 text-slate-500"></i>
-                <div class="w-full bg-yellow-900/30 rounded-lg p-4 border border-yellow-500/30">
-                  <div class="flex items-center justify-center gap-2">
-                    <i data-lucide="shield" class="w-5 h-5 text-yellow-400"></i>
-                    <span class="text-yellow-300 text-sm font-medium">TSPU (Deep Packet Inspection)</span>
-                  </div>
-                  <div class="grid grid-cols-3 gap-2 mt-3 text-xs">
-                    <div class="bg-slate-900/50 rounded p-2 text-center text-slate-400">Filtering</div>
-                    <div class="bg-slate-900/50 rounded p-2 text-center text-slate-400">Monitoring</div>
-                    <div class="bg-slate-900/50 rounded p-2 text-center text-slate-400">Blocking</div>
-                  </div>
-                </div>
-                <i data-lucide="arrow-down" class="w-6 h-6 text-slate-500"></i>
-                <div class="w-full bg-green-900/30 rounded-lg p-4 text-center border border-green-500/30">
-                  <span class="text-green-300 text-sm">Russian Users</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-2 text-sm text-slate-400">
-              <p>• Installed at all ISP exchange points</p>
-              <p>• Enables real-time traffic analysis</p>
-              <p>• Can block VPNs, Tor, and proxy services</p>
-              <p>• Centralized control via Roskomnadzor</p>
-            </div>
-          </div>
-
-          <!-- Evolution -->
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h4 class="font-semibold text-white mb-3">From Filtering to Survivability</h4>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              Russia's approach evolved from simple content blocking (starting with the 2012 "Internet Blacklist" law) toward complete network survivability. The 2019 law represents a paradigm shift: not just controlling what citizens can access, but ensuring the Russian internet can function independently of global infrastructure.
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="px-2 py-1 rounded bg-slate-700 text-xs text-slate-400">2012: Blacklist Law</span>
-              <span class="px-2 py-1 rounded bg-slate-700 text-xs text-slate-400">2016: Yarovaya Law</span>
-              <span class="px-2 py-1 rounded bg-yellow-900/40 text-xs text-yellow-400">2019: Sovereign Internet</span>
-              <span class="px-2 py-1 rounded bg-slate-700 text-xs text-slate-400">2022: VPN Crackdown</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 5: Iran's NIN -->
-    <div class="mb-20 iran-section">
-      <div class="flex items-center gap-4 mb-8">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-green-700 to-emerald-800 flex items-center justify-center shadow-lg shadow-green-500/20">
-          <i data-lucide="wifi-off" class="w-8 h-8 text-white"></i>
-        </div>
-        <div>
-          <span class="text-green-400 text-sm font-semibold uppercase tracking-wider">Iran</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">National Information Network</h2>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h3 class="font-semibold text-white mb-3">The "Halal Internet" Vision</h3>
-            <p class="text-slate-300 text-sm leading-relaxed mb-4">
-              Iran's National Information Network (NIN), also called the "National Internet" or "Halal Internet," represents one of the most comprehensive attempts to create a parallel, state-controlled internet infrastructure. First proposed in 2005 and progressively implemented, the NIN aims to provide domestic users with government-approved content while maintaining the ability to completely sever connections to the global internet.
-            </p>
-
-            <!-- Key Features -->
-            <div class="grid grid-cols-2 gap-3">
-              <div class="bg-green-900/20 rounded-lg p-3 border border-green-500/30">
-                <i data-lucide="home" class="w-4 h-4 text-green-400 mb-1"></i>
-                <span class="text-green-300 text-xs font-medium block">Domestic Hosting</span>
-                <span class="text-slate-500 text-xs">All .ir domains hosted locally</span>
-              </div>
-              <div class="bg-green-900/20 rounded-lg p-3 border border-green-500/30">
-                <i data-lucide="zap" class="w-4 h-4 text-green-400 mb-1"></i>
-                <span class="text-green-300 text-xs font-medium block">Speed Advantage</span>
-                <span class="text-slate-500 text-xs">Domestic sites 10x faster</span>
-              </div>
-              <div class="bg-green-900/20 rounded-lg p-3 border border-green-500/30">
-                <i data-lucide="dollar-sign" class="w-4 h-4 text-green-400 mb-1"></i>
-                <span class="text-green-300 text-xs font-medium block">Currency Control</span>
-                <span class="text-slate-500 text-xs">No forex for intl bandwidth</span>
-              </div>
-              <div class="bg-green-900/20 rounded-lg p-3 border border-green-500/30">
-                <i data-lucide="eye" class="w-4 h-4 text-green-400 mb-1"></i>
-                <span class="text-green-300 text-xs font-medium block">Total Surveillance</span>
-                <span class="text-slate-500 text-xs">All traffic monitored</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2024 Blackout -->
-          <div class="bg-gradient-to-br from-red-900/30 to-green-900/20 rounded-xl p-6 border border-red-500/30">
-            <h4 class="font-semibold text-red-300 mb-4 flex items-center gap-2">
-              <i data-lucide="satellite" class="w-5 h-5"></i>
-              2024: The Starlink Blackout
-            </h4>
-            <p class="text-slate-300 text-sm leading-relaxed mb-4">
-              During nationwide protests in 2024, Iran demonstrated the maturity of its NIN by successfully blocking Starlink satellite internet services—previously considered unblockable. This represented a new frontier in electromagnetic spectrum sovereignty.
-            </p>
-            <div class="bg-slate-900/50 rounded-lg p-4">
-              <h5 class="text-xs font-semibold text-slate-400 mb-2">Counter-Starlink Measures</h5>
-              <ul class="space-y-1 text-xs text-slate-500">
-                <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-red-400"></i> Directional jamming of satellite frequencies</li>
-                <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-red-400"></i> Detection and seizure of user terminals</li>
-                <li class="flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-red-400"></i> Criminalization of terminal possession</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-6">
-          <!-- NIN Architecture -->
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h4 class="font-semibold text-white mb-4">NIN Architecture</h4>
-            
-            <div class="relative">
-              <div class="flex flex-col gap-3">
-                <!-- Layer 1 -->
-                <div class="bg-red-900/20 rounded-lg p-3 border border-red-500/30">
-                  <div class="flex items-center gap-2 mb-2">
-                    <i data-lucide="globe" class="w-4 h-4 text-red-400"></i>
-                    <span class="text-red-300 text-sm font-medium">International Gateway</span>
-                  </div>
-                  <p class="text-xs text-slate-500">Controlled chokepoints - can be severed instantly</p>
-                </div>
-                
-                <!-- Layer 2 -->
-                <div class="bg-yellow-900/20 rounded-lg p-3 border border-yellow-500/30">
-                  <div class="flex items-center gap-2 mb-2">
-                    <i data-lucide="shield" class="w-4 h-4 text-yellow-400"></i>
-                    <span class="text-yellow-300 text-sm font-medium">Filtering Layer</span>
-                  </div>
-                  <p class="text-xs text-slate-500">Deep packet inspection, keyword filtering, protocol blocking</p>
-                </div>
-                
-                <!-- Layer 3 -->
-                <div class="bg-green-900/20 rounded-lg p-3 border border-green-500/30">
-                  <div class="flex items-center gap-2 mb-2">
-                    <i data-lucide="server" class="w-4 h-4 text-green-400"></i>
-                    <span class="text-green-300 text-sm font-medium">National Services</span>
-                  </div>
-                  <p class="text-xs text-slate-500">Domestic search, email, messaging, video platforms</p>
-                </div>
-                
-                <!-- Layer 4 -->
-                <div class="bg-blue-900/20 rounded-lg p-3 border border-blue-500/30">
-                  <div class="flex items-center gap-2 mb-2">
-                    <i data-lucide="users" class="w-4 h-4 text-blue-400"></i>
-                    <span class="text-blue-300 text-sm font-medium">Iranian Users</span>
-                  </div>
-                  <p class="text-xs text-slate-500">Access to approved domestic content only during lockdowns</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Electromagnetic Sovereignty -->
-          <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-            <h4 class="font-semibold text-white mb-3">Electromagnetic Spectrum Sovereignty</h4>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-              Iran's NIN represents a claim to sovereignty not just over fiber and data centers, but over the electromagnetic spectrum itself. By deploying advanced jamming technology and criminalizing circumvention devices, Iran asserts state control over all information entering its territory.
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-2 py-1 rounded-full bg-green-900/40 text-green-400 text-xs">Jamming</span>
-              <span class="px-2 py-1 rounded-full bg-green-900/40 text-green-400 text-xs">Geofencing</span>
-              <span class="px-2 py-1 rounded-full bg-green-900/40 text-green-400 text-xs">Terminal Control</span>
-              <span class="px-2 py-1 rounded-full bg-green-900/40 text-green-400 text-xs">Spectrum Monitoring</span>
-            </div>
-          </div>
-
-          <!-- Quote -->
-          <blockquote class="bg-slate-900/50 border-l-4 border-green-500 rounded-r-xl p-5">
-            <p class="text-slate-300 italic text-sm">
-              "The National Information Network ensures that even when the international internet is cut off, Iranian citizens can continue to access essential domestic services."
-            </p>
-            <footer class="mt-3 text-slate-500 text-xs">
-              — <cite>Iran's Ministry of Information and Communications Technology</cite>
-            </footer>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 6: Triple Stack Reality -->
-    <div class="mb-20 triple-stack-section">
-      <div class="text-center mb-12">
-        <span class="text-purple-400 text-sm font-semibold uppercase tracking-wider">The New Digital Order</span>
-        <h2 class="text-2xl md:text-3xl font-bold text-white mt-2">The Triple Stack Reality</h2>
-        <p class="text-slate-400 mt-3 max-w-2xl mx-auto">
-          By 2024, the global digital infrastructure had crystallized into three competing technology stacks, each with distinct hardware, software, and regulatory frameworks.
+      <aside class="hero__diagram" aria-label="How to read this module">
+        <p class="diagram__label">Reading map</p>
+        <h2 class="diagram__title">Three moves produce fragmentation</h2>
+        <p class="diagram__intro">
+          Read the lesson as a sequence: one open-network ideal, three geopolitical moves, then a triple-stack world.
         </p>
-      </div>
 
-      <!-- Three Stacks Comparison -->
-      <div class="grid lg:grid-cols-3 gap-6 mb-12">
-        
-        <!-- US Stack -->
-        <div class="stack-card group">
-          <div class="bg-gradient-to-b from-blue-900/40 to-slate-900/40 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 h-full">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                <i data-lucide="flag" class="w-7 h-7 text-blue-400"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-blue-300 text-lg">US Stack</h3>
-                <span class="text-blue-400/70 text-sm">"Blue Internet"</span>
-              </div>
+        <div class="diagram-flow">
+          <div class="diagram-node diagram-node--root">
+            <strong>Open internet ideal</strong>
+            <p>Interoperability, shared protocols, and cross-border connectivity remain the reference point.</p>
+          </div>
+
+          <div class="diagram-row">
+            <div class="diagram-node diagram-node--blue">
+              <strong>Exclusion</strong>
+              <p>Ban firms, remove apps, and reframe supply chains as national security questions.</p>
             </div>
-
-            <div class="space-y-4">
-              <div class="stack-layer">
-                <span class="text-xs text-blue-400/70 uppercase tracking-wider">Operating Systems</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Windows</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">iOS</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Android</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-blue-400/70 uppercase tracking-wider">Semiconductors</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Intel</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">NVIDIA</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">AMD</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Qualcomm</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-blue-400/70 uppercase tracking-wider">Cloud Infrastructure</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">AWS</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Azure</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Google Cloud</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-blue-400/70 uppercase tracking-wider">Key Platforms</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Meta</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Google</span>
-                  <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Netflix</span>
-                </div>
-              </div>
+            <div class="diagram-node diagram-node--rust">
+              <strong>Standards contest</strong>
+              <p>Fight over protocols and governance rules that decide how the network should work.</p>
             </div>
-
-            <div class="mt-6 pt-4 border-t border-blue-500/20">
-              <div class="flex items-center gap-2 text-xs text-blue-400/60">
-                <i data-lucide="shield" class="w-4 h-4"></i>
-                <span>Five Eyes, NATO allies, Japan, South Korea</span>
-              </div>
+            <div class="diagram-node diagram-node--sage">
+              <strong>Sovereign insulation</strong>
+              <p>Build domestic chokepoints and fallback systems that can keep operating if global links fail.</p>
             </div>
+          </div>
+
+          <div class="diagram-node diagram-node--result">
+            <strong>Triple-stack world</strong>
+            <p>By 2024, the internet looks less like one global commons and more like a set of blocs, filters, and contested interfaces.</p>
           </div>
         </div>
 
-        <!-- China Stack -->
-        <div class="stack-card group">
-          <div class="bg-gradient-to-b from-red-900/40 to-slate-900/40 rounded-2xl p-6 border border-red-500/30 hover:border-red-400/50 transition-all duration-300 h-full">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-14 h-14 rounded-xl bg-red-500/20 flex items-center justify-center">
-                <i data-lucide="monitor" class="w-7 h-7 text-red-400"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-red-300 text-lg">China Stack</h3>
-                <span class="text-red-400/70 text-sm">"Red Internet"</span>
-              </div>
-            </div>
+        <p class="hero-note">
+          Teaching cue: do not ask only "who controls the internet?" Ask at which layer control is being asserted.
+        </p>
+      </aside>
+    </header>
 
-            <div class="space-y-4">
-              <div class="stack-layer">
-                <span class="text-xs text-red-400/70 uppercase tracking-wider">Operating Systems</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">HarmonyOS</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Kylin OS</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Android (forks)</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-red-400/70 uppercase tracking-wider">Semiconductors</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">SMIC</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">HiSilicon</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">UNISOC</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-red-400/70 uppercase tracking-wider">Cloud Infrastructure</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Alibaba Cloud</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Tencent Cloud</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Huawei Cloud</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-red-400/70 uppercase tracking-wider">Key Platforms</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">WeChat</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">TikTok</span>
-                  <span class="px-2 py-1 bg-red-500/20 rounded text-xs text-red-300">Alipay</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-red-500/20">
-              <div class="flex items-center gap-2 text-xs text-red-400/60">
-                <i data-lucide="globe" class="w-4 h-4"></i>
-                <span>Digital Silk Road partners, Belt & Road nations</span>
-              </div>
-            </div>
-          </div>
+    <section class="hero__stats reveal" aria-label="Evidence points">
+      <p class="hero__stats-label">Evidence points</p>
+      <div class="hero__stats-grid">
+        <div class="stat-chip">
+          <strong>60+</strong>
+          <span>countries claimed by the Clean Network initiative</span>
         </div>
-
-        <!-- Regulatory Bloc -->
-        <div class="stack-card group">
-          <div class="bg-gradient-to-b from-purple-900/40 to-slate-900/40 rounded-2xl p-6 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 h-full">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center">
-                <i data-lucide="scale" class="w-7 h-7 text-purple-400"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-purple-300 text-lg">Regulatory Bloc</h3>
-                <span class="text-purple-400/70 text-sm">"Sovereign Internet"</span>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="stack-layer">
-                <span class="text-xs text-purple-400/70 uppercase tracking-wider">Legal Frameworks</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">GDPR</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">DSA</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">DMA</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-purple-400/70 uppercase tracking-wider">Data Policies</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Localization</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Sovereignty</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Portability</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-purple-400/70 uppercase tracking-wider">Enforcement</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Content Removal</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Fines</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Market Access</span>
-                </div>
-              </div>
-
-              <div class="stack-layer">
-                <span class="text-xs text-purple-400/70 uppercase tracking-wider">Strategic Approach</span>
-                <div class="flex flex-wrap gap-2 mt-1">
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Multi-alignment</span>
-                  <span class="px-2 py-1 bg-purple-500/20 rounded text-xs text-purple-300">Regulatory Export</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-purple-500/20">
-              <div class="flex items-center gap-2 text-xs text-purple-400/60">
-                <i data-lucide="users" class="w-4 h-4"></i>
-                <span>EU, India, Brazil, Indonesia, Nigeria</span>
-              </div>
-            </div>
-          </div>
+        <div class="stat-chip">
+          <strong>300+</strong>
+          <span>Chinese apps banned in India by 2024</span>
+        </div>
+        <div class="stat-chip">
+          <strong>91</strong>
+          <span>Huawei 5G contracts reported in 2020</span>
+        </div>
+        <div class="stat-chip">
+          <strong>80M+</strong>
+          <span>Iranians estimated on the National Information Network</span>
         </div>
       </div>
+    </section>
 
-      <!-- Comparison Table -->
-      <div class="bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700/50">
-        <div class="p-6 border-b border-slate-700/50">
-          <h3 class="font-semibold text-white">Stack Comparison Matrix</h3>
+    <div class="module-layout">
+      <aside class="module-outline">
+        <div class="module-outline__card">
+          <span class="module-outline__label">On this page</span>
+          <nav aria-label="Section outline">
+            <a href="#frame">1. Analytical frame</a>
+            <a href="#timeline">2. Turning points</a>
+            <a href="#cases">3. Five case studies</a>
+            <a href="#synthesis">4. Triple-stack reality</a>
+            <a href="#sources">5. Sources</a>
+          </nav>
+          <p class="module-outline__note">
+            Use the case studies to compare tools of power, not just countries. The same state can combine exclusion, regulation, and sovereign control.
+          </p>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="bg-slate-900/50">
-                <th class="text-left p-4 text-slate-400 font-medium">Dimension</th>
-                <th class="text-left p-4 text-blue-400 font-medium">US Stack</th>
-                <th class="text-left p-4 text-red-400 font-medium">China Stack</th>
-                <th class="text-left p-4 text-purple-400 font-medium">Regulatory Bloc</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-700/50">
-              <tr class="hover:bg-slate-800/30">
-                <td class="p-4 text-slate-300 font-medium">Governance Model</td>
-                <td class="p-4 text-slate-400">Multistakeholder</td>
-                <td class="p-4 text-slate-400">State-controlled</td>
-                <td class="p-4 text-slate-400">Regulatory state</td>
-              </tr>
-              <tr class="hover:bg-slate-800/30">
-                <td class="p-4 text-slate-300 font-medium">Data Flow</td>
-                <td class="p-4 text-slate-400">Cross-border free</td>
-                <td class="p-4 text-slate-400">Restricted/controlled</td>
-                <td class="p-4 text-slate-400">Conditional flows</td>
-              </tr>
-              <tr class="hover:bg-slate-800/30">
-                <td class="p-4 text-slate-300 font-medium">Content Policy</td>
-                <td class="p-4 text-slate-400">Platform-mediated</td>
-                <td class="p-4 text-slate-400">State-censored</td>
-                <td class="p-4 text-slate-400">Legally regulated</td>
-              </tr>
-              <tr class="hover:bg-slate-800/30">
-                <td class="p-4 text-slate-300 font-medium">Infrastructure</td>
-                <td class="p-4 text-slate-400">Private-led</td>
-                <td class="p-4 text-slate-400">State-subsidized</td>
-                <td class="p-4 text-slate-400">Mixed ownership</td>
-              </tr>
-              <tr class="hover:bg-slate-800/30">
-                <td class="p-4 text-slate-300 font-medium">AI Development</td>
-                <td class="p-4 text-slate-400">Open research</td>
-                <td class="p-4 text-slate-400">State-directed</td>
-                <td class="p-4 text-slate-400">Risk-regulated</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      </aside>
 
-      <!-- Stage for AI Sovereignty -->
-      <div class="mt-8 bg-gradient-to-r from-amber-900/20 to-orange-900/20 rounded-xl p-6 border border-amber-500/30">
-        <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-            <i data-lucide="cpu" class="w-6 h-6 text-amber-400"></i>
-          </div>
-          <div>
-            <h4 class="font-semibold text-amber-300 mb-2">Stage Set for AI Sovereignty</h4>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              By 2024, the fragmentation of the internet into three competing stacks created the foundation for the next phase: <strong>AI Sovereignty</strong>. Each bloc began developing its own AI models, training data, and compute infrastructure—extending the splinternet from connectivity and platforms into the realm of artificial intelligence. The battle for GPT, Gemini, and their Chinese counterparts represents the next frontier in digital geopolitics.
+      <div class="module-content">
+        <section id="frame" class="lesson-section reveal" aria-labelledby="frame-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Section 1 / Analytical frame</p>
+              <h2 class="section-title" id="frame-title">Three logics drive the splinternet</h2>
+            </div>
+            <p class="section-copy">
+              The page becomes clearer if we stop treating every example as isolated. The cases below all express one or more of three logics: excluding unwanted dependence, rewriting the rules of technical order, and building sovereign fallback capacity.
             </p>
           </div>
-        </div>
+
+          <div class="semantic-key" aria-label="Semantic color key">
+            <span class="semantic-key__label">Color key</span>
+            <div class="semantic-key__items">
+              <span class="semantic-chip theme-exclusion">Trusted-network exclusion</span>
+              <span class="semantic-chip theme-standards">Standards contest</span>
+              <span class="semantic-chip theme-insulation">Sovereign insulation</span>
+              <span class="semantic-chip theme-market">App-layer restriction</span>
+              <span class="semantic-chip theme-regulation">Regulatory sovereignty</span>
+            </div>
+          </div>
+
+          <div class="logic-grid">
+            <article class="logic-card theme-exclusion">
+              <div class="logic-card__index">01</div>
+              <h3>Exclusion</h3>
+              <p>States identify foreign firms, apps, or infrastructures as security risks and remove them from trusted networks or domestic markets.</p>
+              <ul>
+                <li>Vendor bans and trusted supplier lists</li>
+                <li>App store removals and market access restrictions</li>
+                <li>Telecom and cloud infrastructure screening</li>
+              </ul>
+            </article>
+
+            <article class="logic-card theme-standards">
+              <div class="logic-card__index">02</div>
+              <h3>Standards competition</h3>
+              <p>Control also happens upstream in standards bodies, where protocol design can redistribute power, visibility, and governability.</p>
+              <ul>
+                <li>Competing visions of internet governance</li>
+                <li>Security versus surveillance debates</li>
+                <li>Diplomatic coalitions inside technical forums</li>
+              </ul>
+            </article>
+
+            <article class="logic-card theme-insulation">
+              <div class="logic-card__index">03</div>
+              <h3>Sovereign insulation</h3>
+              <p>Instead of merely filtering content, states build domestic routing, storage, and service layers that can survive partial disconnection.</p>
+              <ul>
+                <li>National DNS and domestic hosting</li>
+                <li>Deep packet inspection at chokepoints</li>
+                <li>Emergency control over spectrum and satellite access</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="teaching-band">
+            In other words, the splinternet is not just about censorship. It is about architecture. Political conflict migrates into cables, cloud regions, standards committees, app markets, and redundancy planning.
+          </div>
+        </section>
+
+        <section id="timeline" class="lesson-section reveal" aria-labelledby="timeline-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Section 2 / Turning points</p>
+              <h2 class="section-title" id="timeline-title">Seven moments that changed the argument</h2>
+            </div>
+            <p class="section-copy">
+              Read this timeline as acceleration rather than origin. The ideas existed earlier, but from 2019 onward they became explicit state strategies with visible diplomatic, legal, and infrastructural consequences.
+            </p>
+          </div>
+
+          <div class="timeline-shell">
+            <p class="timeline-hint">Scroll horizontally through the sequence</p>
+            <div class="timeline-track" role="list" aria-label="Timeline of fragmentation">
+              <article class="timeline-event theme-exclusion" role="listitem">
+                <span class="timeline-event__date">May 2019</span>
+                <span class="timeline-event__logic">Trusted-network exclusion</span>
+                <h3>US Executive Order 13873</h3>
+                <p>The ICT supply chain becomes a national emergency question and opens the path toward vendor exclusion.</p>
+              </article>
+
+              <article class="timeline-event theme-standards" role="listitem">
+                <span class="timeline-event__date">2019</span>
+                <span class="timeline-event__logic">Standards contest</span>
+                <h3>Huawei submits "New IP"</h3>
+                <p>The protocol layer itself becomes geopolitical: who should design the future internet, and with what assumptions about control?</p>
+              </article>
+
+              <article class="timeline-event theme-insulation" role="listitem">
+                <span class="timeline-event__date">Nov 2019</span>
+                <span class="timeline-event__logic">Sovereign insulation</span>
+                <h3>Russia operationalizes Runet autonomy</h3>
+                <p>The focus shifts from filtering content to ensuring domestic network survivability under centralized state control.</p>
+              </article>
+
+              <article class="timeline-event theme-market" role="listitem">
+                <span class="timeline-event__date">Jun 2020</span>
+                <span class="timeline-event__logic">App-layer restriction</span>
+                <h3>India bans 59 Chinese apps</h3>
+                <p>Border conflict reaches the app layer, demonstrating that platform access can be a tool of strategic response.</p>
+              </article>
+
+              <article class="timeline-event theme-exclusion" role="listitem">
+                <span class="timeline-event__date">Aug 2020</span>
+                <span class="timeline-event__logic">Trusted-network exclusion</span>
+                <h3>Clean Network expands</h3>
+                <p>The United States frames telecom, app stores, cloud, and cables as one linked zone of trusted and untrusted infrastructure.</p>
+              </article>
+
+              <article class="timeline-event theme-regulation" role="listitem">
+                <span class="timeline-event__date">2022</span>
+                <span class="timeline-event__logic">Regulatory sovereignty</span>
+                <h3>EU Digital Services Act</h3>
+                <p>The regulatory state emerges as a third posture: not merely open, not fully closed, but sovereign through legal conditions.</p>
+              </article>
+
+              <article class="timeline-event theme-insulation" role="listitem">
+                <span class="timeline-event__date">2024</span>
+                <span class="timeline-event__logic">Sovereign insulation</span>
+                <h3>Iran blocks Starlink at scale</h3>
+                <p>Sovereignty extends beyond fiber and platforms into control over spectrum, terminals, and emergency communications.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="cases" class="lesson-section reveal" aria-labelledby="cases-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Section 3 / Case studies</p>
+              <h2 class="section-title" id="cases-title">Five cases, five layers of digital power</h2>
+            </div>
+            <p class="section-copy">
+              Each case below is structured the same way: what happened, which instrument was used, what changed in the architecture of the internet, and why the episode matters once AI becomes the next strategic layer.
+            </p>
+          </div>
+
+          <div class="case-jumps" aria-label="Jump to case">
+            <a href="#clean-network">Clean Network</a>
+            <a href="#new-ip">Battle for the ITU</a>
+            <a href="#india-strike">India's digital strike</a>
+            <a href="#runet">Runet</a>
+            <a href="#nin">Iran's NIN</a>
+          </div>
+
+          <div class="case-stack">
+            <article id="clean-network" class="case-study theme-exclusion reveal" aria-labelledby="clean-network-title">
+              <header class="case-study__header">
+                <div>
+                  <div class="case-study__meta">
+                    <span class="meta-pill meta-pill--semantic">Trusted-network exclusion</span>
+                    <span class="meta-pill">United States</span>
+                    <span class="meta-pill">Telecom to cloud</span>
+                    <span class="meta-pill">Refs. 1-2</span>
+                  </div>
+                  <h3 id="clean-network-title">The Clean Network turns dependency into a security category</h3>
+                </div>
+                <p class="case-study__prompt">Question to keep in mind: when does supply-chain security become bloc formation?</p>
+              </header>
+
+              <div class="case-study__grid">
+                <div>
+                  <p class="case-study__lede">
+                    In August 2020, the United States presented the <strong>Clean Network</strong> as a broad architecture of trust. The point was not just to block Huawei. It was to connect carriers, app stores, cloud storage, smartphone ecosystems, and undersea cables into one security narrative about Chinese influence.
+                  </p>
+
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <span class="detail-card__label">Five layers</span>
+                      <ul>
+                        <li>Clean Carrier</li>
+                        <li>Clean Store</li>
+                        <li>Clean Apps</li>
+                        <li>Clean Cloud</li>
+                        <li>Clean Cable</li>
+                      </ul>
+                    </div>
+                    <div class="detail-card">
+                      <span class="detail-card__label">What changed</span>
+                      <p>Telecom policy stopped looking like a narrow infrastructure debate and started looking like alliance management across the whole digital stack.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="annotation-panel">
+                    <dl>
+                      <div>
+                        <dt>Instrument</dt>
+                        <dd>Executive order authority plus a diplomatic campaign for trusted vendors and trusted data pathways.</dd>
+                      </div>
+                      <div>
+                        <dt>Target</dt>
+                        <dd>Chinese infrastructure firms, cloud exposure, and platform dependence framed as national security vulnerabilities.</dd>
+                      </div>
+                      <div>
+                        <dt>Why it matters for AI</dt>
+                        <dd>Once cloud and chips are securitized, AI compute access naturally follows the same logic of trusted and untrusted ecosystems.</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="question-box">
+                    <strong>Pedagogical note</strong>
+                    <p>The novelty here is not only exclusion. It is the stitching together of many layers into one geopolitical map of trust.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="new-ip" class="case-study theme-standards reveal" aria-labelledby="new-ip-title">
+              <header class="case-study__header">
+                <div>
+                  <div class="case-study__meta">
+                    <span class="meta-pill meta-pill--semantic">Standards contest</span>
+                    <span class="meta-pill">ITU standards politics</span>
+                    <span class="meta-pill">Protocol layer</span>
+                    <span class="meta-pill">Refs. 3-4</span>
+                  </div>
+                  <h3 id="new-ip-title">The battle for the ITU shows that protocol design is political</h3>
+                </div>
+                <p class="case-study__prompt">Question to keep in mind: can a network standard ever be neutral once it changes who controls visibility and routing?</p>
+              </header>
+
+              <div class="case-study__grid">
+                <div>
+                  <p class="case-study__lede">
+                    Huawei's <strong>New IP</strong> proposal argued that the future internet needed deterministic routing, stronger built-in identification, and more centralized coordination for the 5G and IoT era. Supporters called this security and efficiency. Critics saw the risk of surveillance, kill switches, and a move away from the multistakeholder internet model.
+                  </p>
+
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <span class="detail-card__label">Proponents said</span>
+                      <p>Current TCP/IP was not designed for massive machine-to-machine traffic, guaranteed latency, or intrinsic traceability.</p>
+                    </div>
+                    <div class="detail-card">
+                      <span class="detail-card__label">Critics said</span>
+                      <p>The design assumptions would normalize centralized control and make technical surveillance easier to institutionalize.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="annotation-panel">
+                    <dl>
+                      <div>
+                        <dt>Instrument</dt>
+                        <dd>Standards entrepreneurship inside an international technical body rather than direct market bans.</dd>
+                      </div>
+                      <div>
+                        <dt>Political effect</dt>
+                        <dd>The dispute forced governments to reveal their preferred internet governance model, not just their telecom preferences.</dd>
+                      </div>
+                      <div>
+                        <dt>Why it matters for AI</dt>
+                        <dd>AI governance will also be shaped by standards, evaluation norms, safety rules, and interoperability assumptions that look technical but redistribute power.</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="question-box">
+                    <strong>Pedagogical note</strong>
+                    <p>Students often focus on firms. This case is about rules of design. Whoever defines the protocol can pre-structure what kinds of control become normal.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="india-strike" class="case-study theme-market reveal" aria-labelledby="india-strike-title">
+              <header class="case-study__header">
+                <div>
+                  <div class="case-study__meta">
+                    <span class="meta-pill meta-pill--semantic">App-layer restriction</span>
+                    <span class="meta-pill">India</span>
+                    <span class="meta-pill">Platform layer</span>
+                    <span class="meta-pill">Ref. 5</span>
+                  </div>
+                  <h3 id="india-strike-title">India's "digital strike" brings border conflict into the platform economy</h3>
+                </div>
+                <p class="case-study__prompt">Question to keep in mind: is app prohibition a security tool, an industrial policy, or both at once?</p>
+              </header>
+
+              <div class="case-study__grid">
+                <div>
+                  <p class="case-study__lede">
+                    After the June 2020 Galwan Valley clash, India used <strong>Section 69A of the IT Act</strong> to ban 59 Chinese apps, including TikTok and WeChat. The move translated territorial conflict into digital exclusion and created room for domestic alternatives and other non-Chinese platforms to expand.
+                  </p>
+
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <span class="detail-card__label">Immediate trigger</span>
+                      <p>Military confrontation at the border became the political context for platform removal inside the domestic market.</p>
+                    </div>
+                    <div class="detail-card">
+                      <span class="detail-card__label">Aftershock</span>
+                      <p>By 2024, more than 300 apps had been restricted or removed, and Indian competitors such as ShareChat, Moj, and Josh filled part of the vacuum.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="annotation-panel">
+                    <dl>
+                      <div>
+                        <dt>Instrument</dt>
+                        <dd>Domestic legal authority over public order, sovereignty, and national security at the app-distribution layer.</dd>
+                      </div>
+                      <div>
+                        <dt>Target</dt>
+                        <dd>Consumer-facing platforms with large user bases and symbolic ties to Chinese digital influence.</dd>
+                      </div>
+                      <div>
+                        <dt>Why it matters for AI</dt>
+                        <dd>Control over platforms determines data access, recommendation systems, model deployment channels, and which firms get to scale locally.</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="question-box">
+                    <strong>Pedagogical note</strong>
+                    <p>This is the clearest case of geopolitical rivalry arriving at the everyday interface used by ordinary citizens.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="runet" class="case-study theme-insulation reveal" aria-labelledby="runet-title">
+              <header class="case-study__header">
+                <div>
+                  <div class="case-study__meta">
+                    <span class="meta-pill meta-pill--semantic">Sovereign insulation</span>
+                    <span class="meta-pill">Russia</span>
+                    <span class="meta-pill">Routing and survivability</span>
+                    <span class="meta-pill">Refs. 6-7</span>
+                  </div>
+                  <h3 id="runet-title">Runet makes sovereignty about endurance, not only censorship</h3>
+                </div>
+                <p class="case-study__prompt">Question to keep in mind: what counts as autonomy when the system depends on centralized filtering and inspection?</p>
+              </header>
+
+              <div class="case-study__grid">
+                <div>
+                  <p class="case-study__lede">
+                    Russia's sovereign internet law built toward a domestic network that could <strong>keep functioning under partial disconnection</strong>. That meant national DNS capacity, state-supplied inspection equipment, and recurring tests of whether the network could survive external disruption while remaining governable from the center.
+                  </p>
+
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <span class="detail-card__label">Core mechanisms</span>
+                      <ul>
+                        <li>National DNS mirrors</li>
+                        <li>TSPU deep packet inspection equipment</li>
+                        <li>Annual disconnect tests</li>
+                      </ul>
+                    </div>
+                    <div class="detail-card">
+                      <span class="detail-card__label">Conceptual shift</span>
+                      <p>The move goes beyond content filtering. It aims at infrastructural survivability under conditions of conflict or sanctions.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="annotation-panel">
+                    <dl>
+                      <div>
+                        <dt>Instrument</dt>
+                        <dd>Legal mandate plus technical chokepoints installed at ISP exchange points and centrally coordinated by the state.</dd>
+                      </div>
+                      <div>
+                        <dt>Target</dt>
+                        <dd>The architecture of connectivity itself: routing, packet visibility, and the ability to degrade or sever external dependence.</dd>
+                      </div>
+                      <div>
+                        <dt>Why it matters for AI</dt>
+                        <dd>AI sovereignty also requires domestic compute, domestic hosting, and the ability to keep critical digital services operating despite external pressure.</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="question-box">
+                    <strong>Pedagogical note</strong>
+                    <p>Ask students to distinguish between "filtering what users see" and "rebuilding the network so it can stand alone."</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article id="nin" class="case-study theme-insulation reveal" aria-labelledby="nin-title">
+              <header class="case-study__header">
+                <div>
+                  <div class="case-study__meta">
+                    <span class="meta-pill meta-pill--semantic">Sovereign insulation</span>
+                    <span class="meta-pill">Iran</span>
+                    <span class="meta-pill">Spectrum and gateways</span>
+                    <span class="meta-pill">Refs. 8-9</span>
+                  </div>
+                  <h3 id="nin-title">Iran's National Information Network extends sovereignty into the spectrum</h3>
+                </div>
+                <p class="case-study__prompt">Question to keep in mind: where are the borders of the internet once even satellite connectivity becomes governable?</p>
+              </header>
+
+              <div class="case-study__grid">
+                <div>
+                  <p class="case-study__lede">
+                    Iran's <strong>National Information Network</strong> is one of the most explicit attempts to maintain domestic digital services while retaining the ability to sharply restrict access to the global internet. By 2024, the system was paired with measures capable of disrupting Starlink, showing that sovereignty claims now reach beyond domestic fiber into the electromagnetic spectrum.
+                  </p>
+
+                  <div class="detail-grid">
+                    <div class="detail-card">
+                      <span class="detail-card__label">Architecture</span>
+                      <ul>
+                        <li>Domestic hosting for local domains and services</li>
+                        <li>International gateways that can be restricted quickly</li>
+                        <li>Filtering, monitoring, and protocol blocking layers</li>
+                      </ul>
+                    </div>
+                    <div class="detail-card">
+                      <span class="detail-card__label">2024 escalation</span>
+                      <p>Jamming, terminal seizures, and criminalization of possession turned supposedly borderless satellite connectivity into a contested territorial question.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="annotation-panel">
+                    <dl>
+                      <div>
+                        <dt>Instrument</dt>
+                        <dd>Domestic redundancy combined with coercive control over gateways, devices, and radio frequencies.</dd>
+                      </div>
+                      <div>
+                        <dt>Target</dt>
+                        <dd>Any path that might let information bypass the domestic infrastructure stack during periods of unrest.</dd>
+                      </div>
+                      <div>
+                        <dt>Why it matters for AI</dt>
+                        <dd>As AI services become critical infrastructure, states will seek the same power over model access, compute pathways, and emergency communications.</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="question-box">
+                    <strong>Pedagogical note</strong>
+                    <p>This case pushes the concept furthest: sovereignty is no longer just about platforms or packets, but about every communication channel that crosses territory.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="synthesis" class="lesson-section reveal" aria-labelledby="synthesis-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Section 4 / Synthesis</p>
+              <h2 class="section-title" id="synthesis-title">By 2024, fragmentation looks like a triple-stack reality</h2>
+            </div>
+            <p class="section-copy">
+              The result is not simply an "open" camp and a "closed" camp. A third posture matters: states that prefer conditional openness, regulation, and strategic multi-alignment rather than total alignment with either Washington or Beijing.
+            </p>
+          </div>
+
+          <div class="stack-grid">
+            <article class="stack-card theme-exclusion">
+              <span class="stack-card__label">Trusted-network exclusion</span>
+              <h3>US-led trusted network</h3>
+              <p>Security language sorts vendors, clouds, and infrastructures into trusted and untrusted zones.</p>
+              <ul>
+                <li>Alliance-based vendor screening</li>
+                <li>Private platforms inside a strategic security frame</li>
+                <li>AI spillover: compute and model access become strategic assets</li>
+              </ul>
+            </article>
+
+            <article class="stack-card theme-standards">
+              <span class="stack-card__label">Standards contest</span>
+              <h3>China-centered infrastructural ecosystem</h3>
+              <p>Infrastructure, standards proposals, and overseas network projects support an alternative technical sphere of influence.</p>
+              <ul>
+                <li>Digital Silk Road and platform expansion</li>
+                <li>State-compatible control assumptions in network design</li>
+                <li>AI spillover: domestic models, chips, and cloud substitutes</li>
+              </ul>
+            </article>
+
+            <article class="stack-card theme-regulation">
+              <span class="stack-card__label">Regulatory sovereignty</span>
+              <h3>Regulatory and multi-aligned sovereignty</h3>
+              <p>States such as the EU and India use law, market leverage, and selective restriction to shape digital order without fully exiting the global internet.</p>
+              <ul>
+                <li>Data localization and conditional access rules</li>
+                <li>Platform accountability and legal oversight</li>
+                <li>AI spillover: risk regulation, domestic capacity building, strategic hedging</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="matrix-shell">
+            <table class="matrix">
+              <caption>Comparison matrix</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Dimension</th>
+                  <th scope="col">US-led stack</th>
+                  <th scope="col">China-centered stack</th>
+                  <th scope="col">Regulatory / multi-aligned stack</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Primary tool</th>
+                  <td>Trusted supplier networks and exclusion</td>
+                  <td>Integrated infrastructure and protocol influence</td>
+                  <td>Law, market conditions, and selective restriction</td>
+                </tr>
+                <tr>
+                  <th scope="row">Preferred story</th>
+                  <td>Security and resilience against adversaries</td>
+                  <td>Development, efficiency, and state-compatible order</td>
+                  <td>Digital rights, accountability, and strategic autonomy</td>
+                </tr>
+                <tr>
+                  <th scope="row">Control layer</th>
+                  <td>Vendors, cloud, platforms, cables</td>
+                  <td>Standards, infrastructure financing, domestic platforms</td>
+                  <td>Data flows, platform obligations, legal compliance</td>
+                </tr>
+                <tr>
+                  <th scope="row">Main risk</th>
+                  <td>Bloc hardening and supply-chain bifurcation</td>
+                  <td>Deeper state visibility and surveillance capacity</td>
+                  <td>Regulatory fragmentation and uneven interoperability</td>
+                </tr>
+                <tr>
+                  <th scope="row">Bridge to AI</th>
+                  <td>Trusted compute ecosystems and export controls</td>
+                  <td>National model stacks and strategic substitution</td>
+                  <td>AI regulation, sovereign data, and industrial hedging</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="transition-card">
+            <span class="transition-card__label">Looking ahead</span>
+            <h3>The next step is AI sovereignty</h3>
+            <p>
+              Once the internet is reorganized into trusted zones, regulated gateways, and sovereign fallback infrastructures, it becomes easier to understand why states next compete over model training, cloud regions, chips, datasets, and AI deployment rules. Module 05 follows that transition directly.
+            </p>
+            <a href="module-05.html">Continue to Module 05 &rarr;</a>
+          </div>
+        </section>
+
+        <section id="sources" class="lesson-section reveal" aria-labelledby="sources-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Section 5 / Sources</p>
+              <h2 class="section-title" id="sources-title">Reference points for the cases</h2>
+            </div>
+            <p class="section-copy">
+              Sources are grouped so students can map each case study back to a compact reading trail instead of scanning a single undifferentiated bibliography.
+            </p>
+          </div>
+
+          <div class="sources-grid">
+            <article class="sources-card">
+              <h3>Policy and legal documents</h3>
+              <ol>
+                <li><a href="https://2017-2021.state.gov/the-clean-network/index.html" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">US Department of State. "The Clean Network."</a> August 5, 2020.</li>
+                <li><a href="https://www.federalregister.gov/documents/2019/05/17/2019-10538/securing-the-information-and-communications-technology-and-services-supply-chain" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Executive Order 13873. "Securing the Information and Communications Technology and Services Supply Chain."</a> May 15, 2019.</li>
+                <li><a href="https://www.pib.gov.in/pressrelesedetailm.aspx?prid=1635206" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Government of India, Press Information Bureau. "Government Bans 59 Mobile Apps..."</a> June 29, 2020.</li>
+                <li><a href="https://cyrilla.org/en/entity/mznwu2co0k" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Federal Law No. 90-FZ, Russian Federation.</a> May 1, 2019.</li>
+              </ol>
+            </article>
+
+            <article class="sources-card">
+              <h3>Standards and analytical readings</h3>
+              <ol>
+                <li><a href="https://www.internetsociety.org/wp-content/uploads/2020/04/ISOC-Discussion-Paper-NewIP-analysis-24April2020.pdf" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Internet Society. "An Analysis of the 'New IP' Proposal to the ITU-T."</a> 2020.</li>
+                <li><a href="https://www.internetsociety.org/resources/doc/2022/huaweis-new-ip-proposal-faq/" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Internet Society. "Huawei's 'New IP' Proposal FAQ."</a> 2022.</li>
+                <li><a href="https://firstmonday.org/ojs/index.php/fm/article/download/11698/10127" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Nocetti, J. "Controlling free expression 'by infrastructure' in the Russian Internet."</a> 2021.</li>
+                <li><a href="https://freedomhouse.org/country/iran/freedom-net/2023" target="_blank" rel="noreferrer" style="color: var(--module-accent); text-decoration: underline; text-underline-offset: 4px;">Freedom House. <em>Freedom on the Net 2023: Iran.</em></a></li>
+                <li>Khanna, P. <em>The Future Is Asian</em>. Simon &amp; Schuster, 2021.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
       </div>
     </div>
-
-    <!-- Key Statistics -->
-    <div class="mb-20 statistics-section">
-      <h2 class="text-2xl font-bold text-white mb-8 text-center">The Splinternet by Numbers</h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-blue-400">60+</span>
-          <p class="text-slate-400 text-sm mt-2">Countries in Clean Network</p>
-        </div>
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-red-400">300+</span>
-          <p class="text-slate-400 text-sm mt-2">Apps Banned by India</p>
-        </div>
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-yellow-400">91</span>
-          <p class="text-slate-400 text-sm mt-2">Huawei 5G Contracts (2020)</p>
-        </div>
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-purple-400">$2.5B</span>
-          <p class="text-slate-400 text-sm mt-2">TikTok India Market Value</p>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-4 mt-4">
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-green-400">80M+</span>
-          <p class="text-slate-400 text-sm mt-2">Iranians on NIN (2024)</p>
-        </div>
-        <div class="stat-card bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700/50">
-          <span class="text-3xl md:text-4xl font-bold text-orange-400">3</span>
-          <p class="text-slate-400 text-sm mt-2">Competing Digital Stacks</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sources & Citations -->
-    <div class="sources-section border-t border-slate-700/50 pt-12">
-      <h3 class="text-lg font-semibold text-slate-400 mb-6 flex items-center gap-2">
-        <i data-lucide="book-open" class="w-5 h-5"></i>
-        Sources & References
-      </h3>
-      <div class="grid md:grid-cols-2 gap-4 text-sm">
-        <div class="space-y-2">
-          <p class="text-slate-500">[1] US Department of State. "Announcing the Expansion of the Clean Network to Safeguard America's Assets." August 5, 2020.</p>
-          <p class="text-slate-500">[2] Executive Order 13873. "Securing the Information and Communications Technology and Services Supply Chain." May 15, 2019.</p>
-          <p class="text-slate-500">[3] Huawei, China Unicom. "New IP: A New Internet Protocol for the Future." ITU-T SG13 Contribution, 2019.</p>
-          <p class="text-slate-500">[4] Internet Society. "The New IP: Perspectives and Concerns." 2020.</p>
-        </div>
-        <div class="space-y-2">
-          <p class="text-slate-500">[5] Ministry of Electronics and IT, India. "Press Release on Blocking of Mobile Applications." June 29, 2020.</p>
-          <p class="text-slate-500">[6] Federal Law No. 90-FZ, Russian Federation. "On Amendments to the Federal Law on Communications." May 1, 2019.</p>
-          <p class="text-slate-500">[7] Tseliakhovich, D. "Russia's Sovereign Internet Law: Technical Implementation." CTC Sentinel, 2020.</p>
-          <p class="text-slate-500">[8] Information Technology Organization of Iran. "National Information Network Report." 2023.</p>
-          <p class="text-slate-500">[9] Khanna, P. "The Future is Asian." Simon & Schuster, 2021.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- GSAP ScrollTrigger Animations -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Lucide icons
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-
-      // Check if GSAP and ScrollTrigger are available
-      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Header animation
-        gsap.from('.splinternet-header', {
-          scrollTrigger: {
-            trigger: '.splinternet-header',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          y: 50,
-          duration: 1,
-          ease: 'power3.out'
-        });
-
-        // Intro quote animation
-        gsap.from('.splinternet-intro', {
-          scrollTrigger: {
-            trigger: '.splinternet-intro',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          x: -50,
-          duration: 0.8,
-          ease: 'power2.out'
-        });
-
-        // Map regions stagger
-        gsap.from('.blue-stack-region, .red-stack-region, .regulatory-bloc-region', {
-          scrollTrigger: {
-            trigger: '.splinternet-map',
-            start: 'top 70%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          y: 40,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: 'power2.out'
-        });
-
-        // Timeline events
-        gsap.utils.toArray('.timeline-event').forEach((event, i) => {
-          gsap.from(event, {
-            scrollTrigger: {
-              trigger: event,
-              start: 'top 98%',
-              toggleActions: 'play none none none',
-              once: true
-            },
-            opacity: 0,
-            y: 24,
-            x: i % 2 === 0 ? -26 : 26,
-            duration: 0.95,
-            ease: 'power3.out'
-          });
-        });
-
-        // Clean Network layers
-        gsap.from('.clean-layer', {
-          scrollTrigger: {
-            trigger: '.clean-network-section',
-            start: 'top 60%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          x: 30,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'power2.out'
-        });
-
-        // Stack cards
-        gsap.from('.stack-card', {
-          scrollTrigger: {
-            trigger: '.triple-stack-section',
-            start: 'top 60%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          y: 50,
-          duration: 0.7,
-          stagger: 0.15,
-          ease: 'power3.out'
-        });
-
-        // Statistics
-        gsap.from('.stat-card', {
-          scrollTrigger: {
-            trigger: '.statistics-section',
-            start: 'top 70%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          scale: 0.9,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: 'back.out(1.5)'
-        });
-
-        // Section headers
-        const sections = ['.clean-network-section', '.itu-section', '.india-section', '.russia-section', '.iran-section'];
-        sections.forEach(section => {
-          gsap.from(`${section} > .flex`, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 75%',
-              toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: 30,
-            duration: 0.6,
-            ease: 'power2.out'
-          });
-        });
-      }
-    });
-  </script>
-
-</section>
-
-    <!-- SECTION: week2-part1.html -->
-
   </main>
 
   <script>
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+      const motionPolicy = window.AIGeoMotionPolicy;
+      const reduceMotion = motionPolicy ? motionPolicy.prefersReducedMotion() : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll('.reveal');
+
+      if (reduceMotion) {
+        revealItems.forEach((item) => item.classList.add('is-visible'));
+      } else {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+        revealItems.forEach((item) => revealObserver.observe(item));
+      }
+
+      const sectionLinks = Array.from(document.querySelectorAll('.module-outline__card a'));
+      const sections = sectionLinks
+        .map((link) => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+      const outlineObserver = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) {
+          return;
+        }
+
+        sectionLinks.forEach((link) => {
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + visible.target.id);
+        });
+      }, {
+        threshold: 0.4,
+        rootMargin: '-20% 0px -40% 0px'
+      });
+
+      sections.forEach((section) => outlineObserver.observe(section));
+    });
   </script>
 </body>
 </html>

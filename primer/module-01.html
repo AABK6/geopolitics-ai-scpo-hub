@@ -17,6 +17,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -192,7 +193,7 @@
             <div class="gsap-fade mt-16">
               <div class="flex flex-col items-center gap-2 text-slate-400">
                 <span class="text-sm uppercase tracking-widest">Begin Reading</span>
-                <i data-lucide="chevron-down" class="w-6 h-6 animate-bounce"></i>
+                <i data-lucide="chevron-down" class="w-6 h-6"></i>
               </div>
             </div>
           </div>
@@ -518,11 +519,12 @@
                 </div>
                 <h3 class="insight-title">Liberal Hegemony via Connectivity</h3>
                 <p class="insight-content">
-                  The GII was designed as a <strong>trojan horse for American values</strong>. By building
-                  the infrastructure of global communication, the U.S. would embed its principles—free speech,
-                  market competition, open access—into the very architecture of the digital world. Connectivity
-                  became a form of soft power, spreading liberal democratic norms through technical standards
-                  rather than political coercion.
+                  The GII was not just a speech about networks. It paired a domestic buildout with a diplomatic
+                  template for other states: privatize telecoms, widen competition, preserve interoperability,
+                  and keep regulation flexible enough for U.S. firms to scale abroad. In practice, connectivity
+                  became a geopolitical instrument because the rules of openness, investment, and interconnection
+                  also determined which vendors, legal assumptions, and standards would sit at the center of the
+                  new digital order.
                 </p>
               </div>
 
@@ -956,10 +958,11 @@
                   </h3>
                   <p class="text-slate-300 text-sm leading-relaxed">
                     Barlow's "Declaration of the Independence of Cyberspace" was written in response to
-                    the Telecommunications Act. It articulated a vision of the internet as a separate
-                    realm—immaterial, borderless, and beyond the reach of traditional governments. The
-                    language echoed the American Declaration of Independence, positioning cyberspace as
-                    a new frontier for human liberation.
+                    the Telecommunications Act and the broader cyber-libertarian mood of the mid-1990s.
+                    It articulated a vision of the internet as a separate realm—immaterial, borderless,
+                    and beyond the reach of traditional governments. The language echoed the American
+                    Declaration of Independence, turning a historically specific network architecture into
+                    a universal political manifesto.
                   </p>
                 </div>
 
@@ -987,11 +990,11 @@
                   <div>
                     <h4 class="text-white font-semibold mb-2">The Ideological Function</h4>
                     <p class="text-slate-300 text-sm leading-relaxed">
-                      Barlow's declaration served a crucial ideological purpose: it naturalized American
-                      dominance of the internet as "freedom" rather than hegemony. By framing cyberspace
-                      as a realm beyond government, it obscured the very real power structures—corporate
-                      control, infrastructure ownership, and technical standards—that concentrated influence
-                      in American hands. The myth of immateriality became a shield for material interests.
+                      Barlow's declaration helped recast a contingent infrastructure into a seemingly natural
+                      freedom. By describing cyberspace as if it floated above territory, it obscured the very
+                      real power structures—corporate ownership, cable routes, standards bodies, and U.S.-based
+                      platforms—that already organized the network. The myth of immateriality made those material
+                      asymmetries look like neutrality.
                     </p>
                   </div>
                 </div>
@@ -1054,10 +1057,10 @@
                   </p>
 
                   <p class="text-slate-600 text-sm leading-relaxed">
-                    This hubris served American interests: if the internet couldn't be regulated, then
-                    U.S. companies could operate globally without interference from foreign governments.
-                    The "ungovernability" of cyberspace became a justification for laissez-faire policies
-                    that benefited Silicon Valley.
+                    It also translated a policy preference into a theory of history. If information would
+                    inevitably outrun borders, then openness abroad could be treated as self-executing,
+                    and U.S. firms could expand globally under the assumption that foreign states would
+                    eventually have to yield to the network's logic.
                   </p>
                 </div>
 
@@ -1076,10 +1079,11 @@
                   </p>
 
                   <p class="text-slate-600 text-sm leading-relaxed">
-                    Information may be hard to regulate, but infrastructure is not. The cables, servers,
-                    data centers, and corporate entities that constitute the internet are all eminently
-                    regulable. China would prove this within years, demonstrating that sovereign control
-                    over digital infrastructure was not only possible but effective.
+                    Speech is hard to police perfectly; gateways, licenses, exchange points, platforms,
+                    cables, and cloud operators are not. Once states focus on chokepoints rather than on
+                    the fantasy of total information control, sovereignty returns through architecture.
+                    China would prove that point within a few years by governing the stack layer by layer
+                    rather than trying to stop every packet individually.
                   </p>
                 </div>
 
@@ -1224,89 +1228,123 @@
           <div class="container mx-auto px-6">
             <div class="max-w-4xl mx-auto">
 
-              <div class="source-list">
-                <h3 class="source-list-title flex items-center gap-2">
-                  <i data-lucide="book-marked" class="w-4 h-4"></i>
-                  Sources & References
-                </h3>
+              <div class="space-y-8">
+                <div>
+                  <h3 class="source-list-title flex items-center gap-2">
+                    <i data-lucide="book-marked" class="w-4 h-4"></i>
+                    Sources & References
+                  </h3>
+                  <p class="text-sm text-slate-600 leading-relaxed mt-4">
+                    This dossier mirrors the structure of the lecture notes: each cluster below backs a specific
+                    argumentative block in the page so the historical narrative can be traced back to its primary
+                    texts, legal documents, and technical critiques.
+                  </p>
+                </div>
 
-                <div class="space-y-1">
-
-                  <div class="source-item">
-                    <span class="source-number">[1]</span>
-                    <p class="source-text">
-                      Fukuyama, Francis. <em>The End of History and the Last Man</em>. Free Press, 1992.
+                <div class="grid md:grid-cols-2 gap-6">
+                  <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <p class="text-xs font-mono uppercase tracking-[0.18em] text-orange-600 mb-3">1. Intellectual climate</p>
+                    <h4 class="text-lg font-semibold text-slate-900 mb-3">The synthesis behind the liberal digital order</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                      These texts ground the Fukuyama-Hayek-Romer framework and the broader cyber-utopian language that
+                      made non-rival ideas look politically transformative.
                     </p>
-                  </div>
+                    <ul class="space-y-4 text-sm">
+                      <li>
+                        <a href="https://www.jstor.org/stable/24027184" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Francis Fukuyama, <em>The End of History and the Last Man</em> (1992)</a>
+                        <p class="text-slate-600 mt-1">Political legitimacy after the Cold War and the mood of ideological finality.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.econlib.org/library/Essays/hykKnw.html" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">F.A. Hayek, "The Use of Knowledge in Society" (1945)</a>
+                        <p class="text-slate-600 mt-1">The dispersed-knowledge argument later re-read as a defense of networked decentralization.</p>
+                      </li>
+                      <li>
+                        <a href="https://web.stanford.edu/class/sts175/NewFiles/Negroponte.%20Being%20Digital.pdf" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Nicholas Negroponte, <em>Being Digital</em> (1995)</a>
+                        <p class="text-slate-600 mt-1">A canonical statement of the era's claim that bits would outrun borders and institutions.</p>
+                      </li>
+                      <li>
+                        <a href="https://web.stanford.edu/~klenow/Romer_1990.pdf" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Paul Romer, "Endogenous Technological Change" (1990)</a>
+                        <p class="text-slate-600 mt-1">The economic logic for ideas as non-rival inputs that can scale growth.</p>
+                      </li>
+                    </ul>
+                  </article>
 
-                  <div class="source-item">
-                    <span class="source-number">[2]</span>
-                    <p class="source-text">
-                      Hayek, F.A. "The Use of Knowledge in Society." <em>American Economic Review</em>,
-                      Vol. 35, No. 4, 1945, pp. 519-530.
+                  <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <p class="text-xs font-mono uppercase tracking-[0.18em] text-orange-600 mb-3">2. Strategy and law</p>
+                    <h4 class="text-lg font-semibold text-slate-900 mb-3">How Washington translated theory into policy</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                      These documents show how openness, privatization, interoperability, and legal immunity were
+                      converted into a diplomatic and commercial architecture.
                     </p>
-                  </div>
+                    <ul class="space-y-4 text-sm">
+                      <li>
+                        <a href="https://search.itu.int/history/HistoryDigitalCollectionDocLibrary/4.144.57.en.104.pdf" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Al Gore, Buenos Aires remarks on the Global Information Infrastructure (1994)</a>
+                        <p class="text-slate-600 mt-1">The governing speech for the five principles of the GII and the democracy metaphor.</p>
+                      </li>
+                      <li>
+                        <a href="https://clintonwhitehouse6.archives.gov/1993/09/1993-09-15-the-national-information-infrastructure-agenda-for-action.html" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">The White House, National Information Infrastructure: Agenda for Action (1993)</a>
+                        <p class="text-slate-600 mt-1">The domestic template that the global strategy later tried to export.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.fcc.gov/general/telecommunications-act-1996" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Telecommunications Act of 1996</a>
+                        <p class="text-slate-600 mt-1">The statutory turn toward a more commercial and lightly regulated internet order.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.law.cornell.edu/uscode/text/47/230" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">47 U.S.C. § 230</a>
+                        <p class="text-slate-600 mt-1">The liability shield that accelerated platform scale and changed the structure of online intermediaries.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.wto.org/english/tratop_e/serv_e/telecom_e/tel23_e.htm" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">WTO Basic Telecommunications Reference Paper (1997)</a>
+                        <p class="text-slate-600 mt-1">The international codification of liberalization and competitive access norms.</p>
+                      </li>
+                    </ul>
+                  </article>
 
-                  <div class="source-item">
-                    <span class="source-number">[3]</span>
-                    <p class="source-text">
-                      Romer, Paul M. "Endogenous Technological Change." <em>Journal of Political Economy</em>,
-                      Vol. 98, No. 5, 1990, pp. S71-S102.
+                  <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <p class="text-xs font-mono uppercase tracking-[0.18em] text-orange-600 mb-3">3. Crypto wars</p>
+                    <h4 class="text-lg font-semibold text-slate-900 mb-3">The first clash between openness and surveillance</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                      The Clipper episode matters because it reveals that the U.S. was promoting openness abroad while
+                      still seeking privileged access at the infrastructure layer.
                     </p>
-                  </div>
+                    <ul class="space-y-4 text-sm">
+                      <li>
+                        <a href="https://clintonwhitehouse6.archives.gov/1993/04/1993-04-16-press-release-on-clipper-chip-encryption-initiative.html" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">The White House, Clipper Chip Encryption Initiative (1993)</a>
+                        <p class="text-slate-600 mt-1">The official U.S. statement of key escrow as a policy compromise.</p>
+                      </li>
+                      <li>
+                        <a href="https://epic.org/crypto/clipper/" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">EPIC, The Clipper Chip archive</a>
+                        <p class="text-slate-600 mt-1">Contemporary civil-liberties criticism and document trail for the first crypto wars.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.mattblaze.org/papers/eesproto.pdf" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Matt Blaze, "Protocol Failure in the Escrowed Encryption Standard" (1994)</a>
+                        <p class="text-slate-600 mt-1">The technical critique that exposed why the proposed hardware backdoor was fragile.</p>
+                      </li>
+                    </ul>
+                  </article>
 
-                  <div class="source-item">
-                    <span class="source-number">[4]</span>
-                    <p class="source-text">
-                      Gore, Al. "Remarks at the International Telecommunications Union." Buenos Aires,
-                      Argentina, March 21, 1994.
+                  <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <p class="text-xs font-mono uppercase tracking-[0.18em] text-orange-600 mb-3">4. Cyber-utopian climax</p>
+                    <h4 class="text-lg font-semibold text-slate-900 mb-3">From Barlow's manifesto to the China bet</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                      These texts document the culmination of the borderless-internet thesis and the belief that
+                      connectivity would push China toward liberalization.
                     </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[5]</span>
-                    <p class="source-text">
-                      Blaze, Matt. "Protocol Failure in the Escrowed Encryption Standard."
-                      <em>Proceedings of the 2nd ACM Conference on Computer and Communications Security</em>, 1994.
-                    </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[6]</span>
-                    <p class="source-text">
-                      Telecommunications Act of 1996. Pub. L. No. 104-104, 110 Stat. 56 (1996).
-                    </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[7]</span>
-                    <p class="source-text">
-                      47 U.S.C. § 230 — Protection for private blocking and screening of offensive material.
-                    </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[8]</span>
-                    <p class="source-text">
-                      WTO Agreement on Basic Telecommunications. Geneva, February 15, 1997.
-                    </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[9]</span>
-                    <p class="source-text">
-                      Barlow, John Perry. "A Declaration of the Independence of Cyberspace."
-                      Electronic Frontier Foundation, February 8, 1996.
-                    </p>
-                  </div>
-
-                  <div class="source-item">
-                    <span class="source-number">[10]</span>
-                    <p class="source-text">
-                      Clinton, William J. Remarks on Internet Policy. March 2000.
-                    </p>
-                  </div>
-
+                    <ul class="space-y-4 text-sm">
+                      <li>
+                        <a href="https://www.eff.org/cyberspace-independence" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">John Perry Barlow, "A Declaration of the Independence of Cyberspace" (1996)</a>
+                        <p class="text-slate-600 mt-1">The canonical statement of cyberspace as a realm outside territorial sovereignty.</p>
+                      </li>
+                      <li>
+                        <a href="https://www.wired.com/1995/06/teilhard/" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Wired, "Teilhard de Chardin and the Noosphere" (1995)</a>
+                        <p class="text-slate-600 mt-1">One of the clearest period artifacts of the immaterial, civilizational language around the net.</p>
+                      </li>
+                      <li>
+                        <a href="https://clintonwhitehouse6.archives.gov/2000/03/2000-03-08-remarks-of-the-president-on-china.html" target="_blank" rel="noreferrer" class="font-semibold text-slate-900 underline decoration-orange-400 underline-offset-4">Bill Clinton, Remarks on China at SAIS (March 8, 2000)</a>
+                        <p class="text-slate-600 mt-1">The speech containing both the "liberty will spread by cell phone and cable modem" and the "Jell-O" formulation.</p>
+                      </li>
+                    </ul>
+                  </article>
                 </div>
               </div>
 
@@ -1322,6 +1360,15 @@
           document.addEventListener('DOMContentLoaded', function () {
             if (typeof lucide !== 'undefined') {
               lucide.createIcons();
+            }
+
+            const motionPolicy = window.AIGeoMotionPolicy;
+            const canAnimate = motionPolicy
+              ? motionPolicy.prepareGSAPPage()
+              : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+            if (!canAnimate) {
+              return;
             }
 
             if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -1444,7 +1491,7 @@
                 scale: 1,
                 duration: 0.7,
                 stagger: 0.1,
-                ease: 'back.out(1.2)',
+                ease: 'power2.out',
                 scrollTrigger: {
                   trigger: convictionCards[0],
                   start: 'top 85%',
@@ -1532,7 +1579,7 @@
               onEnter: () => {
                 gsap.fromTo('.section-230-number',
                   { scale: 0.5, opacity: 0 },
-                  { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)' }
+                  { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }
                 );
               },
               once: true

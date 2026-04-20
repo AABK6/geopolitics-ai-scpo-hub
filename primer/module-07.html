@@ -7,25 +7,1220 @@
   
   <link rel="stylesheet" href="../shared/design-system.css">
   <link rel="stylesheet" href="../shared/styles.css?v=20260228b">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
-    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    :root {
+      --ink-strong: #fbf7f1;
+      --ink: #f4ede3;
+      --ink-soft: rgba(255, 252, 246, 0.86);
+      --line: rgba(89, 74, 57, 0.12);
+      --line-strong: rgba(89, 74, 57, 0.24);
+      --text-main: #28231d;
+      --text-soft: #5d554a;
+      --text-faint: #8a7f70;
+      --paper-accent: #53463a;
+      --frame-accent: var(--active-frame-rgb);
+      --frame-ink: var(--paper-accent);
+      --active-frame-rgb: 122, 96, 70;
+      --frame-realist-rgb: 155, 62, 47;
+      --frame-restorationist-rgb: 140, 99, 17;
+      --frame-eacc-rgb: 48, 114, 74;
+      --frame-corporate-rgb: 54, 96, 150;
+      --frame-safety-rgb: 116, 78, 151;
+      --frame-dislocation-rgb: 34, 112, 123;
+      --frame-realist-ink: #9b3e30;
+      --frame-restorationist-ink: #8c6211;
+      --frame-eacc-ink: #30724a;
+      --frame-corporate-ink: #366097;
+      --frame-safety-ink: #744e97;
+      --frame-dislocation-ink: #22707b;
+      --font-display: 'Gelasio', Georgia, 'Times New Roman', serif;
+      --font-body: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+      --type-label: 0.72rem;
+      --type-caption: 0.82rem;
+      --type-small: 0.92rem;
+      --type-body: 1rem;
+      --type-lead: 1.12rem;
+      --type-subhead: clamp(1.3rem, 1.55vw, 1.65rem);
+      --type-heading: clamp(2.45rem, 4.4vw, 3.8rem);
+      --space-xs: 0.5rem;
+      --space-sm: 0.75rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      --space-4xl: 6rem;
+      --measure-main: 68ch;
+      --rail-width: 24rem;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(176, 132, 82, 0.04), transparent 38%),
+        linear-gradient(180deg, #fcfaf6 0%, #faf7f1 52%, #f6f1e8 100%);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: var(--type-body);
+      line-height: 1.68;
+      font-kerning: normal;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
     /* Custom adjustments for standalone modules */
-    .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
-    .module-nav a:hover { color: #fff; }
+    .module-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(252, 249, 244, 0.97);
+      border-bottom: 1px solid var(--line);
+      padding: 1rem 2rem;
+      display: grid;
+      grid-template-columns: auto minmax(15rem, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .module-nav a {
+      order: 1;
+      color: #6f665b;
+      text-transform: uppercase;
+      font-size: var(--type-label);
+      letter-spacing: 0.12em;
+      font-family: var(--font-mono);
+      line-height: 1.3;
+      text-decoration: none;
+    }
+
+    .module-nav a:last-of-type {
+      order: 3;
+      justify-self: end;
+    }
+
+    .module-nav a:hover { color: var(--text-main); }
+
+    .reading-status {
+      order: 2;
+      justify-self: center;
+      width: min(100%, 27rem);
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .reading-status-copy {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .reading-status-kicker,
+    .reading-status-meta {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .reading-status-name {
+      min-width: 0;
+      font-family: var(--font-display);
+      font-size: 1.02rem;
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+      color: var(--text-main);
+      text-align: center;
+      transition: color 0.25s ease;
+    }
+
+    .reading-status-track {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .reading-status-step {
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(95, 79, 60, 0.12);
+      transform-origin: center;
+      transition: background-color 0.28s ease, transform 0.28s ease, opacity 0.28s ease;
+    }
+
+    .reading-status-step.is-complete {
+      background: rgba(var(--active-frame-rgb), 0.5);
+    }
+
+    .reading-status-step.is-active {
+      background: rgba(var(--active-frame-rgb), 0.94);
+      transform: scaleY(1.5);
+    }
+
+    @media (max-width: 900px) {
+      .module-nav {
+        grid-template-columns: 1fr auto;
+      }
+
+      .reading-status {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        order: 3;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .module-nav {
+        padding-inline: 1.1rem;
+      }
+
+      .reading-status-copy {
+        justify-content: flex-start;
+      }
+
+      .reading-status-name {
+        font-size: 0.92rem;
+        text-align: left;
+      }
+
+      .reading-status-meta {
+        display: none;
+      }
+    }
+
+    #week2-part3 {
+      background:
+        linear-gradient(90deg, rgba(109, 92, 73, 0.012) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 254, 251, 0.98), rgba(249, 244, 236, 0.99)),
+        #faf7f1 !important;
+      background-size: 96px 96px, auto, auto;
+      color: var(--text-main);
+    }
+
+    #week2-part3 > .absolute.inset-0.opacity-10 { opacity: 0.004; }
+    #week2-part3 .ideology-nodes { display: none; }
+
+    #week2-part3 .text-white,
+    #week2-part3 .group:hover .group-hover\:text-white {
+      color: var(--text-main) !important;
+    }
+
+    #week2-part3 .text-slate-200 { color: #342d26 !important; }
+    #week2-part3 .text-slate-300 { color: #433a31 !important; }
+    #week2-part3 .text-slate-400 { color: #5a5044 !important; }
+    #week2-part3 .text-slate-500 { color: #6f6456 !important; }
+    #week2-part3 .text-slate-600 { color: #857867 !important; }
+
+    #week2-part3 [class*="bg-slate-950"],
+    #week2-part3 [class*="bg-slate-900"],
+    #week2-part3 [class*="bg-slate-800"] {
+      background-color: rgba(255, 253, 249, 0.92) !important;
+    }
+
+    #week2-part3 [class*="bg-slate-700"] {
+      background-color: rgba(118, 101, 79, 0.08) !important;
+    }
+
+    #week2-part3 [class*="bg-gradient"] {
+      background-image: none !important;
+    }
+
+    #week2-part3 [class*="border-slate-"] {
+      border-color: var(--line) !important;
+    }
+
+    #week2-part3 .text-red-400,
+    #week2-part3 .text-red-300 { color: #9b3e30 !important; }
+    #week2-part3 [class*="bg-red-"] { background-color: rgba(155, 62, 47, 0.15) !important; }
+    #week2-part3 [class*="border-red-"] { border-color: rgba(155, 62, 47, 0.4) !important; }
+
+    #week2-part3 .text-amber-400,
+    #week2-part3 .text-amber-300,
+    #week2-part3 .text-amber-200 { color: #8c6211 !important; }
+    #week2-part3 [class*="bg-amber-"] { background-color: rgba(140, 99, 17, 0.15) !important; }
+    #week2-part3 [class*="border-amber-"] { border-color: rgba(140, 99, 17, 0.4) !important; }
+
+    #week2-part3 .text-emerald-400,
+    #week2-part3 .text-emerald-300 { color: #30724a !important; }
+    #week2-part3 [class*="bg-emerald-"] { background-color: rgba(48, 114, 74, 0.15) !important; }
+    #week2-part3 [class*="border-emerald-"] { border-color: rgba(48, 114, 74, 0.4) !important; }
+
+    #week2-part3 .text-blue-400,
+    #week2-part3 .text-blue-300 { color: #366097 !important; }
+    #week2-part3 [class*="bg-blue-"] { background-color: rgba(54, 96, 150, 0.15) !important; }
+    #week2-part3 [class*="border-blue-"] { border-color: rgba(54, 96, 150, 0.4) !important; }
+
+    #week2-part3 .text-purple-400,
+    #week2-part3 .text-purple-300 { color: #744e97 !important; }
+    #week2-part3 [class*="bg-purple-"] { background-color: rgba(116, 78, 151, 0.15) !important; }
+    #week2-part3 [class*="border-purple-"] { border-color: rgba(116, 78, 151, 0.4) !important; }
+
+    #week2-part3 .text-cyan-400,
+    #week2-part3 .text-cyan-300 { color: #22707b !important; }
+    #week2-part3 [class*="bg-cyan-"] { background-color: rgba(34, 112, 123, 0.15) !important; }
+    #week2-part3 [class*="border-cyan-"] { border-color: rgba(34, 112, 123, 0.4) !important; }
+
+    .section-header,
+    .intro-section,
+    .frames-overview,
+    .frame-section,
+    .comparison-section,
+    .network-section,
+    .sources-section {
+      position: relative;
+    }
+
+    .title-text,
+    .frame-header h2,
+    .intro-card h2,
+    .frames-overview h2,
+    .comparison-section h2,
+    .network-section h2,
+    .sources-section h2 {
+      font-family: var(--font-display);
+      letter-spacing: -0.035em;
+      font-weight: 600;
+    }
+
+    .title-text {
+      max-width: 12ch;
+      line-height: 0.98;
+      font-weight: 700 !important;
+    }
+
+    .title-highlight {
+      color: var(--paper-accent);
+    }
+
+    .subtitle-text {
+      color: #463c32 !important;
+      max-width: 42ch;
+      font-size: clamp(1.08rem, 1.4vw, 1.32rem) !important;
+      line-height: 1.55;
+    }
+
+    .intro-card > p {
+      max-width: 66ch;
+      font-size: var(--type-lead) !important;
+      line-height: 1.72 !important;
+      color: #3f362d !important;
+    }
+
+    .question-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.28rem, 1.7vw, 1.55rem) !important;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      font-weight: 600;
+    }
+
+    .question-card li {
+      line-height: 1.68;
+    }
+
+    .header-line {
+      width: 4.5rem !important;
+      height: 1px !important;
+      border-radius: 0 !important;
+      background: rgba(95, 78, 63, 0.28) !important;
+    }
+
+    .week-badge {
+      background: rgba(255, 253, 249, 0.78) !important;
+      border-color: rgba(95, 78, 63, 0.16) !important;
+    }
+
+    [data-frame="realist"] {
+      --frame-accent: var(--frame-realist-rgb);
+      --frame-ink: var(--frame-realist-ink);
+    }
+
+    [data-frame="restorationist"] {
+      --frame-accent: var(--frame-restorationist-rgb);
+      --frame-ink: var(--frame-restorationist-ink);
+    }
+
+    [data-frame="eacc"] {
+      --frame-accent: var(--frame-eacc-rgb);
+      --frame-ink: var(--frame-eacc-ink);
+    }
+
+    [data-frame="corporate"] {
+      --frame-accent: var(--frame-corporate-rgb);
+      --frame-ink: var(--frame-corporate-ink);
+    }
+
+    [data-frame="safety"] {
+      --frame-accent: var(--frame-safety-rgb);
+      --frame-ink: var(--frame-safety-ink);
+    }
+
+    [data-frame="dislocation"] {
+      --frame-accent: var(--frame-dislocation-rgb);
+      --frame-ink: var(--frame-dislocation-ink);
+    }
+
+    .intro-card,
+    .comparison-table,
+    .network-diagram {
+      background: rgba(255, 255, 253, 0.98) !important;
+      border-color: var(--line) !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .question-card {
+      background: rgba(255, 255, 252, 0.96) !important;
+      border: 1px solid var(--line);
+      border-left-width: 1px !important;
+      border-radius: 0.9rem;
+      padding: clamp(1.25rem, 2vw, 1.75rem) !important;
+    }
+
+    .frame-card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(var(--frame-accent), 0.26) 0%, rgba(var(--frame-accent), 0.11) 36%, rgba(255, 255, 253, 0.99) 36%, rgba(255, 255, 253, 0.99) 100%) !important;
+      border-color: rgba(var(--frame-accent), 0.38) !important;
+      box-shadow: none !important;
+      transition: border-color 0.28s ease, background-color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .frame-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 5px;
+      background: rgba(var(--frame-accent), 0.96);
+    }
+
+    .frame-card:hover {
+      border-color: rgba(var(--frame-accent), 0.62) !important;
+      transform: none !important;
+    }
+
+    .frame-card::after {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 0.8rem;
+      height: 1px;
+      background: rgba(86, 75, 62, 0.14);
+      transform: scaleX(0.42);
+      transform-origin: left center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .frame-card-icon {
+      background: rgba(var(--frame-accent), 0.28) !important;
+      border: 1px solid rgba(var(--frame-accent), 0.44);
+      transition: background-color 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
+    }
+
+    .frame-card:hover .frame-card-icon { transform: none !important; }
+
+    .frame-card-icon i {
+      color: var(--frame-ink) !important;
+    }
+
+    .frame-card.is-active,
+    .frame-card.is-active:hover {
+      border-color: rgba(var(--frame-accent), 0.68) !important;
+      background:
+        linear-gradient(180deg, rgba(var(--frame-accent), 0.38) 0%, rgba(var(--frame-accent), 0.16) 36%, rgba(255, 255, 253, 1) 36%, rgba(255, 255, 253, 1) 100%) !important;
+      box-shadow: 0 18px 36px -30px rgba(var(--frame-accent), 0.28) !important;
+      transform: none !important;
+    }
+
+    .frame-card.is-active::after {
+      background: rgba(var(--frame-accent), 0.92);
+      transform: scaleX(1);
+    }
+
+    .frame-card.is-active .frame-card-icon,
+    .frame-card.is-active:hover .frame-card-icon {
+      background: rgba(var(--frame-accent), 0.38) !important;
+      border-color: rgba(var(--frame-accent), 0.56);
+      transform: none;
+    }
+
+    .frame-card.is-active h3 {
+      color: var(--text-main) !important;
+    }
+
+    .frame-card .frame-card-label {
+      color: var(--frame-ink) !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.92;
+    }
+
+    .frame-card h3 {
+      color: #201b16 !important;
+    }
+
+    .frame-section {
+      isolation: isolate;
+      padding-top: clamp(5.5rem, 9vw, 8rem) !important;
+      padding-bottom: clamp(5.5rem, 9vw, 8rem) !important;
+      scroll-margin-top: 5.5rem;
+    }
+
+    .frame-section::before,
+    .frame-section::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.42;
+      transition: opacity 0.4s ease;
+    }
+
+    .frame-section::before {
+      left: clamp(1rem, 3vw, 3rem);
+      top: clamp(3.75rem, 7vw, 5.5rem);
+      width: min(36rem, 42vw);
+      height: clamp(9rem, 18vw, 13rem);
+      background: radial-gradient(circle at left top, rgba(var(--frame-accent), 0.18), rgba(var(--frame-accent), 0.08) 46%, transparent 74%);
+      z-index: -1;
+    }
+
+    .frame-section::after {
+      left: clamp(1.5rem, 4vw, 4.5rem);
+      top: clamp(4.5rem, 8vw, 6rem);
+      bottom: clamp(4.5rem, 8vw, 6rem);
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(var(--frame-accent), 0.72), transparent);
+    }
+
+    .frame-section.is-active::before,
+    .frame-section.is-active::after {
+      opacity: 0.92;
+    }
+
+    .frame-header {
+      align-items: center !important;
+      gap: 1.25rem !important;
+      margin-bottom: clamp(2.25rem, 5vw, 4rem) !important;
+      transition: transform 0.32s ease;
+    }
+
+    .frame-header > div:first-child {
+      display: flex !important;
+      background: linear-gradient(180deg, rgba(var(--frame-accent), 0.22), rgba(var(--frame-accent), 0.1)) !important;
+      border: 1px solid rgba(var(--frame-accent), 0.34) !important;
+      box-shadow: 0 14px 24px -22px rgba(var(--frame-accent), 0.62);
+    }
+
+    .frame-header > div:first-child i {
+      color: var(--frame-ink) !important;
+    }
+
+    .frame-header h2 {
+      font-size: var(--type-heading) !important;
+      line-height: 1.02 !important;
+      letter-spacing: -0.038em;
+      margin-bottom: 0.35rem;
+      color: var(--frame-ink) !important;
+      text-wrap: balance;
+    }
+
+    .frame-header p {
+      font-family: var(--font-body);
+      font-size: 0.98rem !important;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--frame-ink) !important;
+      max-width: 40ch;
+      text-wrap: balance;
+      opacity: 0.82;
+      filter: saturate(1.08);
+      transition: color 0.28s ease, opacity 0.28s ease;
+    }
+
+    .frame-header p::before {
+      content: "";
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      margin-bottom: 0.72rem;
+      background: rgba(var(--frame-accent), 0.5);
+      opacity: 1;
+    }
+
+    .frame-kicker {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.62rem;
+      margin-bottom: 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--frame-accent), 0.24);
+      background: rgba(var(--frame-accent), 0.12);
+      color: var(--frame-ink) !important;
+      font-family: var(--font-mono);
+      font-size: var(--type-label) !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .frame-section.is-active .frame-header {
+      transform: translateX(0.18rem);
+    }
+
+    .frame-section.is-active .frame-kicker {
+      color: rgba(var(--frame-accent), 0.88) !important;
+    }
+
+    .frame-section.is-active .frame-header p {
+      color: var(--frame-ink) !important;
+      opacity: 1;
+    }
+
+    .frame-section .max-w-4xl {
+      max-width: 82rem !important;
+      gap: 0 !important;
+    }
+
+    @media (min-width: 1024px) {
+      .frame-section .max-w-4xl {
+        display: grid;
+        grid-template-columns: minmax(0, var(--measure-main)) minmax(17rem, var(--rail-width));
+        justify-content: space-between;
+        gap: clamp(3.25rem, 6vw, 6rem) !important;
+        align-items: start;
+      }
+    }
+
+    .frame-section .max-w-4xl > :first-child {
+      display: grid;
+      gap: clamp(3rem, 5vw, 5.25rem);
+    }
+
+    .frame-section .max-w-4xl > :last-child {
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 2.25rem);
+      padding-top: clamp(1.5rem, 3vw, 2rem) !important;
+      border-top: 1px solid rgba(var(--frame-accent), 0.28) !important;
+      transition: border-color 0.32s ease, background-color 0.32s ease;
+    }
+
+    @media (min-width: 1024px) {
+      .frame-section .max-w-4xl > :last-child {
+        position: sticky;
+        top: 6.5rem;
+        align-self: start;
+        padding-top: 0 !important;
+        padding-left: clamp(1.25rem, 2vw, 1.75rem);
+        border-top: none !important;
+        border-left: 1px solid rgba(var(--frame-accent), 0.28);
+      }
+    }
+
+    .frame-section.is-active .max-w-4xl > :last-child {
+      background: transparent;
+      border-top-color: rgba(var(--frame-accent), 0.46) !important;
+    }
+
+    @media (min-width: 1024px) {
+      .frame-section.is-active .max-w-4xl > :last-child {
+        border-left-color: rgba(var(--frame-accent), 0.46) !important;
+      }
+    }
+
+    @media (max-width: 1023px) {
+      .frame-section::after {
+        left: 1.5rem;
+        top: 3.5rem;
+        bottom: 3.5rem;
+      }
+    }
+
+    .frame-section .max-w-4xl > :first-child > div {
+      padding-top: clamp(1.75rem, 3vw, 2.25rem) !important;
+      border-top: 1px solid var(--line) !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child > div:first-child {
+      padding-top: 0 !important;
+      border-top: none !important;
+      margin-bottom: 0;
+    }
+
+    .frame-section .max-w-4xl > :first-child > div:first-child h3 {
+      font-size: clamp(1.65rem, 2vw, 2rem) !important;
+      line-height: 1.12 !important;
+      margin-bottom: 1.15rem !important;
+      font-family: var(--font-display);
+      letter-spacing: -0.025em;
+      font-weight: 600;
+    }
+
+    .frame-section .max-w-4xl > :first-child > div:not(:first-child) h3 {
+      font-family: var(--font-display);
+      font-size: var(--type-subhead) !important;
+      line-height: 1.18;
+      letter-spacing: -0.022em;
+      text-transform: none;
+      font-weight: 600;
+      color: var(--text-main) !important;
+      margin-bottom: 1.15rem !important;
+    }
+
+    .frame-section .max-w-4xl > :last-child h4 {
+      font-family: var(--font-mono);
+      font-size: var(--type-label) !important;
+      line-height: 1.35;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--frame-ink) !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child h3 > i,
+    .frame-section .max-w-4xl > :last-child h4 > i {
+      display: none;
+    }
+
+    .intro-card h2 > i,
+    .comparison-section h2 > i,
+    .network-section h2 > i,
+    .sources-section h2 > i {
+      display: none;
+    }
+
+    .frame-section .max-w-4xl > :first-child p,
+    .frame-section .max-w-4xl > :first-child li,
+    .frame-section .max-w-4xl > :first-child span:not(.text-red-400):not(.text-amber-400):not(.text-emerald-400):not(.text-blue-400):not(.text-purple-400):not(.text-cyan-400) {
+      line-height: 1.76;
+      max-width: 68ch;
+    }
+
+    .frame-section .max-w-4xl > :first-child > div:first-child p,
+    .frame-section .max-w-4xl > :first-child > div:first-child li,
+    .frame-section .max-w-4xl > :first-child > div:first-child span:not(.text-red-400):not(.text-amber-400):not(.text-emerald-400):not(.text-blue-400):not(.text-purple-400):not(.text-cyan-400) {
+      font-size: 1.05rem;
+      color: #473f36 !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child p.text-sm,
+    .frame-section .max-w-4xl > :first-child .text-sm {
+      font-size: var(--type-small) !important;
+      line-height: 1.68;
+    }
+
+    .frame-section .max-w-4xl > :first-child h4,
+    .frame-section .max-w-4xl > :last-child h5 {
+      font-size: 1rem;
+      line-height: 1.32;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+    }
+
+    .frame-section strong {
+      font-weight: 700;
+      letter-spacing: -0.008em;
+    }
+
+    .frame-section .max-w-4xl > :first-child .grid,
+    .frame-section .max-w-4xl > :first-child .space-y-4,
+    .frame-section .max-w-4xl > :first-child .space-y-3 {
+      gap: clamp(1rem, 2vw, 1.5rem) !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child [class*="border-l-2"]:not(.quote-block) {
+      border-left-width: 0 !important;
+      border-top: 1px solid var(--line) !important;
+      padding-left: 0 !important;
+      padding-top: 1rem !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child .flex.items-start.gap-4,
+    .frame-section .max-w-4xl > :first-child .flex.items-start.gap-3 {
+      gap: clamp(0.85rem, 1.4vw, 1.2rem) !important;
+    }
+
+    .frame-section .max-w-4xl > :first-child [class*="w-10"][class*="h-10"],
+    .frame-section .max-w-4xl > :first-child [class*="w-8"][class*="h-8"],
+    .frame-section .max-w-4xl > :first-child [class*="w-6"][class*="h-6"] {
+      margin-top: 0.1rem;
+    }
+
+    .frame-section .max-w-4xl > :last-child > div {
+      padding-top: clamp(1.1rem, 2vw, 1.45rem) !important;
+      border-top: 1px solid rgba(var(--frame-accent), 0.16) !important;
+    }
+
+    .frame-section .max-w-4xl > :last-child > div:first-child {
+      padding-top: 0 !important;
+      border-top: none !important;
+    }
+
+    .quote-block {
+      border: 1px solid rgba(var(--frame-accent), 0.42) !important;
+      border-left-width: 1px !important;
+      border-radius: 1rem;
+      padding: clamp(1rem, 2vw, 1.35rem) !important;
+    }
+
+    .quote-block i[data-lucide="quote"] {
+      display: none;
+    }
+
+    .frame-section .quote-block {
+      background: linear-gradient(180deg, rgba(var(--frame-accent), 0.12), rgba(255, 252, 246, 0.98) 78%);
+      box-shadow: none;
+    }
+
+    .frame-section .quote-block + .quote-block {
+      margin-top: 0.25rem;
+    }
+
+    .quote-block blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.08rem, 1.25vw, 1.28rem) !important;
+      line-height: 1.46 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.015em;
+      color: var(--text-main) !important;
+    }
+
+    .quote-block cite {
+      color: var(--text-soft) !important;
+      font-size: var(--type-caption) !important;
+      line-height: 1.5;
+    }
+
+    .frame-section .rounded-full.text-cyan-300,
+    .frame-section .rounded-full.text-emerald-300,
+    .frame-section .rounded-full.text-purple-300,
+    .frame-section .rounded-full.text-amber-300,
+    .frame-section .rounded-full.text-blue-300,
+    .frame-section .bg-red-500\/20.text-red-400 {
+      background: transparent !important;
+    }
+
+    .sources-section .source-item {
+      border-bottom-color: var(--line) !important;
+    }
+
+    .frame-sources {
+      padding-top: clamp(0.82rem, 1.7vw, 1.02rem);
+      padding-bottom: clamp(0.92rem, 1.9vw, 1.16rem);
+      border-top: 1px solid rgba(var(--frame-accent), 0.22);
+      border-bottom: 1px solid rgba(var(--frame-accent), 0.18);
+      background: rgba(var(--frame-accent), 0.04);
+    }
+
+    .frame-sources .max-w-7xl {
+      display: grid;
+      gap: 0.55rem 0.95rem;
+      align-items: start;
+    }
+
+    .frame-sources h3 {
+      font-family: var(--font-mono);
+      font-size: var(--type-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--frame-ink);
+      width: fit-content;
+      margin: 0;
+      padding: 0.24rem 0.64rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--frame-accent), 0.22);
+      background: rgba(255, 252, 248, 0.72);
+    }
+
+    .frame-sources .source-list {
+      display: grid;
+      gap: 0.55rem 0.8rem;
+    }
+
+    .frame-sources .source-item {
+      border: 1px solid rgba(var(--frame-accent), 0.16);
+      line-height: 1.55;
+      border-radius: 0.72rem;
+      padding: 0.58rem 0.72rem 0.64rem;
+      background: rgba(255, 252, 248, 0.82);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .frame-sources .source-item:hover,
+    .frame-sources .source-item:focus-visible {
+      background: rgba(var(--frame-accent), 0.16);
+      border-color: rgba(var(--frame-accent), 0.34);
+    }
+
+    .frame-sources .source-item:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--frame-accent), 0.2);
+    }
+
+    .frame-sources .source-item .font-medium {
+      font-size: 0.92rem;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--text-main) !important;
+    }
+
+    .frame-sources .source-item .text-slate-500 {
+      font-size: 0.79rem;
+      line-height: 1.5;
+      margin-top: 0.08rem;
+      color: var(--text-soft) !important;
+    }
+
+    @media (min-width: 900px) {
+      .frame-sources .max-w-7xl {
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: clamp(0.95rem, 2vw, 1.4rem);
+        row-gap: 0.35rem;
+        align-items: start;
+      }
+
+      .frame-sources h3 {
+        margin-top: 0.06rem;
+        white-space: nowrap;
+      }
+
+      .frame-sources .source-list {
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      }
+    }
+
+    .frames-overview .max-w-7xl,
+    .comparison-section .max-w-7xl,
+    .network-section .max-w-7xl,
+    .sources-section .max-w-7xl {
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .frames-overview h2,
+    .comparison-section .max-w-7xl > h2,
+    .network-section .max-w-7xl > h2,
+    .sources-section .max-w-7xl > h2 {
+      text-align: left !important;
+      justify-content: flex-start !important;
+      margin-bottom: 0 !important;
+      max-width: 16ch;
+    }
+
+    .frames-overview .grid {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)) !important;
+      gap: 1rem !important;
+      align-items: stretch;
+    }
+
+    .frame-card {
+      min-width: 0;
+      min-height: 100%;
+      padding: 1.1rem 1rem 1.2rem !important;
+    }
+
+    .frame-card h3 {
+      font-size: 1.04rem;
+      line-height: 1.16;
+      letter-spacing: -0.015em;
+      font-weight: 700;
+    }
+
+    .frame-card p {
+      font-size: 0.68rem !important;
+      line-height: 1.42;
+    }
+
+    .comparison-table {
+      overflow-x: auto;
+      border-radius: 1rem !important;
+    }
+
+    .comparison-table table {
+      min-width: 58rem;
+    }
+
+    .comparison-table thead th {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .comparison-table thead th:first-child {
+      background: rgba(95, 78, 63, 0.08);
+    }
+
+    .comparison-table thead th:nth-child(2) {
+      background: rgba(var(--frame-realist-rgb), 0.2);
+      color: var(--frame-realist-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(3) {
+      background: rgba(var(--frame-restorationist-rgb), 0.2);
+      color: var(--frame-restorationist-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(4) {
+      background: rgba(var(--frame-eacc-rgb), 0.2);
+      color: var(--frame-eacc-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(5) {
+      background: rgba(var(--frame-corporate-rgb), 0.2);
+      color: var(--frame-corporate-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(6) {
+      background: rgba(var(--frame-safety-rgb), 0.2);
+      color: var(--frame-safety-ink) !important;
+    }
+
+    .comparison-table thead th:nth-child(7) {
+      background: rgba(var(--frame-dislocation-rgb), 0.2);
+      color: var(--frame-dislocation-ink) !important;
+    }
+
+    .comparison-table {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      line-height: 1.45;
+    }
+
+    .comparison-table .text-slate-300,
+    .comparison-table .text-white {
+      color: var(--text-main) !important;
+    }
+
+    .comparison-table .text-slate-400,
+    .comparison-table .text-slate-500 {
+      color: var(--text-soft) !important;
+    }
+
+    .comparison-table tbody td:first-child {
+      width: 15rem;
+    }
+
+    .network-diagram {
+      background: rgba(255, 253, 249, 0.94) !important;
+      border-color: var(--line) !important;
+      border-width: 1px !important;
+      border-radius: 1.1rem !important;
+      padding: clamp(1.35rem, 3vw, 2rem) !important;
+    }
+
+    .network-diagram > .grid {
+      gap: clamp(1.6rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2rem) !important;
+    }
+
+    .coalition-card {
+      background: transparent !important;
+      border-color: var(--line) !important;
+      border-width: 1px 0 0 0 !important;
+      border-radius: 0 !important;
+      padding: clamp(1rem, 2vw, 1.35rem) 0 0 !important;
+      box-shadow: none !important;
+    }
+
+    .coalition-card h3 {
+      align-items: flex-start;
+      font-family: var(--font-display);
+      font-size: clamp(1.08rem, 1.35vw, 1.25rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .coalition-card .space-y-2 {
+      display: grid;
+      gap: 0.65rem !important;
+    }
+
+    .coalition-card .space-y-2 > div {
+      align-items: flex-start;
+    }
+
+    .coalition-card .grid > div {
+      background: transparent !important;
+      border-top: 1px solid var(--line);
+      border-radius: 0 !important;
+      padding: 1rem 0 0 !important;
+    }
+
+    .coalition-card .grid p {
+      line-height: 1.6;
+    }
+
+    .coalition-card .grid strong {
+      display: inline-block;
+      margin-bottom: 0.12rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: -0.015em;
+    }
+
+    .coalition-card .text-white,
+    .coalition-card .text-slate-300 {
+      color: var(--text-main) !important;
+    }
+
+    .coalition-card .text-slate-400,
+    .coalition-card .text-slate-500 {
+      color: var(--text-soft) !important;
+    }
+
+    .coalition-dot {
+      box-shadow: inset 0 0 0 1px rgba(255, 252, 246, 0.58);
+    }
+
+    .coalition-dot--security {
+      background: linear-gradient(90deg, rgba(var(--frame-realist-rgb), 0.86), rgba(var(--frame-restorationist-rgb), 0.86));
+    }
+
+    .coalition-dot--acceleration {
+      background: linear-gradient(90deg, rgba(var(--frame-eacc-rgb), 0.84), rgba(var(--frame-corporate-rgb), 0.84));
+    }
+
+    .coalition-dot--governance {
+      background: linear-gradient(90deg, rgba(var(--frame-safety-rgb), 0.82), rgba(var(--frame-dislocation-rgb), 0.82));
+    }
+
+    .section-nav {
+      border-top-color: var(--line) !important;
+    }
+
+    .nav-prev,
+    .nav-next {
+      min-width: min(100%, 22rem);
+      justify-content: space-between;
+      background: rgba(255, 252, 246, 0.92) !important;
+      border: 1px solid var(--line);
+    }
+
+    .nav-next {
+      background: rgba(63, 95, 134, 0.08) !important;
+      border-color: rgba(63, 95, 134, 0.22);
+    }
+
+    .nav-prev .text-slate-500,
+    .nav-next .text-indigo-400 {
+      color: var(--text-soft) !important;
+    }
+
+    .nav-prev .text-slate-300,
+    .nav-next .text-white {
+      color: var(--text-main) !important;
+    }
+
+    .nav-prev i {
+      color: var(--text-soft) !important;
+    }
+
+    .nav-next i {
+      color: #3f5f86 !important;
+    }
+
+    @media (min-width: 1280px) {
+      .frames-overview .max-w-7xl,
+      .comparison-section .max-w-7xl,
+      .network-section .max-w-7xl,
+      .sources-section .max-w-7xl {
+        grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.6fr);
+        align-items: start;
+      }
+
+      .frames-overview .max-w-7xl > h2,
+      .comparison-section .max-w-7xl > h2,
+      .network-section .max-w-7xl > h2,
+      .sources-section .max-w-7xl > h2 {
+        grid-column: 1;
+      }
+
+      .frames-overview .max-w-7xl > .grid,
+      .comparison-section .comparison-table,
+      .network-section .network-diagram,
+      .sources-section .max-w-7xl > .grid {
+        grid-column: 2;
+      }
+
+      .sources-section .max-w-7xl > p {
+        grid-column: 1;
+        margin-bottom: 0 !important;
+        max-width: 18rem !important;
+      }
+
+      .sources-section .max-w-7xl > .grid {
+        grid-row: 1 / span 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .frame-section {
+        padding-top: clamp(4rem, 14vw, 5rem) !important;
+        padding-bottom: clamp(4rem, 14vw, 5rem) !important;
+      }
+
+      .frame-header {
+        align-items: flex-start !important;
+      }
+
+      .frame-section .max-w-4xl > :first-child {
+        gap: 2.35rem;
+      }
+
+      .frame-section .max-w-4xl > :first-child > div {
+        padding-top: 1.5rem !important;
+      }
+
+      .frame-section .quote-block {
+        padding: 1rem !important;
+      }
+
+      .network-diagram > .grid {
+        gap: 1.35rem !important;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="module-nav">
+    <div class="reading-status" aria-live="polite">
+      <div class="reading-status-copy">
+        <span class="reading-status-kicker">Reading</span>
+        <strong class="reading-status-name">Overview</strong>
+        <span class="reading-status-meta">Map of 6 Frames</span>
+      </div>
+      <div class="reading-status-track" aria-hidden="true">
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+      </div>
+    </div>
     <a href="../magazine.html">← Back to Hub</a>
     <a href="module-08.html">Next: Module 08 →</a>
   </div>
@@ -63,7 +1258,7 @@
       <!-- Title -->
       <h1 class="title-text text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
         The New Ideological 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Map of AI Power</span>
+        <span class="title-highlight">Map of AI Power</span>
       </h1>
       
       <!-- Subtitle -->
@@ -72,7 +1267,7 @@
       </p>
       
       <!-- Decorative Line -->
-      <div class="header-line w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+      <div class="header-line"></div>
     </div>
   </div>
 
@@ -86,7 +1281,7 @@
         </h2>
         
         <p class="text-slate-300 text-lg mb-10 leading-relaxed">
-          Before any AI policy can be formulated, two fundamental questions must be answered. These questions reveal the deep ideological divides shaping the global AI governance landscape.
+          Each frame answers two prior questions: what must not lose, and what is truly scarce. Once those answers differ, the same model can produce opposite policy instincts.
         </p>
         
         <div class="grid md:grid-cols-2 gap-8">
@@ -166,174 +1361,171 @@
       <!-- Frame Cards Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <!-- Realist -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-red-900/30 to-red-800/10 border border-red-500/30 rounded-xl p-5 hover:border-red-500/60 transition-all duration-300" data-frame="realist">
-          <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="sword" class="w-6 h-6 text-red-400"></i>
+        <a href="#frame-realist" aria-label="Jump to Frame 1: The Realist Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="realist">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="sword" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Realist</h3>
-          <p class="text-red-300 text-xs">National Power</p>
-        </div>
+          <h3 class="font-semibold mb-1">Realist</h3>
+          <p class="frame-card-label text-xs">National Power</p>
+        </a>
         
         <!-- Restorationist -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-amber-900/30 to-amber-800/10 border border-amber-500/30 rounded-xl p-5 hover:border-amber-500/60 transition-all duration-300" data-frame="restorationist">
-          <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="crown" class="w-6 h-6 text-amber-400"></i>
+        <a href="#frame-restorationist" aria-label="Jump to Frame 2: The Restorationist Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="restorationist">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="crown" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Restorationist</h3>
-          <p class="text-amber-300 text-xs">State Capacity</p>
-        </div>
+          <h3 class="font-semibold mb-1">Restorationist</h3>
+          <p class="frame-card-label text-xs">State Capacity</p>
+        </a>
         
         <!-- e/acc -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-emerald-900/30 to-emerald-800/10 border border-emerald-500/30 rounded-xl p-5 hover:border-emerald-500/60 transition-all duration-300" data-frame="eacc">
-          <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="rocket" class="w-6 h-6 text-emerald-400"></i>
+        <a href="#frame-eacc" aria-label="Jump to Frame 3: The Acceleration Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="eacc">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="rocket" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">e/acc</h3>
-          <p class="text-emerald-300 text-xs">Acceleration</p>
-        </div>
+          <h3 class="font-semibold mb-1">e/acc</h3>
+          <p class="frame-card-label text-xs">Acceleration</p>
+        </a>
         
         <!-- Corporate Utopian -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-blue-900/30 to-blue-800/10 border border-blue-500/30 rounded-xl p-5 hover:border-blue-500/60 transition-all duration-300" data-frame="corporate">
-          <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="building" class="w-6 h-6 text-blue-400"></i>
+        <a href="#frame-corporate" aria-label="Jump to Frame 4: The Corporate Utopian Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="corporate">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="building" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Corporate</h3>
-          <p class="text-blue-300 text-xs">Utopian Scale</p>
-        </div>
+          <h3 class="font-semibold mb-1">Corporate</h3>
+          <p class="frame-card-label text-xs">Utopian Scale</p>
+        </a>
         
         <!-- Safety -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-purple-900/30 to-purple-800/10 border border-purple-500/30 rounded-xl p-5 hover:border-purple-500/60 transition-all duration-300" data-frame="safety">
-          <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="shield-check" class="w-6 h-6 text-purple-400"></i>
+        <a href="#frame-safety" aria-label="Jump to Frame 5: The Safety Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="safety">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Safety</h3>
-          <p class="text-purple-300 text-xs">Scientific Int'l</p>
-        </div>
+          <h3 class="font-semibold mb-1">Safety</h3>
+          <p class="frame-card-label text-xs">Scientific Int'l</p>
+        </a>
         
         <!-- Dislocation -->
-        <div class="frame-card group cursor-pointer bg-gradient-to-br from-cyan-900/30 to-cyan-800/10 border border-cyan-500/30 rounded-xl p-5 hover:border-cyan-500/60 transition-all duration-300" data-frame="dislocation">
-          <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="git-branch" class="w-6 h-6 text-cyan-400"></i>
+        <a href="#frame-dislocation" aria-label="Jump to Frame 6: The Dislocation Frame" class="frame-card group block cursor-pointer rounded-xl p-5 transition-all duration-300 no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-200/40" data-frame="dislocation">
+          <div class="frame-card-icon w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="git-branch" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-white font-semibold mb-1">Dislocation</h3>
-          <p class="text-cyan-300 text-xs">Labor & Legitimacy</p>
-        </div>
+          <h3 class="font-semibold mb-1">Dislocation</h3>
+          <p class="frame-card-label text-xs">Labor & Legitimacy</p>
+        </a>
       </div>
     </div>
   </div>
 
   <!-- FRAME 1: Realist -->
-  <div id="frame-realist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-realist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="realist" data-frame-index="1" data-frame-title="The Realist Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center">
           <i data-lucide="sword" class="w-8 h-8 text-red-400"></i>
         </div>
         <div>
-          <span class="text-red-400 text-sm font-medium tracking-wider uppercase">Frame 1</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Realist Frame</h2>
-          <p class="text-slate-400">AI as National Power Amplifier</p>
+          <span class="frame-kicker">Frame 1</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Realist Frame</h2>
+          <p>AI as National Power Amplifier</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-red-500/20 rounded-2xl p-8">
+        <div class="space-y-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="target" class="w-5 h-5 text-red-400"></i>
-              Core Assumptions
+              Strategic Logic
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The realist frame starts from anarchy, relative gains, and distrust of capabilities that cannot be inspected. Frontier AI matters because it can raise the effectiveness of intelligence analysis, targeting, cyber operations, logistics, industrial planning, surveillance, deception, and command support at the same time.
+            </p>
             <ul class="space-y-4">
               <li class="flex items-start gap-3 text-slate-300">
                 <span class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span class="text-red-400 text-xs font-bold">1</span>
                 </span>
-                <span><strong class="text-white">Relative advantage matters.</strong> AI capabilities are not just about absolute progress but about maintaining lead over adversaries.</span>
+                <span><strong class="text-white">Relative advantage can compound.</strong> Better models improve planning; better planning improves procurement and fielding; fielding creates more data and institutional learning. The fear is a lead that becomes self-reinforcing.</span>
               </li>
               <li class="flex items-start gap-3 text-slate-300">
                 <span class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span class="text-red-400 text-xs font-bold">2</span>
                 </span>
-                <span><strong class="text-white">AI as general-purpose accelerant.</strong> AI enhances all domains of national power—economic, military, and technological.</span>
+                <span><strong class="text-white">Integration matters more than invention.</strong> A model lead evaporates if it is not absorbed into defense systems, intelligence cycles, acquisition, and the industrial base.</span>
               </li>
               <li class="flex items-start gap-3 text-slate-300">
                 <span class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span class="text-red-400 text-xs font-bold">3</span>
                 </span>
-                <span><strong class="text-white">Verification failure → worst-case thinking.</strong> Since AI capabilities cannot be reliably verified, assume adversaries are ahead.</span>
+                <span><strong class="text-white">Opacity produces worst-case planning.</strong> Capability lives in code, weights, tacit know-how, and distributed compute. If it cannot be counted or inspected, rivals are treated as possibly ahead.</span>
               </li>
             </ul>
           </div>
           
           <!-- Policy Instruments -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-red-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="wrench" class="w-5 h-5 text-red-400"></i>
               Policy Instruments
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The policy grammar is build, deny, integrate, and align allies. Markets remain useful, but the frame assumes they are insufficient when the object is national survival and the rival may not accept reciprocal restraint.
+            </p>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500">
-                <h4 class="text-white font-medium mb-2">Compute Denial</h4>
-                <p class="text-slate-400 text-sm">Chokepoints on advanced semiconductors and cloud infrastructure</p>
+              <div class="border-l-2 border-red-500/60 pl-4 py-1">
+                <h4 class="text-white font-medium mb-2">Deny</h4>
+                <p class="text-slate-400 text-sm">Use chips, semiconductor tools, cloud pathways, and talent channels as chokepoints against adversarial frontier capability.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500">
-                <h4 class="text-white font-medium mb-2">State-Anchored Scaling</h4>
-                <p class="text-slate-400 text-sm">War Economy model for AI development</p>
+              <div class="border-l-2 border-red-500/60 pl-4 py-1">
+                <h4 class="text-white font-medium mb-2">Build</h4>
+                <p class="text-slate-400 text-sm">Expand domestic and allied compute, energy, semiconductor capacity, talent pipelines, and defense adoption.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500">
+              <div class="border-l-2 border-red-500/60 pl-4 py-1">
                 <h4 class="text-white font-medium mb-2">Genesis Mission</h4>
-                <p class="text-slate-400 text-sm">Nov 2025 — Manhattan Project model for frontier AI</p>
+                <p class="text-slate-400 text-sm">A state-led mobilization model for sovereign frontier capability, closer to strategic infrastructure than normal procurement.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500">
-                <h4 class="text-white font-medium mb-2">Replicator Initiative</h4>
-                <p class="text-slate-400 text-sm">Attritable autonomous systems at scale</p>
+              <div class="border-l-2 border-red-500/60 pl-4 py-1">
+                <h4 class="text-white font-medium mb-2">Integrate</h4>
+                <p class="text-slate-400 text-sm">Move AI into command systems, force structure, procurement, intelligence workflows, and military operations.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500 sm:col-span-2">
-                <h4 class="text-white font-medium mb-2">Alliance Management</h4>
-                <p class="text-slate-400 text-sm">Coordinating compute access among trusted partners while denying adversaries</p>
+              <div class="border-l-2 border-red-500/60 pl-4 py-1 sm:col-span-2">
+                <h4 class="text-white font-medium mb-2">Align allies</h4>
+                <p class="text-slate-400 text-sm">Treat export controls, standards, interoperability, and trusted compute access as alliance politics by other means.</p>
               </div>
             </div>
           </div>
           
           <!-- Contradictions -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-red-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
               Internal Contradictions
             </h3>
-            <div class="space-y-3">
-              <div class="flex items-start gap-3 text-slate-300">
-                <i data-lucide="x-circle" class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Diffusion catches up.</strong> Technology spreads; compute denial is temporary.</span>
-              </div>
-              <div class="flex items-start gap-3 text-slate-300">
-                <i data-lucide="x-circle" class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Security dilemma.</strong> Actions to increase security decrease it by provoking responses.</span>
-              </div>
-              <div class="flex items-start gap-3 text-slate-300">
-                <i data-lucide="x-circle" class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Private chokepoints.</strong> Key capabilities reside in private firms, not state control.</span>
-              </div>
+            <div class="space-y-4">
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">Private chokepoints create a sovereignty paradox.</strong> The state wants sovereign control over strategic capability, yet the control surfaces sit with labs, cloud providers, chip suppliers, and engineering labor markets that it does not fully command.</p>
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">Denial is temporary and catalytic.</strong> Export controls can buy time, but they also generate smuggling, substitution, efficiency innovation, and rival industrial policy.</p>
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">Security and openness pull against each other.</strong> Realists need talent, capital, and open innovation ecosystems, while also demanding research security, trusted channels, and tighter controls.</p>
             </div>
           </div>
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
+        <div class="pt-6 border-t border-slate-800 space-y-5">
           <!-- Quote Block -->
-          <div class="quote-block bg-gradient-to-br from-red-900/20 to-red-800/10 border border-red-500/30 rounded-2xl p-6">
+          <div class="quote-block border-l-2 border-red-500/50 pl-4">
             <i data-lucide="quote" class="w-8 h-8 text-red-400 mb-4"></i>
             <blockquote class="text-white text-lg font-medium mb-4 leading-relaxed">
-              "War-winning capability over safe capability"
+              Safety is achieved through superiority: war-winning capability becomes the condition of deterrence.
             </blockquote>
             <cite class="text-red-300 text-sm not-italic">
-              — Elbridge Colby, <em class="text-slate-400">The Strategy of Denial</em>
+              Elbridge Colby's realist line of argument, <em class="text-slate-400">The Strategy of Denial</em>
             </cite>
           </div>
           
           <!-- Kissinger Quote -->
-          <div class="quote-block bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="quote-block border-l-2 border-slate-700 pl-4">
             <i data-lucide="quote" class="w-6 h-6 text-slate-400 mb-3"></i>
             <blockquote class="text-slate-300 text-base mb-3 leading-relaxed">
               "AI arms control may be more difficult than nuclear arms control because verification is nearly impossible."
@@ -344,7 +1536,7 @@
           </div>
           
           <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="user" class="w-5 h-5 text-red-400"></i>
               Key Proponents
@@ -369,105 +1561,132 @@
     </div>
   </div>
 
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="realist" aria-labelledby="sources-realist">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-realist">Sources for Frame 1</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://ageofaibook.com/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Kissinger, Schmidt, and Huttenlocher, <span class="italic">The Age of AI and Our Human Future</span></div>
+          <div class="text-slate-500">Opacity, verification, and AI as a security dilemma.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://yalebooks.yale.edu/9780300262643/the-strategy-of-denial/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Colby, <span class="italic">The Strategy of Denial</span></div>
+          <div class="text-slate-500">Realist defense-prioritization logic and China-centered denial strategy.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://reports.nscai.gov/final-report/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NSCAI Final Report (2021)</div>
+          <div class="text-slate-500">U.S. national-security framing of AI capacity and competition.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/11/launching-the-genesis-mission/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">The White House, Launching the Genesis Mission</div>
+          <div class="text-slate-500">State-led AI mobilization in the realist policy grammar.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FRAME 2: Restorationist -->
-  <div id="frame-restorationist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-restorationist" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="restorationist" data-frame-index="2" data-frame-title="The Restorationist Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
           <i data-lucide="crown" class="w-8 h-8 text-amber-400"></i>
         </div>
         <div>
-          <span class="text-amber-400 text-sm font-medium tracking-wider uppercase">Frame 2</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Tech-Right / Restorationist</h2>
-          <p class="text-slate-400">From Libertarian "Exit" to Restorationist "Capture"</p>
+          <span class="frame-kicker">Frame 2</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Tech-Right / Restorationist</h2>
+          <p>From Libertarian "Exit" to Restorationist "Capture"</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-8">
+        <div class="space-y-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="rotate-ccw" class="w-5 h-5 text-amber-400"></i>
-              The Ideological Shift
+              From Exit to Capture
             </h3>
             <p class="text-slate-300 mb-6 leading-relaxed">
-              The tech-right has undergone a profound transformation: from Silicon Valley libertarianism advocating "exit" from government (building parallel systems) to a restorationist posture seeking to "capture" and reform state institutions from within.
+              The tech-right frame is a coalition rather than a single doctrine. What holds it together is a diagnosis of Western incapacity: slow institutions, procedural veto points, managerial risk-aversion, cultural demoralization, and a state that no longer executes with coherence.
+            </p>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              This is why it differs from realism. Realists ask how to prevent a rival from overtaking the state; restorationists ask why the West cannot use the power it already has. AI becomes a lever for command capacity: fewer intermediaries, faster decisions, stricter enforcement, and a state rebuilt around technical operators.
             </p>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="bg-slate-800/50 rounded-lg p-4">
+              <div class="border-l-2 border-amber-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i>
-                  <span class="text-amber-400 font-medium text-sm">OLD: Libertarian Exit</span>
+                  <span class="text-amber-400 font-medium text-sm">Exit</span>
                 </div>
-                <p class="text-slate-400 text-sm">Build outside the state. Seasteading, crypto, private cities.</p>
+                <p class="text-slate-400 text-sm">Build outside the state: crypto, network alternatives, private governance fantasies, and digital secession.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4">
+              <div class="border-l-2 border-amber-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="arrow-left" class="w-4 h-4 text-amber-400"></i>
-                  <span class="text-amber-400 font-medium text-sm">NEW: Restorationist Capture</span>
+                  <span class="text-amber-400 font-medium text-sm">Capture</span>
                 </div>
-                <p class="text-slate-400 text-sm">Reform the state. Bureaucratic modernization, institutional takeover.</p>
+                <p class="text-slate-400 text-sm">Take over, harden, and retool the state while cutting through federal, state, local, and bureaucratic vetoes.</p>
               </div>
             </div>
           </div>
           
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="crosshair" class="w-5 h-5 text-amber-400"></i>
               The Enemy is Internal Weakness
             </h3>
             <p class="text-slate-300 mb-4 leading-relaxed">
-              For restorationists, the primary threat is not external adversaries but internal institutional decay—bureaucratic sclerosis, regulatory capture, and the erosion of state capacity to execute ambitious projects.
+              For restorationists, the primary threat is internal institutional decay: bureaucratic sclerosis, cultural demoralization, ideological capture, and talent misallocation away from defense, energy, industrial production, and hard power.
             </p>
-            <div class="bg-amber-900/20 border border-amber-500/30 rounded-lg p-4">
-              <p class="text-amber-200 text-sm">
-                <strong class="text-amber-400">Core belief:</strong> Legitimacy is not just procedural but cultural and coercive. A state that cannot execute has lost its right to rule.
-              </p>
+            <div class="space-y-4">
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">Legitimacy is cultural and coercive.</strong> Alignment is redefined as loyalty to a national-civilizational order rather than technical harmlessness or procedural fairness.</p>
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">AI is administrative force multiplication.</strong> The technology is valued for monitoring, standardizing enforcement, exposing bureaucratic drift, optimizing procurement, and bypassing discretion points where execution stalls.</p>
+              <p class="text-slate-300 leading-relaxed"><strong class="text-white">The state should be strong, but selectively rebuilt.</strong> Restorationism is comfortable with hierarchy and a techno-elite steering layer, yet distrusts the bureaucracies through which state power normally operates.</p>
             </div>
           </div>
           
           <!-- Policy Instruments -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="wrench" class="w-5 h-5 text-amber-400"></i>
               Policy Instruments
             </h3>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="building" class="w-5 h-5 text-amber-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">DOGE Modernization Agenda</h4>
-                  <p class="text-slate-400 text-sm">Department of Government Efficiency — AI-driven bureaucratic reform and cost reduction</p>
+                  <p class="text-slate-400 text-sm">Administrative modernization treated as a software, staffing, and execution problem rather than a deliberative-governance problem.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">"Woke AI" Executive Orders</h4>
-                  <p class="text-slate-400 text-sm">EO 14179, EO 14319 — Removing DEI constraints from federal AI procurement</p>
+                  <p class="text-slate-400 text-sm">Procurement becomes an alignment instrument: vendors must certify systems against engineered social agendas and divisive-concepts language.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="handshake" class="w-5 h-5 text-amber-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Public-Private Fusion in Defense</h4>
-                  <p class="text-slate-400 text-sm">Deep integration of tech firms into national security apparatus</p>
+                  <p class="text-slate-400 text-sm">Agile software firms are pulled into defense and security work as an alternative to legacy institutional inertia.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="code" class="w-5 h-5 text-amber-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Palantir's "Software of Sovereignty"</h4>
-                  <p class="text-slate-400 text-sm">AI platforms for state surveillance, immigration enforcement, and military operations</p>
+                  <p class="text-slate-400 text-sm">The Palantir argument is that Silicon Valley has an affirmative obligation to serve Western security rather than retreat into consumer software or pacifism.</p>
                 </div>
               </div>
             </div>
@@ -475,20 +1694,20 @@
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
+        <div class="pt-6 border-t border-slate-800 space-y-5">
           <!-- Quote Block -->
-          <div class="quote-block bg-gradient-to-br from-amber-900/20 to-amber-800/10 border border-amber-500/30 rounded-2xl p-6">
+          <div class="quote-block border-l-2 border-amber-500/50 pl-4">
             <i data-lucide="quote" class="w-8 h-8 text-amber-400 mb-4"></i>
             <blockquote class="text-white text-lg font-medium mb-4 leading-relaxed">
-              "We have an affirmative obligation to weaponize our technology in defense of the West."
+              The software industry is framed as having an affirmative obligation to serve Western state capacity and security.
             </blockquote>
             <cite class="text-amber-300 text-sm not-italic">
-              — Alex Karp, CEO Palantir
+              Karp and Zamiska, <em class="text-slate-400">The Technological Republic</em>
             </cite>
           </div>
           
           <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="users" class="w-5 h-5 text-amber-400"></i>
               Key Figures & Organizations
@@ -496,45 +1715,41 @@
             <ul class="space-y-3 text-slate-300 text-sm">
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                Alex Karp (Palantir CEO)
+                Alex Karp and Nicholas Zamiska
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                Marc Andreessen
+                Palantir and defense-software firms
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                DOGE (Department of Gov. Efficiency)
+                DOGE modernization agenda
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                Heritage Foundation
-              </li>
-              <li class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                Project 2025
+                EO 14179 and EO 14319 procurement doctrine
               </li>
             </ul>
           </div>
           
           <!-- Timeline -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="calendar" class="w-5 h-5 text-amber-400"></i>
               Key Dates
             </h4>
             <div class="space-y-3">
               <div class="flex gap-3">
-                <span class="text-amber-400 font-mono text-sm">2024</span>
-                <span class="text-slate-300 text-sm">DOGE announced</span>
+                <span class="text-amber-400 font-mono text-sm">Jan 2025</span>
+                <span class="text-slate-300 text-sm">DOGE order signed</span>
               </div>
               <div class="flex gap-3">
                 <span class="text-amber-400 font-mono text-sm">Jan 2025</span>
                 <span class="text-slate-300 text-sm">EO 14179 signed</span>
               </div>
               <div class="flex gap-3">
-                <span class="text-amber-400 font-mono text-sm">Apr 2025</span>
-                <span class="text-slate-300 text-sm">EO 14319 expands scope</span>
+                <span class="text-amber-400 font-mono text-sm">Jul 2025</span>
+                <span class="text-slate-300 text-sm">EO 14319 on federal AI procurement</span>
               </div>
             </div>
           </div>
@@ -543,67 +1758,107 @@
     </div>
   </div>
 
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="restorationist" aria-labelledby="sources-restorationist">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-restorationist">Sources for Frame 2</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Federal Register, Executive Order 14179</div>
+          <div class="text-slate-500">American leadership, deregulation, and ideological framing.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/07/preventing-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">The White House, Executive Order 14319</div>
+          <div class="text-slate-500">Federal procurement and the "Preventing Woke AI" frame.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/presidential-actions/2025/01/establishing-and-implementing-the-presidents-department-of-government-efficiency/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Executive Order 14158 on DOGE</div>
+          <div class="text-slate-500">Administrative modernization as technology-and-software efficiency.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.whitehouse.gov/fact-sheets/2025/07/fact-sheet-president-donald-j-trump-signs-executive-order-to-prevent-woke-ai-in-the-federal-government/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">White House fact sheet on Preventing Woke AI</div>
+          <div class="text-slate-500">Procurement-level statement of the ideological neutrality doctrine.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.amazon.com/Technological-Republic-Belief-Future-West/dp/0593541366" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Karp and Zamiska, <span class="italic">The Technological Republic</span></div>
+          <div class="text-slate-500">State-tech fusion and the restorationist diagnosis of Western incapacity.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FRAME 3: e/acc -->
-  <div id="frame-eacc" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-eacc" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="eacc" data-frame-index="3" data-frame-title="e/acc">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
           <i data-lucide="rocket" class="w-8 h-8 text-emerald-400"></i>
         </div>
         <div>
-          <span class="text-emerald-400 text-sm font-medium tracking-wider uppercase">Frame 3</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Acceleration Frame (e/acc)</h2>
-          <p class="text-slate-400">Speed Saves Lives</p>
+          <span class="frame-kicker">Frame 3</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Acceleration Frame (e/acc)</h2>
+          <p>Speed Saves Lives</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
-          <!-- Core Tenets -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-8">
+        <div class="space-y-8">
+          <!-- Worldview -->
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="zap" class="w-5 h-5 text-emerald-400"></i>
-              Core Tenets
+              Worldview
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              Accelerationism treats AI as a generalized force multiplier on discovery: a machine for shortening the distance between question and answer, design and implementation, problem and solution. Politics is judged by whether it speeds or blocks that unlocking.
+            </p>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              The frame is morally loaded because it counts non-arrival as harm. Cures not discovered, services not cheapened, and competence not diffused are treated as real losses rather than hypothetical benefits.
+            </p>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4">
+              <div class="border-l-2 border-emerald-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="heart-pulse" class="w-5 h-5 text-emerald-400"></i>
                   <span class="text-emerald-400 font-semibold">Speed Saves Lives</span>
                 </div>
-                <p class="text-slate-300 text-sm">Every day of delay costs lives that AI could have saved through medical, scientific, and material progress.</p>
+                <p class="text-slate-300 text-sm">Delay carries an actualization cost: foregone cures, education, productivity, and civilizational capacity.</p>
               </div>
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4">
+              <div class="border-l-2 border-emerald-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
                   <span class="text-emerald-400 font-semibold">Progress as Solver</span>
                 </div>
-                <p class="text-slate-300 text-sm">Technological progress is the only scalable solution to humanity's problems.</p>
+                <p class="text-slate-300 text-sm">AI is read as a scientific accelerator, competence diffuser, abundance engine, and civilizational escalator.</p>
               </div>
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4">
+              <div class="border-l-2 border-emerald-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="alert-circle" class="w-5 h-5 text-emerald-400"></i>
                   <span class="text-emerald-400 font-semibold">Delay is Harm</span>
                 </div>
-                <p class="text-slate-300 text-sm">Opportunity cost of slowed progress exceeds speculative risks.</p>
+                <p class="text-slate-300 text-sm">The decelerator is treated as culpable when precaution blocks benefits that could otherwise materialize.</p>
               </div>
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4">
+              <div class="border-l-2 border-emerald-500/50 pl-4 py-1">
                 <div class="flex items-center gap-2 mb-2">
                   <i data-lucide="scale" class="w-5 h-5 text-emerald-400"></i>
                   <span class="text-emerald-400 font-semibold">Symmetric Risk</span>
                 </div>
-                <p class="text-slate-300 text-sm">Risk is symmetric; stagnation is certain while AI risks are speculative.</p>
+                <p class="text-slate-300 text-sm">Acceleration has risks, but stagnation guarantees continued disease, poverty, ignorance, and scarcity.</p>
               </div>
             </div>
           </div>
           
           <!-- Political Economy -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="git-merge" class="w-5 h-5 text-emerald-400"></i>
               Political Economy Vision
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The accelerationist wager is built on opportunity cost. If transformative systems are delayed, then the lost cures, productivity gains, and scientific discoveries count as real harm. That is why regulation is cast not as prudence, but as a moral and civilizational drag on abundance.
+            </p>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The strongest version of the frame also has a diffusion doctrine. Concentrated capability is treated as more dangerous than proliferation because it produces an AI priesthood: a small state-corporate class able to throttle access, set norms, and govern speech. Open proliferation is framed as resilience.
+            </p>
             <div class="space-y-4">
               <div class="flex items-start gap-4">
                 <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
@@ -611,7 +1866,7 @@
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Permissionlessness</h4>
-                  <p class="text-slate-400 text-sm">Remove regulatory barriers to innovation. Build first, regulate later if at all.</p>
+                  <p class="text-slate-400 text-sm">Remove licensing and pre-approval barriers so experimentation can outrun institutional blockage.</p>
                 </div>
               </div>
               <div class="flex items-start gap-4">
@@ -620,25 +1875,25 @@
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Abundance Dissolves Conflict</h4>
-                  <p class="text-slate-400 text-sm">Post-scarcity from AI eliminates distributional conflicts that drive politics.</p>
+                  <p class="text-slate-400 text-sm">If AI makes services, cognition, and expertise radically cheaper, scarcity politics can be recoded as engineering problems.</p>
                 </div>
               </div>
             </div>
           </div>
           
           <!-- SB 1047 Case Study -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="gavel" class="w-5 h-5 text-emerald-400"></i>
               Case Study: SB 1047 Fight
             </h3>
-            <div class="bg-slate-800/50 rounded-lg p-6">
+            <div class="border-l-2 border-emerald-500/50 pl-4 py-1">
               <div class="flex items-center justify-between mb-4">
                 <span class="text-emerald-400 font-semibold">California SB 1047</span>
                 <span class="px-3 py-1 bg-red-500/20 text-red-400 text-sm rounded-full">VETOED</span>
               </div>
               <p class="text-slate-300 mb-4">
-                California's frontier AI safety bill would have required pre-deployment safety testing for large models. The e/acc coalition mobilized intensely against it.
+                California's frontier AI safety bill mattered because it turned "deceleration" into a concrete institutional object: liability, safety duties, and pre-deployment obligations for frontier developers. For e/acc, the bill became evidence that safety language could entrench gatekeepers and slow the frontier.
               </p>
               <div class="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -654,7 +1909,7 @@
           </div>
           
           <!-- Stress Tests -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i>
               Stress Tests for e/acc
@@ -662,24 +1917,24 @@
             <div class="space-y-3">
               <div class="flex items-start gap-3 text-slate-300">
                 <i data-lucide="help-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Tail risks:</strong> What if the worst-case scenarios materialize?</span>
+                <span><strong class="text-white">Tail risks:</strong> The frame underweights low-probability, high-impact failures that safety actors treat as decision-dominating.</span>
               </div>
               <div class="flex items-start gap-3 text-slate-300">
                 <i data-lucide="help-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Infrastructure reality:</strong> Can energy and compute scale fast enough?</span>
+                <span><strong class="text-white">Infrastructure reality:</strong> Chips, energy, water, grid capacity, and permitting reintroduce the physical bottlenecks accelerationism often wants to outrun.</span>
               </div>
               <div class="flex items-start gap-3 text-slate-300">
                 <i data-lucide="help-circle" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                <span><strong class="text-white">Legitimacy backlash:</strong> Will democratic publics accept this framing?</span>
+                <span><strong class="text-white">Legitimacy backlash:</strong> If acceleration produces job and status shocks, democratic politics may impose harder brakes later.</span>
               </div>
             </div>
           </div>
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
+        <div class="pt-6 border-t border-slate-800 space-y-5">
           <!-- Quote Block -->
-          <div class="quote-block bg-gradient-to-br from-emerald-900/20 to-emerald-800/10 border border-emerald-500/30 rounded-2xl p-6">
+          <div class="quote-block border-l-2 border-emerald-500/50 pl-4">
             <i data-lucide="quote" class="w-8 h-8 text-emerald-400 mb-4"></i>
             <blockquote class="text-white text-lg font-medium mb-4 leading-relaxed">
               "We believe that there is no material problem—whether created by nature or by technology—that cannot be solved with more technology."
@@ -689,157 +1944,189 @@
             </cite>
           </div>
           
-          <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <!-- Frame Logic -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <i data-lucide="users" class="w-5 h-5 text-emerald-400"></i>
-              Key Figures
+              <i data-lucide="list-checks" class="w-5 h-5 text-emerald-400"></i>
+              Acceleration Logic
             </h4>
             <ul class="space-y-3 text-slate-300 text-sm">
-              <li class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                Marc Andreessen (a16z)
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+                <span>Delay is treated as harm because foregone cures, learning, and abundance count as real losses.</span>
               </li>
-              <li class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                Ben Horowitz (a16z)
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+                <span>Risk is symmetrical: acceleration has risks, but stagnation guarantees continued suffering.</span>
               </li>
-              <li class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                Beff Jezos (pseudonymous)
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+                <span>Diffusion and open proliferation are preferred because concentrated capability creates an AI priesthood.</span>
               </li>
-              <li class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                Guillaume Verdon
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+                <span>Abundance is expected to dissolve distributional conflict by lowering the cost of services and competence.</span>
               </li>
             </ul>
           </div>
           
-          <!-- Core Slogans -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <!-- Source Anchor -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <i data-lucide="message-square" class="w-5 h-5 text-emerald-400"></i>
-              Core Slogans
+              <i data-lucide="book-open" class="w-5 h-5 text-emerald-400"></i>
+              Representative Text
             </h4>
-            <div class="space-y-2">
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded px-3 py-2 text-emerald-300 text-sm font-medium text-center">
-                "Accelerate or die"
-              </div>
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded px-3 py-2 text-emerald-300 text-sm font-medium text-center">
-                "Progress is inevitable"
-              </div>
-              <div class="bg-emerald-900/20 border border-emerald-500/30 rounded px-3 py-2 text-emerald-300 text-sm font-medium text-center">
-                "Regulation is stagnation"
-              </div>
-            </div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Andreessen's <span class="italic">The Techno-Optimist Manifesto</span> crystallizes the abundance-through-technology argument.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="eacc" aria-labelledby="sources-eacc">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-eacc">Sources for Frame 3</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://a16z.com/the-techno-optimist-manifesto/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Andreessen, <span class="italic">The Techno-Optimist Manifesto</span></div>
+          <div class="text-slate-500">Representative text for abundance-through-acceleration.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">California SB 1047 bill status</div>
+          <div class="text-slate-500">The legislative front used here to show accelerationist opposition to frontier obligations.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">CDT legal analysis of the SB 1047 veto</div>
+          <div class="text-slate-500">Context on why the bill became a symbolic fight over safety obligations and innovation policy.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FRAME 4: Corporate Utopian -->
-  <div id="frame-corporate" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-corporate" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="corporate" data-frame-index="4" data-frame-title="The Corporate Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
           <i data-lucide="building" class="w-8 h-8 text-blue-400"></i>
         </div>
         <div>
-          <span class="text-blue-400 text-sm font-medium tracking-wider uppercase">Frame 4</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Corporate Utopian Frame</h2>
-          <p class="text-slate-400">AGI for Humanity</p>
+          <span class="frame-kicker">Frame 4</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Corporate Utopian Frame</h2>
+          <p>AGI for Humanity</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="space-y-8">
           <!-- Core Arguments -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="layout-list" class="w-5 h-5 text-blue-400"></i>
               Three Core Arguments
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              Corporate utopianism is the dominant frame inside frontier labs and their capital ecosystems. It speaks in universal-benefit language: AGI for humanity, accelerated science, better medicine, education, productivity, and public services.
+            </p>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              Where e/acc trusts diffusion, this frame trusts centralized stewardship. AGI-scale systems are treated as too capital-intensive, risky, and infrastructural for simple market diffusion, so a small number of mission-legitimated firms should build first, control tightly, and distribute benefits through managed channels.
+            </p>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 bg-blue-900/20 border border-blue-500/30 rounded-lg p-5">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <span class="w-8 h-8 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0 text-blue-400 font-bold">1</span>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Scale is Destiny</h4>
-                  <p class="text-slate-300 text-sm">More compute, more data, more parameters = emergent capabilities. Scale wins, and scale is expensive.</p>
+                  <p class="text-slate-300 text-sm">The fastest path to breakthroughs is scaling models, data, compute, talent, and energy. Only a few actors can mobilize that capital.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-blue-900/20 border border-blue-500/30 rounded-lg p-5">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <span class="w-8 h-8 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0 text-blue-400 font-bold">2</span>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Containment Requires Control</h4>
-                  <p class="text-slate-300 text-sm">Only those who build AGI can ensure it's safe. Centralized development enables safety research.</p>
+                  <p class="text-slate-300 text-sm">Powerful systems should sit behind APIs, staged deployment, monitoring, and internal safety processes rather than open proliferation.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-blue-900/20 border border-blue-500/30 rounded-lg p-5">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <span class="w-8 h-8 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0 text-blue-400 font-bold">3</span>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Governance is Engineering</h4>
-                  <p class="text-slate-300 text-sm">Social problems can be solved through technical solutions. Alignment is an engineering challenge.</p>
+                  <p class="text-slate-300 text-sm">Safety becomes evals, red-teaming, incident response, monitoring, and deployment controls managed like a high-risk industrial system.</p>
                 </div>
               </div>
             </div>
           </div>
           
           <!-- Infrastructure Trap -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="server" class="w-5 h-5 text-blue-400"></i>
               The Infrastructure Trap
             </h3>
             <p class="text-slate-300 mb-6 leading-relaxed">
-              The economics of AI infrastructure create powerful centralizing forces. Training frontier models requires billions in compute, creating barriers that only the largest entities can cross.
+              The economics of AI infrastructure create powerful centralizing forces. Training frontier models requires billions in compute, creating barriers that only the largest entities can cross. That produces the central tension of the frame: firms speak in universalist language about benefits for humanity, but the material structure of the stack keeps pushing capability, governance, and bargaining power into a very small number of actors.
             </p>
-            <div class="bg-slate-800/50 rounded-lg p-6">
+            <div class="border-l-2 border-blue-500/50 pl-4 py-1">
               <div class="flex items-center justify-between mb-4">
-                <span class="text-blue-400 font-semibold">Stargate Project</span>
-                <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm rounded-full">$500B</span>
+                <span class="text-blue-400 font-semibold">OpenAI + SB Energy</span>
+                <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm rounded-full">1.2 GW</span>
               </div>
               <p class="text-slate-400 text-sm mb-4">
-                Announced January 2025 — Joint venture between OpenAI, SoftBank, Oracle, and others to build AI infrastructure in the United States.
+                A power and storage partnership that shows how frontier labs increasingly secure electrical capacity directly rather than treating energy as a background utility.
               </p>
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-slate-700 rounded text-slate-300 text-xs">Data centers</span>
                 <span class="px-2 py-1 bg-slate-700 rounded text-slate-300 text-xs">Power generation</span>
-                <span class="px-2 py-1 bg-slate-700 rounded text-slate-300 text-xs">Semiconductor fabs</span>
+                <span class="px-2 py-1 bg-slate-700 rounded text-slate-300 text-xs">Storage</span>
               </div>
             </div>
           </div>
           
+          <!-- Managed Sovereignty -->
+          <div class="pt-6 border-t border-slate-800">
+            <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <i data-lucide="globe-2" class="w-5 h-5 text-blue-400"></i>
+              Managed Sovereignty
+            </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The newer corporate form is international. Frontier labs increasingly offer states a sovereignty bundle: local data residency, national startup support, training, compute access, and secure deployment, while the core weights, roadmap, and platform governance remain on corporate rails.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              The result is a quasi-sovereign political economy. Labs negotiate land, power, water, security, and diplomatic acceptability; states gain capacity without full control; firms gain legitimacy and market access without surrendering the strategic core of the stack.
+            </p>
+          </div>
+
           <!-- Corporate Fears -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="alert-triangle" class="w-5 h-5 text-blue-400"></i>
               Corporate Utopian Fears
             </h3>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-red-500">
+              <div class="border-l-2 border-red-500/60 pl-4 py-1">
                 <h4 class="text-white font-medium mb-2 flex items-center gap-2">
                   <i data-lucide="share-2" class="w-4 h-4 text-red-400"></i>
                   Uncontrolled Diffusion
                 </h4>
-                <p class="text-slate-400 text-sm">Open-source models enable misuse by bad actors</p>
+                <p class="text-slate-400 text-sm">Open weights weaken containment, enable misuse, and challenge the claim that responsible actors can steward the frontier safely.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 border-l-2 border-amber-500">
+              <div class="border-l-2 border-amber-500/60 pl-4 py-1">
                 <h4 class="text-white font-medium mb-2 flex items-center gap-2">
                   <i data-lucide="landmark" class="w-4 h-4 text-amber-400"></i>
                   State Overreach
                 </h4>
-                <p class="text-slate-400 text-sm">Government regulation slows innovation and captures technology</p>
+                <p class="text-slate-400 text-sm">Fragmented state rules can slow scaling and split markets, so firms prefer governance that formalizes their safety model without breaking their platform control.</p>
               </div>
             </div>
           </div>
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
+        <div class="pt-6 border-t border-slate-800 space-y-5">
           <!-- Quote Block -->
-          <div class="quote-block bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/30 rounded-2xl p-6">
+          <div class="quote-block border-l-2 border-blue-500/50 pl-4">
             <i data-lucide="quote" class="w-8 h-8 text-blue-400 mb-4"></i>
             <blockquote class="text-white text-lg font-medium mb-4 leading-relaxed">
               "In the next couple of decades, we will be able to do things that would have seemed like magic to our grandparents."
@@ -850,7 +2137,7 @@
           </div>
           
           <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="building-2" class="w-5 h-5 text-blue-400"></i>
               Key Organizations
@@ -876,7 +2163,7 @@
           </div>
           
           <!-- Key Figures -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="user" class="w-5 h-5 text-blue-400"></i>
               Key Figures
@@ -905,192 +2192,232 @@
     </div>
   </div>
 
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="corporate" aria-labelledby="sources-corporate">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-corporate">Sources for Frame 4</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://ia.samaltman.com/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Sam Altman, <span class="italic">The Intelligence Age</span></div>
+          <div class="text-slate-500">Prosperity, universal benefit, and conviction in scale.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/stargate-sb-energy-partnership/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI and SB Energy 1.2 GW partnership</div>
+          <div class="text-slate-500">The infrastructure trap behind corporate-scale AI.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/openai-for-india/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI for India</div>
+          <div class="text-slate-500">Managed sovereignty packaged as national AI capability.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/servicenow-powers-actionable-enterprise-ai-with-openai/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">ServiceNow and OpenAI enterprise AI partnership</div>
+          <div class="text-slate-500">Enterprise workflow colonization in the corporate frame.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://openai.com/index/our-agreement-with-the-department-of-war/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">OpenAI agreement with the Department of War</div>
+          <div class="text-slate-500">The fusion of corporate mission, enterprise logic, and hard geopolitics.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FRAME 5: Safety -->
-  <div id="frame-safety" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-safety" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="safety" data-frame-index="5" data-frame-title="The Safety Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center">
           <i data-lucide="shield-check" class="w-8 h-8 text-purple-400"></i>
         </div>
         <div>
-          <span class="text-purple-400 text-sm font-medium tracking-wider uppercase">Frame 5</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">Safety / Scientific Internationalist</h2>
-          <p class="text-slate-400">The Only Anti-Accelerationist Frame</p>
+          <span class="frame-kicker">Frame 5</span>
+          <h2 class="text-3xl md:text-4xl font-bold">Safety / Scientific Internationalist</h2>
+          <p>Transboundary risk, safety science, and verification under uncertainty</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="space-y-8">
           <!-- Core Beliefs -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="alert-octagon" class="w-5 h-5 text-purple-400"></i>
               Core Beliefs
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The safety frame treats frontier AI as a transboundary risk problem: closer to biosecurity, nuclear safety, or aviation than to ordinary software externalities. Its central concern extends from misuse to loss of control, misalignment, and catastrophic cascades under deep uncertainty.
+            </p>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              The key claim is that capability may outrun evaluation and control. That pushes the frame toward thresholds, testing, shared incident reporting, and pre-emptive restraint rather than waiting for post hoc correction after deployment.
+            </p>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="skull" class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Frontier AI as Species-Level Hazard</h4>
-                  <p class="text-slate-300 text-sm">Advanced AI poses existential risks comparable to nuclear weapons and pandemics.</p>
+                  <p class="text-slate-300 text-sm">Frontier AI is treated as a potential species-level hazard through misuse, loss of control, misalignment, and catastrophic cascades.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="puzzle" class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Alignment Problem Not Solved</h4>
-                  <p class="text-slate-300 text-sm">We do not currently know how to ensure AI systems pursue human-intended goals.</p>
+                  <p class="text-slate-300 text-sm">Capability may rise faster than controllability; racing before this is solved is treated as a civilizational gamble.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="ban" class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Worst Harms are Irreversible</h4>
-                  <p class="text-slate-300 text-sm">Existential catastrophes cannot be undone. Precaution is warranted.</p>
+                  <p class="text-slate-300 text-sm">Low-probability harms dominate the calculus when the downside is extinction-level or civilization-level and cannot be repaired.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="trending-down" class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Races Degrade Safety</h4>
-                  <p class="text-slate-300 text-sm">Competitive pressure reduces time for safety testing and increases corner-cutting.</p>
+                  <p class="text-slate-300 text-sm">Competitive pressure rewards deployment before actors fully understand failure modes, creating capability externalities.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-purple-900/20 border border-purple-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="globe" class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Risks are Transboundary</h4>
-                  <p class="text-slate-300 text-sm">AI safety requires international coordination. No single nation can solve this alone.</p>
+                  <p class="text-slate-300 text-sm">If catastrophe is the failure mode, national competition is the wrong lens. The frame emphasizes monitoring, shared science, and non-optional constraints.</p>
                 </div>
               </div>
             </div>
           </div>
           
           <!-- Political Defeat -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="trending-down" class="w-5 h-5 text-purple-400"></i>
               Political Defeat (2023-2025)
             </h3>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              Safety politics briefly tried to occupy the command heights of frontier AI: lab governance, state legislation, and federal executive capacity. The pattern across these defeats is that capital control, employee incentives, and growth politics repeatedly overrode the case for binding slowdown.
+            </p>
             <div class="relative">
               <!-- Timeline -->
               <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-purple-500/30"></div>
               <div class="space-y-6">
                 <div class="relative pl-12">
                   <div class="absolute left-2 top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-slate-900"></div>
-                  <div class="bg-slate-800/50 rounded-lg p-4">
+                  <div class="border-l-2 border-purple-500/50 pl-4 py-1">
                     <div class="flex items-center justify-between mb-2">
                       <span class="text-purple-400 font-semibold">Nov 2023</span>
                       <span class="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">DEFEAT</span>
                     </div>
                     <h4 class="text-white font-medium">OpenAI Boardroom Coup</h4>
-                    <p class="text-slate-400 text-sm">Sam Altman briefly fired over safety concerns, then reinstated with board overhaul</p>
+                    <p class="text-slate-400 text-sm">An internal governance attempt to slow commercialization was reversed once employees and Microsoft asserted institutional power.</p>
                   </div>
                 </div>
                 <div class="relative pl-12">
                   <div class="absolute left-2 top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-slate-900"></div>
-                  <div class="bg-slate-800/50 rounded-lg p-4">
+                  <div class="border-l-2 border-purple-500/50 pl-4 py-1">
                     <div class="flex items-center justify-between mb-2">
                       <span class="text-purple-400 font-semibold">Sept 2024</span>
                       <span class="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">DEFEAT</span>
                     </div>
                     <h4 class="text-white font-medium">SB 1047 Vetoed</h4>
-                    <p class="text-slate-400 text-sm">California's frontier AI safety bill blocked by Governor Newsom</p>
+                    <p class="text-slate-400 text-sm">Catastrophic-risk obligations were acknowledged but rejected as the wrong instrument and too economically threatening.</p>
                   </div>
                 </div>
                 <div class="relative pl-12">
                   <div class="absolute left-2 top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-slate-900"></div>
-                  <div class="bg-slate-800/50 rounded-lg p-4">
+                  <div class="border-l-2 border-purple-500/50 pl-4 py-1">
                     <div class="flex items-center justify-between mb-2">
                       <span class="text-purple-400 font-semibold">June 2025</span>
                       <span class="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">DEFEAT</span>
                     </div>
-                    <h4 class="text-white font-medium">AISI → CAISI Reorganization</h4>
-                    <p class="text-slate-400 text-sm">US AI Safety Institute reorganized and deprioritized under new administration</p>
+                    <h4 class="text-white font-medium">AISI to CAISI Reorganization</h4>
+                    <p class="text-slate-400 text-sm">The U.S. mandate shifted from restriction toward standards and innovation, moving safety from executive restraint into a thinner standards layer.</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- International Efforts -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-8">
+          <!-- Institutional Architecture -->
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <i data-lucide="globe-2" class="w-5 h-5 text-purple-400"></i>
-              International Coordination Efforts
+              Institutional Architecture
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The frame did not disappear after these defeats. It relocated into an epistemic and operational architecture: international reports, safety-institute networks, shared evaluation science, summit diplomacy, and lab-internal risk processes.
+            </p>
             <div class="grid sm:grid-cols-3 gap-4">
-              <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+              <div class="border-t border-slate-800 pt-4 text-center">
                 <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
-                  <i data-lucide="file-signature" class="w-6 h-6 text-purple-400"></i>
+                  <i data-lucide="microscope" class="w-6 h-6 text-purple-400"></i>
                 </div>
-                <h4 class="text-white font-medium mb-1">Bletchley Declaration</h4>
-                <p class="text-slate-400 text-xs">Nov 2023 — 28 nations agree on AI safety principles</p>
+                <h4 class="text-white font-medium mb-1">Scientific Consensus</h4>
+                <p class="text-slate-400 text-xs">International AI Safety Report 2026: evidence base for frontier-risk evaluation.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+              <div class="border-t border-slate-800 pt-4 text-center">
                 <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
-                  <i data-lucide="mic" class="w-6 h-6 text-purple-400"></i>
+                  <i data-lucide="landmark" class="w-6 h-6 text-purple-400"></i>
                 </div>
-                <h4 class="text-white font-medium mb-1">Seoul Statement</h4>
-                <p class="text-slate-400 text-xs">May 2024 — Frontier AI safety commitments</p>
+                <h4 class="text-white font-medium mb-1">UN Scientific Panel</h4>
+                <p class="text-slate-400 text-xs">Independent International Scientific Panel on AI; the U.S. vote marks decoupling from the global safety consensus.</p>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+              <div class="border-t border-slate-800 pt-4 text-center">
                 <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
                   <i data-lucide="network" class="w-6 h-6 text-purple-400"></i>
                 </div>
-                <h4 class="text-white font-medium mb-1">International Network</h4>
-                <p class="text-slate-400 text-xs">Ongoing — AI Safety Institutes coordination</p>
+                <h4 class="text-white font-medium mb-1">Safety Institutes Network</h4>
+                <p class="text-slate-400 text-xs">Bletchley, Seoul, and the San Francisco network turn safety into diplomatic and evaluation infrastructure.</p>
               </div>
             </div>
           </div>
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Quote Block -->
-          <div class="quote-block bg-gradient-to-br from-purple-900/20 to-purple-800/10 border border-purple-500/30 rounded-2xl p-6">
-            <i data-lucide="quote" class="w-8 h-8 text-purple-400 mb-4"></i>
-            <blockquote class="text-white text-lg font-medium mb-4 leading-relaxed">
-              "The development of full artificial intelligence could spell the end of the human race."
-            </blockquote>
-            <cite class="text-purple-300 text-sm not-italic">
-              — Stephen Hawking (2014)
-            </cite>
+        <div class="pt-6 border-t border-slate-800 space-y-5">
+          <!-- Current Locus -->
+          <div class="quote-block border-l-2 border-purple-500/50 pl-4">
+            <h4 class="text-white font-semibold mb-3 flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-purple-400"></i>
+              Current Locus
+            </h4>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              After the political defeats of 2023-2025, the safety frame relocates into scientific, bureaucratic, international, and lab-internal architecture.
+            </p>
           </div>
           
-          <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <!-- Key Institutions -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="users" class="w-5 h-5 text-purple-400"></i>
-              Key Figures & Organizations
+              Institutional Layer
             </h4>
             <ul class="space-y-3 text-slate-300 text-sm">
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                Stuart Russell (UC Berkeley)
+                Yoshua Bengio-led International AI Safety Report 2026 expert process
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                Max Tegmark (FLI)
+                UN Independent International Scientific Panel on AI
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                Future of Life Institute
+                International Network of AI Safety Institutes
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                Center for AI Safety
+                UK and Japan AI Safety Institutes
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                Anthropic (safety-focused)
+                U.S. CAISI after the AISI reorganization
               </li>
             </ul>
           </div>
           
-          <!-- Key Papers -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <!-- Key Documents -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="book-open" class="w-5 h-5 text-purple-400"></i>
               Key Documents
@@ -1098,15 +2425,27 @@
             <ul class="space-y-3 text-slate-300 text-sm">
               <li class="flex items-start gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
-                <span>"Existential Risk from Artificial General Intelligence" (Bostrom, 2012)</span>
+                <span>Bletchley Declaration on frontier AI risks</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
-                <span>"Concrete Problems in AI Safety" (Amodei et al., 2016)</span>
+                <span>International AI Safety Report 2026</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
-                <span>"Managing AI Risks in an Era of Rapid Progress" (Bengio et al., 2023)</span>
+                <span>Seoul Statement of Intent toward International Cooperation on AI Safety Science</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
+                <span>NIST San Francisco Convening of the International Network of AI Safety Institutes</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
+                <span>NIST Center for AI Standards and Innovation (CAISI)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 flex-shrink-0"></span>
+                <span>California SB 1047 bill status and legal analysis</span>
               </li>
             </ul>
           </div>
@@ -1115,130 +2454,175 @@
     </div>
   </div>
 
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="safety" aria-labelledby="sources-safety">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-safety">Sources for Frame 5</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.nist.gov/caisi" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NIST, Center for AI Standards and Innovation (CAISI)</div>
+          <div class="text-slate-500">The U.S. institutional shift from AISI toward standards and innovation.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">International AI Safety Report 2026</div>
+          <div class="text-slate-500">Bengio-led evidence base for frontier-risk evaluation.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Bletchley Declaration</div>
+          <div class="text-slate-500">Baseline recognition of serious frontier-AI risks.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.gov.uk/government/publications/seoul-declaration-for-safe-innovative-and-inclusive-ai-ai-seoul-summit-2024/seoul-statement-of-intent-toward-international-cooperation-on-ai-safety-science-ai-seoul-summit-2024-annex" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Seoul Statement of Intent toward AI Safety Science</div>
+          <div class="text-slate-500">International cooperation on safety science, openness, transparency, and reciprocity.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.nist.gov/document/aisi-pilot-testing-exercise-blog" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">NIST, International Network of AI Safety Institutes San Francisco Convening</div>
+          <div class="text-slate-500">Evaluation cooperation across national AI safety institutes.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">California SB 1047 bill status</div>
+          <div class="text-slate-500">The legislative front in the safety-regulation conflict.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://cdt.org/insights/ca-governor-vetoes-sb-1047-ai-legislation/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">CDT legal analysis of the SB 1047 veto</div>
+          <div class="text-slate-500">Regulatory stakes of the veto in the safety-regulation conflict.</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FRAME 6: Dislocation -->
-  <div id="frame-dislocation" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
+  <div id="frame-dislocation" class="frame-section relative z-10 px-6 md:px-12 lg:px-20 py-20" data-frame="dislocation" data-frame-index="6" data-frame-title="The Dislocation Frame">
     <div class="max-w-7xl mx-auto">
       <div class="frame-header flex items-center gap-4 mb-10">
         <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center">
           <i data-lucide="git-branch" class="w-8 h-8 text-cyan-400"></i>
         </div>
         <div>
-          <span class="text-cyan-400 text-sm font-medium tracking-wider uppercase">Frame 6</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white">The Dislocation Frame</h2>
-          <p class="text-slate-400">Labor, Legitimacy, and Social Order</p>
+          <span class="frame-kicker">Frame 6</span>
+          <h2 class="text-3xl md:text-4xl font-bold">The Dislocation Frame</h2>
+          <p>Labor, Legitimacy, and Social Order</p>
         </div>
       </div>
       
-      <div class="grid lg:grid-cols-3 gap-8">
+      <div class="max-w-4xl space-y-8">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="space-y-8">
           <!-- Core Concerns -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="alert-triangle" class="w-5 h-5 text-cyan-400"></i>
               Core Concerns
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The dislocation frame is less organized than the others, but it may be politically decisive because it speaks to domestic stability. Its starting point is economic redundancy and social disposability rather than species extinction.
+            </p>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+              The core issue is political economy. AI can decouple growth from labor at scale, shifting bargaining power toward capital, compute, data, and distribution channels. The legitimacy problem emerges when productivity gains become a distributional shock rather than a broad dividend.
+            </p>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="user-x" class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Economic Redundancy</h4>
-                  <p class="text-slate-300 text-sm">AI will make large segments of the workforce economically redundant, decoupling growth from labor.</p>
+                  <p class="text-slate-300 text-sm">The fear is growth without labor: productivity rises while the social role and bargaining power of workers erode.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="scale" class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Legitimacy as Constraint</h4>
-                  <p class="text-slate-300 text-sm">The pace of AI deployment is constrained by social and political legitimacy, not just technical feasibility.</p>
+                  <p class="text-slate-300 text-sm">A state cannot pursue external rivalry if it cannot maintain domestic consent, fiscal capacity, and social stability.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="pie-chart" class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Factor Share Shifts</h4>
-                  <p class="text-slate-300 text-sm">Automation shifts returns from labor to capital, increasing inequality unless redistributive policies intervene.</p>
+                  <p class="text-slate-300 text-sm">Returns move toward capital owners and scarce inputs: compute, proprietary data, model access, distribution, and deployment channels.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4">
+              <div class="flex items-start gap-4 border-t border-slate-800 pt-4">
                 <i data-lucide="award" class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0"></i>
                 <div>
                   <h4 class="text-white font-semibold mb-1">Status Order Disruption</h4>
-                  <p class="text-slate-300 text-sm">AI undermines the social status attached to cognitive work, threatening social cohesion.</p>
+                  <p class="text-slate-300 text-sm">The fragile point is entry-level cognitive work, the ladder through which societies reproduce middle-class status and professional identity.</p>
                 </div>
               </div>
             </div>
           </div>
           
           <!-- Expert Warnings -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="megaphone" class="w-5 h-5 text-cyan-400"></i>
-              Expert Warnings
+              Recent Warning Signals
             </h3>
+            <p class="text-slate-300 mb-5 leading-relaxed">
+              The key empirical tension is augmentation versus substitution. Adoption data may show gradual integration, but social perception can still anticipate sudden displacement. Wage compression, slower hiring, tighter monitoring, and the disappearance of formative tasks are enough to generate backlash even before mass unemployment appears.
+            </p>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="bg-slate-800/50 rounded-lg p-5 border-l-2 border-cyan-500">
-                <i data-lucide="quote" class="w-5 h-5 text-cyan-400 mb-3"></i>
-                <blockquote class="text-slate-300 text-sm mb-3">
-                  "AI will hit white-collar workers like a tsunami. Entry-level roles will disappear first."
-                </blockquote>
+              <div class="border-l-2 border-cyan-500/60 pl-4 py-1">
+                <i data-lucide="briefcase-business" class="w-5 h-5 text-cyan-400 mb-3"></i>
+                <p class="text-slate-300 text-sm mb-3">
+                  Amodei publicly warned that entry-level white-collar roles could be hit within a one-to-five-year horizon; the issue is a legitimacy shock as well as a labor-market adjustment.
+                </p>
                 <cite class="text-cyan-300 text-xs not-italic">
-                  — Dario Amodei, CEO Anthropic
+                  Dario Amodei, Axios interview / <span class="italic">The Adolescence of Technology</span>
                 </cite>
               </div>
-              <div class="bg-slate-800/50 rounded-lg p-5 border-l-2 border-cyan-500">
-                <i data-lucide="quote" class="w-5 h-5 text-cyan-400 mb-3"></i>
-                <blockquote class="text-slate-300 text-sm mb-3">
-                  "AI is about to hit the global labor market like a tsunami. We need urgent preparation."
-                </blockquote>
+              <div class="border-l-2 border-cyan-500/60 pl-4 py-1">
+                <i data-lucide="waves" class="w-5 h-5 text-cyan-400 mb-3"></i>
+                <p class="text-slate-300 text-sm mb-3">
+                  Georgieva's Davos warning frames AI as a labor-market "tsunami," with particular risk for younger workers and entry-level pathways.
+                </p>
                 <cite class="text-cyan-300 text-xs not-italic">
-                  — Kristalina Georgieva, IMF Managing Director (Jan 2026)
+                  Kristalina Georgieva, IMF Managing Director, Davos 2026
                 </cite>
               </div>
             </div>
           </div>
           
           <!-- Policy Instincts -->
-          <div class="bg-slate-900/60 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8">
+          <div class="pt-6 border-t border-slate-800">
             <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
               <i data-lucide="lightbulb" class="w-5 h-5 text-cyan-400"></i>
               Policy Instincts
             </h3>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div class="flex items-start gap-3 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-3 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="dollar-sign" class="w-5 h-5 text-cyan-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Taxation</h4>
-                  <p class="text-slate-400 text-sm">Tax AI-derived productivity to fund redistribution</p>
+                  <p class="text-slate-400 text-sm">Capture scarcity rents through windfall taxes, robot-tax proposals, profit sharing, or public claims on productivity gains.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-3 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-3 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="wallet" class="w-5 h-5 text-cyan-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">UBI / UBS</h4>
-                  <p class="text-slate-400 text-sm">Universal Basic Income or Services</p>
+                  <p class="text-slate-400 text-sm">Income guarantees and basic services are framed either as revolt prevention or as dignity-preserving transition policy.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-3 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-3 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="briefcase" class="w-5 h-5 text-cyan-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Labor Innovation</h4>
-                  <p class="text-slate-400 text-sm">New job categories, reskilling programs</p>
+                  <p class="text-slate-400 text-sm">Sectoral bargaining, data rights, algorithmic unions, and new institutions for work mediated by AI systems.</p>
                 </div>
               </div>
-              <div class="flex items-start gap-3 bg-slate-800/50 rounded-lg p-4">
+              <div class="flex items-start gap-3 border-t border-slate-800 pt-4">
                 <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="user-check" class="w-5 h-5 text-cyan-400"></i>
                 </div>
                 <div>
                   <h4 class="text-white font-medium mb-1">Human-in-the-Loop</h4>
-                  <p class="text-slate-400 text-sm">Mandated human oversight requirements</p>
+                  <p class="text-slate-400 text-sm">Visible human accountability in sensitive domains protects legitimacy even when automation is technically feasible.</p>
                 </div>
               </div>
             </div>
@@ -1246,75 +2630,102 @@
         </div>
         
         <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Key Figure -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+        <div class="pt-6 border-t border-slate-800 space-y-5">
+          <!-- Reference Points -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="users" class="w-5 h-5 text-cyan-400"></i>
-              Key Figures & Organizations
+              Reference Points
             </h4>
             <ul class="space-y-3 text-slate-300 text-sm">
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                Daron Acemoglu (MIT)
+                Dario Amodei and frontier-lab warnings
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                Erik Brynjolfsson (Stanford)
+                Kristalina Georgieva and IMF labor-market exposure
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                IMF (labor market analysis)
+                TIME's <span class="italic">The People vs. AI</span> backlash frame
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                ILO (future of work)
+                Labor actors and anti-corporate conservatives
               </li>
               <li class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                Labor unions (AFL-CIO, etc.)
+                Young workers and entry-level white-collar pathways
               </li>
             </ul>
           </div>
           
-          <!-- Statistics -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <!-- Mechanisms -->
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="bar-chart-2" class="w-5 h-5 text-cyan-400"></i>
-              Key Statistics
+              Political-Economy Mechanisms
             </h4>
             <div class="space-y-4">
-              <div class="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4 text-center">
-                <span class="text-3xl font-bold text-cyan-400">300M</span>
-                <p class="text-slate-300 text-sm mt-1">Full-time jobs at risk globally (Goldman Sachs)</p>
+              <div class="border-l-2 border-cyan-500/50 pl-4 py-1">
+                <h5 class="text-white font-medium mb-1">Growth Without Labor</h5>
+                <p class="text-slate-300 text-sm">AI can turn productivity gains into a distributional shock when growth is decoupled from work.</p>
               </div>
-              <div class="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4 text-center">
-                <span class="text-3xl font-bold text-cyan-400">7%</span>
-                <span class="text-cyan-400 text-lg">of US jobs</span>
-                <p class="text-slate-300 text-sm mt-1">At high risk of automation (McKinsey)</p>
+              <div class="border-l-2 border-cyan-500/50 pl-4 py-1">
+                <h5 class="text-white font-medium mb-1">Capital and Scarcity Rents</h5>
+                <p class="text-slate-300 text-sm">Returns shift toward capital, compute, data, and distribution channels unless institutions counteract them.</p>
               </div>
-              <div class="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-4 text-center">
-                <span class="text-3xl font-bold text-cyan-400">$4.4T</span>
-                <p class="text-slate-300 text-sm mt-1">Annual productivity gain potential (McKinsey)</p>
+              <div class="border-l-2 border-cyan-500/50 pl-4 py-1">
+                <h5 class="text-white font-medium mb-1">Credential Ladder Shock</h5>
+                <p class="text-slate-300 text-sm">The sensitive vector is the collapse of entry-level cognitive work as a route into middle-class status.</p>
               </div>
             </div>
           </div>
           
           <!-- Related Concepts -->
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          <div class="pt-4 border-t border-slate-800">
             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
               <i data-lucide="link" class="w-5 h-5 text-cyan-400"></i>
               Related Concepts
             </h4>
             <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Technological unemployment</span>
-              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Polarization</span>
-              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Precariat</span>
-              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Post-work society</span>
-              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Digital divide</span>
+              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Distributional shock</span>
+              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Legitimacy crisis</span>
+              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Cognitive middle class</span>
+              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Policy latency</span>
+              <span class="px-3 py-1 bg-cyan-900/30 border border-cyan-500/30 rounded-full text-cyan-300 text-xs">Purpose erosion</span>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-sources relative z-10 px-6 md:px-12 lg:px-20" data-frame="dislocation" aria-labelledby="sources-dislocation">
+    <div class="max-w-7xl mx-auto">
+      <h3 id="sources-dislocation">Sources for Frame 6</h3>
+      <div class="source-list text-sm">
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">IMF, AI Will Transform the Global Economy (Jan 2024)</div>
+          <div class="text-slate-500">Baseline labor-market exposure and inequality framing.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.theguardian.com/technology/2026/jan/23/ai-tsunami-labour-market-youth-employment-says-head-of-imf-davos" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Guardian, Young will suffer most when AI 'tsunami' hits jobs</div>
+          <div class="text-slate-500">Georgieva's Davos warning about entry-level roles and youth employment.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Dario Amodei, The Adolescence of Technology</div>
+          <div class="text-slate-500">Civilizational-risk and economic-disruption framing under rapid deployment.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://www.axios.com/2025/05/28/ai-jobs-white-collar-unemployment-anthropic" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">Axios, Behind the Curtain: A white-collar bloodbath</div>
+          <div class="text-slate-500">Source for Amodei's entry-level white-collar displacement warning.</div>
+        </a>
+        <a class="source-item group block py-3 focus:outline-none" href="https://time.com/7266504/people-vs-ai/" target="_blank" rel="noreferrer noopener">
+          <div class="font-medium">TIME, The People vs. AI</div>
+          <div class="text-slate-500">Public backlash, labor anxiety, and social legitimacy of deployment.</div>
+        </a>
       </div>
     </div>
   </div>
@@ -1406,9 +2817,9 @@
       <div class="network-diagram bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-2xl p-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Coalition 1: National Security -->
-          <div class="coalition-card bg-gradient-to-br from-red-900/20 to-amber-900/20 border border-red-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-red-400 to-amber-400"></span>
+              <span class="coalition-dot coalition-dot--security w-3 h-3 rounded-full"></span>
               National Security Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -1428,9 +2839,9 @@
           </div>
           
           <!-- Coalition 2: Tech Acceleration -->
-          <div class="coalition-card bg-gradient-to-br from-emerald-900/20 to-blue-900/20 border border-emerald-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-emerald-400 to-blue-400"></span>
+              <span class="coalition-dot coalition-dot--acceleration w-3 h-3 rounded-full"></span>
               Tech Acceleration Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -1450,9 +2861,9 @@
           </div>
           
           <!-- Coalition 3: Governance & Safety -->
-          <div class="coalition-card bg-gradient-to-br from-purple-900/20 to-cyan-900/20 border border-purple-500/30 rounded-xl p-6">
+          <div class="coalition-card rounded-xl p-6">
             <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-cyan-400"></span>
+              <span class="coalition-dot coalition-dot--governance w-3 h-3 rounded-full"></span>
               Governance Coalition
             </h3>
             <div class="space-y-2 text-sm">
@@ -1513,98 +2924,6 @@
     </div>
   </div>
 
-  <!-- Sources & References -->
-  <div class="sources-section relative z-10 px-6 md:px-12 lg:px-20 py-20">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 flex items-center gap-3">
-        <i data-lucide="book-open" class="w-8 h-8 text-indigo-400"></i>
-        Sources & References
-      </h2>
-      
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
-          <h3 class="text-white font-semibold mb-4">Key Texts</h3>
-          <ul class="space-y-3 text-slate-300 text-sm">
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Altman, S. (2024). "The Intelligence Age." <em class="text-slate-400">Personal Blog.</em></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Andreessen, M. (2023). "The Techno-Optimist Manifesto." <em class="text-slate-400">a16z.</em></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Colby, E. (2021). <em class="text-slate-400">The Strategy of Denial.</em> Yale University Press.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Kissinger, H., Schmidt, E., & Huttenlocher, D. (2021). <em class="text-slate-400">The Age of AI.</em> Little, Brown.</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
-          <h3 class="text-white font-semibold mb-4">Official Documents</h3>
-          <ul class="space-y-3 text-slate-300 text-sm">
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Executive Order 14179 (Jan 2025). "Removing Barriers to American AI Leadership."</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Executive Order 14319 (Apr 2025). "Modernizing AI Procurement."</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Bletchley Declaration (Nov 2023). International AI Safety Summit.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Seoul Statement (May 2024). Frontier AI Safety Commitments.</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
-          <h3 class="text-white font-semibold mb-4">Research & Analysis</h3>
-          <ul class="space-y-3 text-slate-300 text-sm">
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>IMF (2026). "AI and the Future of Work." <em class="text-slate-400">World Economic Outlook.</em></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Goldman Sachs (2023). "The Potentially Large Effect of AI on Economic Growth."</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>McKinsey Global Institute (2023). "The Economic Potential of Generative AI."</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="bg-slate-900/60 backdrop-blur-sm border border-slate-700 rounded-xl p-6">
-          <h3 class="text-white font-semibold mb-4">Media & Commentary</h3>
-          <ul class="space-y-3 text-slate-300 text-sm">
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Karp, A. (2024). "The Software of Sovereignty." <em class="text-slate-400">Palantir Blog.</em></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Amodei, D. (2024). "Machines of Loving Grace." <em class="text-slate-400">Anthropic Blog.</em></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0"></i>
-              <span>Various (2024). "SB 1047 Legislative History." <em class="text-slate-400">California Legislature.</em></span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Section Navigation -->
   <div class="section-nav relative z-10 px-6 md:px-12 lg:px-20 py-12 border-t border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -1632,6 +2951,193 @@
       // Initialize Lucide icons
       if (typeof lucide !== 'undefined') {
         lucide.createIcons();
+      }
+
+      const moduleNav = document.querySelector('.module-nav');
+      const readingStatusName = document.querySelector('.reading-status-name');
+      const readingStatusMeta = document.querySelector('.reading-status-meta');
+      const readingStatusSteps = Array.from(document.querySelectorAll('.reading-status-step'));
+      const frameCards = Array.from(document.querySelectorAll('.frame-card[href^="#frame-"]'));
+      const frameSections = Array.from(document.querySelectorAll('.frame-section[id]'));
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let activeFrameId = '';
+      let frameUpdateHandle = null;
+
+      const animateStatusCopy = () => {
+        if (prefersReducedMotion || typeof document.body.animate !== 'function') {
+          return;
+        }
+
+        [readingStatusName, readingStatusMeta].forEach((node) => {
+          if (!node) {
+            return;
+          }
+
+          node.animate(
+            [
+              { opacity: 0.55, transform: 'translateY(4px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ],
+            {
+              duration: 260,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+            }
+          );
+        });
+      };
+
+      const setOverviewState = () => {
+        if (activeFrameId === 'overview') {
+          return;
+        }
+
+        activeFrameId = 'overview';
+        moduleNav?.style.setProperty('--active-frame-rgb', '122, 96, 70');
+        frameSections.forEach((section) => section.classList.remove('is-active'));
+        frameCards.forEach((card) => {
+          card.classList.remove('is-active');
+          card.removeAttribute('aria-current');
+        });
+
+        if (readingStatusName) {
+          readingStatusName.textContent = 'Overview';
+        }
+
+        if (readingStatusMeta) {
+          readingStatusMeta.textContent = 'Map of 6 Frames';
+        }
+
+        readingStatusSteps.forEach((step) => {
+          step.classList.remove('is-active', 'is-complete');
+        });
+
+        animateStatusCopy();
+      };
+
+      const setActiveFrame = (section) => {
+        if (!section || activeFrameId === section.id) {
+          return;
+        }
+
+        activeFrameId = section.id;
+
+        const accent = getComputedStyle(section).getPropertyValue('--frame-accent').trim() || '122, 96, 70';
+        const frameIndex = Number(section.dataset.frameIndex || frameSections.indexOf(section) + 1);
+
+        moduleNav?.style.setProperty('--active-frame-rgb', accent);
+
+        frameSections.forEach((candidate) => {
+          candidate.classList.toggle('is-active', candidate === section);
+        });
+
+        frameCards.forEach((card) => {
+          const isActive = card.getAttribute('href') === `#${section.id}`;
+          card.classList.toggle('is-active', isActive);
+          if (isActive) {
+            card.setAttribute('aria-current', 'true');
+          } else {
+            card.removeAttribute('aria-current');
+          }
+        });
+
+        if (readingStatusName) {
+          readingStatusName.textContent = section.dataset.frameTitle || section.querySelector('h2')?.textContent || 'Overview';
+        }
+
+        if (readingStatusMeta) {
+          readingStatusMeta.textContent = `Frame ${frameIndex} / ${frameSections.length}`;
+        }
+
+        readingStatusSteps.forEach((step, index) => {
+          step.classList.toggle('is-active', index === frameIndex - 1);
+          step.classList.toggle('is-complete', index < frameIndex - 1);
+        });
+
+        animateStatusCopy();
+      };
+
+      const updateActiveFrameFromScroll = () => {
+        frameUpdateHandle = null;
+
+        if (!frameSections.length) {
+          return;
+        }
+
+        const navOffset = moduleNav?.offsetHeight || 88;
+        const overviewThreshold = frameSections[0].offsetTop - navOffset - 120;
+        const hashTarget = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+        if (window.scrollY < overviewThreshold) {
+          if (hashTarget?.classList.contains('frame-section') && activeFrameId === hashTarget.id) {
+            return;
+          }
+          setOverviewState();
+          return;
+        }
+
+        const targetLine = navOffset + window.innerHeight * 0.24;
+        let nextSection = frameSections[0];
+        let smallestDistance = Number.POSITIVE_INFINITY;
+
+        frameSections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.bottom <= navOffset + 32) {
+            return;
+          }
+
+          const distance = Math.abs(rect.top - targetLine);
+          if (distance < smallestDistance) {
+            smallestDistance = distance;
+            nextSection = section;
+          }
+        });
+
+        setActiveFrame(nextSection);
+      };
+
+      const requestFrameUpdate = () => {
+        if (frameUpdateHandle !== null) {
+          return;
+        }
+
+        frameUpdateHandle = window.requestAnimationFrame(updateActiveFrameFromScroll);
+      };
+
+      frameCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const targetId = card.getAttribute('href')?.slice(1);
+          const targetSection = targetId ? document.getElementById(targetId) : null;
+          if (targetSection) {
+            setActiveFrame(targetSection);
+          }
+        });
+      });
+
+      const initialHashTarget = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+      if (initialHashTarget?.classList.contains('frame-section')) {
+        setActiveFrame(initialHashTarget);
+      } else {
+        setOverviewState();
+      }
+
+      window.addEventListener('scroll', requestFrameUpdate, { passive: true });
+      window.addEventListener('resize', requestFrameUpdate);
+      window.addEventListener('hashchange', () => {
+        const hashTarget = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+        if (hashTarget?.classList.contains('frame-section')) {
+          setActiveFrame(hashTarget);
+        }
+        requestFrameUpdate();
+      });
+      window.addEventListener('load', requestFrameUpdate);
+      requestFrameUpdate();
+
+      const motionPolicy = window.AIGeoMotionPolicy;
+      const canAnimate = motionPolicy
+        ? motionPolicy.prepareGSAPPage()
+        : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+      if (!canAnimate) {
+        return;
       }
       
       // Check if GSAP is available
@@ -1810,68 +3316,38 @@
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: rgba(30, 41, 59, 0.5);
+      background: rgba(232, 222, 208, 0.74);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(99, 102, 241, 0.5);
+      background: rgba(103, 91, 76, 0.30);
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(99, 102, 241, 0.7);
+      background: rgba(103, 91, 76, 0.46);
     }
-    
-    /* Frame card hover effects */
-    .frame-card {
-      transition: all 0.3s ease;
-    }
-    .frame-card:hover {
-      transform: translateY(-4px);
-    }
-    
-    /* Quote block styling */
-    .quote-block {
-      position: relative;
-      background-color: rgba(15, 23, 42, 0.72);
-      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.24);
-    }
-    .quote-block::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, currentColor, transparent);
-      opacity: 0.3;
-    }
-    
+
     /* Comparison table styling */
     .comparison-table th,
     .comparison-table td {
       transition: background-color 0.2s ease;
     }
     .comparison-table tbody tr:hover td {
-      background-color: rgba(51, 65, 85, 0.3);
-    }
-    
-    /* Coalition card hover */
-    .coalition-card {
-      transition: all 0.3s ease;
-    }
-    .coalition-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      background-color: rgba(98, 84, 68, 0.035);
     }
     
     /* Navigation hover */
     .nav-prev, .nav-next {
-      transition: all 0.3s ease;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+    .nav-prev:hover,
+    .nav-next:hover {
+      background: rgba(98, 84, 68, 0.055) !important;
     }
     
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .title-text {
-        font-size: 2rem;
+        font-size: 2.4rem;
       }
       .comparison-table {
         font-size: 0.75rem;
@@ -1892,6 +3368,6 @@
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
-  </script>
+</script>
 </body>
 </html>

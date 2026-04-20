@@ -14,6 +14,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style>
@@ -76,7 +77,7 @@
         <div class="flex flex-col items-center gap-3 text-slate-500">
           <span class="text-xs font-mono uppercase tracking-widest">Scroll to Explore</span>
           <div class="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center pt-2">
-            <div class="w-1.5 h-3 bg-red-500 rounded-full animate-bounce"></div>
+              <div class="w-1.5 h-3 bg-red-500 rounded-full"></div>
           </div>
         </div>
       </div>
@@ -1312,24 +1313,73 @@
         <i data-lucide="book-open" class="w-5 h-5"></i>
         Sources & References
       </h3>
+      <p class="text-sm text-slate-400 leading-relaxed mb-6 max-w-3xl">
+        This page moves from disclosure to diplomatic response, private security measures, and the legal breakup of
+        seamless data flows. The references below are grouped the same way so each turn in the argument can be checked
+        against the underlying documents.
+      </p>
       <div class="grid md:grid-cols-2 gap-4 text-sm">
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">Greenwald, G. (2014). <em>No Place to Hide: Edward Snowden, the NSA, and the U.S. Surveillance State.</em> Metropolitan Books.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">The disclosure</p>
+          <a href="https://www.theguardian.com/us-news/the-nsa-files" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">The Guardian, "The NSA Files"</a>
+          <p class="text-slate-500 mt-2">Primary reporting on the Snowden leaks and the surveillance architecture they exposed.</p>
         </div>
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">Mueller, M. (2017). <em>Will the Internet Fragment? Sovereignty, Globalization and Cyberspace.</em> Polity Press.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">U.S. response</p>
+          <a href="https://obamawhitehouse.archives.gov/the-press-office/2014/01/17/remarks-president-review-signals-intelligence" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Barack Obama, remarks on the review of signals intelligence (2014)</a>
+          <p class="text-slate-500 mt-2">The official attempt to restore legitimacy after the disclosures.</p>
         </div>
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">Schneier, B. (2015). <em>Data and Goliath: The Hidden Battles to Collect Your Data and Control Your World.</em> W. W. Norton.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Defensive sovereignty</p>
+          <div class="space-y-3">
+            <div>
+              <a href="https://gadebate.un.org/sites/default/files/gastatements/68/BR_en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Dilma Rousseff, UN General Assembly statement (2013)</a>
+              <p class="text-slate-500 mt-1">The diplomatic rupture after Petrobras and presidential communications were targeted.</p>
+            </div>
+            <div>
+              <a href="https://ella.link/about-us/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">EllaLink project overview</a>
+              <p class="text-slate-500 mt-1">A representative infrastructure response designed to bypass North American hub dependence.</p>
+            </div>
+            <div>
+              <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">GDPR, Regulation (EU) 2016/679</a>
+              <p class="text-slate-500 mt-1">Europe's move to translate privacy into regulatory and geopolitical leverage.</p>
+            </div>
+            <div>
+              <a href="https://www.gaia-x.eu/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Gaia-X</a>
+              <p class="text-slate-500 mt-1">The cloud and data-space response to dependence on foreign hyperscalers.</p>
+            </div>
+          </div>
         </div>
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">European Court of Justice. (2015, 2020). <em>Schrems I & II</em> rulings on data transfers.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Governance fracture</p>
+          <a href="http://netmundial.br/netmundial-multistakeholder-statement/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">NETmundial Multistakeholder Statement (2014)</a>
+          <p class="text-slate-500 mt-2">The clearest primary document for the post-Snowden governance revolt and demand for a stronger international voice.</p>
         </div>
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">NETmundial. (2014). <em>NETmundial Multistakeholder Statement.</em> São Paulo, Brazil.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Industry trust response</p>
+          <div class="space-y-3">
+            <div>
+              <a href="https://www.apple.com/customer-letter/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Apple, "A Message to Our Customers" (2016)</a>
+              <p class="text-slate-500 mt-1">The public statement that turned encryption into a trust and sovereignty issue.</p>
+            </div>
+            <div>
+              <a href="https://www.apple.com/legal/transparency/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Apple Transparency Report</a>
+              <p class="text-slate-500 mt-1">A representative example of the transparency practices firms adopted after the rupture.</p>
+            </div>
+          </div>
         </div>
-        <div class="p-4 bg-slate-900/50 rounded-lg">
-          <p class="text-slate-500">ICANN. (2016). <em>IANA Stewardship Transition.</em> Completion Report.</p>
+        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Legal rupture</p>
+          <div class="space-y-3">
+            <div>
+              <a href="https://curia.europa.eu/jcms/upload/docs/application/pdf/2015-10/cp150117en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">CJEU, Schrems I (Case C-362/14)</a>
+              <p class="text-slate-500 mt-1">The judgment that invalidated Safe Harbor and reframed data transfer as a sovereignty question.</p>
+            </div>
+            <div>
+              <a href="https://curia.europa.eu/jcms/upload/docs/application/pdf/2020-07/cp200091en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">CJEU, Schrems II (Case C-311/18)</a>
+              <p class="text-slate-500 mt-1">The ruling that turned compliance architecture and sovereign cloud into practical responses.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1386,6 +1436,23 @@
           }
         });
       };
+
+      const motionPolicy = window.AIGeoMotionPolicy;
+      const canAnimate = motionPolicy
+        ? motionPolicy.prepareGSAPPage({
+            reveal: {
+              selectors: ['.rupture-header', '.scroll-indicator'],
+              removeTransforms: ['translate-y-12']
+            }
+          })
+        : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+      if (!canAnimate) {
+        if (!motionPolicy) {
+          revealFallback();
+        }
+        return;
+      }
 
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         console.warn('GSAP or ScrollTrigger not loaded');
