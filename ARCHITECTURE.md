@@ -5,7 +5,7 @@ The platform is deployed as a static site on GitHub Pages. The repository is org
 
 - **Root:** The command center. It contains the 3D landing page (`index.html`), the editorial fallback (`magazine.html`), shared design assets, and the global scripts that power the course site.
 - **Primer:** The course narrative. The `primer/` directory contains the eight module pages.
-- **Projects:** The field briefs. The `projects/` directory contains five reserved student sandboxes: one folder per group, each with its own `index.html` entrypoint.
+- **Projects:** The field briefs. The `projects/` directory contains five reserved student sandboxes (`projects/group-1/` through `projects/group-5/`), each with its own `index.html` entrypoint.
 
 Because the host is static, student work must be published as static output. Framework builds are acceptable only after they have been compiled down to files that can be served directly from a browser.
 
@@ -21,6 +21,8 @@ The preview wrapper is useful for review and context, but it is not the primary 
 - Pull Request validation for student submissions
 - instructor review through `CODEOWNERS`
 - protected branch settings on GitHub, with teacher and maintainer bypass configured in repository settings
+
+Students can use either a basic HTML/CSS workflow or a framework workflow. In both cases, the published output must end up inside the assigned `projects/group-X/` folder. Groups using React, Vue, Three.js, or similar tools should run their build locally and copy only the static output (`dist/`, `out/`, or equivalent) into their group folder.
 
 ## 3. Submission Guardrails
 Student submissions are expected to be self-contained static bundles:
@@ -44,4 +46,5 @@ The landing page presents the course as a 3D spatial network rather than a conve
 - **Anchor Nodes:** Larger nodes for the course modules.
 - **Satellite Nodes:** Smaller nodes for the five student projects.
 - **Interaction:** Hovering reveals a briefing card; clicking opens the corresponding module or project page directly.
+- **Tactical Overlay:** A persistent, minimalist control layer gives users context and access to the selected node.
 - **Escape Hatch:** Users can switch from the 3D interface to `magazine.html`, a fully readable editorial index that also links to every student project and preview wrapper.

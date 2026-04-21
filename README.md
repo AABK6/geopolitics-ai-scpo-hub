@@ -43,17 +43,20 @@ If your group has no coding experience, use frontier chatbots to generate your s
 #### Option B: "Builder" method (Light to Advanced Technical)
 If your group wants to use AI coding agents (VS Code with Gemini, Codex, Claude) or vibe-coding tools (Antigravity, Claude Code), you have full freedom to do so:
 1. Create a GitHub account.
-2. Clone this repository locally.
+2. **Fork** this repository on GitHub, then clone your fork locally.
 3. Use your AI tools to build your project. **Important:** Your final output must compile to static files. If you use a framework, run your build command (for example, `npm run build`) and copy the contents of your `dist/` or `out/` folder into your assigned group folder. Ensure asset paths are relative and remain inside that folder.
-4. Open a Pull Request to send your page directly to the class website.
+4. Push a branch to your fork and open a Pull Request into `AABK6/geopolitics-ai-scpo-hub`.
 
-To submit your project to the Hub via Git:
+Most students should use the fork-and-PR flow below. Pushing directly to `main` will fail unless you have explicitly been given write access to the upstream repository.
+
+To push your project to the Hub via GitHub:
 ```bash
-# 1. Clone the repository (if you haven't already)
-git clone https://github.com/YOUR_ORG/geopolitics-ai-scpo-hub.git
+# 1. Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_GITHUB_USERNAME/geopolitics-ai-scpo-hub.git
+cd geopolitics-ai-scpo-hub
 
-# 2. Create a branch for your submission
-git checkout -b group-1-submission
+# 2. Create a working branch
+git checkout -b add-group-1-project
 
 # 3. Add your files to your specific group folder
 # (for example, copy your built static files into projects/group-1/)
@@ -62,9 +65,11 @@ git checkout -b group-1-submission
 git add projects/group-1/
 git commit -m "Add Group 1 Project"
 
-# 5. Push your branch and open a Pull Request
-git push origin group-1-submission
+# 5. Push your branch to your fork
+git push -u origin add-group-1-project
 ```
+
+Then open a Pull Request from your forked branch into `AABK6/geopolitics-ai-scpo-hub:main`.
 
 Within 60 seconds of merging, GitHub Pages will rebuild the site. Your research project will automatically become accessible via the 3D Hub as a Satellite Node.
 
