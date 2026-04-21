@@ -4,1313 +4,2933 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module 05: AI Makes Sovereignty Industrial Again | Geopolitics of AI</title>
-  
+
   <link rel="stylesheet" href="../shared/design-system.css">
   <link rel="stylesheet" href="../shared/styles.css?v=20260228b">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="../shared/motion-policy.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  
+
   <style>
-    body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    /* Custom adjustments for standalone modules */
-    .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
-    .module-nav a:hover { color: #fff; }
-    .quote-block {
-      background-color: rgba(15, 23, 42, 0.72);
-      border-radius: 0.85rem;
-      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.22);
+    :root {
+      --bg: #0c1222;
+      --bg-soft: #111a31;
+      --surface: rgba(16, 24, 45, 0.9);
+      --surface-2: rgba(22, 31, 58, 0.88);
+      --surface-3: rgba(18, 25, 48, 0.76);
+      --line: rgba(148, 163, 184, 0.18);
+      --line-strong: rgba(148, 163, 184, 0.3);
+      --ink: #e5e7eb;
+      --muted: #9ca3af;
+      --muted-strong: #cbd5e1;
+      --indigo: #8699ff;
+      --violet: #b19af8;
+      --cyan: #7bd5e8;
+      --emerald: #78d2a8;
+      --amber: #f3c36c;
+      --rose: #ef8aa4;
+      --rust: #b07b6e;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(134, 153, 255, 0.1), transparent 32%),
+        radial-gradient(circle at 86% 8%, rgba(243, 195, 108, 0.08), transparent 24%),
+        linear-gradient(180deg, #0a1020 0%, #0c1222 100%);
+      color: var(--ink);
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-padding-top: 6.75rem;
+    }
+
+    h1, h2, h3, .display-face {
+      font-family: "Playfair Display", serif;
+      letter-spacing: -0.03em;
+    }
+
+    .module-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(12, 18, 34, 0.86);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .module-nav a {
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      font-family: "JetBrains Mono", monospace;
+      text-decoration: none;
+    }
+
+    .module-nav a:hover {
+      color: #ffffff;
+    }
+
+    .hero-section {
+      position: relative;
+      min-height: auto;
+      padding: clamp(4rem, 6vw, 5rem) 1.5rem 3rem;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(134, 153, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(134, 153, 255, 0.08) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 88%);
+      pointer-events: none;
+      opacity: 0.38;
+    }
+
+    .hero-shell,
+    .section-shell {
+      position: relative;
+      max-width: 78rem;
+      margin: 0 auto;
+      min-width: 0;
+    }
+
+    .hero-kicker,
+    .section-kicker,
+    .source-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--muted-strong);
+      font-size: 0.76rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .hero-kicker::before,
+    .section-kicker::before,
+    .source-kicker::before {
+      content: "";
+      width: 2.75rem;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      max-width: 13ch;
+      margin: 1.5rem 0 1.25rem;
+      font-size: clamp(3.35rem, 7vw, 6rem);
+      line-height: 0.96;
+    }
+
+    .hero-lede {
+      max-width: 46rem;
+      font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+      line-height: 1.75;
+      color: var(--muted-strong);
+      overflow-wrap: anywhere;
+    }
+
+    .hero-intro {
+      display: block;
+    }
+
+    .hero-copy {
+      min-width: 0;
+      max-width: 56rem;
+    }
+
+    .hero-thesis-card p,
+    .section-thesis p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-frame,
+    .analysis-panel,
+    .source-group,
+    .data-block,
+    .response-card,
+    .signal-card,
+    .variable-tile,
+    .implication-card,
+    .scenario-card,
+    .bridge-panel,
+    .metric-block {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 1.4rem;
+      box-shadow: 0 16px 60px rgba(3, 7, 18, 0.22);
+    }
+
+    .hero-frame {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-top: 2.25rem;
+      padding: 1.15rem;
+      max-width: 58rem;
+    }
+
+    .hero-frame article {
+      border-radius: 1.18rem;
+      padding: 1.35rem 1.4rem;
+      background: linear-gradient(135deg, rgba(134, 153, 255, 0.18), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(134, 153, 255, 0.2);
+    }
+
+    .hero-frame h2,
+    .hero-frame h3,
+    .analysis-panel h3,
+    .response-card h3,
+    .data-block h3,
+    .bridge-panel h3,
+    .source-group h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+    }
+
+    .hero-frame p,
+    .analysis-panel p,
+    .response-card p,
+    .data-block p,
+    .bridge-panel p,
+    .source-group p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-thesis-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-thesis-card p {
+      font-size: 1.12rem;
+      line-height: 1.82;
+      color: #dbe4ff;
+    }
+
+    .hero-thesis-card strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .reading-spine {
+      margin-top: 2rem;
+      padding: 1.4rem;
+      border-radius: 1.55rem;
+      background:
+        linear-gradient(180deg, rgba(18, 27, 50, 0.92), rgba(10, 16, 32, 0.9)),
+        radial-gradient(circle at top right, rgba(243, 195, 108, 0.1), transparent 36%);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: 0 24px 80px rgba(3, 7, 18, 0.24);
+    }
+
+    .reading-bands {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .reading-band {
+      display: grid;
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+      min-width: 0;
+    }
+
+    .reading-band:first-of-type {
+      border-top: 0;
+      padding-top: 0.15rem;
+    }
+
+    .band-label {
+      padding-top: 0.18rem;
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .band-track {
+      display: grid;
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .spine-step {
+      position: relative;
+      padding: 0.85rem 0.9rem 0.95rem 1rem;
+      border-left: 2px solid var(--accent, rgba(255, 255, 255, 0.3));
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.9rem;
+      min-height: 6.2rem;
+      min-width: 0;
+    }
+
+    .spine-step::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 0.5px);
+      right: -0.95rem;
+      width: 0.95rem;
+      height: 1px;
+      background: rgba(148, 163, 184, 0.18);
+    }
+
+    .band-track .spine-step:last-child::after {
+      display: none;
+    }
+
+    .step-index {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: var(--accent, var(--muted-strong));
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .step-title {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #f8fafc;
+      font-size: 0.98rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .step-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .scroll-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 1.6rem;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .module-layout {
+      display: grid;
+      grid-template-columns: minmax(9rem, 11rem) minmax(0, 86rem);
+      gap: clamp(1.25rem, 2vw, 2.4rem);
+      width: calc(100% - clamp(1.25rem, 4vw, 4rem));
+      max-width: 104rem;
+      margin: clamp(1.5rem, 3vw, 2.4rem) auto 0;
+      padding: 0;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-outline {
+      position: sticky;
+      top: 6.35rem;
+    }
+
+    .module-outline__card {
+      padding: 0 0 0 0.7rem;
+      border-left: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .module-outline__label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: var(--muted-strong);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .module-outline__card nav {
+      display: grid;
+      gap: 0.18rem;
+    }
+
+    .module-outline__card a {
+      display: flex;
+      align-items: center;
+      gap: 0.46rem;
+      padding: 0.42rem 0.45rem;
+      border-radius: 0.62rem;
+      border: 1px solid transparent;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+      background: transparent;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease, border-color 180ms ease;
+    }
+
+    .module-outline__card a::before {
+      content: "";
+      width: 0.52rem;
+      height: 0.52rem;
+      flex: 0 0 0.52rem;
+      border-radius: 999px;
+      background: var(--outline-accent, var(--indigo));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--outline-accent, var(--indigo)) 14%, transparent);
+      opacity: 0.76;
+      transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .module-outline__card a:hover,
+    .module-outline__card a.is-active {
+      color: color-mix(in srgb, var(--outline-accent, var(--indigo)) 76%, #ffffff);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--outline-accent, var(--indigo)) 10%, transparent), rgba(255, 255, 255, 0.018));
+      border-color: color-mix(in srgb, var(--outline-accent, var(--indigo)) 24%, rgba(255,255,255,0.06));
+      transform: translateX(2px);
+    }
+
+    .module-outline__card a:hover::before,
+    .module-outline__card a.is-active::before {
+      opacity: 1;
+      transform: scale(1.18);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--outline-accent, var(--indigo)) 18%, transparent);
+    }
+
+    .module-outline__note {
+      margin: 0.75rem 0 0;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      color: var(--muted);
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .module-content {
+      min-width: 0;
+    }
+
+    .module-content .section-shell {
+      width: 100%;
+      max-width: 86rem;
+      margin: 0;
+    }
+
+    .content-section {
+      position: relative;
+      padding: clamp(2.8rem, 4.4vw, 4.15rem) 0;
+    }
+
+    .content-section.section-tinted {
+      background: linear-gradient(180deg, rgba(17, 26, 49, 0.26), rgba(12, 18, 34, 0));
+    }
+
+    .section-header {
+      max-width: 42rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header h2 {
+      margin: 1rem 0 0.85rem;
+      font-size: clamp(2.2rem, 4.2vw, 3.45rem);
+      line-height: 1.03;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .content-section.section-compute {
+      background:
+        radial-gradient(circle at 88% 18%, rgba(123, 213, 232, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(10, 16, 32, 0.26), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-energy {
+      background:
+        radial-gradient(circle at 12% 22%, rgba(177, 154, 248, 0.14), transparent 30%),
+        linear-gradient(180deg, rgba(14, 17, 36, 0.24), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-water {
+      background:
+        radial-gradient(circle at 84% 20%, rgba(176, 123, 110, 0.12), transparent 30%),
+        linear-gradient(180deg, rgba(20, 14, 16, 0.16), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-data {
+      background:
+        radial-gradient(circle at 16% 20%, rgba(243, 195, 108, 0.13), transparent 30%),
+        linear-gradient(180deg, rgba(22, 17, 10, 0.16), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-talent {
+      background:
+        radial-gradient(circle at 86% 18%, rgba(120, 210, 168, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(9, 21, 18, 0.14), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-efficiency {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(239, 138, 164, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(27, 12, 22, 0.16), rgba(12, 18, 34, 0));
+    }
+
+    .content-section.section-integration {
+      background:
+        radial-gradient(circle at 88% 20%, rgba(134, 153, 255, 0.14), transparent 28%),
+        linear-gradient(180deg, rgba(13, 17, 36, 0.18), rgba(12, 18, 34, 0));
+    }
+
+    .section-grid {
+      display: grid;
+      gap: clamp(1.4rem, 2.2vw, 2.4rem);
+      grid-template-columns: minmax(0, 0.92fr) minmax(24rem, 1.08fr);
+      align-items: start;
+      min-width: 0;
+    }
+
+    .section-content {
+      display: grid;
+      gap: 1rem;
+      max-width: 43rem;
+      min-width: 0;
+    }
+
+    .content-paragraph {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 1.03rem;
+      line-height: 1.88;
+      overflow-wrap: anywhere;
+    }
+
+    .section-thesis {
+      margin-top: 1rem;
+      padding: 1.15rem 1.2rem;
+      border-radius: 1.2rem;
+      background:
+        linear-gradient(135deg, rgba(134, 153, 255, 0.14), rgba(18, 27, 50, 0.9)),
+        rgba(16, 24, 45, 0.9);
+      border: 1px solid rgba(134, 153, 255, 0.18);
+      box-shadow: 0 18px 48px rgba(3, 7, 18, 0.18);
+    }
+
+    .section-thesis-inline {
+      margin: 0.75rem 0 1rem;
+      box-shadow: none;
+    }
+
+    .analysis-panel .section-thesis-inline p {
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+
+    .section-thesis p + p {
+      margin-top: 0.65rem;
+    }
+
+    .section-thesis strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .sovereignty-stack {
+      grid-column: 1 / -1;
+      margin-top: 1rem;
+      padding: 1.2rem;
+      background:
+        radial-gradient(circle at top right, rgba(123, 213, 232, 0.12), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(239, 138, 164, 0.1), transparent 38%),
+        linear-gradient(160deg, rgba(18, 27, 50, 0.96), rgba(9, 14, 26, 0.94));
+      border-color: rgba(148, 163, 184, 0.16);
+    }
+
+    .sovereignty-stack-grid {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .sovereignty-stack-row {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .sovereignty-stack-row.bottom {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: min(44rem, 100%);
+      margin: 0 auto;
+    }
+
+    .stack-band,
+    .stack-output {
+      position: relative;
+      padding: 0.95rem 1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      min-width: 0;
+      text-align: center;
+    }
+
+    .stack-band {
+      max-width: min(54rem, 100%);
+      margin: 0 auto;
+      background:
+        linear-gradient(135deg, rgba(134, 153, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(134, 153, 255, 0.2);
+    }
+
+    .stack-output {
+      max-width: min(32rem, 100%);
+      margin: 0 auto;
+      background:
+        linear-gradient(135deg, rgba(239, 138, 164, 0.18), rgba(255, 255, 255, 0.04)),
+        rgba(16, 24, 45, 0.92);
+      border-color: rgba(239, 138, 164, 0.24);
+      box-shadow: 0 12px 40px rgba(239, 138, 164, 0.12);
+    }
+
+    .stack-band strong,
+    .stack-output strong,
+    .stack-diagram-title {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--muted-strong);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .stack-diagram-title {
+      margin: 0 0 0.3rem;
+      color: #f8fafc;
+      font-size: 1rem;
+      line-height: 1.25;
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .stack-band p,
+    .stack-output p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.25rem;
+      color: var(--muted-strong);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .section-number {
+      min-width: 3.5rem;
+      padding: 0.9rem 0.8rem;
+      border-radius: 0.95rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .analysis-panel {
+      container-type: inline-size;
+      padding: 1.4rem;
+      min-width: 0;
+    }
+
+    .section-compute .analysis-panel,
+    .section-compute .signal-card,
+    .section-compute .policy-panel {
+      background:
+        linear-gradient(135deg, rgba(123, 213, 232, 0.12), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(123, 213, 232, 0.16);
+    }
+
+    .section-energy .analysis-panel,
+    .section-energy .response-card,
+    .section-energy .policy-panel {
+      background:
+        linear-gradient(135deg, rgba(177, 154, 248, 0.12), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(177, 154, 248, 0.18);
+    }
+
+    .section-water .analysis-panel {
+      background:
+        linear-gradient(135deg, rgba(176, 123, 110, 0.15), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(176, 123, 110, 0.22);
+    }
+
+    .section-talent .analysis-panel,
+    .section-talent .dilemma-grid article {
+      background:
+        linear-gradient(135deg, rgba(120, 210, 168, 0.12), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(120, 210, 168, 0.18);
+    }
+
+    .section-integration .analysis-panel,
+    .section-integration .bridge-panel {
+      background:
+        linear-gradient(135deg, rgba(134, 153, 255, 0.12), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(134, 153, 255, 0.18);
+    }
+
+    .section-compute .section-number,
+    .section-compute .section-tag { color: var(--cyan); }
+    .section-compute .section-number { background: rgba(123, 213, 232, 0.14); border-color: rgba(123, 213, 232, 0.2); }
+    .section-energy .section-number,
+    .section-energy .section-tag { color: var(--violet); }
+    .section-energy .section-number { background: rgba(177, 154, 248, 0.14); border-color: rgba(177, 154, 248, 0.2); }
+    .section-water .section-number,
+    .section-water .section-tag { color: var(--rust); }
+    .section-water .section-number { background: rgba(176, 123, 110, 0.14); border-color: rgba(176, 123, 110, 0.24); }
+    .section-data .section-number,
+    .section-data .section-tag { color: var(--amber); }
+    .section-data .section-number { background: rgba(243, 195, 108, 0.16); border-color: rgba(243, 195, 108, 0.24); }
+    .section-talent .section-number,
+    .section-talent .section-tag { color: var(--emerald); }
+    .section-talent .section-number { background: rgba(120, 210, 168, 0.16); border-color: rgba(120, 210, 168, 0.22); }
+    .section-efficiency .section-number,
+    .section-efficiency .section-tag { color: var(--rose); }
+    .section-efficiency .section-number { background: rgba(239, 138, 164, 0.16); border-color: rgba(239, 138, 164, 0.22); }
+    .section-integration .section-number,
+    .section-integration .section-tag { color: var(--indigo); }
+    .section-integration .section-number { background: rgba(134, 153, 255, 0.16); border-color: rgba(134, 153, 255, 0.22); }
+
+    .comparison-rows,
+    .implication-grid,
+    .signal-grid,
+    .source-grid,
+    .scenario-grid {
+      display: grid;
+      gap: 0.95rem;
+    }
+
+    .comparison-row,
+    .matrix-row,
+    .integration-row {
+      display: grid;
+      grid-template-columns: 10rem minmax(0, 1fr);
+      gap: 0.95rem;
+      padding: 0.95rem 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .comparison-row:first-of-type,
+    .matrix-row:first-of-type,
+    .integration-row:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .row-label {
+      color: var(--muted-strong);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .row-copy {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @container (max-width: 34rem) {
+      .comparison-row,
+      .matrix-row,
+      .integration-row {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+    }
+
+    .equation-panel {
+      container-type: inline-size;
+      padding: clamp(1.6rem, 3vw, 2.4rem);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(134, 153, 255, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(18, 27, 50, 0.96), rgba(10, 16, 32, 0.94));
+      border-color: rgba(134, 153, 255, 0.24);
+    }
+
+    .equation-head {
+      display: grid;
+      justify-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .equation-head .hero-kicker {
+      justify-content: center;
+    }
+
+    .equation-head p {
+      max-width: 52rem;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .equation {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.12em;
+      margin: 0;
+      padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 3vw, 2.4rem);
+      border-radius: 1.15rem;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+        rgba(8, 13, 26, 0.74);
+      border: 1px solid rgba(226, 232, 240, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 22px 70px rgba(3, 7, 18, 0.24);
+      font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+
+    .equation .a,
+    .equation .c,
+    .equation .e,
+    .equation .d,
+    .equation .t,
+    .equation .eta {
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .equation .a { color: #f8fafc; }
+    .equation .c { color: var(--cyan); }
+    .equation .e { color: var(--violet); }
+    .equation .d { color: var(--amber); }
+    .equation .t { color: var(--emerald); }
+    .equation .eta { color: var(--rose); }
+    .equation .faded {
+      color: #7b879c;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .equation .math-function {
+      color: #9aa6ba;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .variable-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+      gap: 0.9rem;
+      margin-top: 1.2rem;
+    }
+
+    .variable-tile {
+      padding: 1rem;
+      min-height: 11rem;
+      transition: border-color 220ms ease, transform 220ms ease;
+    }
+
+    .variable-tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .variable-tile strong,
+    .signal-card strong,
+    .metric-block strong,
+    .response-card strong,
+    .scenario-card strong {
+      display: block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+      color: var(--muted-strong);
+    }
+
+    .variable-glyph {
+      display: block;
+      margin-bottom: 0.55rem;
+      font-size: 2rem;
+      line-height: 1;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .variable-tile h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.02rem;
+    }
+
+    .clarification-grid,
+    .implication-grid {
+      margin-top: 1.2rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .formula-synthesis {
+      margin-top: 1.35rem;
+      padding: 1.4rem;
+      background:
+        linear-gradient(135deg, rgba(239, 138, 164, 0.1), rgba(16, 24, 45, 0.94)),
+        rgba(16, 24, 45, 0.92);
+      border-color: rgba(239, 138, 164, 0.18);
+    }
+
+    .formula-synthesis h3 {
+      margin-bottom: 0.85rem;
+    }
+
+    .implication-card,
+    .signal-card,
+    .scenario-card,
+    .metric-block {
+      padding: 1rem 1.05rem;
+    }
+
+    .signal-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+      margin-top: 1.3rem;
+    }
+
+    .signal-card p,
+    .implication-card p,
+    .scenario-card p,
+    .metric-block p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .process-ladder,
+    .response-ladder,
+    .technique-stack {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .process-step,
+    .technique-item {
+      position: relative;
+      padding: 1rem 1rem 1rem 1.2rem;
+      border-left: 2px solid var(--accent, rgba(255, 255, 255, 0.35));
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.9rem;
+    }
+
+    .process-step::after {
+      content: "";
+      position: absolute;
+      left: 0.55rem;
+      bottom: -0.9rem;
+      width: 1px;
+      height: 0.9rem;
+      background: rgba(148, 163, 184, 0.22);
+    }
+
+    .process-step:last-child::after {
+      display: none;
+    }
+
+    .process-step h3,
+    .technique-item h3 {
+      margin: 0 0 0.35rem;
+      font-family: "Inter", sans-serif;
+      font-size: 1rem;
+    }
+
+    .process-step p,
+    .technique-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .policy-panel {
+      container-type: inline-size;
+      margin-top: 1.2rem;
+      padding: 1.25rem;
+      border-radius: 1.2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .policy-update {
+      margin-top: 1rem;
+      background:
+        linear-gradient(135deg, rgba(123, 213, 232, 0.08), rgba(16, 24, 45, 0.94)),
+        rgba(16, 24, 45, 0.92);
+      border-color: rgba(123, 213, 232, 0.16);
+    }
+
+    .policy-update h3 {
+      margin: 0.55rem 0 0.85rem;
+      font-family: "Inter", sans-serif;
+      font-size: 1.02rem;
+    }
+
+    .diagram-block {
+      container-type: inline-size;
+      margin-top: 1.1rem;
+      padding: 1.1rem;
+      border-radius: 1.15rem;
+      background: rgba(8, 13, 26, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      overflow: hidden;
+    }
+
+    .wide-diagram {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
+    .diagram-block header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      margin-bottom: 0.9rem;
+    }
+
+    .diagram-block header h4,
+    .diagram-title {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 0.95rem;
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+    }
+
+    .diagram-block header span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .flow-diagram {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .chain-row,
+    .energy-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr) 2rem minmax(0, 1fr) 2rem minmax(0, 1fr);
+      gap: 0.55rem;
+      align-items: center;
+    }
+
+    .energy-flow {
+      grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr) 2rem minmax(0, 1fr);
+    }
+
+    .diagram-node {
+      position: relative;
+      min-height: 6.25rem;
+      padding: 0.9rem 0.95rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      background: rgba(255, 255, 255, 0.03);
+      min-width: 0;
+    }
+
+    .diagram-node strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--muted-strong);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .diagram-node h4,
+    .diagram-node-title {
+      margin: 0 0 0.3rem;
+      color: #f8fafc;
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+    }
+
+    .diagram-node p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+
+    .tone-cyan { border-color: rgba(123, 213, 232, 0.24); background: linear-gradient(135deg, rgba(123, 213, 232, 0.12), rgba(255, 255, 255, 0.03)); }
+    .tone-violet { border-color: rgba(177, 154, 248, 0.24); background: linear-gradient(135deg, rgba(177, 154, 248, 0.12), rgba(255, 255, 255, 0.03)); }
+    .tone-amber { border-color: rgba(243, 195, 108, 0.26); background: linear-gradient(135deg, rgba(243, 195, 108, 0.12), rgba(255, 255, 255, 0.03)); }
+    .tone-emerald { border-color: rgba(120, 210, 168, 0.24); background: linear-gradient(135deg, rgba(120, 210, 168, 0.12), rgba(255, 255, 255, 0.03)); }
+    .tone-rose { border-color: rgba(239, 138, 164, 0.24); background: linear-gradient(135deg, rgba(239, 138, 164, 0.12), rgba(255, 255, 255, 0.03)); }
+    .tone-rust { border-color: rgba(176, 123, 110, 0.28); background: linear-gradient(135deg, rgba(176, 123, 110, 0.12), rgba(255, 255, 255, 0.03)); }
+
+    .connector-track {
+      position: relative;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.18), rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0.18));
+      overflow: hidden;
+    }
+
+    .connector-track.vertical {
+      width: 2px;
+      height: 1.1rem;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(148, 163, 184, 0.18), rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0.18));
+    }
+
+    .connector-pulse {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 999px;
+      transform: translate(-10%, -50%);
+      box-shadow: 0 0 18px currentColor;
+    }
+
+    .connector-track.vertical .connector-pulse {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -10%);
+    }
+
+    .connector-pulse.tone-cyan { background: var(--cyan); color: var(--cyan); }
+    .connector-pulse.tone-violet { background: var(--violet); color: var(--violet); }
+    .connector-pulse.tone-amber { background: var(--amber); color: var(--amber); }
+    .connector-pulse.tone-emerald { background: var(--emerald); color: var(--emerald); }
+    .connector-pulse.tone-rose { background: var(--rose); color: var(--rose); }
+
+    @container (max-width: 38rem) {
+      .chain-row,
+      .energy-flow,
+      .data-map-row,
+      .data-map-row.final-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .chain-row .connector-track,
+      .energy-flow .connector-track,
+      .data-map-row .connector-track {
+        justify-self: center;
+        width: 2px;
+        height: 1.1rem;
+        background: linear-gradient(180deg, rgba(148, 163, 184, 0.18), rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0.18));
+      }
+
+      .chain-row .connector-pulse,
+      .energy-flow .connector-pulse,
+      .data-map-row .connector-pulse {
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -10%);
+      }
+    }
+
+    .diagram-caption {
+      margin-top: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+
+    .policy-grid,
+    .data-grid {
+      display: grid;
+      gap: 0.95rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .policy-grid article,
+    .data-grid article {
+      padding: 1rem 1.05rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .policy-grid h3,
+    .data-grid h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.98rem;
+      font-family: "Inter", sans-serif;
+    }
+
+    .policy-grid p,
+    .data-grid p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .response-card {
+      padding: 1rem 1.05rem;
+    }
+
+    .response-card strong {
+      color: var(--muted-strong);
+      margin-bottom: 0.35rem;
+    }
+
+    .water-grid {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
+      align-items: start;
+    }
+
+    .data-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .data-visual {
+      display: grid;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .data-block {
+      padding: 1.1rem 1.15rem;
+      min-width: 0;
+    }
+
+    .data-block:nth-child(1) {
+      background: linear-gradient(135deg, rgba(243, 195, 108, 0.14), rgba(16, 24, 45, 0.9));
+      border-color: rgba(243, 195, 108, 0.22);
+    }
+
+    .data-block:nth-child(2) {
+      background: linear-gradient(135deg, rgba(177, 154, 248, 0.14), rgba(16, 24, 45, 0.9));
+      border-color: rgba(177, 154, 248, 0.2);
+    }
+
+    .data-block:nth-child(3) {
+      background: linear-gradient(135deg, rgba(120, 210, 168, 0.14), rgba(16, 24, 45, 0.9));
+      border-color: rgba(120, 210, 168, 0.2);
+    }
+
+    .data-block:nth-child(4) {
+      background: linear-gradient(135deg, rgba(239, 138, 164, 0.12), rgba(16, 24, 45, 0.9));
+      border-color: rgba(239, 138, 164, 0.2);
+    }
+
+    .data-governance-map {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .data-map-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .data-map-row.final-row {
+      grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .data-block strong {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.6rem;
+      color: var(--muted-strong);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .example-line {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .talent-chart {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .talent-bar {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .talent-bar header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--muted-strong);
+      font-size: 0.96rem;
+    }
+
+    .talent-track {
+      height: 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .talent-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(120, 210, 168, 0.92), rgba(123, 213, 232, 0.92));
+    }
+
+    .talent-note {
+      margin-top: 0.8rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .dilemma-grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .dilemma-grid article {
+      padding: 1rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .dilemma-grid h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.98rem;
+      font-family: "Inter", sans-serif;
+    }
+
+    .dilemma-grid p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .efficiency-grid {
+      display: grid;
+      gap: clamp(1.25rem, 2vw, 2rem);
+      grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 1.08fr);
+      align-items: start;
+      min-width: 0;
+    }
+
+    .efficiency-card {
+      padding: 1.35rem;
+      border-radius: 1.4rem;
+      background: rgba(20, 27, 50, 0.92);
+      border: 1px solid rgba(239, 138, 164, 0.2);
+      box-shadow: 0 18px 50px rgba(3, 7, 18, 0.2);
+    }
+
+    .cost-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.95rem;
+      margin-top: 1rem;
+    }
+
+    .cost-compare article {
+      padding: 1rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      text-align: left;
+    }
+
+    .cost-compare .price {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #ffffff;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 1.55rem;
+      line-height: 1.1;
+    }
+
+    .scenario-grid {
+      margin-top: 1.2rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .integration-grid {
+      display: grid;
+      gap: clamp(1.25rem, 2vw, 2rem);
+      grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 1.08fr);
+      align-items: start;
+    }
+
+    .integration-table,
+    .bridge-panel {
+      container-type: inline-size;
+      padding: 1.4rem;
+    }
+
+    .integration-row .row-copy strong,
+    .bridge-panel strong {
+      display: inline;
+      font-family: inherit;
+      font-size: inherit;
+      letter-spacing: normal;
+      text-transform: none;
+      color: #f8fafc;
+      margin: 0;
+    }
+
+    .policy-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .policy-preview span {
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      color: var(--muted-strong);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .sources-section {
+      position: relative;
+      padding: clamp(3.4rem, 5vw, 4.25rem) 0 4.5rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(7, 12, 24, 0.8);
+    }
+
+    .sources-lede {
+      max-width: 44rem;
+      margin: 1rem 0 2rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .source-grid {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .source-group {
+      display: grid;
+      grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+      column-gap: clamp(1rem, 2vw, 2rem);
+      padding: 1.25rem;
+    }
+
+    .source-group:nth-child(1) {
+      background:
+        linear-gradient(135deg, rgba(134, 153, 255, 0.14), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(134, 153, 255, 0.18);
+    }
+
+    .source-group:nth-child(2) {
+      background:
+        linear-gradient(135deg, rgba(177, 154, 248, 0.14), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(177, 154, 248, 0.2);
+    }
+
+    .source-group:nth-child(3) {
+      background:
+        linear-gradient(135deg, rgba(243, 195, 108, 0.14), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(243, 195, 108, 0.2);
+    }
+
+    .source-group:nth-child(4) {
+      background:
+        linear-gradient(135deg, rgba(120, 210, 168, 0.14), rgba(16, 24, 45, 0.92)),
+        rgba(16, 24, 45, 0.9);
+      border-color: rgba(120, 210, 168, 0.2);
+    }
+
+    .source-group:nth-child(1) .group-kicker { color: var(--indigo); }
+    .source-group:nth-child(2) .group-kicker { color: var(--violet); }
+    .source-group:nth-child(3) .group-kicker { color: var(--amber); }
+    .source-group:nth-child(4) .group-kicker { color: var(--emerald); }
+
+    .source-group h3 {
+      grid-column: 1;
+      margin-bottom: 0.85rem;
+      font-size: 1rem;
+      font-family: "Inter", sans-serif;
+    }
+
+    .source-group .group-kicker {
+      display: block;
+      grid-column: 1;
+      margin-bottom: 0.5rem;
+      color: var(--muted-strong);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .source-item {
+      display: block;
+      grid-column: 2;
+      padding: 0.95rem 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      text-decoration: none;
+      transition: color 180ms ease, border-color 180ms ease;
+    }
+
+    .source-item:first-of-type {
+      border-top: 0;
+      padding-top: 0.1rem;
+    }
+
+    .source-item strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #e5e7eb;
+      font-size: 0.98rem;
+      line-height: 1.45;
+      font-family: "Inter", sans-serif;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .source-item span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.94rem;
+    }
+
+    .source-item:hover {
+      border-color: rgba(134, 153, 255, 0.4);
+    }
+
+    .source-item:hover strong {
+      color: #ffffff;
+    }
+
+    .section-compute .diagram-block,
+    .section-compute .diagram-node,
+    .section-compute .diagram-caption {
+      color: inherit;
+    }
+
+    @media (max-width: 1100px) {
+      .reading-band,
+      .section-grid,
+      .water-grid,
+      .efficiency-grid,
+      .integration-grid,
+      .hero-frame {
+        grid-template-columns: 1fr;
+      }
+
+      .module-layout {
+        max-width: 100%;
+        grid-template-columns: minmax(4.85rem, 5.65rem) minmax(0, 1fr);
+        gap: clamp(0.75rem, 2vw, 1.25rem);
+        padding-left: clamp(0.65rem, 2vw, 1rem);
+        padding-right: clamp(0.65rem, 2vw, 1rem);
+      }
+
+      .band-label {
+        padding-top: 0;
+      }
+
+      .equation-head {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .module-outline {
+        position: sticky;
+        top: 4.85rem;
+        z-index: 20;
+      }
+
+      .module-outline__card {
+        padding: 0.55rem;
+        border-left: 0;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 0.95rem;
+        background: rgba(12, 18, 34, 0.9);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 18px 50px rgba(3, 7, 18, 0.22);
+        max-height: calc(100vh - 6.25rem);
+        overflow-y: auto;
+      }
+
+      .module-outline__label,
+      .module-outline__note {
+        display: none;
+      }
+
+      .module-outline__card nav {
+        grid-template-columns: 1fr;
+        gap: 0.32rem;
+      }
+
+      .module-outline__card a {
+        justify-content: center;
+        min-height: 2.55rem;
+        padding: 0.45rem 0.35rem;
+        gap: 0.32rem;
+        font-size: 0;
+      }
+
+      .module-outline__card a::before {
+        width: 0.42rem;
+        height: 0.42rem;
+        flex-basis: 0.42rem;
+      }
+
+      .module-outline__card a::after {
+        content: attr(data-short);
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", monospace;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .variable-strip,
+      .signal-grid,
+      .clarification-grid,
+      .implication-grid,
+      .scenario-grid,
+      .policy-grid,
+      .dilemma-grid,
+      .source-grid,
+      .cost-compare {
+        grid-template-columns: 1fr;
+      }
+
+      .band-track {
+        grid-template-columns: 1fr;
+      }
+
+      .data-map-row {
+        grid-template-columns: 1fr;
+      }
+
+      .spine-step::after {
+        display: none;
+      }
+
+      .source-group {
+        grid-template-columns: 1fr;
+      }
+
+      .source-item {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .module-nav {
+        padding: 0.95rem 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+        align-items: start;
+      }
+
+      .module-nav a {
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
+      }
+
+      .module-nav a:last-child {
+        justify-self: end;
+      }
+
+      .module-layout {
+        grid-template-columns: minmax(4.35rem, 4.85rem) minmax(0, 1fr);
+        gap: 0.7rem;
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+      }
+
+      .module-outline__card {
+        padding: 0.45rem;
+      }
+
+      .hero-section,
+      .content-section,
+      .sources-section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .module-content .content-section,
+      .module-content .sources-section {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .comparison-row,
+      .matrix-row,
+      .integration-row,
+      .reading-band,
+      .sovereignty-stack-row {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-row,
+      .matrix-row,
+      .integration-row {
+        gap: 0.45rem;
+      }
+
+      .equation {
+        font-size: 2rem;
+      }
+
+      .sovereignty-stack-row.bottom,
+      .stack-band,
+      .stack-output {
+        max-width: none;
+      }
+
+      .hero-title {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+        max-width: 8ch;
+      }
+
+      .hero-lede {
+        font-size: 1rem;
+        line-height: 1.72;
+      }
+
     }
   </style>
 </head>
 <body>
   <div class="module-nav">
-    <a href="../index.html#network">← Back to Hub</a>
-    <a href="module-06.html">Next: Module 06 →</a>
+    <a href="../index.html#network">&larr; Back to Hub</a>
+    <a href="module-06.html">Next: Module 06 &rarr;</a>
   </div>
-  
+
   <main>
-<!-- Week 2 Part 1: AI Makes Sovereignty Industrial Again (The Production Function) -->
-<section id="week2-part1" class="relative w-full bg-slate-950 overflow-hidden">
-  
-  <!-- Hero Section -->
-  <div class="hero-section relative min-h-screen flex items-center justify-center px-6 py-20">
-    <!-- Background Gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-indigo-950/30 to-slate-950"></div>
-    
-    <!-- Animated Grid Background -->
-    <div class="absolute inset-0 opacity-20">
-      <div class="absolute inset-0" style="background-image: linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px); background-size: 60px 60px;"></div>
-    </div>
-    
-    <!-- Floating Elements -->
-    <div class="absolute top-20 left-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl floating-element"></div>
-    <div class="absolute bottom-40 right-20 w-48 h-48 bg-violet-500/10 rounded-full blur-3xl floating-element"></div>
-    <div class="absolute top-1/3 right-1/4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl floating-element"></div>
-    
-    <div class="relative z-10 max-w-5xl mx-auto text-center">
-      <!-- Week Badge -->
-      <div class="week-badge inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/20 border border-indigo-500/30 rounded-full mb-8">
-        <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i>
-        <span class="text-indigo-300 text-sm font-medium tracking-wider uppercase">Week 2</span>
-      </div>
-      
-      <!-- Main Title -->
-      <h1 class="hero-title text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-        <span class="block">AI Makes Sovereignty</span>
-        <span class="block bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">Industrial Again</span>
-      </h1>
-      
-      <!-- Subtitle -->
-      <p class="hero-subtitle text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-12">
-        The Production Function of AI Power
-      </p>
-      
-      <!-- Key Insight Card -->
-      <div class="hero-insight max-w-2xl mx-auto bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center">
-            <i data-lucide="lightbulb" class="w-6 h-6 text-indigo-400"></i>
-          </div>
-          <div class="text-left">
-            <p class="text-slate-300 text-lg leading-relaxed italic">
-              "The production function is back. AI models are not 'just code'—they are the output of an industrial pipeline requiring compute, energy, data, talent, and algorithmic efficiency."
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 scroll-indicator">
-      <span class="text-slate-500 text-sm">Scroll to explore</span>
-      <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500"></i>
-    </div>
-  </div>
-
-  <!-- Section 1: From Software to Sovereignty -->
-  <div class="content-section relative px-6 py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <!-- Left: Content -->
-        <div class="section-content">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold">01</span>
-            </div>
-            <span class="text-indigo-400 font-medium tracking-wider uppercase text-sm">The Paradigm Shift</span>
-          </div>
-          
-          <h2 class="text-4xl font-bold text-white mb-6">From "Software" to "Sovereignty"</h2>
-          
-          <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-            <p class="content-paragraph">
-              For decades, the tech industry celebrated the dematerialization of value creation. Software, we were told, "eats the world"—transforming heavy industry into lightweight code that could be copied infinitely at near-zero marginal cost.
-            </p>
-            <p class="content-paragraph">
-              AI disrupts this narrative. The production function—the economic relationship between inputs and outputs—has returned with a vengeance. Building frontier AI systems requires massive physical infrastructure: specialized semiconductors, gigawatts of electricity, curated datasets, and elite human talent.
-            </p>
-            <p class="content-paragraph">
-              Paul Romer's endogenous growth theory takes on new relevance: non-rival ideas (algorithms, architectures) still require rival inputs (chips, power, data centers) to generate value. The AI revolution is industrial in nature.
-            </p>
-          </div>
-          
-          <!-- Takeaway Block -->
-          <div class="quote-block mt-8 pl-6 border-l-4 border-indigo-500">
-            <p class="text-xl text-white mb-3">
-              Ideas are non-rival, but frontier AI capability still depends on rival inputs: compute, energy, data, talent, and institutions.
-            </p>
-            <cite class="text-slate-400 text-sm">Production-function baseline after Paul Romer</cite>
-          </div>
-        </div>
-        
-        <!-- Right: Visual -->
-        <div class="section-visual relative">
-          <div class="relative bg-slate-900/80 border border-slate-700/50 rounded-2xl p-8">
-            <h3 class="text-lg font-semibold text-white mb-6 text-center">The Shift in Production</h3>
-            
-            <!-- Before/After Comparison -->
-            <div class="space-y-6">
-              <!-- Traditional Software -->
-              <div class="comparison-card bg-slate-800/50 rounded-xl p-6 border border-slate-700/50">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center">
-                    <i data-lucide="code" class="w-5 h-5 text-slate-400"></i>
-                  </div>
-                  <span class="text-slate-300 font-medium">Traditional Software</span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Code</span>
-                  <span class="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Developer</span>
-                  <span class="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Laptop</span>
-                  <span class="px-3 py-1 bg-emerald-500/20 rounded-full text-xs text-emerald-400">Low Capital</span>
-                </div>
-              </div>
-              
-              <!-- Arrow -->
-              <div class="flex justify-center">
-                <i data-lucide="arrow-down" class="w-6 h-6 text-indigo-500"></i>
-              </div>
-              
-              <!-- AI Systems -->
-              <div class="comparison-card bg-gradient-to-br from-indigo-900/30 to-violet-900/30 rounded-xl p-6 border border-indigo-500/30">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center">
-                    <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i>
-                  </div>
-                  <span class="text-white font-medium">AI Systems</span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-indigo-500/20 rounded-full text-xs text-indigo-300">Compute</span>
-                  <span class="px-3 py-1 bg-violet-500/20 rounded-full text-xs text-violet-300">Energy</span>
-                  <span class="px-3 py-1 bg-cyan-500/20 rounded-full text-xs text-cyan-300">Data</span>
-                  <span class="px-3 py-1 bg-amber-500/20 rounded-full text-xs text-amber-300">Talent</span>
-                  <span class="px-3 py-1 bg-rose-500/20 rounded-full text-xs text-rose-300">$100M-500M</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 2: The AI Production Function Formula -->
-  <div class="content-section relative px-6 py-24 bg-gradient-to-b from-slate-950 to-indigo-950/20">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-cyan-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold">02</span>
-          </div>
-          <span class="text-violet-400 font-medium tracking-wider uppercase text-sm">The Formula</span>
-        </div>
-        <h2 class="text-4xl font-bold text-white mb-4">The AI Production Function</h2>
-        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-          A mathematical framework for understanding what it takes to build frontier AI capabilities
-        </p>
-      </div>
-      
-      <!-- Formula Display -->
-      <div class="formula-container max-w-4xl mx-auto mb-16">
-        <div class="relative bg-slate-900/90 border border-indigo-500/30 rounded-3xl p-12 overflow-hidden">
-          <!-- Glow Effect -->
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-          
-          <div class="relative z-10 text-center">
-            <div class="formula-main text-4xl md:text-6xl font-bold text-white mb-8 font-mono">
-              <span class="text-indigo-400">A</span>
-              <span class="text-slate-500">=</span>
-              <span class="text-slate-300">f(</span><span class="text-cyan-400">C</span><span class="text-slate-500">,</span>
-              <span class="text-violet-400">E</span><span class="text-slate-500">,</span>
-              <span class="text-amber-400">D</span><span class="text-slate-300">)</span>
-              <span class="text-slate-500">·</span>
-              <span class="text-emerald-400">T</span>
-              <span class="text-slate-500">·</span>
-              <span class="text-rose-400">η</span>
-            </div>
-            
-            <p class="text-slate-400 text-lg mb-8">Where AI capability is a function of five critical inputs</p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Variable Cards Grid -->
-      <div class="variables-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Compute -->
-        <div class="variable-card group bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <i data-lucide="cpu" class="w-7 h-7 text-cyan-400"></i>
-            </div>
-            <div>
-              <span class="text-3xl font-bold text-cyan-400 font-mono">C</span>
-              <span class="block text-slate-400 text-sm">Compute</span>
-            </div>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Chips, clusters, data centers. The physical silicon that processes AI workloads.
-          </p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-cyan-400">
-            <i data-lucide="trending-up" class="w-4 h-4"></i>
-            <span>Capital Moat</span>
-          </div>
-        </div>
-        
-        <!-- Energy -->
-        <div class="variable-card group bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 hover:border-violet-500/50 transition-all duration-300">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-violet-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <i data-lucide="zap" class="w-7 h-7 text-violet-400"></i>
-            </div>
-            <div>
-              <span class="text-3xl font-bold text-violet-400 font-mono">E</span>
-              <span class="block text-slate-400 text-sm">Energy</span>
-            </div>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Electricity, grid capacity, cooling. AI runs on power—lots of it.
-          </p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-violet-400">
-            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-            <span>Strategic Friction</span>
-          </div>
-        </div>
-        
-        <!-- Data -->
-        <div class="variable-card group bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 hover:border-amber-500/50 transition-all duration-300">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <i data-lucide="database" class="w-7 h-7 text-amber-400"></i>
-            </div>
-            <div>
-              <span class="text-3xl font-bold text-amber-400 font-mono">D</span>
-              <span class="block text-slate-400 text-sm">Data</span>
-            </div>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Access, rights, freshness. High-quality training data is becoming enclosed.
-          </p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-amber-400">
-            <i data-lucide="lock" class="w-4 h-4"></i>
-            <span>Controlled Assets</span>
-          </div>
-        </div>
-        
-        <!-- Talent -->
-        <div class="variable-card group bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 hover:border-emerald-500/50 transition-all duration-300">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <i data-lucide="users" class="w-7 h-7 text-emerald-400"></i>
-            </div>
-            <div>
-              <span class="text-3xl font-bold text-emerald-400 font-mono">T</span>
-              <span class="block text-slate-400 text-sm">Talent</span>
-            </div>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Researchers, engineers, architects. The human bottleneck in AI development.
-          </p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-emerald-400">
-            <i data-lucide="globe" class="w-4 h-4"></i>
-            <span>Global Competition</span>
-          </div>
-        </div>
-        
-        <!-- Efficiency -->
-        <div class="variable-card group bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 hover:border-rose-500/50 transition-all duration-300 md:col-span-2 lg:col-span-2">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-14 h-14 bg-rose-500/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-              <i data-lucide="sparkles" class="w-7 h-7 text-rose-400"></i>
-            </div>
-            <div>
-              <span class="text-3xl font-bold text-rose-400 font-mono">η</span>
-              <span class="block text-slate-400 text-sm">Efficiency (Eta)</span>
-            </div>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed">
-            Algorithmic innovations, architectural improvements, training optimizations. The counter-force that can multiply output without multiplying inputs. Mixture-of-Experts, distillation, and other techniques that challenge the capital-intensive paradigm.
-          </p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-rose-400">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-            <span>The Disruptor</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 3: Compute - The Capital Moat -->
-  <div class="content-section relative px-6 py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16">
-        <!-- Left: Content -->
-        <div class="section-content">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold">03</span>
-            </div>
-            <span class="text-cyan-400 font-medium tracking-wider uppercase text-sm">Variable C</span>
-          </div>
-          
-          <h2 class="text-4xl font-bold text-white mb-2">Compute</h2>
-          <p class="text-cyan-400 text-xl mb-6">The Capital Moat</p>
-          
-          <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-            <p class="content-paragraph">
-              Compute has become the primary gatekeeper of AI capability. Training a frontier model requires tens of thousands of specialized AI accelerators running in parallel for months—a capital expenditure that runs into the hundreds of millions of dollars.
-            </p>
-            <p class="content-paragraph">
-              The compute stack is dominated by two critical chokepoints: NVIDIA controls over 80% of the AI accelerator market, while TSMC manufactures approximately 90% of the world's most advanced logic chips. This creates a dual monopoly that shapes the geopolitical landscape of AI development.
-            </p>
-          </div>
-          
-          <!-- Key Stats -->
-          <div class="stats-grid grid grid-cols-2 gap-4 mt-8">
-            <div class="stat-card bg-slate-900/60 border border-slate-700/50 rounded-xl p-5">
-              <div class="text-3xl font-bold text-cyan-400 mb-1">>80%</div>
-              <div class="text-slate-400 text-sm">NVIDIA Market Share</div>
-            </div>
-            <div class="stat-card bg-slate-900/60 border border-slate-700/50 rounded-xl p-5">
-              <div class="text-3xl font-bold text-cyan-400 mb-1">~90%</div>
-              <div class="text-slate-400 text-sm">TSMC Advanced Chips</div>
-            </div>
-            <div class="stat-card bg-slate-900/60 border border-slate-700/50 rounded-xl p-5">
-              <div class="text-3xl font-bold text-cyan-400 mb-1">$100-500M</div>
-              <div class="text-slate-400 text-sm">Training Run Cost</div>
-            </div>
-            <div class="stat-card bg-slate-900/60 border border-slate-700/50 rounded-xl p-5">
-              <div class="text-3xl font-bold text-cyan-400 mb-1">10K+</div>
-              <div class="text-slate-400 text-sm">GPUs per Cluster</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right: Visual -->
-        <div class="section-visual">
-          <div class="relative bg-slate-900/80 border border-slate-700/50 rounded-2xl p-8">
-            <h3 class="text-lg font-semibold text-white mb-6">The Frontier System Stack</h3>
-            
-            <!-- Stack Visualization -->
-            <div class="space-y-3">
-              <div class="stack-layer flex items-center gap-4 bg-gradient-to-r from-cyan-900/40 to-cyan-800/20 border border-cyan-500/30 rounded-xl p-4">
-                <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="box" class="w-6 h-6 text-cyan-400"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-white font-medium">AI Accelerators</div>
-                  <div class="text-cyan-400 text-sm">NVIDIA H100/H200, AMD MI300</div>
-                </div>
-                <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400"></i>
-              </div>
-              
-              <div class="stack-layer flex items-center gap-4 bg-gradient-to-r from-violet-900/40 to-violet-800/20 border border-violet-500/30 rounded-xl p-4">
-                <div class="w-12 h-12 bg-violet-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="layers" class="w-6 h-6 text-violet-400"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-white font-medium">HBM Memory</div>
-                  <div class="text-violet-400 text-sm">SK Hynix, Samsung, Micron</div>
-                </div>
-                <i data-lucide="check-circle" class="w-5 h-5 text-violet-400"></i>
-              </div>
-              
-              <div class="stack-layer flex items-center gap-4 bg-gradient-to-r from-amber-900/40 to-amber-800/20 border border-amber-500/30 rounded-xl p-4">
-                <div class="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="network" class="w-6 h-6 text-amber-400"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-white font-medium">Networking</div>
-                  <div class="text-amber-400 text-sm">InfiniBand, NVLink, Ethernet</div>
-                </div>
-                <i data-lucide="check-circle" class="w-5 h-5 text-amber-400"></i>
-              </div>
-              
-              <div class="stack-layer flex items-center gap-4 bg-gradient-to-r from-emerald-900/40 to-emerald-800/20 border border-emerald-500/30 rounded-xl p-4">
-                <div class="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="thermometer-snowflake" class="w-6 h-6 text-emerald-400"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-white font-medium">Cooling Systems</div>
-                  <div class="text-emerald-400 text-sm">Liquid cooling, immersion</div>
-                </div>
-                <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
-              </div>
-            </div>
-            
-            <!-- Takeaway -->
-            <div class="mt-6 p-4 bg-slate-800/50 rounded-xl border-l-4 border-cyan-500">
-              <p class="text-slate-300 text-sm">
-                Strategic takeaway: restricting access to frontier chips has become a primary tool of AI geopolitics.
+    <section id="week2-part1" class="relative">
+      <div class="hero-section">
+        <div class="hero-shell">
+          <div class="hero-intro">
+            <div class="hero-copy">
+              <div class="hero-kicker">Week 2 / Part 1</div>
+              <h1 class="hero-title">AI Makes Sovereignty Industrial Again</h1>
+              <p class="hero-lede">
+                Frontier AI is not just software. It is an industrial pipeline built on rival inputs: compute, energy, data, talent, and the institutions that can coordinate them at scale.
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Section 4: Energy -->
-  <div class="content-section relative px-6 py-24 bg-gradient-to-b from-slate-950 to-violet-950/20">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16">
-        <!-- Left: Visual -->
-        <div class="section-visual order-2 lg:order-1">
-          <div class="relative bg-slate-900/80 border border-slate-700/50 rounded-2xl p-8">
-            <h3 class="text-lg font-semibold text-white mb-6">Big Tech Nuclear Pivot</h3>
-            
-            <!-- Nuclear Deals -->
-            <div class="space-y-4">
-              <div class="energy-deal bg-gradient-to-r from-blue-900/30 to-blue-800/10 border border-blue-500/30 rounded-xl p-5">
-                <div class="flex items-center gap-3 mb-3">
-                  <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                    <i data-lucide="building-2" class="w-5 h-5 text-blue-400"></i>
-                  </div>
-                  <div>
-                    <div class="text-white font-medium">Microsoft</div>
-                    <div class="text-blue-400 text-sm">Three Mile Island</div>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-slate-400 text-sm">20-year PPA</span>
-                  <span class="text-blue-400 font-mono font-bold">$110-115/MWh</span>
-                </div>
-              </div>
-              
-              <div class="energy-deal bg-gradient-to-r from-red-900/30 to-red-800/10 border border-red-500/30 rounded-xl p-5">
-                <div class="flex items-center gap-3 mb-3">
-                  <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
-                    <i data-lucide="search" class="w-5 h-5 text-red-400"></i>
-                  </div>
-                  <div>
-                    <div class="text-white font-medium">Google</div>
-                    <div class="text-red-400 text-sm">Kairos Power</div>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-slate-400 text-sm">SMR Deployment</span>
-                  <span class="text-red-400 font-mono font-bold">500 MW by 2035</span>
-                </div>
-              </div>
-              
-              <div class="energy-deal bg-gradient-to-r from-amber-900/30 to-amber-800/10 border border-amber-500/30 rounded-xl p-5">
-                <div class="flex items-center gap-3 mb-3">
-                  <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-amber-400"></i>
-                  </div>
-                  <div>
-                    <div class="text-white font-medium">Amazon</div>
-                    <div class="text-amber-400 text-sm">Susquehanna</div>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-slate-400 text-sm">Nuclear PPA</span>
-                  <span class="text-amber-400 font-mono font-bold">Blocked by FERC</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Stranded Intelligence -->
-            <div class="mt-6 p-4 bg-violet-900/20 rounded-xl border border-violet-500/30">
-              <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="alert-circle" class="w-5 h-5 text-violet-400"></i>
-                <span class="text-violet-300 font-medium">Stranded Intelligence</span>
-              </div>
-              <p class="text-slate-400 text-sm">
-                GPUs sitting idle due to power constraints—capital deployed but capability unrealized.
+          <div class="hero-frame hero-frame-panel">
+            <article class="hero-thesis-card">
+              <h2>Core thesis</h2>
+              <p>
+                <strong>What scales is not the idea alone.</strong> Frontier AI becomes strategic where states and firms can assemble the system that turns ideas into training runs, inference fleets, and durable deployment.
               </p>
-            </div>
+            </article>
           </div>
-        </div>
-        
-        <!-- Right: Content -->
-        <div class="section-content order-1 lg:order-2">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold">04</span>
-            </div>
-            <span class="text-violet-400 font-medium tracking-wider uppercase text-sm">Variable E</span>
-          </div>
-          
-          <h2 class="text-4xl font-bold text-white mb-2">Energy</h2>
-          <p class="text-violet-400 text-xl mb-6">"AI Runs on Electricity"</p>
-          
-          <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-            <p class="content-paragraph">
-              Power has emerged as the binding constraint on AI expansion. A single large training cluster can consume as much electricity as a small city. Data center power demand is projected to grow 160% by 2030, creating intense competition for grid capacity.
-            </p>
-            <p class="content-paragraph">
-              This scarcity has triggered grid moratoriums in key markets: Northern Virginia—the world's largest data center hub—has paused new connections. Ireland, another major hub, has imposed similar restrictions. The result is "stranded intelligence": GPUs deployed but unable to run at capacity due to power limitations.
-            </p>
-            <p class="content-paragraph">
-              Big Tech's response has been dramatic: a pivot to nuclear energy. Microsoft signed a 20-year power purchase agreement to restart Three Mile Island. Google partnered with Kairos Power for 500 MW of small modular reactors by 2035. These deals, at $110-115/MWh, represent a 3-4x premium over conventional power—testament to how critical energy has become.
-            </p>
-          </div>
-          
-          <!-- Grid Moratoriums -->
-          <div class="mt-8 p-5 bg-slate-900/60 border border-slate-700/50 rounded-xl">
-            <h4 class="text-white font-medium mb-3 flex items-center gap-2">
-              <i data-lucide="map-pin" class="w-5 h-5 text-violet-400"></i>
-              Grid Moratoriums
-            </h4>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1.5 bg-violet-500/20 rounded-lg text-violet-300 text-sm">Northern Virginia</span>
-              <span class="px-3 py-1.5 bg-violet-500/20 rounded-lg text-violet-300 text-sm">Ireland</span>
-              <span class="px-3 py-1.5 bg-violet-500/20 rounded-lg text-violet-300 text-sm">Singapore</span>
-              <span class="px-3 py-1.5 bg-violet-500/20 rounded-lg text-violet-300 text-sm">Amsterdam</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Section 5: Data -->
-  <div class="content-section relative px-6 py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16">
-        <!-- Left: Content -->
-        <div class="section-content">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold">05</span>
-            </div>
-            <span class="text-amber-400 font-medium tracking-wider uppercase text-sm">Variable D</span>
-          </div>
-          
-          <h2 class="text-4xl font-bold text-white mb-2">Data</h2>
-          <p class="text-amber-400 text-xl mb-6">From Free Scraping to Controlled Assets</p>
-          
-          <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-            <p class="content-paragraph">
-              The era of free, unrestricted data scraping is ending. High-quality training data—particularly code repositories, textbooks, and academic papers—has become a strategic resource subject to enclosure and monetization.
+          <div class="reading-spine">
+            <div class="source-kicker">Reading Spine</div>
+            <p class="sources-lede">
+              Part 1 moves from a conceptual reframing of AI power to the rival inputs that constrain it, then to the institutional logic that pushes the next module toward industrial policy.
             </p>
-            <p class="content-paragraph">
-              Platforms are erecting barriers: paywalls, API pricing hikes, and aggressive anti-scraping measures. Reddit signed exclusive licensing deals with Google and OpenAI worth $60-80 million annually. X (formerly Twitter) changed its privacy policy to explicitly allow AI training on user content.
-            </p>
-            <p class="content-paragraph">
-              Legal battles are reshaping the landscape. The New York Times' lawsuit against OpenAI challenges the foundational assumption that training on copyrighted content constitutes fair use. The outcome could fundamentally alter how AI companies acquire training data.
-            </p>
-          </div>
-          
-          <!-- Takeaway -->
-          <div class="quote-block mt-8 pl-6 border-l-4 border-amber-500">
-            <p class="text-xl text-white mb-3">
-              Data enclosure turns training material from an open-web input into a licensed and litigated asset.
-            </p>
-          </div>
-        </div>
-        
-        <!-- Right: Visual -->
-        <div class="section-visual">
-          <div class="relative bg-slate-900/80 border border-slate-700/50 rounded-2xl p-8">
-            <h3 class="text-lg font-semibold text-white mb-6">Data Enclosure Timeline</h3>
-            
-            <!-- Timeline -->
-            <div class="space-y-6">
-              <div class="timeline-item flex gap-4">
-                <div class="flex-shrink-0 w-12 text-right">
-                  <span class="text-amber-400 font-mono font-bold">2023</span>
-                </div>
-                <div class="flex-shrink-0 w-px bg-slate-700 relative">
-                  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-amber-500 rounded-full"></div>
-                </div>
-                <div class="pb-6">
-                  <div class="text-white font-medium">Reddit API Changes</div>
-                  <div class="text-slate-400 text-sm">Pricing increases, access restrictions</div>
-                </div>
-              </div>
-              
-              <div class="timeline-item flex gap-4">
-                <div class="flex-shrink-0 w-12 text-right">
-                  <span class="text-amber-400 font-mono font-bold">2024</span>
-                </div>
-                <div class="flex-shrink-0 w-px bg-slate-700 relative">
-                  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-amber-500 rounded-full"></div>
-                </div>
-                <div class="pb-6">
-                  <div class="text-white font-medium">Reddit↔Google/OpenAI Deals</div>
-                  <div class="text-slate-400 text-sm">$60-80M annual licensing agreements</div>
-                </div>
-              </div>
-              
-              <div class="timeline-item flex gap-4">
-                <div class="flex-shrink-0 w-12 text-right">
-                  <span class="text-amber-400 font-mono font-bold">2024</span>
-                </div>
-                <div class="flex-shrink-0 w-px bg-slate-700 relative">
-                  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-amber-500 rounded-full"></div>
-                </div>
-                <div class="pb-6">
-                  <div class="text-white font-medium">X Privacy Policy Update</div>
-                  <div class="text-slate-400 text-sm">Explicit AI training permission</div>
-                </div>
-              </div>
-              
-              <div class="timeline-item flex gap-4">
-                <div class="flex-shrink-0 w-12 text-right">
-                  <span class="text-amber-400 font-mono font-bold">Ongoing</span>
-                </div>
-                <div class="flex-shrink-0 w-px bg-slate-700 relative">
-                  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-rose-500 rounded-full"></div>
-                </div>
-                <div>
-                  <div class="text-white font-medium">NYT vs OpenAI Lawsuit</div>
-                  <div class="text-slate-400 text-sm">Fair use boundaries being tested</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Data Types -->
-            <div class="mt-6 pt-6 border-t border-slate-700/50">
-              <h4 class="text-white font-medium mb-3">High-Value Data Types</h4>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1.5 bg-amber-500/20 rounded-lg text-amber-300 text-sm flex items-center gap-2">
-                  <i data-lucide="code-2" class="w-4 h-4"></i> Code
-                </span>
-                <span class="px-3 py-1.5 bg-amber-500/20 rounded-lg text-amber-300 text-sm flex items-center gap-2">
-                  <i data-lucide="book-open" class="w-4 h-4"></i> Textbooks
-                </span>
-                <span class="px-3 py-1.5 bg-amber-500/20 rounded-lg text-amber-300 text-sm flex items-center gap-2">
-                  <i data-lucide="file-text" class="w-4 h-4"></i> Papers
-                </span>
-                <span class="px-3 py-1.5 bg-amber-500/20 rounded-lg text-amber-300 text-sm flex items-center gap-2">
-                  <i data-lucide="message-square" class="w-4 h-4"></i> Dialogues
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Section 6: Talent -->
-  <div class="content-section relative px-6 py-24 bg-gradient-to-b from-slate-950 to-emerald-950/20">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16">
-        <!-- Left: Visual -->
-        <div class="section-visual order-2 lg:order-1">
-          <div class="relative bg-slate-900/80 border border-slate-700/50 rounded-2xl p-8">
-            <h3 class="text-lg font-semibold text-white mb-6">Global AI Talent Competition</h3>
-            
-            <!-- Talent Stats -->
-            <div class="space-y-6">
-              <div class="talent-stat">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-slate-300">China Produces</span>
-                  <span class="text-emerald-400 font-bold text-xl">47%</span>
-                </div>
-                <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full" style="width: 47%"></div>
-                </div>
-                <div class="text-slate-500 text-xs mt-1">of top AI researchers</div>
-              </div>
-              
-              <div class="talent-stat">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-slate-300">US Hosts</span>
-                  <span class="text-blue-400 font-bold text-xl">57%</span>
-                </div>
-                <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full" style="width: 57%"></div>
-                </div>
-                <div class="text-slate-500 text-xs mt-1">of top AI researchers</div>
-              </div>
-            </div>
-            
-            <!-- Source -->
-            <div class="mt-4 text-xs text-slate-500">
-              Source: MacroPolo Global AI Talent Tracker
-            </div>
-            
-            <!-- Visa Wars -->
-            <div class="mt-8 pt-6 border-t border-slate-700/50">
-              <h4 class="text-white font-medium mb-4">The Visa Wars</h4>
-              <div class="space-y-3">
-                <div class="visa-policy flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                  <div class="w-8 h-8 bg-blue-500/20 rounded flex items-center justify-center">
-                    <span class="text-blue-400 font-bold text-xs">US</span>
+            <div class="reading-bands">
+              <div class="reading-band reading-band-item">
+                <div class="band-label">Analytical Turn</div>
+                <div class="band-track" style="--cols: 2;">
+                  <div class="spine-step" style="--accent: var(--indigo);">
+                    <span class="step-index">1.0</span>
+                    <span class="step-title">Paradigm Shift</span>
+                    <span class="step-note">AI power stops looking weightless and starts looking industrial.</span>
                   </div>
-                  <div class="flex-1">
-                    <div class="text-white text-sm">H-1B Fee Increase</div>
-                    <div class="text-blue-400 font-mono text-sm">$100K+</div>
-                  </div>
-                </div>
-                
-                <div class="visa-policy flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                  <div class="w-8 h-8 bg-red-500/20 rounded flex items-center justify-center">
-                    <span class="text-red-400 font-bold text-xs">CN</span>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-white text-sm">Global Excellent Scientists Fund</div>
-                    <div class="text-red-400 text-sm">Aggressive recruitment</div>
-                  </div>
-                </div>
-                
-                <div class="visa-policy flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-                  <div class="w-8 h-8 bg-emerald-500/20 rounded flex items-center justify-center">
-                    <span class="text-emerald-400 font-bold text-xs">CA</span>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-white text-sm">Global Impact+ Program</div>
-                    <div class="text-emerald-400 text-sm">Fast-track visas</div>
+                  <div class="spine-step" style="--accent: var(--violet);">
+                    <span class="step-index">1.1</span>
+                    <span class="step-title">Production Function</span>
+                    <span class="step-note">Capability depends on linked inputs, not on code alone.</span>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right: Content -->
-        <div class="section-content order-1 lg:order-2">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold">06</span>
-            </div>
-            <span class="text-emerald-400 font-medium tracking-wider uppercase text-sm">Variable T</span>
-          </div>
-          
-          <h2 class="text-4xl font-bold text-white mb-2">Talent</h2>
-          <p class="text-emerald-400 text-xl mb-6">The Human Bottleneck</p>
-          
-          <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-            <p class="content-paragraph">
-              Despite the focus on compute and capital, humans remain the critical bottleneck. Elite AI researchers—those capable of architecting and training frontier models—number only in the low thousands globally.
-            </p>
-            <p class="content-paragraph">
-              The development cycle is long: 10-15 years from undergraduate to leading researcher. This creates a supply inelasticity that no amount of capital can immediately resolve.
-            </p>
-            <p class="content-paragraph">
-              MacroPolo's Global AI Talent Tracker reveals a striking pattern: China produces 47% of top AI researchers (based on undergraduate education), while the United States hosts 57% (based on current employment). This production-hosting asymmetry defines the talent competition.
-            </p>
-            <p class="content-paragraph">
-              The sovereignty dilemma is acute: countries must decide whether to prioritize capturing foreign talent (immigration) or controlling domestic talent (preventing emigration). The "visa wars" are intensifying, with the US raising H-1B fees, China launching aggressive recruitment funds, and Canada offering fast-track programs.
-            </p>
-          </div>
-          
-          <!-- Key Insight -->
-          <div class="mt-8 p-5 bg-emerald-900/20 rounded-xl border border-emerald-500/30">
-            <div class="flex items-start gap-3">
-              <i data-lucide="brain" class="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5"></i>
-              <div>
-                <div class="text-emerald-300 font-medium mb-1">The 10-15 Year Cycle</div>
-                <div class="text-slate-400 text-sm">No amount of capital can compress the time required to develop elite AI researchers.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Section 7: Efficiency (η) -->
-  <div class="content-section relative px-6 py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold">07</span>
-          </div>
-          <span class="text-rose-400 font-medium tracking-wider uppercase text-sm">Variable η</span>
-        </div>
-        <h2 class="text-4xl font-bold text-white mb-4">Efficiency (η)</h2>
-        <p class="text-rose-400 text-xl mb-4">The Counter-Force</p>
-        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-          Algorithmic innovations that multiply output without multiplying inputs—the great disruptor
-        </p>
-      </div>
-      
-      <!-- DeepSeek Shock -->
-      <div class="deepseek-highlight max-w-4xl mx-auto mb-16">
-        <div class="relative bg-gradient-to-br from-rose-900/30 to-pink-900/20 border border-rose-500/40 rounded-3xl p-10 overflow-hidden">
-          <!-- Glow -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
-          
-          <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="px-4 py-1.5 bg-rose-500/20 rounded-full">
-                <span class="text-rose-400 font-bold text-sm tracking-wider">THE DEEPSEEK SHOCK (2025)</span>
+              <div class="reading-band reading-band-item">
+                <div class="band-label">Rival Inputs</div>
+                <div class="band-track" style="--cols: 5;">
+                  <div class="spine-step" style="--accent: var(--cyan);">
+                    <span class="step-index">1.2</span>
+                    <span class="step-title">Compute</span>
+                    <span class="step-note">Capital moats and chip chokepoints shape access.</span>
+                  </div>
+                  <div class="spine-step" style="--accent: var(--violet);">
+                    <span class="step-index">1.3</span>
+                    <span class="step-title">Energy</span>
+                    <span class="step-note">Grid capacity becomes a binding condition of scale.</span>
+                  </div>
+                  <div class="spine-step" style="--accent: var(--rust);">
+                    <span class="step-index">1.3a</span>
+                    <span class="step-title">Water</span>
+                    <span class="step-note">Cooling demand turns siting into a local political problem.</span>
+                  </div>
+                  <div class="spine-step" style="--accent: var(--amber);">
+                    <span class="step-index">1.4</span>
+                    <span class="step-title">Data</span>
+                    <span class="step-note">Training material becomes licensed, localized, and litigated.</span>
+                  </div>
+                  <div class="spine-step" style="--accent: var(--emerald);">
+                    <span class="step-index">1.5</span>
+                    <span class="step-title">Talent</span>
+                    <span class="step-note">Scarcity meets mobility, creating a capture-versus-control dilemma.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reading-band reading-band-item">
+                <div class="band-label">Strategic Consequences</div>
+                <div class="band-track" style="--cols: 2;">
+                  <div class="spine-step" style="--accent: var(--rose);">
+                    <span class="step-index">1.6</span>
+                    <span class="step-title">Efficiency</span>
+                    <span class="step-note">Software becomes the counter-force against pure denial.</span>
+                  </div>
+                  <div class="spine-step" style="--accent: var(--indigo);">
+                    <span class="step-index">1.7</span>
+                    <span class="step-title">Institutions &amp; Capital</span>
+                    <span class="step-note">Only actors that can assemble the whole stack can play at frontier scale.</span>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 class="text-2xl font-bold text-white mb-4">Algorithmic Asymmetry</h3>
-                <p class="text-slate-300 leading-relaxed mb-6">
-                  DeepSeek demonstrated that a $5.6 million training run could achieve capabilities comparable to models trained at $100-500 million. The efficiency gains came from architectural innovations, not capital expenditure.
+          </div>
+
+          <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-layout">
+        <aside class="module-outline">
+          <div class="module-outline__card">
+            <span class="module-outline__label">On this page</span>
+            <nav aria-label="Reader menu">
+              <a href="#paradigm-shift" data-short="1.0" style="--outline-accent: var(--indigo);">1. Paradigm shift</a>
+              <a href="#production-function" data-short="1.1" style="--outline-accent: var(--violet);">2. Production function</a>
+              <a href="#compute" data-short="1.2" style="--outline-accent: var(--cyan);">3. Compute</a>
+              <a href="#energy" data-short="1.3" style="--outline-accent: var(--violet);">4. Energy</a>
+              <a href="#water" data-short="1.3a" style="--outline-accent: var(--rust);">5. Water</a>
+              <a href="#data" data-short="1.4" style="--outline-accent: var(--amber);">6. Data</a>
+              <a href="#talent" data-short="1.5" style="--outline-accent: var(--emerald);">7. Talent</a>
+              <a href="#efficiency" data-short="1.6" style="--outline-accent: var(--rose);">8. Efficiency</a>
+              <a href="#integration" data-short="1.7" style="--outline-accent: var(--indigo);">9. Institutions &amp; capital</a>
+              <a href="#sources" data-short="Src" style="--outline-accent: var(--muted-strong);">10. Sources</a>
+            </nav>
+          </div>
+        </aside>
+
+        <div class="module-content">
+      <section id="paradigm-shift" class="content-section">
+        <div class="section-shell">
+          <div class="section-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">01</span>
+                <span>1.0 Paradigm Shift</span>
+              </div>
+              <div class="section-header">
+                <h2>From Software to Sovereignty</h2>
+                <p>
+                  Frontier AI does not behave like weightless software. Strategically, what matters is the industrial system that turns code into usable power.
                 </p>
-                <div class="flex items-center gap-4">
-                  <div class="text-center">
-                    <div class="text-3xl font-bold text-rose-400 font-mono">$5.6M</div>
-                    <div class="text-slate-500 text-sm">DeepSeek</div>
+              </div>
+              <p class="content-paragraph">
+                Early scaling narratives treated models as if they were naturally diffusive: copyable, downloadable, and therefore difficult to territorialize. That intuition captures the non-rival character of ideas, but it misses the infrastructure that makes frontier capability real.
+              </p>
+              <p class="content-paragraph">
+                Training runs, inference fleets, cooling systems, curated datasets, power contracts, and operating teams all reintroduce rival constraints. AI therefore pulls geopolitics back toward an older grammar of industrial power: who owns the inputs, who controls the chokepoints, and who can deny scale to others.
+              </p>
+              <p class="content-paragraph">
+                The question is no longer only which lab writes the best model architecture. It is which state-firm assemblage can mobilize the full production system behind that architecture.
+              </p>
+            </div>
+
+            <div class="analysis-panel section-visual">
+              <h3>The shift in what matters</h3>
+              <div class="section-thesis section-thesis-inline">
+                <p><strong>Capability does not emerge from code alone.</strong> It emerges when rival inputs, institutions, and delivery systems align in the same place.</p>
+                <p>Sovereignty returns where states and firms can govern access, cost, siting, and delivery across that full pipeline.</p>
+              </div>
+              <div class="comparison-rows">
+                <div class="comparison-row">
+                  <div class="row-label">Non-rival layer</div>
+                  <div class="row-copy">
+                    Weights, architectures, and software logic can still spread faster than steel mills or oil fields.
                   </div>
-                  <div class="text-slate-600">
-                    <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Rival layer</div>
+                  <div class="row-copy">
+                    Compute clusters, electricity, data rights, cooling systems, and skilled operators remain scarce, located, and governed.
                   </div>
-                  <div class="text-center">
-                    <div class="text-3xl font-bold text-slate-400 font-mono">$100-500M</div>
-                    <div class="text-slate-500 text-sm">Frontier Models</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Strategic effect</div>
+                  <div class="row-copy">
+                    The decisive advantage shifts from raw model novelty to the ability to assemble and sustain the whole industrial pipeline.
                   </div>
                 </div>
               </div>
-              
-              <div class="space-y-4">
-                <div class="efficiency-technique bg-slate-900/60 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-2">
-                    <i data-lucide="git-branch" class="w-5 h-5 text-rose-400"></i>
-                    <span class="text-white font-medium">Mixture-of-Experts (MoE)</span>
-                  </div>
-                  <p class="text-slate-400 text-sm">Activate only relevant parameters per token, reducing compute by 3-5x</p>
+            </div>
+
+            <div class="diagram-block sovereignty-stack">
+              <header>
+                <p class="diagram-title">The industrial stack</p>
+                <span>How sovereignty re-enters</span>
+              </header>
+              <div class="sovereignty-stack-grid">
+                <div class="sovereignty-stack-row">
+                  <article class="diagram-node tone-cyan">
+                    <strong>Compute</strong>
+                    <p class="diagram-node-title">Accelerators and clusters</p>
+                    <p>Chips, networking, and integration define the first hard gate.</p>
+                  </article>
+                  <article class="diagram-node tone-violet">
+                    <strong>Energy</strong>
+                    <p class="diagram-node-title">Power and cooling</p>
+                    <p>Grid access decides whether compute can become operational scale.</p>
+                  </article>
+                  <article class="diagram-node tone-amber">
+                    <strong>Data</strong>
+                    <p class="diagram-node-title">Rights and access</p>
+                    <p>Training inputs arrive through licensing, governance, and control.</p>
+                  </article>
                 </div>
-                
-                <div class="efficiency-technique bg-slate-900/60 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-2">
-                    <i data-lucide="flask-conical" class="w-5 h-5 text-rose-400"></i>
-                    <span class="text-white font-medium">Distillation</span>
-                  </div>
-                  <p class="text-slate-400 text-sm">Transfer knowledge from large to small models, maintaining capability</p>
+
+                <div class="connector-track vertical">
+                  <span class="connector-pulse tone-emerald"></span>
                 </div>
-                
-                <div class="efficiency-technique bg-slate-900/60 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-2">
-                    <i data-lucide="settings" class="w-5 h-5 text-rose-400"></i>
-                    <span class="text-white font-medium">Training Optimizations</span>
-                  </div>
-                  <p class="text-slate-400 text-sm">Better initialization, curriculum learning, data quality filtering</p>
+
+                <div class="stack-band">
+                  <strong>Coordination layer</strong>
+                  <p class="stack-diagram-title">Capital, cloud, permits, procurement</p>
+                  <p>What matters strategically is the ability to assemble the whole stack, not just to invent one more model.</p>
+                </div>
+
+                <div class="connector-track vertical">
+                  <span class="connector-pulse tone-rose"></span>
+                </div>
+
+                <div class="sovereignty-stack-row bottom">
+                  <article class="diagram-node tone-emerald">
+                    <strong>Talent</strong>
+                    <p class="diagram-node-title">Research and operations</p>
+                    <p>Frontier teams remain scarce, mobile, and institutionally sticky.</p>
+                  </article>
+                  <article class="diagram-node tone-rose">
+                    <strong>Efficiency</strong>
+                    <p class="diagram-node-title">Software multiplier</p>
+                    <p>Better training recipes and system design change how far inputs can go.</p>
+                  </article>
+                </div>
+
+                <div class="connector-track vertical">
+                  <span class="connector-pulse tone-amber"></span>
+                </div>
+
+                <div class="stack-output">
+                  <strong>Output</strong>
+                  <p class="stack-diagram-title">Frontier capability</p>
+                  <p>Training runs, inference fleets, and durable deployment depend on all of the above.</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- The Question -->
-      <div class="max-w-3xl mx-auto text-center">
-        <div class="question-block inline-block bg-slate-900/60 border border-slate-700/50 rounded-2xl p-8">
-          <i data-lucide="help-circle" class="w-12 h-12 text-rose-400 mx-auto mb-4"></i>
-          <h3 class="text-2xl font-bold text-white mb-3">Does Efficiency Rewrite the Balance?</h3>
-          <p class="text-slate-400 leading-relaxed">
-            If algorithmic improvements continue at this pace, the capital-intensive paradigm may shift. But efficiency gains themselves require talent and research—creating a recursive dependency on the very inputs they seek to reduce.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <!-- Section 8: Institutions & Capital -->
-  <div class="content-section relative px-6 py-24 bg-gradient-to-b from-slate-950 to-indigo-950/30">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold">08</span>
+      <section id="production-function" class="content-section section-tinted">
+        <div class="section-shell">
+          <div class="section-tag">
+            <span class="section-number">02</span>
+            <span>1.1 Production Function</span>
           </div>
-          <span class="text-indigo-400 font-medium tracking-wider uppercase text-sm">Integration</span>
-        </div>
-        <h2 class="text-4xl font-bold text-white mb-4">Institutions & Capital</h2>
-        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-          The organizational and financial infrastructure that binds all inputs together
-        </p>
-      </div>
-      
-      <!-- Barriers Grid -->
-      <div class="barriers-grid grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-        <div class="barrier-card bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 text-center hover:border-indigo-500/50 transition-all duration-300">
-          <div class="w-16 h-16 bg-indigo-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="shield" class="w-8 h-8 text-indigo-400"></i>
-          </div>
-          <h3 class="text-white font-semibold mb-2">High Barriers</h3>
-          <p class="text-slate-400 text-sm">Capital, expertise, and infrastructure requirements exclude most entrants</p>
-        </div>
-        
-        <div class="barrier-card bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 text-center hover:border-violet-500/50 transition-all duration-300">
-          <div class="w-16 h-16 bg-violet-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="cloud" class="w-8 h-8 text-violet-400"></i>
-          </div>
-          <h3 class="text-white font-semibold mb-2">Cloud Coupling</h3>
-          <p class="text-slate-400 text-sm">Hyperscalers control the infrastructure; AI companies depend on them</p>
-        </div>
-        
-        <div class="barrier-card bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 text-center hover:border-cyan-500/50 transition-all duration-300">
-          <div class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="landmark" class="w-8 h-8 text-cyan-400"></i>
-          </div>
-          <h3 class="text-white font-semibold mb-2">State Policy</h3>
-          <p class="text-slate-400 text-sm">Export controls, subsidies, and industrial policy shape outcomes</p>
-        </div>
-        
-        <div class="barrier-card bg-slate-900/60 border border-slate-700/50 rounded-2xl p-6 text-center hover:border-emerald-500/50 transition-all duration-300">
-          <div class="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="users-2" class="w-8 h-8 text-emerald-400"></i>
-          </div>
-          <h3 class="text-white font-semibold mb-2">Organizational Feat</h3>
-          <p class="text-slate-400 text-sm">Building frontier AI is as much management as science</p>
-        </div>
-      </div>
-      
-      <!-- Final Quote -->
-      <div class="max-w-3xl mx-auto">
-        <div class="final-quote relative bg-gradient-to-r from-indigo-900/30 to-violet-900/30 border border-indigo-500/30 rounded-2xl p-10">
-          <i data-lucide="layers" class="w-10 h-10 text-indigo-400/50 absolute top-6 left-6"></i>
-          <div class="relative z-10 text-center">
-            <p class="text-2xl md:text-3xl text-white leading-relaxed mb-6">
-              Building frontier AI is an organizational feat as much as a scientific one.
+          <div class="section-header">
+            <h2>The AI Production Function</h2>
+            <p>
+              At scale, AI capability depends on linked inputs rather than code alone. Once those inputs are named, the political stakes become easier to see.
             </p>
-            <footer class="text-slate-400">
-              The production function reminds us that ideas require infrastructure
-            </footer>
+          </div>
+
+          <div class="equation-panel formula-container">
+            <div class="equation-head">
+              <div>
+                <div class="hero-kicker">Core Concept</div>
+                <div class="equation">
+                  <span class="a">A</span>
+                  <span class="faded">=</span>
+                  <span class="math-function">f</span><span class="faded">(</span><span class="c">C</span><span class="faded">,</span><span class="e">E</span><span class="faded">,</span><span class="d">D</span><span class="faded">)</span>
+                  <span class="faded">&times;</span><span class="t">T</span><span class="faded">&times;</span><span class="eta">&eta;</span>
+                </div>
+              </div>
+              <p>
+                AI capability at scale is produced by compute, energy, and data, then multiplied by scarce talent and by the efficiency gains that software can deliver.
+              </p>
+            </div>
+
+            <div class="variable-strip">
+              <article class="variable-tile">
+                <strong>Input C</strong>
+                <span class="variable-glyph" style="color: var(--cyan);">C</span>
+                <h3>Compute</h3>
+                <p>Chips, clusters, networking, and datacenter integration.</p>
+              </article>
+              <article class="variable-tile">
+                <strong>Input E</strong>
+                <span class="variable-glyph" style="color: var(--violet);">E</span>
+                <h3>Energy</h3>
+                <p>Electricity, grid capacity, cooling, and site readiness.</p>
+              </article>
+              <article class="variable-tile">
+                <strong>Input D</strong>
+                <span class="variable-glyph" style="color: var(--amber);">D</span>
+                <h3>Data</h3>
+                <p>Access, rights, freshness, domain coverage, and industrial telemetry.</p>
+              </article>
+              <article class="variable-tile">
+                <strong>Multiplier T</strong>
+                <span class="variable-glyph" style="color: var(--emerald);">T</span>
+                <h3>Talent</h3>
+                <p>Researchers, systems engineers, and operators who can deploy at scale.</p>
+              </article>
+              <article class="variable-tile">
+                <strong>Multiplier &eta;</strong>
+                <span class="variable-glyph" style="color: var(--rose);">&eta;</span>
+                <h3>Efficiency</h3>
+                <p>Algorithmic and software advances that convert inputs into capability more effectively.</p>
+              </article>
+            </div>
+
+            <div class="analysis-panel formula-synthesis">
+              <h3>What the formula changes</h3>
+              <div class="comparison-rows">
+                <div class="comparison-row">
+                  <div class="row-label">Constraint logic</div>
+                  <div class="row-copy">These inputs are substitutes only at the margin. Efficiency can relieve compute pressure, but at frontier scale the bottlenecks remain complementary rather than cleanly replaceable.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Political logic</div>
+                  <div class="row-copy">If capability depends on rival inputs, sovereignty returns through supply chains, infrastructure, and the institutions that can mobilize them.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">State response</div>
+                  <div class="row-copy">Tariffs, subsidies, export controls, standards, procurement, immigration policy, and permitting all matter again.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Strategic effect</div>
+                  <div class="row-copy">Capability reconcentrates around actors that can coordinate capital expenditure, infrastructure access, labor, and organizational scale.</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <!-- Sources Section -->
-  <div class="sources-section relative px-6 py-16 bg-slate-950 border-t border-slate-800">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-        <i data-lucide="book-marked" class="w-5 h-5 text-slate-400"></i>
-        Sources & References
-      </h3>
-      <p class="text-slate-500 text-sm max-w-3xl mb-6">
-        These references follow Part 1's sequence: the production-function baseline, rival physical inputs, data enclosure, talent, and efficiency.
-      </p>
-      <div class="grid md:grid-cols-2 gap-6 text-sm">
-        <div class="space-y-3">
-          <div class="text-xs uppercase tracking-[0.2em] text-slate-500">Part 1 / 1.0-1.3 Rival inputs</div>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://web.stanford.edu/~klenow/Romer_1990.pdf" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">Paul Romer, Endogenous Technological Change (1990)</div>
-                <div class="text-slate-500">The baseline distinction between non-rival ideas and rival inputs.</div>
+      <section id="compute" class="content-section section-compute">
+        <div class="section-shell">
+          <div class="section-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">03</span>
+                <span>1.2 Compute</span>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://iea.blob.core.windows.net/assets/b73798cb-e452-42b9-9d8a-07542de7a041/Electricity_2026.pdf" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">IEA, Electricity 2026 Analysis and Forecast</div>
-                <div class="text-slate-500">AI and data centers as a fast-growing electricity-demand segment.</div>
+              <div class="section-header">
+                <h2>Compute as Capital Moat and Chokepoint</h2>
+                <p>
+                  Compute is both the most visible frontier input and the clearest example of how industrial concentration shapes AI power.
+                </p>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://www.energyconnects.com/news/renewables/2024/september/microsoft-to-pay-hefty-price-for-three-mile-island-clean-power/" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">Energy Connects, Microsoft Three Mile Island power deal</div>
-                <div class="text-slate-500">The Microsoft nuclear PPA price example.</div>
+              <p class="content-paragraph">
+                Frontier training runs now require clusters measured in tens of thousands of accelerators and expenditures measured in the hundreds of millions. That immediately narrows the field to actors with unusual access to capital and supply.
+              </p>
+              <p class="content-paragraph">
+                The stack is concentrated at multiple layers. NVIDIA dominates frontier accelerators, TSMC remains central to advanced fabrication, and memory, networking, and datacenter engineering add further bottlenecks to the path from chip design to usable capability.
+              </p>
+              <p class="content-paragraph">
+                The strategic result is a dual logic: compute is a capital moat for frontier labs and a policy chokepoint for states that can regulate access to chips, tools, and cloud pathways.
+              </p>
+
+              <div class="signal-grid">
+                <article class="signal-card">
+                  <strong>Scale</strong>
+                  <p>Frontier clusters now run from roughly 10,000 to 100,000 GPUs at the high end of current training scale.</p>
+                </article>
+                <article class="signal-card">
+                  <strong>Concentration</strong>
+                  <p>NVIDIA design and TSMC fabrication concentrate leverage at the top of the stack.</p>
+                </article>
+                <article class="signal-card">
+                  <strong>Cost</strong>
+                  <p>Training frontier-scale systems can require roughly $100M-$500M runs, before inference buildout.</p>
+                </article>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
             </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://kairospower.com/external_updates/google-kairos-power-tva-collaborate-to-meet-americas-growing-energy-needs/" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">Kairos Power, Google-Kairos-TVA collaboration</div>
-                <div class="text-slate-500">Google's firm-power partnership example.</div>
+
+            <div class="analysis-panel section-visual">
+              <h3>The frontier system stack</h3>
+              <div class="process-ladder">
+                <article class="process-step" style="--accent: var(--cyan);">
+                  <h3>AI accelerators</h3>
+                  <p>Frontier capability starts with a narrow accelerator market dominated by a small number of suppliers.</p>
+                </article>
+                <article class="process-step" style="--accent: var(--violet);">
+                  <h3>Advanced fabrication</h3>
+                  <p>Cutting-edge logic manufacturing remains geographically concentrated and difficult to replicate quickly.</p>
+                </article>
+                <article class="process-step" style="--accent: var(--amber);">
+                  <h3>Memory and interconnect</h3>
+                  <p>HBM and high-bandwidth networking determine whether chips can operate as a coherent training cluster.</p>
+                </article>
+                <article class="process-step" style="--accent: var(--emerald);">
+                  <h3>Datacenter engineering</h3>
+                  <p>Cooling, power delivery, and cluster integration turn components into reliable frontier-scale compute.</p>
+                </article>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://www.utilitydive.com/news/ferc-interconnection-isa-talen-amazon-data-center-susquehanna-exelon/731841/" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">Utility Dive, FERC rejects Amazon-Susquehanna agreement</div>
-                <div class="text-slate-500">The regulatory constraint example for co-located power and data centers.</div>
+
+              <div class="policy-panel policy-update">
+                <div class="hero-kicker">2026 policy update</div>
+                <h3>Deny + monetize</h3>
+                <div class="comparison-rows">
+                  <div class="comparison-row">
+                    <div class="row-label">Old frame</div>
+                    <div class="row-copy">Export controls were read mainly as denial: block access to the chips that matter most.</div>
+                  </div>
+                  <div class="comparison-row">
+                    <div class="row-label">Update</div>
+                    <div class="row-copy">The January 2026 White House proclamation and BIS rule made some diffusion conditional, priced, and case-by-case rather than simply banned.</div>
+                  </div>
+                  <div class="comparison-row">
+                    <div class="row-label">Effect</div>
+                    <div class="row-copy">Compute policy becomes a mix of restriction, certification, and monetized diffusion instead of a single denial story.</div>
+                  </div>
+                </div>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
             </div>
-          </a>
+
+            <div class="diagram-block compute-diagram wide-diagram">
+              <header>
+                <p class="diagram-title">Chokepoint geometry</p>
+                <span>Design to deployment</span>
+              </header>
+              <div class="flow-diagram">
+                <div class="chain-row">
+                  <article class="diagram-node tone-cyan">
+                    <strong>01</strong>
+                    <p class="diagram-node-title">NVIDIA design</p>
+                    <p>Architecture and accelerator leadership shape the first bottleneck.</p>
+                  </article>
+                  <div class="connector-track">
+                    <span class="connector-pulse tone-cyan"></span>
+                  </div>
+                  <article class="diagram-node tone-violet">
+                    <strong>02</strong>
+                    <p class="diagram-node-title">TSMC fabrication</p>
+                    <p>Advanced manufacturing concentrates the second gate in a narrow geography.</p>
+                  </article>
+                  <div class="connector-track">
+                    <span class="connector-pulse tone-violet"></span>
+                  </div>
+                  <article class="diagram-node tone-amber">
+                    <strong>03</strong>
+                    <p class="diagram-node-title">HBM &amp; interconnect</p>
+                    <p>Memory and networking decide whether chips can act as one coherent cluster.</p>
+                  </article>
+                  <div class="connector-track">
+                    <span class="connector-pulse tone-amber"></span>
+                  </div>
+                  <article class="diagram-node tone-emerald">
+                    <strong>04</strong>
+                    <p class="diagram-node-title">Datacenter integration</p>
+                    <p>Cooling, power, and cluster engineering turn procurement into usable capability.</p>
+                  </article>
+                </div>
+              </div>
+              <p class="diagram-caption">
+                The point is not one monopoly alone. It is the sequence of narrow gates that makes compute simultaneously a capital moat and a policy lever.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="space-y-3">
-          <div class="text-xs uppercase tracking-[0.2em] text-slate-500">Part 1 / 1.4-1.6 Data, talent, efficiency</div>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://openai.com/index/openai-and-reddit-partnership/" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">OpenAI and Reddit Partnership</div>
-                <div class="text-slate-500">Training data moving from open extraction to licensed access.</div>
+      </section>
+
+      <section id="energy" class="content-section section-tinted section-energy">
+        <div class="section-shell">
+          <div class="section-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">04</span>
+                <span>1.3 Energy</span>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://x.ai/legal/privacy-policy/previous-2024-10-29" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">X Privacy Policy archive (October 2024)</div>
-                <div class="text-slate-500">Platform rules allowing third-party AI training.</div>
+              <div class="section-header">
+                <h2>Energy Becomes the Binding Constraint</h2>
+                <p>
+                  Once compute is secured, the next bottleneck is often not another chip but the electricity, grid access, and permitting needed to activate the cluster.
+                </p>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
+              <p class="content-paragraph">
+                Energy now sits at the center of the production function because AI deployment is becoming power intensive at system scale. IEA projects electricity demand from AI and data centers rising sharply through 2030, while EIA ties the strongest recent U.S. electricity-demand growth directly to data centers.
+              </p>
+              <p class="content-paragraph">
+                This is where the idea of stranded intelligence becomes useful. A lab can have capital, chips, and ambition, yet still fail to scale if the grid cannot deliver reliable baseload power fast enough.
+              </p>
+              <p class="content-paragraph">
+                The political consequence is that power delivery, co-location, transmission, and rate allocation stop looking like background infrastructure. They become part of AI strategy itself.
+              </p>
             </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://nytco-assets.nytimes.com/2023/12/NYT_Complaint_Dec2023.pdf" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">The New York Times Company v. OpenAI and Microsoft complaint</div>
-                <div class="text-slate-500">A direct legal source for the training-data lawsuit example.</div>
+
+            <div class="analysis-panel section-visual">
+              <h3>Scarcity before response</h3>
+              <div class="response-ladder">
+                <article class="response-card">
+                  <strong>Demand pressure</strong>
+                  <p>IEA treats AI and data centers as a fast-rising electricity-demand segment, and EIA links recent U.S. demand growth directly to datacenter expansion.</p>
+                </article>
+                <article class="response-card">
+                  <strong>Grid friction</strong>
+                  <p>Connection queues, co-location disputes, and reliability concerns shift AI expansion into the terrain of grid governance and public regulation.</p>
+                </article>
+                <article class="response-card">
+                  <strong>Firm-power response</strong>
+                  <p>Hyperscalers and their partners increasingly seek always-on supply through nuclear restarts, advanced reactor partnerships, and long-horizon power agreements.</p>
+                </article>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://macropolo.org/digital-projects/the-global-ai-talent-tracker/" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">MacroPolo, Global AI Talent Tracker 2.0</div>
-                <div class="text-slate-500">The researcher-origin and destination data behind the talent bottleneck section.</div>
+
+              <div class="diagram-block energy-diagram">
+                <header>
+                  <p class="diagram-title">Constraint to response</p>
+                  <span>Power becomes strategy</span>
+                </header>
+                <div class="energy-flow">
+                  <article class="diagram-node tone-violet">
+                    <strong>Demand</strong>
+                    <p class="diagram-node-title">AI load growth</p>
+                    <p>Training and inference push datacenter demand into long-horizon planning.</p>
+                  </article>
+                  <div class="connector-track">
+                    <span class="connector-pulse tone-violet"></span>
+                  </div>
+                  <article class="diagram-node tone-amber">
+                    <strong>Constraint</strong>
+                    <p class="diagram-node-title">Grid congestion</p>
+                    <p>Queues, co-location fights, and transmission limits create stranded intelligence.</p>
+                  </article>
+                  <div class="connector-track">
+                    <span class="connector-pulse tone-amber"></span>
+                  </div>
+                  <article class="diagram-node tone-emerald">
+                    <strong>Response</strong>
+                    <p class="diagram-node-title">Firm-power deals</p>
+                    <p>Hyperscalers seek nuclear, advanced reactors, and regulatory accommodation.</p>
+                  </article>
+                </div>
+                <p class="diagram-caption">
+                  The sequence matters: scarcity arrives first, and only then does firm power appear as the strategic response.
+                </p>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
-            </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://www.nature.com/articles/s41586-025-09422-z" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">Nature, DeepSeek-R1: incentivizing efficient AI</div>
-                <div class="text-slate-500">Current validation source for efficiency as a counter-force.</div>
+
+              <div class="policy-panel">
+                <div class="hero-kicker">Illustrative responses</div>
+                <div class="data-grid">
+                  <article>
+                    <h3>Microsoft / Constellation</h3>
+                    <p>The Crane restart is framed as a way to put carbon-free baseload power back onto the grid for a power-hungry digital economy.</p>
+                  </article>
+                  <article>
+                    <h3>Google / Kairos / TVA</h3>
+                    <p>Kairos ties advanced reactor deployment directly to load growth, with 500 MW of capacity targeted by 2035.</p>
+                  </article>
+                  <article>
+                    <h3>Meta</h3>
+                    <p>Meta frames nuclear projects as a route to reliable firm power for American AI leadership, at a scale reaching up to 6.6 GW by 2035.</p>
+                  </article>
+                  <article>
+                    <h3>FERC</h3>
+                    <p>Co-location disputes show that datacenter power access is now a regulated conflict over reliability and cost allocation, not a private back-office detail.</p>
+                  </article>
+                </div>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
             </div>
-          </a>
-          <a class="source-item group block p-4 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-cyan-500/40 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/40" href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noreferrer noopener">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-slate-300 font-medium mb-1 group-hover:text-white">DeepSeek-V3 Technical Report</div>
-                <div class="text-slate-500">The technical source for MoE efficiency and constrained-hardware adaptation.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="water" class="content-section section-water">
+        <div class="section-shell">
+          <div class="water-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">04A</span>
+                <span>1.3a Water</span>
               </div>
-              <span class="text-[11px] uppercase tracking-[0.2em] text-slate-600 group-hover:text-cyan-300">Open</span>
+              <div class="section-header">
+                <h2>Water as Co-Binding Constraint</h2>
+                <p>
+                  Water is a newer but increasingly important scaling condition: smaller in global share than electricity, but sharply concentrated where facilities actually sit.
+                </p>
+              </div>
+              <p class="content-paragraph">
+                Water matters because cooling load is local. A hyperscale campus does not compete against all freshwater use on earth; it competes inside a specific basin, permitting regime, and municipal infrastructure system.
+              </p>
+              <p class="content-paragraph">
+                That is why the strategic issue is not planetary spectacle but siting politics. In water-stressed regions, a large datacenter can trigger fights over cooling methods, recycling systems, and who bears the local burden of AI expansion.
+              </p>
+              <p class="content-paragraph">
+                The result is a new marginal advantage for locations that can pair firm power with water resilience. Cooling technology, wastewater reuse, and basin stress start to matter alongside price and latency.
+              </p>
             </div>
-          </a>
+
+            <div class="analysis-panel section-visual">
+              <h3>What water changes</h3>
+              <div class="comparison-rows">
+                <div class="comparison-row">
+                  <div class="row-label">Cooling load</div>
+                  <div class="row-copy">Water intensity varies by cooling architecture, climate, and facility design rather than by one universal benchmark.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Local politics</div>
+                  <div class="row-copy">Permitting fights emerge where datacenter demand intersects with stressed basins, agricultural use, or urban growth.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Operational response</div>
+                  <div class="row-copy">Closed-loop systems, different cooling strategies, and water-recycling partnerships become part of the infrastructure strategy.</div>
+                </div>
+                <div class="comparison-row">
+                  <div class="row-label">Geopolitical effect</div>
+                  <div class="row-copy">Water-rich sites with reliable power gain a measurable advantage in marginal scaling capacity.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="data" class="content-section section-tinted section-data">
+        <div class="section-shell">
+          <div class="section-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">05</span>
+                <span>1.4 Data</span>
+              </div>
+              <div class="section-header">
+                <h2>Data Moves from Commons to Governed Asset</h2>
+                <p>
+                  Three dynamics explain why training material becomes strategic: monetization and gatekeeping, strategic localization, and quality scarcity.
+                </p>
+              </div>
+              <p class="content-paragraph">
+                Easy web-scale scraping was always a transitional condition, not a permanent settlement. As frontier systems exhaust cheap public text and shift toward higher-quality reasoning corpora, data rights become harder to separate from market power and institutional control.
+              </p>
+              <p class="content-paragraph">
+                Platforms, publishers, and states now compete over who can gate, license, localize, and legally define the data that matters most for training. The result is not the disappearance of data flows, but the end of treating them as politically neutral.
+              </p>
+            </div>
+
+            <div class="section-visual data-visual">
+              <div class="diagram-block data-diagram">
+                <header>
+                  <p class="diagram-title">From open extraction to governed flows</p>
+                  <span>How data is rerouted</span>
+                </header>
+                <div class="data-governance-map">
+                  <div class="data-map-row">
+                    <article class="diagram-node tone-amber">
+                      <strong>Source</strong>
+                      <p class="diagram-node-title">Open web text</p>
+                      <p>Cheap public corpora defined the early scaling phase.</p>
+                    </article>
+                    <article class="diagram-node tone-violet">
+                      <strong>Source</strong>
+                      <p class="diagram-node-title">Platform data</p>
+                      <p>Forums, social feeds, and publisher archives become negotiable assets.</p>
+                    </article>
+                    <article class="diagram-node tone-emerald">
+                      <strong>Source</strong>
+                      <p class="diagram-node-title">Industrial telemetry</p>
+                      <p>Operational data becomes valuable as AI moves into factories and infrastructure.</p>
+                    </article>
+                  </div>
+                  <div class="data-map-row final-row">
+                    <article class="diagram-node tone-rose">
+                      <strong>Governance</strong>
+                      <p class="diagram-node-title">Licensing, localization, litigation</p>
+                      <p>Access is now filtered through contracts, jurisdiction, and legal conflict.</p>
+                    </article>
+                    <div class="connector-track">
+                      <span class="connector-pulse tone-rose"></span>
+                    </div>
+                    <article class="diagram-node tone-amber">
+                      <strong>Output</strong>
+                      <p class="diagram-node-title">Training pipeline</p>
+                      <p>What reaches the model is increasingly priced, filtered, or domestically bounded.</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+
+              <div class="data-grid">
+              <article class="data-block">
+                <strong>Dynamic 1</strong>
+                <h3>Monetization and gatekeeping</h3>
+                <p>Platforms can shift from open extraction toward priced APIs, licensing, and explicit rules about AI training use.</p>
+                <div class="example-line">Examples on the page: OpenAI&rsquo;s Reddit partnership and X&rsquo;s own privacy-policy clarification about AI model training.</div>
+              </article>
+
+              <article class="data-block">
+                <strong>Dynamic 2</strong>
+                <h3>Strategic localization</h3>
+                <p>States increasingly treat public-service, health, education, and defense-relevant datasets as sovereignty resources rather than frictionless inputs.</p>
+                <div class="example-line">The strategic question shifts from access alone to jurisdiction, permissible transfer, and who governs downstream use.</div>
+              </article>
+
+              <article class="data-block">
+                <strong>Dynamic 3</strong>
+                <h3>Quality scarcity and industrial data</h3>
+                <p>High-quality human data, proprietary feedback loops, and industrial telemetry gain value as generic web text saturates.</p>
+                <div class="example-line">This is where the argument moves from generic scraping toward reasoning data, RLHF-style feedback, and the industrial web.</div>
+              </article>
+
+              <article class="data-block">
+                <strong>Legal pressure</strong>
+                <h3>Litigation hardens bargaining power</h3>
+                <p>The New York Times complaint does not settle the legal question, but it shows that training-data access now sits inside copyright conflict and legal risk.</p>
+              </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="talent" class="content-section section-talent">
+        <div class="section-shell">
+          <div class="section-grid">
+            <div class="analysis-panel section-visual">
+              <h3>Production and hosting are not the same thing</h3>
+              <div class="talent-chart">
+                <div class="talent-bar">
+                  <header>
+                    <span>China produces top researchers</span>
+                    <span>47%</span>
+                  </header>
+                  <div class="talent-track">
+                    <div class="talent-fill" style="width: 47%;"></div>
+                  </div>
+                </div>
+                <div class="talent-bar">
+                  <header>
+                    <span>United States hosts top researchers</span>
+                    <span>57%</span>
+                  </header>
+                  <div class="talent-track">
+                    <div class="talent-fill" style="width: 57%;"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="talent-note">
+                MacroPolo&rsquo;s tracker shows the asymmetry clearly: one country produces a large share of frontier talent, another remains the leading destination.
+              </p>
+
+              <div class="dilemma-grid">
+                <article>
+                  <h3>Capture</h3>
+                  <p>Open systems attract globally mobile researchers and engineers, which is why immigration and research ecosystems remain strategic assets.</p>
+                </article>
+                <article>
+                  <h3>Control</h3>
+                  <p>Securitization, loyalty tests, and restrictive controls can protect against leakage, but they also risk degrading the openness that makes the system attractive.</p>
+                </article>
+              </div>
+            </div>
+
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">06</span>
+                <span>1.5 Talent</span>
+              </div>
+              <div class="section-header">
+                <h2>Talent Remains the Human Bottleneck</h2>
+                <p>
+                  Talent is the paradoxical input: the scarcest in the short run and the most globally mobile at the same time.
+                </p>
+              </div>
+              <p class="content-paragraph">
+                Elite AI researchers and systems engineers are not produced on demand. Frontier talent is a long-cycle input that can take more than a decade to develop, which makes it resistant to quick policy fixes.
+              </p>
+              <p class="content-paragraph">
+                That scarcity interacts with global mobility. States want the gains from openness when they are trying to attract frontier talent, but they also want tighter control when AI becomes securitized.
+              </p>
+              <p class="content-paragraph">
+                The result is a sovereignty dilemma rather than a simple race: how much openness can a system retain while still treating frontier AI as a strategic domain?
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="efficiency" class="content-section section-tinted section-efficiency">
+        <div class="section-shell">
+          <div class="section-tag">
+            <span class="section-number">07</span>
+            <span>1.6 Efficiency</span>
+          </div>
+          <div class="section-header">
+            <h2>Efficiency as the Counter-Force</h2>
+            <p>
+              Efficiency matters because it destabilizes any simple story in which hardware denial automatically settles the balance of power.
+            </p>
+          </div>
+
+          <div class="efficiency-grid">
+            <div class="section-content">
+              <p class="content-paragraph">
+                If capability can improve with less compute and less energy, export controls do not end the competition. They also create adaptation pressure: constrained actors have a stronger reason to innovate on software, model design, and training recipes.
+              </p>
+              <p class="content-paragraph">
+                DeepSeek is the clearest proof of concept for that counter-strategy. The point is not that efficiency abolishes infrastructure, but that it can erode the leverage of purely brute-force denial.
+              </p>
+
+              <div class="technique-stack">
+                <article class="technique-item" style="--accent: var(--rose);">
+                  <h3>Mixture-of-Experts</h3>
+                  <p>Large parameter counts no longer imply that every parameter is activated on every token, reducing cost per inference and per training step.</p>
+                </article>
+                <article class="technique-item" style="--accent: var(--rose);">
+                  <h3>Distillation</h3>
+                  <p>Capabilities learned by large models can be compressed into smaller systems, widening diffusion below the absolute frontier.</p>
+                </article>
+                <article class="technique-item" style="--accent: var(--rose);">
+                  <h3>Training-stack optimization</h3>
+                  <p>Data quality filtering, better load balancing, and architectural tuning can substitute for brute-force scale only up to a point, but they matter.</p>
+                </article>
+              </div>
+            </div>
+
+            <div class="efficiency-card section-visual deepseek-highlight">
+              <div class="hero-kicker">Proof of Concept</div>
+              <h3 style="margin: 1rem 0 0.6rem; font-size: 1.55rem;">DeepSeek as adaptation pressure</h3>
+              <p style="color: var(--muted-strong); line-height: 1.8;">
+                DeepSeek-V3 and R1 show how software and training efficiency can become a geopolitical counter-strategy. The lesson is not that compute stops mattering, but that constrained hardware environments can still produce meaningful capability gains.
+              </p>
+
+              <div class="cost-compare">
+                <article>
+                  <strong>Claimed direct cost</strong>
+                  <span class="price" style="color: var(--rose);">$5.6M</span>
+                  <p>DeepSeek-V3 is useful because it shows how efficient design can narrow the gap to much larger training budgets.</p>
+                </article>
+                <article>
+                  <strong>Frontier comparison</strong>
+                  <span class="price">$100M-$500M</span>
+                  <p>U.S. frontier training runs still define the high-capital benchmark that efficiency is trying to offset rather than erase.</p>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="scenario-grid question-block">
+            <article class="scenario-card">
+              <strong>Unknown 1</strong>
+              <h3>If efficiency compounds</h3>
+              <p>Chokepoint leverage erodes over time because denial keeps generating adaptation incentives and software spreads more easily than fabs or grids.</p>
+            </article>
+            <article class="scenario-card">
+              <strong>Unknown 2</strong>
+              <h3>If efficiency hits ceilings</h3>
+              <p>Compute concentration retains its force because the frontier remains stubbornly capital intensive and physically bottlenecked.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="integration" class="content-section section-integration">
+        <div class="section-shell">
+          <div class="integration-grid">
+            <div class="section-content">
+              <div class="section-tag">
+                <span class="section-number">08</span>
+                <span>1.7 Institutions &amp; Capital</span>
+              </div>
+              <div class="section-header">
+                <h2>Institutions and Capital Bind the Stack Together</h2>
+                <p>
+                  The final move in Part 1 is not a flourish. It explains why only a narrow set of actors can actually turn all the previous inputs into frontier capability.
+                </p>
+              </div>
+              <p class="content-paragraph">
+                Frontier AI is no longer a domain where a small team can scale on code quality alone. It now requires capital expenditure, cloud access, long-cycle infrastructure decisions, and the institutional ability to align regulators, suppliers, engineers, and financing.
+              </p>
+              <p class="content-paragraph">
+                That is why frontier AI is an organizational feat as much as a scientific one. States cannot simply declare AI power into existence; they must build the enabling industrial system or bargain with the firms that already command it.
+              </p>
+            </div>
+
+            <div class="section-visual">
+              <div class="analysis-panel integration-table">
+                <h3>What only a few actors can assemble</h3>
+                <div class="comparison-rows">
+                  <div class="integration-row">
+                    <div class="row-label">Capital</div>
+                    <div class="row-copy"><strong>Frontier runs require balance sheets</strong> that can absorb datacenter buildout, long procurement timelines, and uncertain commercialization paths.</div>
+                  </div>
+                  <div class="integration-row">
+                    <div class="row-label">Cloud</div>
+                    <div class="row-copy"><strong>Hyperscaler infrastructure</strong> remains a central delivery mechanism for training, inference, and enterprise deployment.</div>
+                  </div>
+                  <div class="integration-row">
+                    <div class="row-label">Energy</div>
+                    <div class="row-copy"><strong>Power contracts and grid access</strong> decide whether compute can move from procurement to operation.</div>
+                  </div>
+                  <div class="integration-row">
+                    <div class="row-label">Policy</div>
+                    <div class="row-copy"><strong>Export controls, procurement, liability, and permitting</strong> shape who can assemble the frontier stack and where.</div>
+                  </div>
+                  <div class="integration-row">
+                    <div class="row-label">Operations</div>
+                    <div class="row-copy"><strong>Integration capacity</strong> turns isolated inputs into a functioning industrial system rather than a pile of expensive bottlenecks.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bridge-panel" style="margin-top: 1rem;">
+                <div class="hero-kicker">Bridge to Module 06</div>
+                <h3>Industrial policy follows structurally</h3>
+                <p>
+                  Once AI is understood as an industrial production function, the next move is no longer mysterious. States respond with the familiar levers of industrial policy because they are trying to build, protect, and route the very inputs this module has defined.
+                </p>
+                <div class="policy-preview">
+                  <span>Subsidies</span>
+                  <span>Export controls</span>
+                  <span>Procurement</span>
+                  <span>Permits</span>
+                  <span>Talent policy</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sources" class="sources-section">
+        <div class="section-shell">
+          <div class="source-kicker">Sources &amp; References</div>
+          <p class="sources-lede">
+            These references track the Part 1 architecture used on the page: the production-function baseline, the 2026 compute-policy turn, the energy and water constraints of scale, the enclosure of data, and efficiency as the main counter-force to pure denial.
+          </p>
+
+          <div class="source-grid">
+            <div class="source-group">
+              <span class="group-kicker">1.0-1.2 Baseline and Compute</span>
+              <h3>Production function and chokepoints</h3>
+              <a class="source-item" href="https://web.stanford.edu/~klenow/Romer_1990.pdf" target="_blank" rel="noreferrer noopener">
+                <strong>Paul Romer, Endogenous Technological Change (1990)</strong>
+                <span>The baseline distinction between non-rival ideas and the rival inputs needed to turn them into growth.</span>
+              </a>
+              <a class="source-item" href="https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative-products-into-the-united-states/" target="_blank" rel="noreferrer noopener">
+                <strong>White House proclamation on semiconductor imports (January 14, 2026)</strong>
+                <span>The tariff layer behind the shift from simple denial toward priced, conditional diffusion.</span>
+              </a>
+              <a class="source-item" href="https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities" target="_blank" rel="noreferrer noopener">
+                <strong>BIS revision to license review policy for advanced computing commodities (January 15, 2026)</strong>
+                <span>The case-by-case review framework that updates the compute chokepoint logic in early 2026.</span>
+              </a>
+            </div>
+
+            <div class="source-group">
+              <span class="group-kicker">1.3-1.3a Energy and Water</span>
+              <h3>Power, co-location, and cooling</h3>
+              <a class="source-item" href="https://www.iea.org/reports/electricity-2026" target="_blank" rel="noreferrer noopener">
+                <strong>IEA, Electricity 2026</strong>
+                <span>The main structural source here for electricity-demand growth and the return of grid constraints.</span>
+              </a>
+              <a class="source-item" href="https://www.eia.gov/pressroom/releases/press582.php" target="_blank" rel="noreferrer noopener">
+                <strong>EIA press release on U.S. electricity-demand growth (January 13, 2026)</strong>
+                <span>The U.S. update linking recent demand growth directly to data centers.</span>
+              </a>
+              <a class="source-item" href="https://www.ferc.gov/news-events/news/ferc-orders-action-co-location-issues-related-data-centers-running-ai" target="_blank" rel="noreferrer noopener">
+                <strong>FERC on co-location issues related to AI data centers</strong>
+                <span>The regulatory source showing that datacenter power access has become a grid-governance question.</span>
+              </a>
+              <a class="source-item" href="https://www.constellationenergy.com/newsroom/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid.html?os=io___" target="_blank" rel="noreferrer noopener">
+                <strong>Constellation on the Crane Clean Energy Center restart</strong>
+                <span>The primary company source for the Microsoft-linked nuclear restart example.</span>
+              </a>
+              <a class="source-item" href="https://www.kairospower.com/updates/google-kairos-power-tva-collaborate-to-meet-americas-growing-energy-needs" target="_blank" rel="noreferrer noopener">
+                <strong>Kairos Power on Google, Kairos, and TVA</strong>
+                <span>The primary source for the advanced-reactor partnership tied to Google load growth.</span>
+              </a>
+              <a class="source-item" href="https://about.fb.com/news/2026/01/meta-nuclear-energy-projects-power-american-ai-leadership/" target="_blank" rel="noreferrer noopener">
+                <strong>Meta nuclear energy projects announcement (January 2026)</strong>
+                <span>The company statement connecting firm power to U.S. AI leadership.</span>
+              </a>
+              <a class="source-item" href="https://amp.xylem.com/m/aa10f8022757c5e/original/Watering-the-New-Economy-DIGITAL-final.pdf" target="_blank" rel="noreferrer noopener">
+                <strong>Xylem, Watering the New Economy (2025)</strong>
+                <span>A grounding source for cooling, water intensity, and localized infrastructure risk.</span>
+              </a>
+              <a class="source-item" href="https://www.nature.com/articles/s41893-024-01448-1" target="_blank" rel="noreferrer noopener">
+                <strong>Nature Sustainability, Water footprint of artificial intelligence</strong>
+                <span>The broader research layer behind the water-footprint discussion when the page needs a scientific benchmark.</span>
+              </a>
+            </div>
+
+            <div class="source-group">
+              <span class="group-kicker">1.4 Data</span>
+              <h3>Licensing, policy language, and litigation</h3>
+              <a class="source-item" href="https://openai.com/index/openai-and-reddit-partnership/" target="_blank" rel="noreferrer noopener">
+                <strong>OpenAI and Reddit Partnership</strong>
+                <span>The licensing example used to show that high-value platform data is moving from extraction to negotiated access.</span>
+              </a>
+              <a class="source-item" href="https://privacy.x.com/en/blog/2024/updates-tos-privacy-policy" target="_blank" rel="noreferrer noopener">
+                <strong>X update to Terms of Service and Privacy Policy (November 2024)</strong>
+                <span>The primary platform source clarifying how user-shared information may be used to train AI models.</span>
+              </a>
+              <a class="source-item" href="https://nytco-assets.nytimes.com/2023/12/NYT_Complaint_Dec2023.pdf" target="_blank" rel="noreferrer noopener">
+                <strong>The New York Times Company v. OpenAI and Microsoft complaint</strong>
+                <span>The direct legal source for the litigation example in the data section.</span>
+              </a>
+            </div>
+
+            <div class="source-group">
+              <span class="group-kicker">1.5-1.7 Talent, Efficiency, Integration</span>
+              <h3>Human bottlenecks and adaptation pressure</h3>
+              <a class="source-item" href="https://macropolo.org/digital-projects/the-global-ai-talent-tracker/" target="_blank" rel="noreferrer noopener">
+                <strong>MacroPolo, Global AI Talent Tracker 2.0</strong>
+                <span>The empirical source behind the production-versus-hosting asymmetry in frontier AI talent.</span>
+              </a>
+              <a class="source-item" href="https://www.nature.com/articles/s41586-025-09422-z" target="_blank" rel="noreferrer noopener">
+                <strong>Nature, DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning</strong>
+                <span>The external validation layer for efficiency as a real counter-force rather than a rhetorical claim.</span>
+              </a>
+              <a class="source-item" href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noreferrer noopener">
+                <strong>DeepSeek-V3 Technical Report</strong>
+                <span>The technical source for the efficiency mechanisms covered here, including MoE and training-stack design.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <!-- GSAP Animation Script -->
+  <script>
+    (function() {
+      if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+      }
+    })();
+  </script>
+
   <script>
     (function() {
       const motionPolicy = window.AIGeoMotionPolicy;
       const canAnimate = motionPolicy
         ? motionPolicy.prepareGSAPPage()
-        : (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+        : (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined");
 
       if (!canAnimate) {
         return;
       }
 
-      // Wait for GSAP to be available
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        console.warn('GSAP or ScrollTrigger not loaded');
+      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+        console.warn("GSAP or ScrollTrigger not loaded");
         return;
       }
-      
+
       gsap.registerPlugin(ScrollTrigger);
-      
-      // Hero animations
-      gsap.from('.hero-title', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: 'power3.out'
-      });
-      
-      gsap.from('.hero-subtitle', {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        delay: 0.2,
-        ease: 'power3.out'
-      });
-      
-      gsap.from('.hero-insight', {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        delay: 0.4,
-        ease: 'power3.out'
-      });
-      
-      gsap.from('.week-badge', {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.5,
-        delay: 0.1,
-        ease: 'power2.out'
-      });
-      
-      // Floating elements animation
-      gsap.to('.floating-element', {
-        y: -20,
-        duration: 3,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.5
-      });
-      
-      // Section content animations
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach((section) => {
-        const content = section.querySelector('.section-content');
-        const visual = section.querySelector('.section-visual');
-        const paragraphs = section.querySelectorAll('.content-paragraph');
-        const cards = section.querySelectorAll('.variable-card, .comparison-card, .stat-card, .stack-layer, .energy-deal, .talent-stat, .visa-policy, .efficiency-technique, .barrier-card');
-        
-        if (content) {
-          gsap.from(content, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
-              toggleActions: 'play none none none'
-            },
-            x: -50,
-            duration: 0.8,
-            ease: 'power3.out'
-          });
-        }
-        
-        if (visual) {
-          gsap.from(visual, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
-              toggleActions: 'play none none none'
-            },
-            x: 50,
-            duration: 0.8,
-            delay: 0.2,
-            ease: 'power3.out'
-          });
-        }
-        
-        if (paragraphs.length) {
-          gsap.from(paragraphs, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 60%',
-              toggleActions: 'play none none none'
-            },
-            y: 20,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power3.out'
-          });
-        }
-        
-        if (cards.length) {
-          gsap.from(cards, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 70%',
-              toggleActions: 'play none none none'
-            },
-            y: 30,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power3.out'
-          });
+
+      const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      heroTl
+        .from(".hero-kicker", { opacity: 0, y: 18, duration: 0.55 })
+        .from(".hero-title", { opacity: 0, y: 36, duration: 0.8 }, "-=0.25")
+        .from(".hero-lede", { opacity: 0, y: 28, duration: 0.7 }, "-=0.45")
+        .from(".hero-frame-panel", { opacity: 0, y: 26, duration: 0.75 }, "-=0.35")
+        .from(".scroll-indicator", { opacity: 0, y: 12, duration: 0.45 }, "-=0.2");
+
+      const pulseLoops = [];
+      document.querySelectorAll(".connector-track").forEach((track) => {
+        const pulse = track.querySelector(".connector-pulse");
+        if (!pulse) {
+          return;
         }
 
-        const timelineRows = section.querySelectorAll('.timeline-item');
-        timelineRows.forEach((row) => {
-          gsap.from(row, {
-            scrollTrigger: {
-              trigger: row,
-              start: 'top 98%',
-              toggleActions: 'play none none none',
-              once: true
-            },
-            opacity: 0,
-            y: 32,
-            duration: 1,
-            ease: 'power4.out'
-          });
+        const isVertical = track.classList.contains("vertical") || track.offsetHeight > track.offsetWidth;
+
+        const tween = gsap.fromTo(
+          pulse,
+          isVertical ? { y: -12, opacity: 0 } : { x: -12, opacity: 0 },
+          {
+            ...(isVertical
+              ? { y: () => Math.max(track.offsetHeight - 12, 0) }
+              : { x: () => Math.max(track.offsetWidth - 12, 0) }),
+            opacity: 1,
+            duration: isVertical ? 1.15 : 1.45,
+            ease: "none",
+            repeat: -1,
+            repeatDelay: 0.35
+          }
+        );
+
+        tween.pause();
+        pulseLoops.push(tween);
+
+        ScrollTrigger.create({
+          trigger: track.closest(".diagram-block"),
+          start: "top 88%",
+          end: "bottom 15%",
+          onEnter: () => tween.play(),
+          onEnterBack: () => tween.play(),
+          onLeave: () => tween.pause(0),
+          onLeaveBack: () => tween.pause(0)
         });
       });
-      
-      // Formula animation
-      gsap.from('.formula-container', {
+
+      gsap.to(".scroll-indicator", {
         scrollTrigger: {
-          trigger: '.formula-container',
-          start: 'top 70%',
-          toggleActions: 'play none none none'
-        },
-        scale: 0.9,
-        duration: 1,
-        ease: 'power3.out'
-      });
-      
-      // Quote blocks animation
-      const quotes = document.querySelectorAll('.quote-block, .final-quote');
-      quotes.forEach((quote) => {
-        gsap.from(quote, {
-          scrollTrigger: {
-            trigger: quote,
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          },
-          x: -30,
-          duration: 0.8,
-          ease: 'power3.out'
-        });
-      });
-      
-      // DeepSeek highlight animation
-      gsap.from('.deepseek-highlight', {
-        scrollTrigger: {
-          trigger: '.deepseek-highlight',
-          start: 'top 70%',
-          toggleActions: 'play none none none'
-        },
-        scale: 0.95,
-        duration: 1,
-        ease: 'power3.out'
-      });
-      
-      // Question block animation
-      gsap.from('.question-block', {
-        scrollTrigger: {
-          trigger: '.question-block',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
-        },
-        y: 30,
-        duration: 0.8,
-        ease: 'power3.out'
-      });
-      
-      // Sources animation
-      gsap.from('.source-item', {
-        scrollTrigger: {
-          trigger: '.sources-section',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
-        },
-        y: 20,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: 'power3.out'
-      });
-      
-      // Scroll indicator fade out
-      gsap.to('.scroll-indicator', {
-        scrollTrigger: {
-          trigger: '.hero-section',
-          start: 'top top',
-          end: 'bottom top',
+          trigger: ".hero-section",
+          start: "top top",
+          end: "bottom top",
           scrub: true
         },
         opacity: 0,
-        ease: 'none'
+        ease: "none"
       });
     })();
   </script>
 
-  <!-- Initialize Lucide Icons -->
   <script>
     (function() {
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+      const sectionLinks = Array.from(document.querySelectorAll('.module-outline__card a'));
+      if (!sectionLinks.length || typeof IntersectionObserver === 'undefined') {
+        return;
       }
+
+      const sections = sectionLinks
+        .map((link) => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+      if (!sections.length) {
+        return;
+      }
+
+      const setActive = (id) => {
+        sectionLinks.forEach((link) => {
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+        });
+      };
+
+      setActive(sections[0].id);
+
+      const outlineObserver = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) {
+          return;
+        }
+
+        setActive(visible.target.id);
+      }, {
+        threshold: [0.2, 0.4, 0.6],
+        rootMargin: '-16% 0px -52% 0px'
+      });
+
+      sections.forEach((section) => outlineObserver.observe(section));
     })();
-  </script>
-</section>
-
-    <!-- SECTION: week2-part2.html -->
-
-  </main>
-
-  <script>
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
   </script>
 </body>
 </html>
