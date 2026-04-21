@@ -20,19 +20,538 @@
   <style>
     body { background-color: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; overflow-x: hidden; }
     /* Custom adjustments for standalone modules */
-    .module-nav { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .module-nav a { color: #cbd5e1; text-transform: uppercase; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
+    .module-nav {
+      --active-chain-rgb: 148, 163, 184;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem 2rem;
+      display: grid;
+      grid-template-columns: auto minmax(16rem, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+    }
+    .module-nav a {
+      order: 1;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      font-family: 'JetBrains Mono', monospace;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    .module-nav a:last-of-type {
+      order: 3;
+      justify-self: end;
+    }
     .module-nav a:hover { color: #fff; }
+    .reading-status {
+      order: 2;
+      justify-self: center;
+      width: min(100%, 29rem);
+      display: grid;
+      gap: 0.45rem;
+    }
+    .reading-status-copy {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+    .reading-status-kicker,
+    .reading-status-meta {
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .reading-status-name {
+      min-width: 0;
+      color: #f8fafc;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      text-align: center;
+      transition: color 0.25s ease;
+    }
+    .reading-status-track {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .reading-status-step {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.16);
+      transform-origin: center;
+      transition: background-color 0.28s ease, transform 0.28s ease, opacity 0.28s ease;
+    }
+    .reading-status-step.is-complete {
+      background: rgba(var(--active-chain-rgb), 0.48);
+    }
+    .reading-status-step.is-active {
+      background: rgba(var(--active-chain-rgb), 0.96);
+      transform: scaleY(1.45);
+    }
+    #week1-part3 {
+      --m3-ink: #f8fafc;
+      --m3-muted: #94a3b8;
+      --m3-line: rgba(148, 163, 184, 0.18);
+      --m3-panel: rgba(15, 23, 42, 0.72);
+      --m3-panel-strong: rgba(15, 23, 42, 0.9);
+      --m3-disclosure: #f59e0b;
+      --m3-shock: #ef4444;
+      --m3-sovereignty: #10b981;
+      --m3-governance: #818cf8;
+      --m3-trust: #a78bfa;
+      --m3-data: #fb7185;
+      --m3-bridge: #22d3ee;
+    }
+    #week1-part3 .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--m3-line);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.62);
+      color: var(--m3-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    #week1-part3 .section-kicker::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: var(--chain-color, var(--m3-disclosure));
+    }
+    #week1-part3 .analytical-panel,
+    #week1-part3 .response-panel,
+    #week1-part3 .matrix-shell,
+    #week1-part3 .reading-map {
+      border: 1px solid var(--m3-line);
+      border-radius: 1.5rem;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.68));
+    }
+    #week1-part3 .reading-map {
+      margin: -4rem auto 0;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      max-width: 72rem;
+      position: relative;
+      z-index: 12;
+    }
+    #week1-part3 .reading-map__header {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    #week1-part3 .reading-map__label,
+    #week1-part3 .panel-label,
+    #week1-part3 .rupture-band__label,
+    #week1-part3 .iana-column__label {
+      color: var(--m3-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    #week1-part3 .rupture-bands,
+    #week1-part3 .response-grid,
+    #week1-part3 .mechanism-grid,
+    #week1-part3 .assumption-grid,
+    #week1-part3 .synthesis-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    #week1-part3 .rupture-bands {
+      gap: 1.25rem;
+    }
+    #week1-part3 .rupture-band {
+      display: grid;
+      grid-template-columns: minmax(11rem, 13rem) minmax(0, 1fr);
+      gap: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--m3-line);
+    }
+    #week1-part3 .rupture-band:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+    #week1-part3 .rupture-band__header {
+      display: grid;
+      gap: 0.45rem;
+      align-content: start;
+      padding-left: 1rem;
+      border-left: 2px solid var(--chain-color, var(--m3-disclosure));
+    }
+    #week1-part3 .rupture-band__label {
+      color: var(--chain-color, var(--m3-disclosure));
+    }
+    #week1-part3 .rupture-band__header p {
+      color: var(--m3-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      max-width: 18rem;
+    }
+    #week1-part3 .rupture-band__steps {
+      position: relative;
+      display: grid;
+      gap: 0.85rem;
+      align-items: stretch;
+    }
+    #week1-part3 .rupture-band__steps::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1.45rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.08));
+    }
+    #week1-part3 .rupture-band__steps--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    #week1-part3 .rupture-band__steps--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    #week1-part3 .chain-step {
+      position: relative;
+      z-index: 1;
+      min-height: 10rem;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 1rem;
+      background: linear-gradient(180deg, rgba(2, 6, 23, 0.68), rgba(15, 23, 42, 0.42));
+      padding: 1.05rem 1rem 1rem 1.15rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+    #week1-part3 .chain-step::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      border-radius: 1rem 0 0 1rem;
+      background: var(--chain-color, var(--m3-disclosure));
+    }
+    #week1-part3 .chain-step strong,
+    #week1-part3 .assumption-card strong,
+    #week1-part3 .mechanism-card strong {
+      display: block;
+      color: var(--m3-ink);
+      margin-bottom: 0.35rem;
+    }
+    #week1-part3 .chain-step span {
+      color: var(--chain-color, var(--m3-disclosure));
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    #week1-part3 .chain-step p,
+    #week1-part3 .assumption-card p,
+    #week1-part3 .mechanism-card p,
+    #week1-part3 .response-panel dd,
+    #week1-part3 .synthesis-row p {
+      color: var(--m3-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    #week1-part3 .assumption-card,
+    #week1-part3 .mechanism-card,
+    #week1-part3 .synthesis-row {
+      border-left: 2px solid var(--chain-color, var(--m3-trust));
+      background: transparent;
+      padding: 0.85rem 0 0.85rem 1rem;
+    }
+    #week1-part3 .response-grid,
+    #week1-part3 .mechanism-grid {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+    #week1-part3 .response-panel {
+      padding: 1.5rem;
+    }
+    #week1-part3 .response-panel dl {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    #week1-part3 .response-panel dt {
+      color: var(--chain-color, var(--m3-sovereignty));
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    #week1-part3 .response-ladder {
+      display: grid;
+      gap: 0.85rem;
+      counter-reset: ladder;
+    }
+    #week1-part3 .response-rung {
+      counter-increment: ladder;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 0.9rem 0;
+      border-top: 1px solid var(--m3-line);
+    }
+    #week1-part3 .response-rung::before {
+      content: counter(ladder, decimal-leading-zero);
+      color: var(--chain-color, var(--m3-sovereignty));
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      margin-top: 0.15rem;
+    }
+    #week1-part3 .legal-matrix,
+    #week1-part3 .synthesis-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    #week1-part3 .legal-matrix th,
+    #week1-part3 .legal-matrix td,
+    #week1-part3 .synthesis-table th,
+    #week1-part3 .synthesis-table td {
+      border-bottom: 1px solid var(--m3-line);
+      padding: 1rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    #week1-part3 .legal-matrix th,
+    #week1-part3 .synthesis-table th {
+      color: #e2e8f0;
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    #week1-part3 .legal-matrix td,
+    #week1-part3 .synthesis-table td {
+      color: #cbd5e1;
+      line-height: 1.55;
+      font-size: 0.93rem;
+    }
+    #week1-part3 .matrix-shell {
+      overflow-x: auto;
+      padding: 0.5rem;
+    }
+    #week1-part3 .iana-diagram {
+      display: grid;
+      gap: 1rem;
+    }
+    #week1-part3 .iana-diagram__frame {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 1rem;
+      align-items: center;
+    }
+    #week1-part3 .iana-column {
+      display: grid;
+      gap: 0.75rem;
+      padding: 1rem;
+      border: 1px solid var(--m3-line);
+      border-radius: 1.25rem;
+      background: rgba(2, 6, 23, 0.34);
+    }
+    #week1-part3 .iana-box {
+      padding: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 1rem;
+      background: rgba(15, 23, 42, 0.56);
+    }
+    #week1-part3 .iana-box strong {
+      display: block;
+      color: var(--m3-ink);
+      margin-bottom: 0.35rem;
+    }
+    #week1-part3 .iana-box p,
+    #week1-part3 .iana-transition-pivot p,
+    #week1-part3 .iana-residual p {
+      color: var(--m3-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    #week1-part3 .iana-box--us {
+      box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.22);
+    }
+    #week1-part3 .iana-box--global {
+      box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.24);
+    }
+    #week1-part3 .iana-connector {
+      position: relative;
+      height: 2rem;
+    }
+    #week1-part3 .iana-connector::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(129, 140, 248, 0.2), rgba(129, 140, 248, 0.6), rgba(129, 140, 248, 0.16));
+      transform: translateX(-50%);
+    }
+    #week1-part3 .iana-transition-pivot {
+      display: grid;
+      gap: 0.55rem;
+      max-width: 10rem;
+      padding: 1rem 0.95rem;
+      border: 1px solid rgba(129, 140, 248, 0.26);
+      border-radius: 999px;
+      background: rgba(49, 46, 129, 0.18);
+      text-align: center;
+    }
+    #week1-part3 .iana-transition-pivot__year {
+      color: #c7d2fe;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    #week1-part3 .iana-transition-pivot strong {
+      color: var(--m3-ink);
+      font-size: 0.96rem;
+    }
+    #week1-part3 .iana-residual {
+      padding: 1rem 1.1rem;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 1rem;
+      background: rgba(2, 6, 23, 0.3);
+    }
+    @media (max-width: 900px) {
+      .module-nav {
+        grid-template-columns: 1fr auto;
+      }
+      .reading-status {
+        grid-column: 1 / -1;
+        justify-self: stretch;
+        order: 3;
+      }
+    }
+    @media (max-width: 640px) {
+      .module-nav {
+        padding-inline: 1.1rem;
+      }
+      .reading-status-copy {
+        justify-content: flex-start;
+      }
+      .reading-status-name {
+        font-size: 0.98rem;
+        text-align: left;
+      }
+      .reading-status-meta {
+        display: none;
+      }
+    }
+    @media (max-width: 760px) {
+      #week1-part3 .rupture-band {
+        grid-template-columns: 1fr;
+      }
+      #week1-part3 .rupture-band__steps::before {
+        display: none;
+      }
+      #week1-part3 .rupture-band__steps--2,
+      #week1-part3 .rupture-band__steps--3 {
+        grid-template-columns: 1fr;
+      }
+      #week1-part3 .chain-step {
+        min-height: 0;
+      }
+      #week1-part3 .iana-diagram__frame {
+        grid-template-columns: 1fr;
+      }
+      #week1-part3 .iana-transition-pivot {
+        max-width: none;
+        border-radius: 1rem;
+      }
+      #week1-part3 .matrix-shell {
+        overflow-x: visible;
+        padding: 1rem;
+      }
+      #week1-part3 .legal-matrix,
+      #week1-part3 .synthesis-table,
+      #week1-part3 .legal-matrix tbody,
+      #week1-part3 .synthesis-table tbody {
+        display: grid;
+        gap: 1rem;
+        min-width: 0;
+      }
+      #week1-part3 .legal-matrix thead,
+      #week1-part3 .synthesis-table thead {
+        display: none;
+      }
+      #week1-part3 .legal-matrix tr,
+      #week1-part3 .synthesis-table tr {
+        display: grid;
+        gap: 0.8rem;
+        padding: 1rem;
+        border: 1px solid var(--m3-line);
+        border-radius: 1rem;
+        background: rgba(2, 6, 23, 0.32);
+      }
+      #week1-part3 .legal-matrix td,
+      #week1-part3 .synthesis-table td {
+        display: grid;
+        gap: 0.25rem;
+        padding: 0;
+        border-bottom: 0;
+      }
+      #week1-part3 .legal-matrix td::before,
+      #week1-part3 .synthesis-table td::before {
+        color: var(--m3-muted);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      #week1-part3 .legal-matrix td:nth-child(1)::before { content: "Framework"; }
+      #week1-part3 .legal-matrix td:nth-child(2)::before { content: "Court event"; }
+      #week1-part3 .legal-matrix td:nth-child(3)::before { content: "Surveillance issue"; }
+      #week1-part3 .legal-matrix td:nth-child(4)::before { content: "Effect on data flows"; }
+      #week1-part3 .synthesis-table td:nth-child(1)::before { content: "Layer"; }
+      #week1-part3 .synthesis-table td:nth-child(2)::before { content: "Pre-2013 assumption"; }
+      #week1-part3 .synthesis-table td:nth-child(3)::before { content: "Post-Snowden rupture"; }
+      #week1-part3 .synthesis-table td:nth-child(4)::before { content: "Bridge to Module 04"; }
+    }
   </style>
 </head>
 <body>
   <div class="module-nav">
-      <a href="../index.html#network">← Back to Hub</a>
+    <div class="reading-status" aria-live="polite">
+      <div class="reading-status-copy">
+        <span class="reading-status-kicker">Reading</span>
+        <strong class="reading-status-name">The Rupture Chain</strong>
+        <span class="reading-status-meta">Map of 7 Sections</span>
+      </div>
+      <div class="reading-status-track" aria-hidden="true">
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+        <span class="reading-status-step"></span>
+      </div>
+    </div>
+    <a href="../index.html#network">← Back to Hub</a>
     <a href="module-04.html">Next: Module 04 →</a>
   </div>
   
   <main>
-<!-- WEEK 1 - PART III: The Rupture (2013) - Snowden and the Death of the Global Commons -->
+<!-- WEEK 1 - PART III: The Rupture (2013) - Snowden and the Governance of the Global Commons -->
 <section id="week1-part3" class="relative bg-slate-950 overflow-hidden">
   
   <!-- Animated Background Grid -->
@@ -40,19 +559,10 @@
     <div class="absolute inset-0" style="background-image: linear-gradient(rgba(6,182,212,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
   </div>
   
-  <!-- Floating Data Particles -->
-  <div class="data-particles absolute inset-0 pointer-events-none overflow-hidden">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-
   <!-- SECTION HEADER -->
   <div class="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-20">
     <div class="max-w-5xl mx-auto text-center">
-      <!-- Dramatic Title Reveal -->
+      <!-- Title reveal -->
       <div class="rupture-header opacity-0 translate-y-12">
         <div class="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-red-500/10 border border-red-500/30 rounded-full">
           <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
@@ -61,13 +571,13 @@
         
         <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-6 tracking-tight">
           <span class="block rupture-title-1">THE</span>
-          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-red-600 rupture-title-2">RUPTURE</span>
+          <span class="block text-red-400 rupture-title-2">RUPTURE</span>
         </h1>
         
         <div class="h-1 w-32 bg-gradient-to-r from-red-500 to-orange-500 mx-auto mb-8 rupture-line"></div>
         
         <p class="text-xl md:text-2xl text-slate-400 font-light max-w-3xl mx-auto leading-relaxed rupture-subtitle">
-          Snowden and the Death of the Global Commons
+          Snowden revealed that the open internet depended on hidden chokepoints.
           <span class="block text-red-400 font-mono text-lg mt-2">(2013)</span>
         </p>
       </div>
@@ -84,27 +594,101 @@
     </div>
   </div>
 
-  <!-- 1. THE END OF INNOCENCE -->
-  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50">
+  <!-- READING MAP -->
+  <div class="relative z-10 px-6">
+    <div class="reading-map rupture-map">
+      <div class="reading-map__header">
+        <span class="reading-map__label">Reading map</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white">The Rupture Chain</h2>
+        <p class="text-slate-400 max-w-3xl leading-relaxed">
+          Read this module as a causal sequence: the key question is not only what Snowden revealed, but which layers of internet order became governable once hidden surveillance capability was exposed.
+        </p>
+      </div>
+      <div class="rupture-bands" aria-label="The Rupture Chain">
+        <section class="rupture-band" style="--chain-color: var(--m3-shock)">
+          <div class="rupture-band__header">
+            <span class="rupture-band__label">Exposure</span>
+            <p>Hidden capabilities become visible and turn stewardship into a legitimacy question.</p>
+          </div>
+          <div class="rupture-band__steps rupture-band__steps--2">
+            <article class="chain-step" style="--chain-color: var(--m3-disclosure)">
+              <span>01</span>
+              <strong>Disclosure</strong>
+              <p>Surveillance programs make the hidden stack visible.</p>
+            </article>
+            <article class="chain-step" style="--chain-color: var(--m3-shock)">
+              <span>02</span>
+              <strong>Legitimacy Shock</strong>
+              <p>Stewardship claims become harder to defend.</p>
+            </article>
+          </div>
+        </section>
+        <section class="rupture-band" style="--chain-color: var(--m3-governance)">
+          <div class="rupture-band__header">
+            <span class="rupture-band__label">Response</span>
+            <p>States, institutions, and firms react at different layers of the network stack.</p>
+          </div>
+          <div class="rupture-band__steps rupture-band__steps--3">
+            <article class="chain-step" style="--chain-color: var(--m3-sovereignty)">
+              <span>03</span>
+              <strong>Defensive Sovereignty</strong>
+              <p>Democracies seek legal and infrastructural insulation.</p>
+            </article>
+            <article class="chain-step" style="--chain-color: var(--m3-governance)">
+              <span>04</span>
+              <strong>Governance Rebalancing</strong>
+              <p>Internet institutions absorb pressure to de-Americanize.</p>
+            </article>
+            <article class="chain-step" style="--chain-color: var(--m3-trust)">
+              <span>05</span>
+              <strong>Trust Repair</strong>
+              <p>Platforms encrypt, disclose, and litigate.</p>
+            </article>
+          </div>
+        </section>
+        <section class="rupture-band" style="--chain-color: var(--m3-bridge)">
+          <div class="rupture-band__header">
+            <span class="rupture-band__label">Reordering</span>
+            <p>Data governance hardens into jurisdictional infrastructure and leads into the next module.</p>
+          </div>
+          <div class="rupture-band__steps rupture-band__steps--2">
+            <article class="chain-step" style="--chain-color: var(--m3-data)">
+              <span>06</span>
+              <strong>Data Borders</strong>
+              <p>Surveillance law becomes data-flow governance.</p>
+            </article>
+            <article class="chain-step" style="--chain-color: var(--m3-bridge)">
+              <span>07</span>
+              <strong>Splinternet Bridge</strong>
+              <p>The next module follows sovereignty into the stack.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. LEGITIMACY SHOCK -->
+  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50" data-reading-stage data-reading-title="Legitimacy Shock" data-reading-meta="Section 1 / 7" data-reading-index="1" data-reading-rgb="239, 68, 68">
     <div class="max-w-6xl mx-auto">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <!-- Left: Content -->
         <div class="innocence-content">
           <div class="flex items-center gap-4 mb-6">
             <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
-              <i data-lucide="skull" class="w-6 h-6 text-red-400"></i>
+              <i data-lucide="shield-alert" class="w-6 h-6 text-red-400"></i>
             </div>
-            <span class="text-red-400 font-mono text-sm tracking-widest uppercase">The End of Innocence</span>
+            <span class="text-red-400 font-mono text-sm tracking-widest uppercase">Legitimacy Shock</span>
           </div>
           
           <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
             June 2013:<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">The Definitive Funeral</span>
+            <span class="text-red-300">The Stewardship Claim Breaks</span>
           </h2>
           
           <div class="prose prose-lg prose-invert">
             <p class="text-slate-300 leading-relaxed text-lg">
-              The Snowden revelations of June 2013 marked a definitive break with cyber-utopianism. The foundational myth—that the internet was inherently democratic, borderless, and free from state control—was irrevocably shattered.
+              The Snowden disclosures of June 2013 made a hidden dependency visible: an internet described as open, borderless, and commercially driven also depended on infrastructures that could be used for state surveillance.
             </p>
             
             <blockquote class="border-l-4 border-red-500 pl-6 my-8 italic text-xl text-slate-200">
@@ -113,62 +697,35 @@
             </blockquote>
             
             <p class="text-slate-300 leading-relaxed">
-              The transformation was seismic: from an era of <span class="text-cyan-400 font-semibold">"Stewardship"</span> to an era of <span class="text-red-400 font-semibold">"Hegemony."</span> The United States, once positioned as the benevolent guardian of the global internet, was revealed as its most aggressive surveillor.
+              The shift was conceptual as much as technical: U.S.-anchored <span class="text-cyan-400 font-semibold">"stewardship"</span> now had to be read alongside <span class="text-red-400 font-semibold">"asymmetric visibility."</span> The same architecture that enabled global reach also exposed the political concentration underneath it.
             </p>
           </div>
         </div>
         
-        <!-- Right: Visual Metaphor -->
+        <!-- Right: Assumption Shift -->
         <div class="innocence-visual relative">
-          <div class="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700">
-            <!-- Before/After Visualization -->
-            <div class="space-y-6">
-              <!-- Before -->
-              <div class="before-state p-6 bg-slate-800/50 rounded-xl border border-slate-600/50">
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-cyan-400 font-mono text-sm">PRE-2013</span>
-                  <i data-lucide="globe" class="w-5 h-5 text-cyan-400"></i>
-                </div>
-                <div class="flex items-center gap-3">
-                  <div class="flex-1 h-2 bg-cyan-500/30 rounded-full overflow-hidden">
-                    <div class="h-full w-full bg-cyan-500 rounded-full"></div>
-                  </div>
-                  <span class="text-cyan-400 font-mono">Trust: 100%</span>
-                </div>
-                <p class="text-slate-400 text-sm mt-3">Open Internet • Global Commons • Multistakeholder Governance</p>
+          <div class="analytical-panel p-8" style="--chain-color: var(--m3-shock)">
+            <p class="panel-label mb-4" style="color: var(--m3-shock)">Assumption shift</p>
+            <h3 class="text-2xl font-bold text-white mb-6">What changed after the disclosures</h3>
+            <div class="assumption-grid md:grid-cols-2">
+              <div class="assumption-card">
+                <span class="panel-label">Pre-2013 assumption</span>
+                <ul class="mt-4 space-y-3 text-slate-300">
+                  <li><strong class="text-white">Open commons</strong><p>Interconnection was treated as a benign public good.</p></li>
+                  <li><strong class="text-white">Benign stewardship</strong><p>U.S.-anchored governance looked like practical coordination.</p></li>
+                  <li><strong class="text-white">Commercial platforms</strong><p>Major firms appeared mainly as services and markets.</p></li>
+                  <li><strong class="text-white">Global routing efficiency</strong><p>Concentrated routes were understood as speed and scale.</p></li>
+                </ul>
               </div>
-              
-              <!-- Arrow -->
-              <div class="flex justify-center">
-                <i data-lucide="arrow-down" class="w-8 h-8 text-red-500 animate-pulse"></i>
+              <div class="assumption-card">
+                <span class="panel-label">Post-Snowden rupture</span>
+                <ul class="mt-4 space-y-3 text-slate-300">
+                  <li><strong class="text-white">Strategic chokepoints</strong><p>Infrastructure concentration became a control surface.</p></li>
+                  <li><strong class="text-white">Surveillance hegemony</strong><p>Stewardship claims were recoded as asymmetric visibility.</p></li>
+                  <li><strong class="text-white">Platform exposure</strong><p>Private services became routes into state power.</p></li>
+                  <li><strong class="text-white">Jurisdictional routing risk</strong><p>Where data moved now mattered politically and legally.</p></li>
+                </ul>
               </div>
-              
-              <!-- After -->
-              <div class="after-state p-6 bg-red-950/30 rounded-xl border border-red-500/30">
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-red-400 font-mono text-sm">POST-2013</span>
-                  <i data-lucide="shield-alert" class="w-5 h-5 text-red-400"></i>
-                </div>
-                <div class="flex items-center gap-3">
-                  <div class="flex-1 h-2 bg-slate-700 rounded-full overflow-hidden">
-                    <div class="h-full w-[15%] bg-red-500 rounded-full"></div>
-                  </div>
-                  <span class="text-red-400 font-mono">Trust: 15%</span>
-                </div>
-                <p class="text-slate-400 text-sm mt-3">Fragmented Internet • Data Sovereignty • National Controls</p>
-              </div>
-            </div>
-            
-            <!-- Shattered Glass Effect -->
-            <div class="absolute inset-0 pointer-events-none">
-              <svg class="w-full h-full opacity-20" viewBox="0 0 400 400">
-                <defs>
-                  <pattern id="shatter" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
-                    <path d="M25 0 L50 25 L25 50 L0 25 Z" fill="none" stroke="rgba(239,68,68,0.3)" stroke-width="0.5"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#shatter)"/>
-              </svg>
             </div>
           </div>
         </div>
@@ -177,16 +734,16 @@
   </div>
 
   <!-- 2. WHAT SNOWDEN REVEALED -->
-  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" data-reading-stage data-reading-title="Disclosure" data-reading-meta="Section 2 / 7" data-reading-index="2" data-reading-rgb="245, 158, 11">
     <div class="max-w-7xl mx-auto">
       <!-- Section Header -->
       <div class="text-center mb-16 revelation-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-amber-500/10 border border-amber-500/30 rounded-full">
           <i data-lucide="eye" class="w-4 h-4 text-amber-400"></i>
-          <span class="text-amber-400 font-mono text-sm tracking-widest uppercase">The Revelations</span>
+          <span class="text-amber-400 font-mono text-sm tracking-widest uppercase">Disclosure</span>
         </div>
         <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">What Snowden Revealed</h2>
-        <p class="text-slate-400 text-lg max-w-2xl mx-auto">The scope of NSA surveillance was far beyond what anyone had imagined</p>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">The disclosures made hidden collection programs legible as platform, cable, and search dependencies.</p>
       </div>
       
       <!-- Revelation Cards Grid -->
@@ -246,17 +803,17 @@
         </div>
       </div>
       
-      <!-- The Upstream Shock -->
+      <!-- Network chokepoints -->
       <div class="upstream-shock bg-gradient-to-r from-red-950/50 to-slate-900 rounded-2xl p-8 md:p-12 border border-red-500/30">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div class="flex items-center gap-3 mb-6">
-              <i data-lucide="alert-octagon" class="w-6 h-6 text-red-400"></i>
-              <span class="text-red-400 font-mono text-sm tracking-widest uppercase">The Upstream Shock</span>
+              <i data-lucide="network" class="w-6 h-6 text-red-400"></i>
+              <span class="text-red-400 font-mono text-sm tracking-widest uppercase">Network Chokepoints</span>
             </div>
             <h3 class="text-3xl font-bold text-white mb-6">Tapping the Fiber Backbone</h3>
             <p class="text-slate-300 text-lg leading-relaxed mb-6">
-              The most shocking revelation was <strong class="text-white">Upstream</strong>—the NSA's ability to intercept data directly from the internet's physical infrastructure. At cable landing stations across the globe, the agency installed splitters that copied <em>all</em> traffic passing through.
+              <strong class="text-white">Upstream</strong> showed that surveillance capacity was not only a platform question. It could also sit inside the internet's physical infrastructure, where cable routes and landing stations made bulk collection technically possible.
             </p>
             <div class="space-y-4">
               <div class="flex items-start gap-4">
@@ -281,7 +838,7 @@
           </div>
           
           <!-- Cable Tapping Diagram -->
-          <div class="relative">
+          <div class="relative upstream-diagram">
             <div class="bg-slate-950 rounded-xl p-6 border border-slate-700">
               <svg viewBox="0 0 400 250" class="w-full">
                 <!-- Cable -->
@@ -302,43 +859,33 @@
                 
                 <!-- Main Fiber Line -->
                 <line x1="20" y1="125" x2="380" y2="125" stroke="url(#fiberGlow)" stroke-width="8" filter="url(#glow)"/>
-                
-                <!-- Data Packets -->
-                <circle cx="60" cy="125" r="6" fill="#22d3ee" class="data-packet">
-                  <animate attributeName="cx" from="40" to="360" dur="2s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="100" cy="125" r="5" fill="#67e8f9" class="data-packet">
-                  <animate attributeName="cx" from="80" to="360" dur="2.5s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="140" cy="125" r="4" fill="#a5f3fc" class="data-packet">
-                  <animate attributeName="cx" from="120" to="360" dur="1.8s" repeatCount="indefinite"/>
-                </circle>
+                <line x1="20" y1="125" x2="380" y2="125" stroke="#67e8f9" stroke-width="4" opacity="0.2" class="upstream-cable-highlight"/>
+                <circle cx="48" cy="125" r="6" fill="#a5f3fc" opacity="0.95" class="upstream-packet upstream-packet--main"/>
+                <circle cx="200" cy="125" r="5" fill="#fda4af" opacity="0" class="upstream-packet upstream-packet--copy"/>
                 
                 <!-- Tapping Point -->
                 <g transform="translate(200, 125)">
-                  <circle cx="0" cy="0" r="25" fill="#7f1d1d" stroke="#ef4444" stroke-width="3"/>
-                  <circle cx="0" cy="0" r="15" fill="#ef4444" opacity="0.5">
-                    <animate attributeName="r" from="15" to="35" dur="1.5s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" from="0.5" to="0" dur="1.5s" repeatCount="indefinite"/>
-                  </circle>
+                  <circle cx="0" cy="0" r="25" fill="#7f1d1d" stroke="#ef4444" stroke-width="3" class="upstream-tap-core"/>
+                  <circle cx="0" cy="0" r="15" fill="#ef4444" opacity="0.35"/>
                   <text x="0" y="5" text-anchor="middle" fill="white" font-size="10" font-family="monospace">TAP</text>
                 </g>
                 
                 <!-- NSA Collection -->
                 <g transform="translate(200, 200)">
-                  <rect x="-50" y="-20" width="100" height="40" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="2"/>
+                  <rect x="-60" y="-28" width="120" height="56" rx="10" fill="#312e81" opacity="0.1" class="upstream-collection-glow"/>
+                  <rect x="-50" y="-20" width="100" height="40" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="2" class="upstream-collection"/>
                   <text x="0" y="-5" text-anchor="middle" fill="#818cf8" font-size="9" font-family="monospace">NSA</text>
                   <text x="0" y="10" text-anchor="middle" fill="white" font-size="10" font-family="monospace">COLLECTION</text>
                 </g>
                 
                 <!-- Splitter Line -->
-                <line x1="200" y1="150" x2="200" y2="180" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3"/>
+                <line x1="200" y1="150" x2="200" y2="180" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3" opacity="0.45" class="upstream-branch"/>
                 
                 <!-- Labels -->
                 <text x="20" y="105" fill="#64748b" font-size="10" font-family="monospace">UNDERSEA CABLE</text>
                 <text x="320" y="105" fill="#64748b" font-size="10" font-family="monospace">CONTINUES...</text>
                 
-                <!-- Warning Icon -->
+                <!-- Exposure marker -->
                 <g transform="translate(280, 180)">
                   <polygon points="0,-15 13,10 -13,10" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
                   <text x="0" y="5" text-anchor="middle" fill="#78350f" font-size="12" font-weight="bold">!</text>
@@ -352,147 +899,117 @@
     </div>
   </div>
 
-  <!-- 3. THE WESTPHALIANIZATION -->
-  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50">
+  <!-- 3. DEFENSIVE SOVEREIGNTY -->
+  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50" data-reading-stage data-reading-title="Defensive Sovereignty" data-reading-meta="Section 3 / 7" data-reading-index="3" data-reading-rgb="16, 185, 129">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 westphalia-header">
+      <div class="text-center mb-16 defensive-sovereignty-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
           <i data-lucide="globe-2" class="w-4 h-4 text-emerald-400"></i>
-          <span class="text-emerald-400 font-mono text-sm tracking-widest uppercase">The Westphalianization</span>
+          <span class="text-emerald-400 font-mono text-sm tracking-widest uppercase">Defensive Sovereignty</span>
         </div>
         <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Democracies Turn Sovereign</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          The revelations triggered a wave of digital sovereignty movements across democratic nations, fundamentally reshaping the global internet landscape.
+          Democratic governments treated the disclosures as a sovereignty problem: exposure to foreign surveillance became a reason to revisit infrastructure, law, and diplomatic control.
         </p>
       </div>
       
-      <!-- Brazil & Germany Cards -->
-      <div class="grid lg:grid-cols-2 gap-8 mb-16">
-        <!-- Brazil -->
-        <div class="westphalia-card bg-gradient-to-br from-green-950/30 to-slate-900 rounded-2xl p-8 border border-green-500/30">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center">
-              <span class="text-3xl">🇧🇷</span>
-            </div>
-            <div>
-              <h3 class="text-2xl font-bold text-white">Brazil's Response</h3>
-              <p class="text-green-400 font-mono text-sm">The EllaLink Cable</p>
-            </div>
-          </div>
-          
-          <blockquote class="border-l-4 border-green-500 pl-6 mb-6 italic text-lg text-slate-200">
+      <!-- Brazil & Germany Response Panels -->
+      <div class="response-grid mb-16">
+        <article class="response-panel" style="--chain-color: var(--m3-sovereignty)">
+          <span class="panel-label">Brazil</span>
+          <h3 class="text-2xl font-bold text-white mt-2">Diplomatic protest becomes infrastructure strategy</h3>
+          <blockquote class="mt-6 mb-4 text-lg italic text-slate-200">
             "Brazil will redouble its efforts to adopt legislation, technologies and mechanisms to protect us from the illegal interception of communications and data."
             <cite class="block text-sm text-slate-500 mt-2 not-italic">— President Dilma Rousseff, UN General Assembly, 2013</cite>
           </blockquote>
-          
-          <div class="space-y-4">
-            <div class="flex items-center gap-4 p-4 bg-slate-800/50 rounded-lg">
-              <i data-lucide="anchor" class="w-5 h-5 text-green-400"></i>
-              <div>
-                <p class="text-white font-semibold">5,900 km Direct Link</p>
-                <p class="text-slate-400 text-sm">Brazil ↔ Portugal, bypassing US territory</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-4 p-4 bg-slate-800/50 rounded-lg">
-              <i data-lucide="shield" class="w-5 h-5 text-green-400"></i>
-              <div>
-                <p class="text-white font-semibold">Marco Civil da Internet</p>
-                <p class="text-slate-400 text-sm">Brazil's internet "bill of rights"</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Germany -->
-        <div class="westphalia-card bg-gradient-to-br from-amber-950/30 to-slate-900 rounded-2xl p-8 border border-amber-500/30">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 bg-amber-500/20 rounded-xl flex items-center justify-center">
-              <span class="text-3xl">🇩🇪</span>
+          <dl>
+            <div>
+              <dt>Trigger</dt>
+              <dd>Reports that the NSA intercepted presidential communications and Petrobras-linked traffic.</dd>
             </div>
             <div>
-              <h3 class="text-2xl font-bold text-white">Germany's Revolt</h3>
-              <p class="text-amber-400 font-mono text-sm">The Schengen Cloud</p>
+              <dt>Political response</dt>
+              <dd>Rousseff cancelled a U.S. state visit and used the UN General Assembly to reject surveillance as normal statecraft.</dd>
             </div>
-          </div>
-          
-          <blockquote class="border-l-4 border-amber-500 pl-6 mb-6 italic text-lg text-slate-200">
+            <div>
+              <dt>Infrastructure / legal response</dt>
+              <dd>Brazil backed Marco Civil and the EllaLink cable as ways to reduce dependence on North American routes.</dd>
+            </div>
+            <div>
+              <dt>Limit</dt>
+              <dd>Routing autonomy did not remove dependence on global platforms, cloud providers, or U.S.-centered technical standards.</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="response-panel" style="--chain-color: var(--m3-sovereignty)">
+          <span class="panel-label">Germany / European Union</span>
+          <h3 class="text-2xl font-bold text-white mt-2">Privacy shock becomes regulatory sovereignty</h3>
+          <blockquote class="mt-6 mb-4 text-lg italic text-slate-200">
             "Spying on friends is not acceptable at all."
             <cite class="block text-sm text-slate-500 mt-2 not-italic">— Chancellor Angela Merkel, 2013</cite>
           </blockquote>
-          
-          <div class="space-y-4">
-            <div class="flex items-center gap-4 p-4 bg-slate-800/50 rounded-lg">
-              <i data-lucide="cloud" class="w-5 h-5 text-amber-400"></i>
-              <div>
-                <p class="text-white font-semibold">Schengen Cloud Proposal</p>
-                <p class="text-slate-400 text-sm">EU-only data routing, keeping data within Europe</p>
-              </div>
+          <dl>
+            <div>
+              <dt>Trigger</dt>
+              <dd>The reported monitoring of Merkel's phone turned surveillance into a legitimacy crisis inside a close alliance.</dd>
             </div>
-            <div class="flex items-center gap-4 p-4 bg-slate-800/50 rounded-lg">
-              <i data-lucide="scale" class="w-5 h-5 text-amber-400"></i>
-              <div>
-                <p class="text-white font-semibold">GDPR (2018) & Gaia-X (2019)</p>
-                <p class="text-slate-400 text-sm">Data protection and European cloud infrastructure</p>
-              </div>
+            <div>
+              <dt>Political response</dt>
+              <dd>German and EU debate shifted toward strategic autonomy, privacy rights, and distrust of extraterritorial U.S. access.</dd>
+            </div>
+            <div>
+              <dt>Infrastructure / legal response</dt>
+              <dd>Schengen-routing proposals, GDPR enforcement, and Gaia-X expressed the search for European control over data and cloud layers.</dd>
+            </div>
+            <div>
+              <dt>Limit</dt>
+              <dd>European law created leverage, but the region still depended on hyperscale cloud, platform services, and transatlantic data transfers.</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+
+      <!-- Response Ladder -->
+      <div class="westphalia-timeline analytical-panel p-8" style="--chain-color: var(--m3-sovereignty)">
+        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+          <i data-lucide="clock" class="w-5 h-5 text-emerald-400"></i>
+          Response ladder
+        </h3>
+        <div class="response-ladder">
+          <div class="response-rung">
+            <div>
+              <span class="text-emerald-400 font-mono text-sm">2013</span>
+              <h4 class="text-white font-semibold mt-1">Diplomatic shock</h4>
+              <p class="text-slate-400 text-sm mt-1">Rousseff and Merkel make surveillance a question of sovereignty and alliance legitimacy.</p>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Timeline of Responses -->
-      <div class="westphalia-timeline bg-slate-900/50 rounded-2xl p-8 border border-slate-700">
-        <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
-          <i data-lucide="clock" class="w-5 h-5 text-emerald-400"></i>
-          Timeline of Sovereignty Responses
-        </h3>
-        
-        <div class="relative">
-          <!-- Timeline Line -->
-          <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-amber-500 to-purple-500"></div>
-          
-          <div class="space-y-8">
-            <div class="timeline-item flex gap-6">
-              <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
-                <span class="text-white text-xs font-bold">1</span>
-              </div>
-              <div>
-                <span class="text-emerald-400 font-mono text-sm">2013</span>
-                <h4 class="text-white font-semibold mt-1">Immediate Political Fallout</h4>
-                <p class="text-slate-400 text-sm mt-1">Rousseff and Merkel statements; diplomatic tensions peak</p>
-              </div>
+          <div class="response-rung">
+            <div>
+              <span class="text-emerald-400 font-mono text-sm">2014</span>
+              <h4 class="text-white font-semibold mt-1">Governance reform pressure</h4>
+              <p class="text-slate-400 text-sm mt-1">NETmundial channels the shock into demands for a more credible multistakeholder order.</p>
             </div>
-            
-            <div class="timeline-item flex gap-6">
-              <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
-                <span class="text-white text-xs font-bold">2</span>
-              </div>
-              <div>
-                <span class="text-amber-400 font-mono text-sm">2014-2015</span>
-                <h4 class="text-white font-semibold mt-1">Infrastructure Projects Launch</h4>
-                <p class="text-slate-400 text-sm mt-1">EllaLink cable announced; Gaia-X planning begins</p>
-              </div>
+          </div>
+          <div class="response-rung">
+            <div>
+              <span class="text-emerald-400 font-mono text-sm">2016</span>
+              <h4 class="text-white font-semibold mt-1">GDPR adopted / IANA transition completed</h4>
+              <p class="text-slate-400 text-sm mt-1">Legal and institutional responses start changing the terms of data protection and root-zone stewardship.</p>
             </div>
-            
-            <div class="timeline-item flex gap-6">
-              <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
-                <span class="text-white text-xs font-bold">3</span>
-              </div>
-              <div>
-                <span class="text-blue-400 font-mono text-sm">2018</span>
-                <h4 class="text-white font-semibold mt-1">GDPR Takes Effect</h4>
-                <p class="text-slate-400 text-sm mt-1">Landmark EU data protection regulation becomes law</p>
-              </div>
+          </div>
+          <div class="response-rung">
+            <div>
+              <span class="text-emerald-400 font-mono text-sm">2018</span>
+              <h4 class="text-white font-semibold mt-1">GDPR enforced</h4>
+              <p class="text-slate-400 text-sm mt-1">Privacy rights become a regulatory instrument for shaping cross-border digital activity.</p>
             </div>
-            
-            <div class="timeline-item flex gap-6">
-              <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
-                <span class="text-white text-xs font-bold">4</span>
-              </div>
-              <div>
-                <span class="text-purple-400 font-mono text-sm">2019</span>
-                <h4 class="text-white font-semibold mt-1">Gaia-X Foundation</h4>
-                <p class="text-slate-400 text-sm mt-1">European initiative for federated, sovereign cloud infrastructure</p>
-              </div>
+          </div>
+          <div class="response-rung">
+            <div>
+              <span class="text-emerald-400 font-mono text-sm">2019</span>
+              <h4 class="text-white font-semibold mt-1">Gaia-X launched</h4>
+              <p class="text-slate-400 text-sm mt-1">European sovereignty moves higher in the stack, toward cloud, data spaces, and industrial coordination.</p>
             </div>
           </div>
         </div>
@@ -500,17 +1017,17 @@
     </div>
   </div>
 
-  <!-- 4. NETMUNDIAL & THE POWER STRUGGLE -->
-  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-indigo-950/20 to-slate-950">
+  <!-- 4. GOVERNANCE REBALANCING -->
+  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-indigo-950/20 to-slate-950" data-reading-stage data-reading-title="Governance Rebalancing" data-reading-meta="Section 4 / 7" data-reading-index="4" data-reading-rgb="129, 140, 248">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 netmundial-header">
+      <div class="text-center mb-16 governance-rebalancing-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full">
           <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
-          <span class="text-indigo-400 font-mono text-sm tracking-widest uppercase">NETmundial 2014</span>
+          <span class="text-indigo-400 font-mono text-sm tracking-widest uppercase">Governance Rebalancing</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">The Diplomatic Revolt</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">NETmundial and the Legitimacy Repair Problem</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          The global internet governance order faced its greatest challenge at the NETmundial summit in São Paulo.
+          NETmundial became a visible forum for converting post-Snowden legitimacy pressure into governance reform debate.
         </p>
       </div>
       
@@ -594,9 +1111,9 @@
               <i data-lucide="key" class="w-6 h-6 text-indigo-400"></i>
               <span class="text-indigo-400 font-mono text-sm tracking-widest uppercase">The IANA Transition (2016)</span>
             </div>
-            <h3 class="text-2xl font-bold text-white mb-4">The Root Changes Hands</h3>
+            <h3 class="text-2xl font-bold text-white mb-4">A Symbolic De-Americanization, Not a Full Exit</h3>
             <p class="text-slate-300 leading-relaxed mb-6">
-              In response to global pressure, the U.S. government agreed to transfer control of IANA—the system that manages the internet's root zone—from the Department of Commerce to the global multistakeholder community.
+              In response to global pressure, the U.S. government agreed to transfer control of IANA—the system that manages the internet's root zone—from the Department of Commerce to the global multistakeholder community. The move repaired part of the legitimacy problem, but it did not eliminate U.S. structural advantages in platforms, cloud, standards, or surveillance reach.
             </p>
             <div class="flex flex-wrap gap-3">
               <span class="px-4 py-2 bg-indigo-500/20 text-indigo-300 rounded-full text-sm font-mono">October 1, 2016</span>
@@ -604,37 +1121,41 @@
             </div>
           </div>
           
-          <div class="relative">
-            <div class="bg-slate-950 rounded-xl p-6 border border-slate-700">
-              <svg viewBox="0 0 400 200" class="w-full">
-                <!-- Before -->
-                <g transform="translate(80, 100)">
-                  <circle cx="0" cy="0" r="40" fill="#1e3a5f" stroke="#3b82f6" stroke-width="3"/>
-                  <text x="0" y="-5" text-anchor="middle" fill="#60a5fa" font-size="10" font-family="monospace">US</text>
-                  <text x="0" y="8" text-anchor="middle" fill="white" font-size="12" font-weight="bold">IANA</text>
-                  <text x="0" y="60" text-anchor="middle" fill="#64748b" font-size="10">Before 2016</text>
-                </g>
-                
-                <!-- Arrow -->
-                <g transform="translate(200, 100)">
-                  <line x1="-30" y1="0" x2="30" y2="0" stroke="#6366f1" stroke-width="3" marker-end="url(#arrowhead)"/>
-                  <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                      <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
-                    </marker>
-                  </defs>
-                  <text x="0" y="25" text-anchor="middle" fill="#818cf8" font-size="9" font-family="monospace">TRANSITION</text>
-                </g>
-                
-                <!-- After -->
-                <g transform="translate(320, 100)">
-                  <circle cx="0" cy="0" r="40" fill="#312e81" stroke="#818cf8" stroke-width="3"/>
-                  <circle cx="0" cy="0" r="50" fill="none" stroke="#818cf8" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
-                  <text x="0" y="-5" text-anchor="middle" fill="#a5b4fc" font-size="9" font-family="monospace">GLOBAL</text>
-                  <text x="0" y="8" text-anchor="middle" fill="white" font-size="11" font-weight="bold">COMMUNITY</text>
-                  <text x="0" y="60" text-anchor="middle" fill="#64748b" font-size="10">After 2016</text>
-                </g>
-              </svg>
+          <div class="iana-diagram" aria-label="IANA transition governance diagram">
+            <div class="iana-diagram__frame">
+              <div class="iana-column">
+                <span class="iana-column__label">Before 2016</span>
+                <div class="iana-box iana-box--us">
+                  <strong>NTIA contractual oversight</strong>
+                  <p>The U.S. Department of Commerce retained formal stewardship over the IANA functions contract.</p>
+                </div>
+                <div class="iana-connector"></div>
+                <div class="iana-box">
+                  <strong>ICANN / IANA root functions</strong>
+                  <p>Root-zone coordination operated under a structure that still carried visible U.S. supervisory authority.</p>
+                </div>
+              </div>
+              <div class="iana-transition-pivot">
+                <span class="iana-transition-pivot__year">2016 transition</span>
+                <strong>Legitimacy repair</strong>
+                <p>Global pressure turned symbolic U.S. stewardship into a governance problem that had to be addressed.</p>
+              </div>
+              <div class="iana-column">
+                <span class="iana-column__label">After 2016</span>
+                <div class="iana-box iana-box--global">
+                  <strong>Empowered community</strong>
+                  <p>Multistakeholder accountability mechanisms gained formal weight over the stewardship structure.</p>
+                </div>
+                <div class="iana-connector"></div>
+                <div class="iana-box">
+                  <strong>ICANN / PTI stewardship</strong>
+                  <p>IANA root functions continued without NTIA contractual oversight, but stayed inside the same wider institutional ecosystem.</p>
+                </div>
+              </div>
+            </div>
+            <div class="iana-residual">
+              <span class="panel-label">What did not change</span>
+              <p>Platforms, cloud scale, standards influence, and surveillance reach remained structurally U.S.-advantaged after the symbolic transfer.</p>
             </div>
           </div>
         </div>
@@ -642,38 +1163,55 @@
     </div>
   </div>
 
-  <!-- 5. HUB-AND-SPOKE VULNERABILITY -->
-  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50">
+  <!-- 5. ROUTING GEOGRAPHY -->
+  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50" data-reading-stage data-reading-title="Star and Mesh Routing" data-reading-meta="Section 5 / 7" data-reading-index="5" data-reading-rgb="34, 211, 238">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 topology-header">
+      <div class="text-center mb-16 routing-geography-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
           <i data-lucide="network" class="w-4 h-4 text-cyan-400"></i>
-          <span class="text-cyan-400 font-mono text-sm tracking-widest uppercase">Network Topology</span>
+          <span class="text-cyan-400 font-mono text-sm tracking-widest uppercase">Splinternet Bridge</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">The Hub-and-Spoke Vulnerability</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Routing Geography Becomes Political</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          The internet's star topology created a single point of surveillance—geographic efficiency became a strategic vulnerability.
+          The disclosures made a simple point harder to ignore: efficient routes are also jurisdictional routes, and jurisdictional routes can become surveillance chokepoints.
         </p>
       </div>
       
+      <div class="analytical-panel p-8 mb-12" style="--chain-color: var(--m3-bridge)">
+        <h3 class="text-2xl font-bold text-white mb-6">The routing chain</h3>
+        <div class="response-grid">
+          <div class="mechanism-card">
+            <span class="panel-label">01 / Efficiency route</span>
+            <strong>Traffic follows cheap, fast, existing paths.</strong>
+            <p>Exchange points, undersea cables, cloud regions, and platform concentration make the network efficient by concentrating traffic.</p>
+          </div>
+          <div class="mechanism-card">
+            <span class="panel-label">02 / Chokepoint exposure</span>
+            <strong>Concentration creates visibility.</strong>
+            <p>Once data crosses a small number of jurisdictions and facilities, state access can scale beyond targeted interception.</p>
+          </div>
+          <div class="mechanism-card">
+            <span class="panel-label">03 / Sovereignty response</span>
+            <strong>States try to reroute, localize, or duplicate.</strong>
+            <p>The response is not only censorship; it is an attempt to redesign dependency, resilience, and governability.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Topology Comparison -->
-      <div class="grid lg:grid-cols-2 gap-12 mb-16">
-        <!-- Star Topology (Before) -->
+      <div class="grid lg:grid-cols-2 gap-12 mb-16 routing-geography-visuals">
+        <!-- Star Routing -->
         <div class="topology-card">
           <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-            <span class="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center text-red-400 text-sm">✕</span>
-            Star Topology (Vulnerable)
+            <span class="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center text-red-400 text-sm">01</span>
+            Star Routing
           </h3>
           <div class="bg-slate-900 rounded-xl p-6 border border-slate-700">
-            <svg viewBox="0 0 300 280" class="w-full">
+            <svg viewBox="0 0 300 280" class="w-full routing-diagram routing-diagram--hub">
               <!-- Center Hub (US) -->
               <g transform="translate(150, 140)">
                 <circle cx="0" cy="0" r="35" fill="#7f1d1d" stroke="#ef4444" stroke-width="3"/>
-                <text x="0" y="5" text-anchor="middle" fill="white" font-size="11" font-weight="bold">USA</text>
-                <circle cx="0" cy="0" r="45" fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4" opacity="0.5">
-                  <animate attributeName="r" from="45" to="55" dur="2s" repeatCount="indefinite"/>
-                  <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite"/>
-                </circle>
+                <circle cx="0" cy="0" r="47" fill="none" stroke="#fca5a5" stroke-width="2" opacity="0.12" class="route-hub-pulse"/>
               </g>
               
               <!-- Spokes -->
@@ -685,61 +1223,58 @@
                 <line x1="150" y1="140" x2="63" y2="190"/>
                 <line x1="150" y1="140" x2="63" y2="90"/>
               </g>
+              <polyline points="63,90 150,140 237,90" fill="none" stroke="#fca5a5" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-star route-star--a"/>
+              <polyline points="150,40 150,140 237,190" fill="none" stroke="#fdba74" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-star route-star--b"/>
+              <polyline points="63,190 150,140 150,240" fill="none" stroke="#fda4af" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-star route-star--c"/>
+              <circle cx="63" cy="90" r="5.5" fill="#fca5a5" opacity="0" class="routing-packet routing-packet--star-a"/>
+              <circle cx="150" cy="40" r="5.5" fill="#fdba74" opacity="0" class="routing-packet routing-packet--star-b"/>
+              <circle cx="63" cy="190" r="5.5" fill="#fda4af" opacity="0" class="routing-packet routing-packet--star-c"/>
+              <text x="150" y="145" text-anchor="middle" fill="white" font-size="11" font-weight="bold" paint-order="stroke" stroke="#7f1d1d" stroke-width="4" stroke-linejoin="round">USA</text>
               
               <!-- Nodes -->
               <g transform="translate(150, 40)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="0" y="-30" text-anchor="middle" fill="#94a3b8" font-size="9">🇨🇦 Canada</text>
+                <text x="0" y="-30" text-anchor="middle" fill="#94a3b8" font-size="9">Canada</text>
               </g>
               <g transform="translate(237, 90)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="25" y="0" text-anchor="start" fill="#94a3b8" font-size="9">🇪🇺 Europe</text>
+                <text x="25" y="0" text-anchor="start" fill="#94a3b8" font-size="9">Europe</text>
               </g>
               <g transform="translate(237, 190)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="25" y="0" text-anchor="start" fill="#94a3b8" font-size="9">🇧🇷 Brazil</text>
+                <text x="25" y="0" text-anchor="start" fill="#94a3b8" font-size="9">Brazil</text>
               </g>
               <g transform="translate(150, 240)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="0" y="35" text-anchor="middle" fill="#94a3b8" font-size="9">🇦🇷 Argentina</text>
+                <text x="0" y="35" text-anchor="middle" fill="#94a3b8" font-size="9">Argentina</text>
               </g>
               <g transform="translate(63, 190)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="-25" y="0" text-anchor="end" fill="#94a3b8" font-size="9">🇯🇵 Japan</text>
+                <text x="-25" y="0" text-anchor="end" fill="#94a3b8" font-size="9">Japan</text>
               </g>
               <g transform="translate(63, 90)">
                 <circle cx="0" cy="0" r="20" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2"/>
-                <text x="-25" y="0" text-anchor="end" fill="#94a3b8" font-size="9">🇦🇺 Australia</text>
+                <text x="-25" y="0" text-anchor="end" fill="#94a3b8" font-size="9">Australia</text>
               </g>
               
-              <!-- Data Flow Animation -->
-              <circle cx="0" cy="0" r="4" fill="#22d3ee">
-                <animateMotion path="M150,40 L150,140" dur="1.5s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="0" cy="0" r="4" fill="#22d3ee">
-                <animateMotion path="M237,90 L150,140" dur="1.8s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="0" cy="0" r="4" fill="#22d3ee">
-                <animateMotion path="M63,190 L150,140" dur="2s" repeatCount="indefinite"/>
-              </circle>
             </svg>
           </div>
           <div class="mt-4 p-4 bg-red-950/30 rounded-lg border border-red-500/20">
             <p class="text-red-300 text-sm">
               <i data-lucide="alert-triangle" class="w-4 h-4 inline mr-2"></i>
-              All traffic routes through US → Single surveillance point
+              Efficient concentration creates a jurisdictional surveillance surface.
             </p>
           </div>
         </div>
         
-        <!-- Mesh Topology (After) -->
+        <!-- Mesh Routing -->
         <div class="topology-card">
           <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-            <span class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 text-sm">✓</span>
-            Mesh Topology (Resilient)
+            <span class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 text-sm">02</span>
+            Mesh Routing
           </h3>
           <div class="bg-slate-900 rounded-xl p-6 border border-slate-700">
-            <svg viewBox="0 0 300 280" class="w-full">
+            <svg viewBox="0 0 300 280" class="w-full routing-diagram routing-diagram--mesh">
               <!-- Mesh Connections -->
               <g stroke="#10b981" stroke-width="1.5" opacity="0.4">
                 <line x1="150" y1="50" x2="250" y2="100"/>
@@ -758,99 +1293,102 @@
                 <line x1="150" y1="230" x2="50" y2="100"/>
                 <line x1="50" y1="180" x2="50" y2="100"/>
               </g>
+              <polyline points="50,100 150,50 250,100 150,230" fill="none" stroke="#67e8f9" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-reroute route-reroute--a"/>
+              <polyline points="50,180 150,50 250,180" fill="none" stroke="#86efac" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-reroute route-reroute--b"/>
+              <polyline points="250,100 50,180 150,230" fill="none" stroke="#a5f3fc" stroke-width="3" opacity="0.12" stroke-linecap="round" stroke-linejoin="round" class="route-reroute route-reroute--c"/>
+              <circle cx="50" cy="100" r="5.5" fill="#67e8f9" opacity="0" class="routing-packet routing-packet--reroute-a"/>
+              <circle cx="50" cy="180" r="5.5" fill="#86efac" opacity="0" class="routing-packet routing-packet--reroute-b"/>
+              <circle cx="250" cy="100" r="5.5" fill="#a5f3fc" opacity="0" class="routing-packet routing-packet--reroute-c"/>
               
               <!-- Nodes -->
               <g transform="translate(150, 50)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇨🇦 CA</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">CA</text>
               </g>
               <g transform="translate(250, 100)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇪🇺 EU</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">EU</text>
               </g>
               <g transform="translate(250, 180)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇧🇷 BR</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">BR</text>
               </g>
               <g transform="translate(150, 230)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇦🇷 AR</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">AR</text>
               </g>
               <g transform="translate(50, 180)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇯🇵 JP</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">JP</text>
               </g>
               <g transform="translate(50, 100)">
-                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
-                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">🇦🇺 AU</text>
+                <circle cx="0" cy="0" r="22" fill="#064e3b" stroke="#10b981" stroke-width="2" class="route-reroute-node"/>
+                <text x="0" y="4" text-anchor="middle" fill="white" font-size="9" font-weight="bold">AU</text>
               </g>
               
-              <!-- Direct Data Flows -->
-              <circle cx="0" cy="0" r="3" fill="#34d399">
-                <animateMotion path="M150,50 L250,100" dur="2s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="0" cy="0" r="3" fill="#34d399">
-                <animateMotion path="M250,180 L150,230" dur="2.5s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="0" cy="0" r="3" fill="#34d399">
-                <animateMotion path="M50,100 L50,180" dur="1.8s" repeatCount="indefinite"/>
-              </circle>
             </svg>
           </div>
           <div class="mt-4 p-4 bg-green-950/30 rounded-lg border border-green-500/20">
             <p class="text-green-300 text-sm">
               <i data-lucide="shield-check" class="w-4 h-4 inline mr-2"></i>
-              Direct peer-to-peer links → No single control point
+              Alternative pathways reduce single-route dependence, but they also fragment the network into planned zones of resilience.
             </p>
           </div>
         </div>
       </div>
       
-      <!-- Geographic Efficiency vs Security -->
-      <div class="geo-efficiency bg-slate-900/50 rounded-2xl p-8 border border-slate-700">
+      <!-- Bridge to Module 04 -->
+      <div class="geo-efficiency analytical-panel p-8">
         <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
           <i data-lucide="map" class="w-5 h-5 text-cyan-400"></i>
-          Geography of Efficiency Becomes Vulnerability
+          Bridge to the splinternet
         </h3>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="p-6 bg-slate-800/50 rounded-xl">
-            <div class="text-3xl font-bold text-cyan-400 mb-2">70%</div>
-            <p class="text-slate-300 text-sm">of global internet traffic passed through US infrastructure pre-2013</p>
-          </div>
-          <div class="p-6 bg-slate-800/50 rounded-xl">
-            <div class="text-3xl font-bold text-amber-400 mb-2">$10B+</div>
-            <p class="text-slate-300 text-sm">estimated cost of building alternative cable routes post-Snowden</p>
-          </div>
-          <div class="p-6 bg-slate-800/50 rounded-xl">
-            <div class="text-3xl font-bold text-green-400 mb-2">40+</div>
-            <p class="text-slate-300 text-sm">new submarine cables built bypassing US territory (2014-2020)</p>
-          </div>
-        </div>
+        <p class="text-slate-300 leading-relaxed max-w-4xl">
+          This is the conceptual handoff to Module 04. Once routing, cloud regions, standards, app stores, and cables are understood as political layers, the splinternet no longer looks like a sudden break from openness. It looks like the institutionalization of the post-Snowden sovereignty response.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- 6. INDUSTRY RESPONSE -->
-  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-violet-950/20 to-slate-950">
+  <!-- 6. TRUST REPAIR BY PLATFORMS -->
+  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-violet-950/20 to-slate-950" data-reading-stage data-reading-title="Trust Repair" data-reading-meta="Section 6 / 7" data-reading-index="6" data-reading-rgb="167, 139, 250">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 industry-header">
+      <div class="text-center mb-16 trust-repair-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-violet-500/10 border border-violet-500/30 rounded-full">
           <i data-lucide="code" class="w-4 h-4 text-violet-400"></i>
-          <span class="text-violet-400 font-mono text-sm tracking-widest uppercase">Industry Response</span>
+          <span class="text-violet-400 font-mono text-sm tracking-widest uppercase">Trust Repair</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Tech Fights Back</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Trust Repair by Platforms</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          Silicon Valley moved from passive compliance to active resistance—encrypting the backbone and challenging government overreach in court.
+          Silicon Valley did not simply "fight back." It repaired trust through encryption defaults, public transparency, and selective legal resistance to state access.
         </p>
       </div>
+
+      <div class="mechanism-grid mb-12">
+        <div class="mechanism-card">
+          <span class="panel-label">Mechanism 01</span>
+          <strong>Encryption defaults</strong>
+          <p>User connections, data-center links, and backbone traffic moved toward encryption as the new baseline for platform credibility.</p>
+        </div>
+        <div class="mechanism-card">
+          <span class="panel-label">Mechanism 02</span>
+          <strong>Transparency and public trust repair</strong>
+          <p>Disclosure reports, public letters, and security commitments became reputational tools after the legitimacy shock.</p>
+        </div>
+        <div class="mechanism-card">
+          <span class="panel-label">Mechanism 03</span>
+          <strong>Jurisdictional/legal resistance</strong>
+          <p>Companies challenged backdoors and extraterritorial warrants when state access threatened user trust or foreign-market legitimacy.</p>
+        </div>
+      </div>
       
-      <!-- Encryption Revolution -->
+      <!-- Encryption Defaults -->
       <div class="encryption-revolution bg-gradient-to-r from-violet-950/50 to-slate-900 rounded-2xl p-8 mb-12 border border-violet-500/30">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h3 class="text-2xl font-bold text-white mb-4">The Encryption Revolution</h3>
+            <h3 class="text-2xl font-bold text-white mb-4">Encryption Defaults</h3>
             <p class="text-slate-300 leading-relaxed mb-6">
-              Post-Snowden, major tech companies raced to encrypt all internal traffic. What was once optional became mandatory—data centers, backbone links, and user connections all received encryption upgrades.
+              After Snowden, major technology companies expanded encryption across user connections, data-center links, and backbone traffic. What had been unevenly deployed became part of the trust baseline.
             </p>
             
             <div class="space-y-4">
@@ -946,11 +1484,11 @@
         </div>
       </div>
       
-      <!-- Legal Battles -->
+      <!-- Jurisdictional and legal resistance -->
       <div class="legal-battles">
         <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
           <i data-lucide="gavel" class="w-5 h-5 text-violet-400"></i>
-          Major Legal Battles
+          Jurisdictional and Legal Resistance
         </h3>
         
         <div class="grid md:grid-cols-2 gap-6">
@@ -1014,153 +1552,107 @@
     </div>
   </div>
 
-  <!-- 7. LEGAL RUPTURE: SAFE HARBOR TO SCHREMS II -->
-  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50">
+  <!-- 7. DATA-TRANSFER LAW -->
+  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50" data-reading-stage data-reading-title="Surveillance Law and Data Borders" data-reading-meta="Section 7 / 7" data-reading-index="7" data-reading-rgb="251, 113, 133">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16 schrems-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-rose-500/10 border border-rose-500/30 rounded-full">
           <i data-lucide="scale" class="w-4 h-4 text-rose-400"></i>
-          <span class="text-rose-400 font-mono text-sm tracking-widest uppercase">Legal Rupture</span>
+          <span class="text-rose-400 font-mono text-sm tracking-widest uppercase">Data Borders</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Safe Harbor to Schrems II</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Surveillance Law Becomes Data-Transfer Law</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          European courts systematically dismantled the legal frameworks enabling transatlantic data flows.
+          European courts turned the Snowden problem into a data-flow problem: if U.S. surveillance law could reach transferred data, transatlantic transfer frameworks had to be legally re-tested.
         </p>
       </div>
       
-      <!-- Legal Timeline -->
-      <div class="legal-timeline relative mb-16">
-        <!-- Timeline Line -->
-        <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-rose-500 via-amber-500 to-red-600 transform -translate-x-1/2 hidden lg:block"></div>
-        
-        <div class="space-y-12">
-          <!-- Safe Harbor -->
-          <div class="timeline-case grid lg:grid-cols-2 gap-8 items-center">
-            <div class="lg:text-right order-2 lg:order-1">
-              <div class="bg-slate-900/80 rounded-xl p-6 border border-slate-700 inline-block lg:text-left">
-                <span class="text-slate-500 font-mono text-sm">2000-2015</span>
-                <h3 class="text-xl font-bold text-white mt-2">Safe Harbor Framework</h3>
-                <p class="text-slate-400 mt-2">Self-certification program allowing US companies to transfer EU personal data</p>
-              </div>
-            </div>
-            <div class="flex justify-center order-1 lg:order-2">
-              <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center z-10">
-                <i data-lucide="anchor" class="w-6 h-6 text-slate-400"></i>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Schrems I -->
-          <div class="timeline-case grid lg:grid-cols-2 gap-8 items-center">
-            <div class="flex justify-center">
-              <div class="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center z-10">
-                <i data-lucide="x-circle" class="w-6 h-6 text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="bg-gradient-to-br from-rose-950/50 to-slate-900 rounded-xl p-6 border border-rose-500/30">
-                <span class="text-rose-400 font-mono text-sm">October 6, 2015</span>
-                <h3 class="text-2xl font-bold text-white mt-2">Schrems I</h3>
-                <p class="text-rose-400 font-semibold mt-1">Safe Harbor Struck Down</p>
-                <p class="text-slate-400 mt-3 leading-relaxed">
-                  The European Court of Justice invalidated Safe Harbor, ruling that US surveillance practices violated EU fundamental rights. Max Schrems' complaint against Facebook changed the landscape of data transfers.
-                </p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-rose-500/20 text-rose-300 rounded-full text-xs font-mono">ECJ Ruling</span>
-                  <span class="px-3 py-1 bg-rose-500/20 text-rose-300 rounded-full text-xs font-mono">Invalidated</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Privacy Shield -->
-          <div class="timeline-case grid lg:grid-cols-2 gap-8 items-center">
-            <div class="lg:text-right order-2 lg:order-1">
-              <div class="bg-slate-900/80 rounded-xl p-6 border border-slate-700 inline-block lg:text-left">
-                <span class="text-amber-400 font-mono text-sm">2016-2020</span>
-                <h3 class="text-xl font-bold text-white mt-2">Privacy Shield</h3>
-                <p class="text-slate-400 mt-2">Replacement framework with stronger US commitments</p>
-              </div>
-            </div>
-            <div class="flex justify-center order-1 lg:order-2">
-              <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center z-10">
-                <i data-lucide="shield" class="w-6 h-6 text-white"></i>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Schrems II -->
-          <div class="timeline-case grid lg:grid-cols-2 gap-8 items-center">
-            <div class="flex justify-center">
-              <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center z-10 animate-pulse">
-                <i data-lucide="alert-triangle" class="w-6 h-6 text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="bg-gradient-to-br from-red-950/50 to-slate-900 rounded-xl p-6 border border-red-500/50">
-                <span class="text-red-400 font-mono text-sm">July 16, 2020</span>
-                <h3 class="text-2xl font-bold text-white mt-2">Schrems II</h3>
-                <p class="text-red-400 font-semibold mt-1">Privacy Shield Collapsed</p>
-                <p class="text-slate-400 mt-3 leading-relaxed">
-                  The ECJ struck down Privacy Shield, finding that US surveillance laws (FISA 702, EO 12333) still failed to provide adequate protection. Standard Contractual Clauses also faced new scrutiny.
-                </p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-xs font-mono">Landmark Ruling</span>
-                  <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-xs font-mono">Global Impact</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Legal Matrix -->
+      <div class="matrix-shell legal-timeline mb-16">
+        <table class="legal-matrix">
+          <thead>
+            <tr>
+              <th>Framework</th>
+              <th>Court event</th>
+              <th>Surveillance issue</th>
+              <th>Effect on data flows</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="legal-row">
+              <td><strong>Safe Harbor</strong><br><span class="text-slate-500">2000-2015</span></td>
+              <td>Baseline transfer arrangement for U.S. firms receiving EU personal data.</td>
+              <td>Assumed U.S. self-certification could coexist with adequate privacy protection.</td>
+              <td>Enabled routine transatlantic transfers until the Snowden disclosures made U.S. access legally contestable.</td>
+            </tr>
+            <tr class="legal-row">
+              <td><strong>Schrems I</strong><br><span class="text-rose-300">October 6, 2015</span></td>
+              <td>The CJEU invalidated Safe Harbor after Max Schrems' complaint against Facebook.</td>
+              <td>U.S. surveillance practices were treated as incompatible with EU fundamental-rights protection.</td>
+              <td>Companies had to rely on alternative legal mechanisms while regulators reassessed U.S. adequacy.</td>
+            </tr>
+            <tr class="legal-row">
+              <td><strong>Privacy Shield</strong><br><span class="text-amber-300">2016-2020</span></td>
+              <td>Replacement framework attempted to add stronger U.S. commitments.</td>
+              <td>The core problem remained: intelligence authorities still had broad access pathways.</td>
+              <td>Transfers resumed under a more fragile legal basis.</td>
+            </tr>
+            <tr class="legal-row">
+              <td><strong>Schrems II</strong><br><span class="text-red-300">July 16, 2020</span></td>
+              <td>The CJEU struck down Privacy Shield and tightened scrutiny of Standard Contractual Clauses.</td>
+              <td>FISA 702 and EO 12333 still failed to provide EU-equivalent redress and proportionality protections.</td>
+              <td>Data transfer became a continuing compliance and sovereignty problem, not a solved trade issue.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
-      <!-- Data Fortresses -->
-      <div class="data-fortresses bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700">
+      <!-- Data-border instruments -->
+      <div class="data-border-instruments bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 border border-slate-700">
         <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-          <i data-lucide="castle" class="w-5 h-5 text-amber-400"></i>
-          Birth of Data Fortresses
+          <i data-lucide="landmark" class="w-5 h-5 text-amber-400"></i>
+          Governance Instruments for Data Borders
         </h3>
         <div class="grid md:grid-cols-3 gap-6">
           <div class="p-6 bg-slate-950/50 rounded-xl border border-slate-700">
             <i data-lucide="map-pin" class="w-8 h-8 text-amber-400 mb-4"></i>
-            <h4 class="text-white font-semibold mb-2">Sovereign Cloud Regions</h4>
-            <p class="text-slate-400 text-sm">AWS, Azure, GCP create EU-only data centers with local control</p>
+            <h4 class="text-white font-semibold mb-2">Sovereign cloud regions</h4>
+            <p class="text-slate-400 text-sm">AWS, Azure, and GCP create local control arrangements for regulated data.</p>
           </div>
           <div class="p-6 bg-slate-950/50 rounded-xl border border-slate-700">
             <i data-lucide="lock" class="w-8 h-8 text-amber-400 mb-4"></i>
-            <h4 class="text-white font-semibold mb-2">Data Localization</h4>
-            <p class="text-slate-400 text-sm">Laws requiring citizen data remain within national borders</p>
+            <h4 class="text-white font-semibold mb-2">Data localization</h4>
+            <p class="text-slate-400 text-sm">States require selected citizen, public-sector, or strategic data to stay in national jurisdiction.</p>
           </div>
           <div class="p-6 bg-slate-950/50 rounded-xl border border-slate-700">
             <i data-lucide="building-2" class="w-8 h-8 text-amber-400 mb-4"></i>
-            <h4 class="text-white font-semibold mb-2">National Champions</h4>
-            <p class="text-slate-400 text-sm">Government-backed domestic cloud providers emerge</p>
+            <h4 class="text-white font-semibold mb-2">National champions</h4>
+            <p class="text-slate-400 text-sm">Governments support domestic providers to reduce dependency in sensitive layers.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 8. DATA SOVEREIGNTY MANDATE -->
-  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-amber-950/10 to-slate-950">
+  <!-- 8. DATA BORDERS -->
+  <div class="relative z-10 px-6 py-24 bg-gradient-to-b from-slate-950 via-amber-950/10 to-slate-950" data-reading-stage data-reading-title="Data Borders" data-reading-meta="Section 7 / 7" data-reading-index="7" data-reading-rgb="251, 113, 133">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 sovereignty-header">
+      <div class="text-center mb-16 data-borders-header">
         <div class="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-amber-500/10 border border-amber-500/30 rounded-full">
           <i data-lucide="database" class="w-4 h-4 text-amber-400"></i>
-          <span class="text-amber-400 font-mono text-sm tracking-widest uppercase">Data Sovereignty</span>
+          <span class="text-amber-400 font-mono text-sm tracking-widest uppercase">Data Borders</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Data as the New Oil</h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Data Becomes Jurisdictional Infrastructure</h2>
         <p class="text-slate-400 text-lg max-w-3xl mx-auto">
-          The Snowden revelations transformed how nations view data—from a commercial resource to a strategic national asset.
+          The Snowden disclosures reframed data from a mobile commercial input into a governable jurisdictional object: where data is stored, processed, and accessed now carries strategic meaning.
         </p>
       </div>
       
       <!-- The Shift -->
       <div class="grid lg:grid-cols-2 gap-12 mb-16">
         <div class="sovereignty-content">
-          <h3 class="text-2xl font-bold text-white mb-6">From Personal to National Resource</h3>
+          <h3 class="text-2xl font-bold text-white mb-6">From free flow to governed location</h3>
           <p class="text-slate-300 leading-relaxed mb-6">
-            Before 2013, data was primarily viewed through an economic lens—something to be mined, monetized, and moved freely. After Snowden, nations began treating data as a <strong class="text-amber-400">strategic resource</strong> requiring sovereign control.
+            Before 2013, data was primarily viewed through an economic lens: something to be mined, monetized, and moved freely. After Snowden, states increasingly treated data location, cloud jurisdiction, and lawful access as parts of national digital infrastructure.
           </p>
           
           <div class="space-y-4">
@@ -1169,8 +1661,8 @@
                 <i data-lucide="trending-up" class="w-5 h-5 text-amber-400"></i>
               </div>
               <div>
-                <h4 class="text-white font-semibold">Data Localization Laws</h4>
-                <p class="text-slate-400 text-sm mt-1">Russia, China, Vietnam, Indonesia, and others mandate local data storage</p>
+                <h4 class="text-white font-semibold">Data localization laws</h4>
+                <p class="text-slate-400 text-sm mt-1">States require certain citizen or sectoral data to remain inside national jurisdiction.</p>
               </div>
             </div>
             <div class="flex items-start gap-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
@@ -1178,8 +1670,8 @@
                 <i data-lucide="cpu" class="w-5 h-5 text-amber-400"></i>
               </div>
               <div>
-                <h4 class="text-white font-semibold">Precursor to AI Sovereignty</h4>
-                <p class="text-slate-400 text-sm mt-1">Training data becomes a national AI advantage; borders extend to digital realm</p>
+                <h4 class="text-white font-semibold">Sovereign cloud regions</h4>
+                <p class="text-slate-400 text-sm mt-1">Cloud providers create local control arrangements to satisfy public-sector and regulatory demands.</p>
               </div>
             </div>
             <div class="flex items-start gap-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
@@ -1187,8 +1679,8 @@
                 <i data-lucide="globe" class="w-5 h-5 text-amber-400"></i>
               </div>
               <div>
-                <h4 class="text-white font-semibold">Splinternet Acceleration</h4>
-                <p class="text-slate-400 text-sm mt-1">The unified global internet fragments into national or regional segments</p>
+                <h4 class="text-white font-semibold">AI sovereignty precursor</h4>
+                <p class="text-slate-400 text-sm mt-1">Training data, deployment channels, and model access become easier to politicize once data location is governable.</p>
               </div>
             </div>
           </div>
@@ -1197,18 +1689,18 @@
         <!-- Visualization -->
         <div class="sovereignty-visual">
           <div class="bg-slate-900 rounded-2xl p-8 border border-slate-700">
-            <h4 class="text-white font-semibold mb-6 text-center">The Data Sovereignty Shift</h4>
+            <h4 class="text-white font-semibold mb-6 text-center">The jurisdictional shift</h4>
             
             <div class="space-y-6">
               <!-- Before -->
               <div class="relative">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-slate-500 font-mono text-xs">PRE-2013</span>
-                  <span class="text-slate-500 font-mono text-xs">Global Commons</span>
+                  <span class="text-slate-500 font-mono text-xs">Free-flow assumption</span>
                 </div>
                 <div class="h-12 bg-slate-800 rounded-lg overflow-hidden flex">
                   <div class="w-full h-full bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-green-500/30 flex items-center justify-center">
-                    <span class="text-slate-400 text-sm">Free Flow of Data</span>
+                    <span class="text-slate-400 text-sm">Data as mobile commercial input</span>
                   </div>
                 </div>
               </div>
@@ -1222,20 +1714,20 @@
               <div class="relative">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-amber-400 font-mono text-xs">POST-2013</span>
-                  <span class="text-amber-400 font-mono text-xs">National Control</span>
+                  <span class="text-amber-400 font-mono text-xs">Jurisdictional Infrastructure</span>
                 </div>
                 <div class="h-16 bg-slate-800 rounded-lg overflow-hidden flex">
                   <div class="w-1/4 h-full bg-red-500/30 border-r border-slate-700 flex items-center justify-center">
-                    <span class="text-red-300 text-xs text-center">🇨🇳<br/>China</span>
+                    <span class="text-red-300 text-xs text-center">Localization</span>
                   </div>
                   <div class="w-1/4 h-full bg-blue-500/30 border-r border-slate-700 flex items-center justify-center">
-                    <span class="text-blue-300 text-xs text-center">🇪🇺<br/>EU</span>
+                    <span class="text-blue-300 text-xs text-center">Rights</span>
                   </div>
                   <div class="w-1/4 h-full bg-green-500/30 border-r border-slate-700 flex items-center justify-center">
-                    <span class="text-green-300 text-xs text-center">🇺🇸<br/>US</span>
+                    <span class="text-green-300 text-xs text-center">Lawful access</span>
                   </div>
                   <div class="w-1/4 h-full bg-amber-500/30 flex items-center justify-center">
-                    <span class="text-amber-300 text-xs text-center">🇷🇺<br/>Russia</span>
+                    <span class="text-amber-300 text-xs text-center">Sovereign cloud</span>
                   </div>
                 </div>
               </div>
@@ -1244,63 +1736,85 @@
             <div class="mt-6 p-4 bg-amber-950/30 rounded-lg border border-amber-500/20">
               <p class="text-amber-300 text-sm text-center">
                 <i data-lucide="alert-circle" class="w-4 h-4 inline mr-2"></i>
-                Data now flows within borders, not across them
+                Data governance becomes a question of storage, processing, jurisdiction, and access.
               </p>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Key Statistics -->
-      <div class="sovereignty-stats grid md:grid-cols-4 gap-6">
-        <div class="stat-card bg-slate-900/50 rounded-xl p-6 text-center border border-slate-700">
-          <div class="text-4xl font-bold text-amber-400 mb-2">100+</div>
-          <p class="text-slate-400 text-sm">Data localization measures worldwide</p>
-        </div>
-        <div class="stat-card bg-slate-900/50 rounded-xl p-6 text-center border border-slate-700">
-          <div class="text-4xl font-bold text-cyan-400 mb-2">$200B+</div>
-          <p class="text-slate-400 text-sm">Estimated economic impact of data restrictions</p>
-        </div>
-        <div class="stat-card bg-slate-900/50 rounded-xl p-6 text-center border border-slate-700">
-          <div class="text-4xl font-bold text-green-400 mb-2">75%</div>
-          <p class="text-slate-400 text-sm">of countries have data protection laws</p>
-        </div>
-        <div class="stat-card bg-slate-900/50 rounded-xl p-6 text-center border border-slate-700">
-          <div class="text-4xl font-bold text-red-400 mb-2">2013</div>
-          <p class="text-slate-400 text-sm">The year everything changed</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- CONCLUSION -->
-  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50">
-    <div class="max-w-4xl mx-auto text-center">
+  <div class="relative z-10 px-6 py-24 border-t border-slate-800/50" data-reading-stage data-reading-title="What the Rupture Changed" data-reading-meta="Section 7 / 7" data-reading-index="7" data-reading-rgb="251, 113, 133">
+    <div class="max-w-7xl mx-auto">
       <div class="conclusion-content">
-        <div class="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-red-500/10 border border-red-500/30 rounded-full">
-          <i data-lucide="history" class="w-5 h-5 text-red-400"></i>
-          <span class="text-red-400 font-mono text-sm tracking-widest uppercase">The Aftermath</span>
-        </div>
-        
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">The Commons Is Dead, Long Live the Commons</h2>
-        
-        <p class="text-xl text-slate-300 leading-relaxed mb-8">
-          The Snowden revelations of June 2013 didn't just expose surveillance programs—they shattered the foundational myth of the internet as a borderless, global commons. What emerged was a <strong class="text-white">fragmented landscape</strong> where data flows follow political borders, where trust is the scarcest commodity, and where the dream of a unified digital world gave way to the reality of digital sovereignty.
-        </p>
-        
-        <div class="border-l-4 border-red-500 pl-8 py-4 my-12 text-left bg-slate-900/50 rounded-r-xl">
-          <p class="text-xl text-slate-200 mb-4">
-            Fragmentation turns internet governance into internet geopolitics: data flows, routing, standards, and jurisdiction become objects of state power.
+        <div class="text-center max-w-4xl mx-auto">
+          <div class="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-red-500/10 border border-red-500/30 rounded-full">
+            <i data-lucide="history" class="w-5 h-5 text-red-400"></i>
+            <span class="text-red-400 font-mono text-sm tracking-widest uppercase">Splinternet Bridge</span>
+          </div>
+
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">What the Rupture Changed</h2>
+
+          <p class="text-xl text-slate-300 leading-relaxed mb-10">
+            The Snowden revelations of June 2013 did not end the internet commons by themselves. They changed how states, firms, courts, and publics interpreted the layers underneath it: trust, routing, governance, platforms, law, and data all became sites of geopolitical control.
           </p>
-          <cite class="text-slate-500 not-italic">Reading synthesis after Milton Mueller, <em>Will the Internet Fragment?</em> (2017)</cite>
         </div>
         
-        <div class="flex flex-wrap justify-center gap-4 mt-12">
-          <span class="px-4 py-2 bg-slate-800 text-slate-300 rounded-full text-sm font-mono">GDPR</span>
-          <span class="px-4 py-2 bg-slate-800 text-slate-300 rounded-full text-sm font-mono">Schrems II</span>
-          <span class="px-4 py-2 bg-slate-800 text-slate-300 rounded-full text-sm font-mono">Data Sovereignty</span>
-          <span class="px-4 py-2 bg-slate-800 text-slate-300 rounded-full text-sm font-mono">IANA Transition</span>
-          <span class="px-4 py-2 bg-slate-800 text-slate-300 rounded-full text-sm font-mono">Splinternet</span>
+        <div class="matrix-shell">
+          <table class="synthesis-table">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Pre-2013 assumption</th>
+                <th>Post-Snowden rupture</th>
+                <th>Bridge to Module 04</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Trust</th>
+                <td>The U.S.-anchored internet order could be treated as benign stewardship.</td>
+                <td>Stewardship became inseparable from asymmetric surveillance capacity.</td>
+                <td>Trusted and untrusted networks become explicit policy categories.</td>
+              </tr>
+              <tr>
+                <th>Routing</th>
+                <td>Traffic concentration was mainly a matter of speed, cost, and reliability.</td>
+                <td>Efficient routes became jurisdictional exposure and intelligence opportunity.</td>
+                <td>States start treating cables, gateways, and cloud regions as strategic terrain.</td>
+              </tr>
+              <tr>
+                <th>Governance</th>
+                <td>Multistakeholder institutions looked technically practical and politically neutral.</td>
+                <td>Governance legitimacy required visible de-Americanization and broader participation.</td>
+                <td>Standards bodies and governance forums become arenas of bloc competition.</td>
+              </tr>
+              <tr>
+                <th>Platforms</th>
+                <td>Major firms were primarily commercial services scaling across borders.</td>
+                <td>Platforms became trust intermediaries, lawful-access targets, and geopolitical actors.</td>
+                <td>App stores, clouds, and platform access become instruments of exclusion.</td>
+              </tr>
+              <tr>
+                <th>Law</th>
+                <td>Transatlantic data transfer could be handled as compliance paperwork.</td>
+                <td>Surveillance law became a condition for whether data could legally move.</td>
+                <td>Regulation becomes a sovereignty strategy, not only a privacy policy.</td>
+              </tr>
+              <tr>
+                <th>Data</th>
+                <td>Data was mobile, commercial, and naturally global.</td>
+                <td>Data became tied to jurisdiction, storage, processing, and access rights.</td>
+                <td>Data localization and sovereign cloud logic anticipate AI sovereignty.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="iana-residual mt-10">
+          Fragmentation turns internet governance into internet geopolitics: data flows, routing, standards, and jurisdiction become objects of state power. Module 04 follows that logic as it hardens into the splinternet.
         </div>
       </div>
     </div>
@@ -1314,8 +1828,8 @@
         Sources & References
       </h3>
       <p class="text-sm text-slate-400 leading-relaxed mb-6 max-w-3xl">
-        These references follow Part III's sequence: disclosure, defensive sovereignty, governance fracture, industry
-        trust responses, and the legal rupture over transatlantic data flows.
+        These references follow Part III's sequence: disclosure, defensive sovereignty, governance rebalancing, trust
+        repair, data borders, and the legal rupture over transatlantic data flows.
       </p>
       <div class="grid md:grid-cols-2 gap-4 text-sm">
         <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
@@ -1332,11 +1846,11 @@
           <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.2 Defensive sovereignty</p>
           <div class="space-y-3">
             <div>
-              <a href="https://gadebate.un.org/sites/default/files/gastatements/68/BR_en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Dilma Rousseff, UN General Assembly statement (2013)</a>
+              <a href="https://gadebate.un.org/sites/default/files/gastatements/68/br_en_25.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Dilma Rousseff, UN General Assembly statement (2013)</a>
               <p class="text-slate-500 mt-1">Brazil's diplomatic response after presidential communications were targeted.</p>
             </div>
             <div>
-              <a href="https://ella.link/about-us/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">EllaLink project overview</a>
+              <a href="https://ella.link/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">EllaLink project overview</a>
               <p class="text-slate-500 mt-1">An infrastructure example for bypassing North American hub dependence.</p>
             </div>
             <div>
@@ -1350,12 +1864,12 @@
           </div>
         </div>
         <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
-          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.3 Governance fracture</p>
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.3 Governance rebalancing</p>
           <a href="http://netmundial.br/netmundial-multistakeholder-statement/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">NETmundial Multistakeholder Statement (2014)</a>
           <p class="text-slate-500 mt-2">The primary document for the post-Snowden governance-fracture section.</p>
         </div>
         <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
-          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.5 Industry trust response</p>
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.5 Trust repair</p>
           <div class="space-y-3">
             <div>
               <a href="https://www.apple.com/customer-letter/" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">Apple, "A Message to Our Customers" (2016)</a>
@@ -1368,14 +1882,14 @@
           </div>
         </div>
         <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800">
-          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.6 Legal rupture</p>
+          <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 mb-3">Part III / 3.6 Data borders and legal rupture</p>
           <div class="space-y-3">
             <div>
-              <a href="https://curia.europa.eu/jcms/upload/docs/application/pdf/2015-10/cp150117en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">CJEU, Schrems I (Case C-362/14)</a>
+              <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62014CJ0362" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">EUR-Lex, CJEU judgment in Schrems I (Case C-362/14)</a>
               <p class="text-slate-500 mt-1">The ruling that ended Safe Harbor.</p>
             </div>
             <div>
-              <a href="https://curia.europa.eu/jcms/upload/docs/application/pdf/2020-07/cp200091en.pdf" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">CJEU, Schrems II (Case C-311/18)</a>
+              <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62018CJ0311" target="_blank" rel="noreferrer" class="block text-slate-200 font-medium underline decoration-cyan-400 underline-offset-4">EUR-Lex, CJEU judgment in Schrems II (Case C-311/18)</a>
               <p class="text-slate-500 mt-1">The ruling behind the Privacy Shield collapse and new transfer regime.</p>
             </div>
           </div>
@@ -1386,28 +1900,6 @@
 
   <!-- Styles -->
   <style>
-    /* Data Particles Animation */
-    .data-particles .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(6, 182, 212, 0.5);
-      border-radius: 50%;
-      animation: float 15s infinite;
-    }
-    .data-particles .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .data-particles .particle:nth-child(2) { left: 30%; animation-delay: 3s; }
-    .data-particles .particle:nth-child(3) { left: 50%; animation-delay: 6s; }
-    .data-particles .particle:nth-child(4) { left: 70%; animation-delay: 9s; }
-    .data-particles .particle:nth-child(5) { left: 90%; animation-delay: 12s; }
-    
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-    }
-    
     /* Smooth scroll behavior */
     html {
       scroll-behavior: smooth;
@@ -1421,6 +1913,140 @@
       if (typeof lucide !== 'undefined') {
         lucide.createIcons();
       }
+
+      const moduleNav = document.querySelector('.module-nav');
+      const readingStatusName = document.querySelector('.reading-status-name');
+      const readingStatusMeta = document.querySelector('.reading-status-meta');
+      const readingStatusSteps = Array.from(document.querySelectorAll('.reading-status-step'));
+      const readingSections = Array.from(document.querySelectorAll('[data-reading-stage]'));
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let activeReadingSection = 'overview';
+      let readingUpdateHandle = null;
+
+      const animateStatusCopy = () => {
+        if (prefersReducedMotion || typeof document.body.animate !== 'function') {
+          return;
+        }
+
+        [readingStatusName, readingStatusMeta].forEach((node) => {
+          if (!node) {
+            return;
+          }
+
+          node.animate(
+            [
+              { opacity: 0.55, transform: 'translateY(4px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ],
+            {
+              duration: 220,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+            }
+          );
+        });
+      };
+
+      const setReadingOverviewState = () => {
+        if (activeReadingSection === 'overview') {
+          return;
+        }
+
+        activeReadingSection = 'overview';
+        moduleNav?.style.setProperty('--active-chain-rgb', '148, 163, 184');
+
+        if (readingStatusName) {
+          readingStatusName.textContent = 'The Rupture Chain';
+        }
+
+        if (readingStatusMeta) {
+          readingStatusMeta.textContent = 'Map of 7 Sections';
+        }
+
+        readingStatusSteps.forEach((step) => {
+          step.classList.remove('is-active', 'is-complete');
+        });
+
+        animateStatusCopy();
+      };
+
+      const setActiveReadingStage = (section) => {
+        if (!section || activeReadingSection === section) {
+          return;
+        }
+
+        activeReadingSection = section;
+
+        const title = section.dataset.readingTitle || 'The Rupture Chain';
+        const meta = section.dataset.readingMeta || 'Section';
+        const index = Math.max(1, Number(section.dataset.readingIndex || 1));
+        const accent = section.dataset.readingRgb || '148, 163, 184';
+
+        moduleNav?.style.setProperty('--active-chain-rgb', accent);
+
+        if (readingStatusName) {
+          readingStatusName.textContent = title;
+        }
+
+        if (readingStatusMeta) {
+          readingStatusMeta.textContent = meta;
+        }
+
+        readingStatusSteps.forEach((step, stepIndex) => {
+          step.classList.toggle('is-active', stepIndex === index - 1);
+          step.classList.toggle('is-complete', stepIndex < index - 1);
+        });
+
+        animateStatusCopy();
+      };
+
+      const updateReadingStageFromScroll = () => {
+        readingUpdateHandle = null;
+
+        if (!readingSections.length) {
+          return;
+        }
+
+        const navOffset = moduleNav?.offsetHeight || 88;
+        const overviewThreshold = readingSections[0].offsetTop - navOffset - 120;
+        if (window.scrollY < overviewThreshold) {
+          setReadingOverviewState();
+          return;
+        }
+
+        const targetLine = navOffset + window.innerHeight * 0.24;
+        let nextSection = readingSections[0];
+        let smallestDistance = Number.POSITIVE_INFINITY;
+
+        readingSections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.bottom <= navOffset + 32) {
+            return;
+          }
+
+          const distance = Math.abs(rect.top - targetLine);
+          if (distance < smallestDistance) {
+            smallestDistance = distance;
+            nextSection = section;
+          }
+        });
+
+        setActiveReadingStage(nextSection);
+      };
+
+      const requestReadingUpdate = () => {
+        if (readingUpdateHandle !== null) {
+          return;
+        }
+
+        readingUpdateHandle = window.requestAnimationFrame(updateReadingStageFromScroll);
+      };
+
+      setReadingOverviewState();
+      window.addEventListener('scroll', requestReadingUpdate, { passive: true });
+      window.addEventListener('resize', requestReadingUpdate);
+      window.addEventListener('hashchange', requestReadingUpdate);
+      window.addEventListener('load', requestReadingUpdate);
+      requestReadingUpdate();
       
       const revealFallback = () => {
         document.querySelectorAll('.opacity-0').forEach((el) => el.classList.remove('opacity-0'));
@@ -1475,6 +2101,166 @@
           duration: 1,
           delay: 1.5
         });
+
+        // Rupture Chain Map
+        gsap.from('.rupture-band', {
+          scrollTrigger: {
+            trigger: '.rupture-map',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true
+          },
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power2.out'
+        });
+
+        const createUpstreamMotion = () => {
+          const diagram = document.querySelector('.upstream-diagram');
+          if (!diagram) return;
+
+          const mainPacket = diagram.querySelector('.upstream-packet--main');
+          const copyPacket = diagram.querySelector('.upstream-packet--copy');
+          const tapCore = diagram.querySelector('.upstream-tap-core');
+          const tapBranch = diagram.querySelector('.upstream-branch');
+          const collection = diagram.querySelector('.upstream-collection');
+          const collectionGlow = diagram.querySelector('.upstream-collection-glow');
+          const cableHighlight = diagram.querySelector('.upstream-cable-highlight');
+
+          if (!mainPacket || !copyPacket || !tapCore || !tapBranch || !collection || !collectionGlow || !cableHighlight) {
+            return;
+          }
+
+          const reset = () => {
+            gsap.set(mainPacket, { attr: { cx: 48, cy: 125 }, autoAlpha: 1 });
+            gsap.set(copyPacket, { attr: { cx: 200, cy: 125 }, autoAlpha: 0 });
+            gsap.set(cableHighlight, { opacity: 0.2 });
+            gsap.set(tapBranch, { opacity: 0.45, stroke: '#ef4444' });
+            gsap.set(tapCore, { scale: 1, transformOrigin: '50% 50%' });
+            gsap.set(collection, { scale: 1, transformOrigin: '50% 50%' });
+            gsap.set(collectionGlow, { opacity: 0.1 });
+          };
+
+          reset();
+
+          const loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.1, defaults: { ease: 'none' } });
+
+          loop
+            .call(reset)
+            .to(cableHighlight, { opacity: 0.9, duration: 0.35 }, 0)
+            .to(mainPacket, { attr: { cx: 190, cy: 125 }, duration: 1.1 }, 0)
+            .to(tapCore, { scale: 1.08, duration: 0.22, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 0.92)
+            .to(tapBranch, { opacity: 1, stroke: '#fda4af', duration: 0.2 }, 0.95)
+            .set(copyPacket, { autoAlpha: 1 }, 0.96)
+            .to(copyPacket, { attr: { cx: 200, cy: 190 }, duration: 0.55, ease: 'power1.in' }, 0.96)
+            .to(collectionGlow, { opacity: 0.75, duration: 0.22, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 1.34)
+            .to(collection, { scale: 1.04, duration: 0.24, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 1.32)
+            .to(mainPacket, { attr: { cx: 355, cy: 125 }, duration: 1.05 }, 1.05)
+            .to(copyPacket, { autoAlpha: 0, duration: 0.18 }, 1.55)
+            .to(cableHighlight, { opacity: 0.2, duration: 0.35 }, 1.62)
+            .to(tapBranch, { opacity: 0.45, stroke: '#ef4444', duration: 0.25 }, 1.62);
+
+          ScrollTrigger.create({
+            trigger: '.upstream-shock',
+            start: 'top 78%',
+            onEnter: () => loop.play(0),
+            onEnterBack: () => loop.play(0),
+            onLeave: () => { loop.pause(0); reset(); },
+            onLeaveBack: () => { loop.pause(0); reset(); }
+          });
+        };
+
+        const createRoutingMotion = () => {
+          const visual = document.querySelector('.routing-geography-visuals');
+          if (!visual) return;
+
+          const starRoutes = visual.querySelectorAll('.route-star');
+          const starPacketA = visual.querySelector('.routing-packet--star-a');
+          const starPacketB = visual.querySelector('.routing-packet--star-b');
+          const starPacketC = visual.querySelector('.routing-packet--star-c');
+          const hubPulse = visual.querySelector('.route-hub-pulse');
+          const reroutePaths = visual.querySelectorAll('.route-reroute');
+          const reroutePacketA = visual.querySelector('.routing-packet--reroute-a');
+          const reroutePacketB = visual.querySelector('.routing-packet--reroute-b');
+          const reroutePacketC = visual.querySelector('.routing-packet--reroute-c');
+          const rerouteNodes = visual.querySelectorAll('.route-reroute-node');
+
+          if (starRoutes.length !== 3 || !starPacketA || !starPacketB || !starPacketC || !hubPulse || reroutePaths.length !== 3 || !reroutePacketA || !reroutePacketB || !reroutePacketC || !rerouteNodes.length) {
+            return;
+          }
+
+          const reset = () => {
+            gsap.set(starRoutes, { opacity: 0.12, strokeWidth: 3 });
+            gsap.set(starPacketA, { attr: { cx: 63, cy: 90 }, autoAlpha: 0 });
+            gsap.set(starPacketB, { attr: { cx: 150, cy: 40 }, autoAlpha: 0 });
+            gsap.set(starPacketC, { attr: { cx: 63, cy: 190 }, autoAlpha: 0 });
+            gsap.set(hubPulse, { opacity: 0.12, scale: 1, transformOrigin: '50% 50%' });
+            gsap.set(reroutePaths, { opacity: 0.12, strokeWidth: 3 });
+            gsap.set(reroutePacketA, { attr: { cx: 50, cy: 100 }, autoAlpha: 0 });
+            gsap.set(reroutePacketB, { attr: { cx: 50, cy: 180 }, autoAlpha: 0 });
+            gsap.set(reroutePacketC, { attr: { cx: 250, cy: 100 }, autoAlpha: 0 });
+            gsap.set(rerouteNodes, { fill: '#064e3b', stroke: '#10b981' });
+          };
+
+          reset();
+
+          const loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.35 });
+
+          loop
+            .call(reset)
+            .to(starRoutes[0], { opacity: 0.92, duration: 0.2 }, 0)
+            .set(starPacketA, { autoAlpha: 1 }, 0)
+            .to(starPacketA, { attr: { cx: 150, cy: 140 }, duration: 0.7, ease: 'none' }, 0)
+            .to(hubPulse, { opacity: 0.68, scale: 1.08, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 0.56)
+            .to(starPacketA, { attr: { cx: 237, cy: 90 }, duration: 0.72, ease: 'none' }, 0.72)
+            .to(starPacketA, { autoAlpha: 0, duration: 0.14 }, 1.34)
+            .to(starRoutes[1], { opacity: 0.9, duration: 0.2 }, 1.12)
+            .set(starPacketB, { autoAlpha: 1 }, 1.12)
+            .to(starPacketB, { attr: { cx: 150, cy: 140 }, duration: 0.64, ease: 'none' }, 1.12)
+            .to(hubPulse, { opacity: 0.7, scale: 1.08, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 1.62)
+            .to(starPacketB, { attr: { cx: 237, cy: 190 }, duration: 0.74, ease: 'none' }, 1.78)
+            .to(starPacketB, { autoAlpha: 0, duration: 0.14 }, 2.42)
+            .to(starRoutes[2], { opacity: 0.9, duration: 0.2 }, 2.18)
+            .set(starPacketC, { autoAlpha: 1 }, 2.18)
+            .to(starPacketC, { attr: { cx: 150, cy: 140 }, duration: 0.64, ease: 'none' }, 2.18)
+            .to(hubPulse, { opacity: 0.72, scale: 1.09, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 2.68)
+            .to(starPacketC, { attr: { cx: 150, cy: 240 }, duration: 0.68, ease: 'none' }, 2.84)
+            .to(starPacketC, { autoAlpha: 0, duration: 0.14 }, 3.42)
+            .to(starRoutes, { opacity: 0.16, duration: 0.3, stagger: 0.04 }, 3.38)
+            .to(reroutePaths[0], { opacity: 0.92, duration: 0.22 }, 3.78)
+            .set(reroutePacketA, { autoAlpha: 1 }, 3.78)
+            .to(reroutePacketA, { attr: { cx: 150, cy: 50 }, duration: 0.52, ease: 'none' }, 3.78)
+            .to(rerouteNodes[0], { fill: '#164e63', stroke: '#67e8f9', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.24)
+            .to(reroutePacketA, { attr: { cx: 250, cy: 100 }, duration: 0.54, ease: 'none' }, 4.34)
+            .to(rerouteNodes[1], { fill: '#164e63', stroke: '#67e8f9', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 4.8)
+            .to(reroutePacketA, { attr: { cx: 150, cy: 230 }, duration: 0.58, ease: 'none' }, 4.9)
+            .to(rerouteNodes[3], { fill: '#164e63', stroke: '#67e8f9', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 5.4)
+            .to(reroutePacketA, { autoAlpha: 0, duration: 0.12 }, 5.56)
+            .to(reroutePaths[1], { opacity: 0.86, duration: 0.18 }, 5.18)
+            .set(reroutePacketB, { autoAlpha: 1 }, 5.18)
+            .to(reroutePacketB, { attr: { cx: 150, cy: 50 }, duration: 0.56, ease: 'none' }, 5.18)
+            .to(reroutePacketB, { attr: { cx: 250, cy: 180 }, duration: 0.74, ease: 'none' }, 5.74)
+            .to(rerouteNodes[2], { fill: '#14532d', stroke: '#86efac', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 6.32)
+            .to(reroutePacketB, { autoAlpha: 0, duration: 0.12 }, 6.5)
+            .to(reroutePaths[2], { opacity: 0.84, duration: 0.18 }, 6.02)
+            .set(reroutePacketC, { autoAlpha: 1 }, 6.02)
+            .to(reroutePacketC, { attr: { cx: 50, cy: 180 }, duration: 0.88, ease: 'none' }, 6.02)
+            .to(rerouteNodes[4], { fill: '#164e63', stroke: '#a5f3fc', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 6.76)
+            .to(reroutePacketC, { attr: { cx: 150, cy: 230 }, duration: 0.52, ease: 'none' }, 6.94)
+            .to(reroutePacketC, { autoAlpha: 0, duration: 0.12 }, 7.42)
+            .to(reroutePaths, { opacity: 0.18, duration: 0.26, stagger: 0.04 }, 7.36);
+
+          ScrollTrigger.create({
+            trigger: '.routing-geography-visuals',
+            start: 'top 78%',
+            onEnter: () => loop.play(0),
+            onEnterBack: () => loop.play(0),
+            onLeave: () => { loop.pause(0); reset(); },
+            onLeaveBack: () => { loop.pause(0); reset(); }
+          });
+        };
         
         // Innocence Section
         gsap.from('.innocence-content', {
@@ -1528,11 +2314,12 @@
           duration: 0.8,
           ease: 'power2.out'
         });
+        createUpstreamMotion();
         
-        // Westphalia Cards
-        gsap.from('.westphalia-card', {
+        // Defensive Sovereignty Panels
+        gsap.from('.response-panel', {
           scrollTrigger: {
-            trigger: '.westphalia-header',
+            trigger: '.defensive-sovereignty-header',
             start: 'top 70%',
             toggleActions: 'play none none none'
           },
@@ -1543,8 +2330,8 @@
           ease: 'power2.out'
         });
         
-        // Timeline Items
-        gsap.utils.toArray('#week1-part3 .timeline-item').forEach((item) => {
+        // Response Ladder
+        gsap.utils.toArray('#week1-part3 .response-rung').forEach((item) => {
           gsap.from(item, {
             scrollTrigger: {
               trigger: item,
@@ -1560,10 +2347,10 @@
           });
         });
         
-        // NETmundial Camps
+        // Governance Rebalancing Camps
         gsap.from('.camp-card', {
           scrollTrigger: {
-            trigger: '.netmundial-header',
+            trigger: '.governance-rebalancing-header',
             start: 'top 85%',
             toggleActions: 'play none none none',
             once: true
@@ -1591,7 +2378,7 @@
         // Topology Cards
         gsap.from('.topology-card', {
           scrollTrigger: {
-            trigger: '.topology-header',
+            trigger: '.routing-geography-header',
             start: 'top 70%',
             toggleActions: 'play none none none'
           },
@@ -1601,11 +2388,12 @@
           stagger: 0.2,
           ease: 'power2.out'
         });
+        createRoutingMotion();
         
-        // Industry Section
+        // Trust Repair Section
         gsap.from('.encryption-revolution', {
           scrollTrigger: {
-            trigger: '.industry-header',
+            trigger: '.trust-repair-header',
             start: 'top 70%',
             toggleActions: 'play none none none'
           },
@@ -1628,8 +2416,8 @@
           ease: 'power2.out'
         });
         
-        // Legal Timeline
-        gsap.utils.toArray('.timeline-case').forEach((item) => {
+        // Legal Matrix
+        gsap.utils.toArray('.legal-row').forEach((item) => {
           gsap.from(item, {
             scrollTrigger: {
               trigger: item,
@@ -1644,10 +2432,10 @@
           });
         });
         
-        // Data Fortresses
-        gsap.from('.data-fortresses', {
+        // Data-Border Instruments
+        gsap.from('.data-border-instruments', {
           scrollTrigger: {
-            trigger: '.data-fortresses',
+            trigger: '.data-border-instruments',
             start: 'top 85%',
             toggleActions: 'play none none none'
           },
@@ -1657,10 +2445,10 @@
           ease: 'power2.out'
         });
         
-        // Sovereignty Section
+        // Data Borders Section
         gsap.from('.sovereignty-content', {
           scrollTrigger: {
-            trigger: '.sovereignty-header',
+            trigger: '.data-borders-header',
             start: 'top 70%',
             toggleActions: 'play none none none'
           },
@@ -1672,27 +2460,13 @@
         
         gsap.from('.sovereignty-visual', {
           scrollTrigger: {
-            trigger: '.sovereignty-header',
+            trigger: '.data-borders-header',
             start: 'top 70%',
             toggleActions: 'play none none none'
           },
           opacity: 0,
           x: 40,
           duration: 0.7,
-          ease: 'power2.out'
-        });
-        
-        gsap.from('.stat-card', {
-          scrollTrigger: {
-            trigger: '.sovereignty-stats',
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-          },
-          opacity: 0,
-          y: 30,
-          scale: 0.95,
-          duration: 0.5,
-          stagger: 0.1,
           ease: 'power2.out'
         });
         
