@@ -5,14 +5,14 @@ To host five distinct student projects without conflicting with the main site's 
 
 Since the platform is deployed via static hosting (e.g., GitHub Pages), the server only serves static assets. This provides immense flexibility:
 
-*   **Folder Structure:** The repository contains a `/projects/` directory with five subfolders (e.g., `/projects/group-alpha/`).
+*   **Folder Structure:** The repository contains a `/projects/` directory with five numbered subfolders (e.g., `/projects/group-1/` through `/projects/group-5/`).
 *   **The Baseline (Option A Students):** Students using basic HTML/CSS methods can simply drop their `index.html` and `styles.css` into their assigned folder.
 *   **The Advanced (Option B Students):** Groups with stronger technical skills can build complex apps (React, Vue, Three.js) by running their build command locally and pushing the static output (`dist/` or `out/`) into their folder.
 
 ### The Integration Strategy
 When a user clicks on a student project from the Hub, they are presented with two options:
 1.  **Direct Link:** Opens the project in its own page (fastest, least brittle).
-2.  **Preview (Iframe Wrapper):** Opens a "Project Viewer" page on the main site. This page features a standard navigation bar at the top (maintaining the course ecosystem context) and a sandboxed `<iframe src="/projects/group-alpha/index.html">` taking up the remaining viewport. The iframe acts as a quarantine zone, preventing student code from breaking the main site.
+2.  **Preview (Iframe Wrapper):** Opens a "Project Viewer" page on the main site. This page features a standard navigation bar at the top (maintaining the course ecosystem context) and a sandboxed `<iframe src="/projects/group-1/index.html">` taking up the remaining viewport. The iframe acts as a quarantine zone, preventing student code from breaking the main site.
 
 ## 2. The Repository Structure (Federated Model)
 The repository acts as a strict filing system to support a 3D interface without mixing student code with the master narrative.

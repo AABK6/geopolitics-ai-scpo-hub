@@ -764,6 +764,167 @@
       box-shadow: none;
     }
 
+    #week1-part2 .gfw-hybrid-card {
+      overflow: hidden;
+    }
+
+    #week1-part2 .gfw-hybrid-head {
+      max-width: 42rem;
+      margin: 0 auto 0.75rem;
+      text-align: center;
+    }
+
+    #week1-part2 .gfw-hybrid-head h3 {
+      margin-bottom: 0.45rem;
+    }
+
+    #week1-part2 .gfw-hybrid-shell {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    #week1-part2 .gfw-network-stage {
+      position: relative;
+      padding: 0.6rem 0.7rem 0.45rem;
+      border: 1px solid rgba(95, 71, 39, 0.14);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255, 250, 243, 0.98), rgba(247, 241, 232, 0.98));
+      overflow: hidden;
+    }
+
+    #week1-part2 .gfw-stage-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 14rem;
+      border-radius: calc(var(--radius-lg) - 0.15rem);
+    }
+
+    #week1-part2 .gfw-node {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    #week1-part2 .gfw-svg-node-title {
+      fill: var(--rebuttal-ink, #172531);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    #week1-part2 .gfw-svg-cable {
+      fill: none;
+      stroke: rgba(96, 117, 141, 0.72);
+      stroke-width: 5.5;
+      stroke-linecap: round;
+    }
+
+    #week1-part2 .gfw-svg-stem {
+      stroke: rgba(95, 71, 39, 0.18);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    #week1-part2 .gfw-svg-sensor-link {
+      fill: none;
+      stroke: rgba(145, 113, 76, 0.58);
+      stroke-width: 2.5;
+      stroke-dasharray: 8 8;
+      stroke-linecap: round;
+    }
+
+    #week1-part2 .gfw-packet {
+      opacity: 0;
+    }
+
+    #week1-part2 .gfw-packet circle {
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+    }
+
+    #week1-part2 .gfw-packet-query-one circle,
+    #week1-part2 .gfw-packet-reply-one circle,
+    #week1-part2 .gfw-packet-query-two circle {
+      fill: rgba(96, 117, 141, 0.96);
+      stroke: rgba(255, 250, 243, 0.95);
+    }
+
+    #week1-part2 .gfw-packet-late circle {
+      fill: rgba(96, 117, 141, 0.34);
+      stroke: rgba(96, 117, 141, 0.72);
+    }
+
+    #week1-part2 .gfw-packet-stop circle {
+      fill: rgba(159, 86, 78, 0.96);
+      stroke: rgba(255, 250, 243, 0.95);
+    }
+
+    #week1-part2 .gfw-stage-meta {
+      display: grid;
+      gap: 0.12rem;
+      justify-items: center;
+      padding-top: 0.1rem;
+    }
+
+    #week1-part2 .gfw-loop-mode {
+      min-height: 1rem;
+      margin: 0;
+      color: var(--rebuttal-caption, #62554a);
+      font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+      font-size: 0.76rem;
+      font-weight: var(--font-medium, 500);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    #week1-part2 .gfw-loop-status {
+      min-height: 1.4rem;
+      margin: 0;
+      color: var(--rebuttal-sovereignty-ink, #612b24);
+      font-size: 0.94rem;
+      font-weight: var(--font-medium, 500);
+      text-align: center;
+    }
+
+    #week1-part2 .gfw-loop-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.85rem 1.1rem;
+      padding-top: 0.15rem;
+    }
+
+    #week1-part2 .gfw-loop-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--rebuttal-caption, #62554a);
+      font-size: 0.76rem;
+      font-weight: var(--font-medium, 500);
+    }
+
+    #week1-part2 .gfw-loop-swatch {
+      width: 0.82rem;
+      height: 0.82rem;
+      border-radius: 999px;
+      display: inline-block;
+      border: 1px solid rgba(95, 71, 39, 0.14);
+      background: rgba(255, 250, 243, 0.96);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    #week1-part2 .gfw-loop-swatch-blue {
+      background: rgba(96, 117, 141, 0.96);
+      border-color: rgba(255, 250, 243, 0.95);
+    }
+
+    #week1-part2 .gfw-loop-swatch-red {
+      background: rgba(159, 86, 78, 0.96);
+      border-color: rgba(255, 250, 243, 0.95);
+    }
+
     #week1-part2 .bat-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1103,6 +1264,18 @@
 
       #week1-part2 .hero-thesis-points {
         grid-template-columns: 1fr;
+      }
+
+      #week1-part2 .tech-card--wide .space-y-6 {
+        grid-template-columns: 1fr;
+      }
+
+      #week1-part2 .gfw-stage-svg {
+        min-height: 12rem;
+      }
+
+      #week1-part2 .gfw-svg-node-title {
+        font-size: 15px;
       }
 
       #week1-part2 .bat-card {
@@ -1568,8 +1741,8 @@
           </div>
 
           <!-- Technical Deep Dive -->
-          <div class="section-duo-grid grid lg:grid-cols-2 gap-8 mb-10">
-            <div class="tech-card bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
+          <div class="gfw-deep-dive-stack">
+            <div class="tech-card tech-card--wide bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
               <div class="flex items-center gap-3 mb-6">
                 <div class="w-12 h-12 bg-orange-600/20 rounded-xl flex items-center justify-center">
                   <i data-lucide="cpu" class="w-6 h-6 text-orange-400"></i>
@@ -1617,64 +1790,76 @@
             </div>
 
             <!-- GFW Architecture Diagram -->
-            <div class="diagram-card bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
-              <h3 class="text-xl font-semibold text-white mb-6 text-center">GFW Architecture</h3>
-              <div class="space-y-4">
-                <!-- User -->
-                <div class="flex items-center gap-4">
-                  <div class="w-16 h-16 bg-blue-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="user" class="w-8 h-8 text-blue-400"></i>
-                  </div>
-                  <div class="flex-1 p-3 bg-blue-900/20 rounded-lg border border-blue-700/30">
-                    <p class="text-blue-300 text-sm font-medium">User Request</p>
-                  </div>
+            <div class="diagram-card gfw-hybrid-card bg-slate-900/60 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
+              <div class="gfw-hybrid-head">
+                <p class="contrast-caption mb-3">Gateway explainer</p>
+                <h3 class="text-xl font-semibold text-white">One Line, Two Outcomes</h3>
+                <p class="text-slate-300 text-sm leading-relaxed max-w-3xl mx-auto">
+                  Every request is scanned at the border. Most pass through and return normally. Flagged ones trigger a
+                  forged stop reply from the side before the late real reply can get back.
+                </p>
+              </div>
+
+              <div class="gfw-hybrid-shell">
+                <div class="gfw-network-stage" aria-label="Looping diagram showing one authorized request and one unauthorized request moving on the same connection line">
+                  <svg class="gfw-stage-svg" viewBox="0 0 1000 250" role="img" aria-hidden="true">
+                    <line class="gfw-svg-cable" x1="150" y1="122" x2="850" y2="122"></line>
+
+                    <line class="gfw-svg-stem" x1="150" y1="80" x2="150" y2="122"></line>
+                    <line class="gfw-svg-stem" x1="500" y1="80" x2="500" y2="122"></line>
+                    <line class="gfw-svg-stem" x1="850" y1="80" x2="850" y2="122"></line>
+                    <path class="gfw-svg-sensor-link" d="M 500 122 L 528 150"></path>
+
+                    <g class="gfw-node gfw-node-user" transform="translate(72 28)">
+                      <rect width="156" height="52" rx="16" fill="rgba(232, 238, 244, 0.94)" stroke="rgba(96, 117, 141, 0.18)" stroke-width="1.5"></rect>
+                      <text class="gfw-svg-node-title" x="78" y="33" text-anchor="middle">User</text>
+                    </g>
+
+                    <g class="gfw-node gfw-node-border" transform="translate(404 28)">
+                      <rect width="192" height="52" rx="16" fill="rgba(241, 231, 216, 0.98)" stroke="rgba(145, 113, 76, 0.18)" stroke-width="1.5"></rect>
+                      <text class="gfw-svg-node-title" x="96" y="33" text-anchor="middle">Border gateway</text>
+                    </g>
+
+                    <g class="gfw-node gfw-node-server" transform="translate(772 28)">
+                      <rect width="156" height="52" rx="16" fill="rgba(232, 238, 244, 0.94)" stroke="rgba(96, 117, 141, 0.18)" stroke-width="1.5"></rect>
+                      <text class="gfw-svg-node-title" x="78" y="33" text-anchor="middle">Global site</text>
+                    </g>
+
+                    <g class="gfw-node gfw-node-sensor" transform="translate(438 150)">
+                      <rect width="124" height="42" rx="14" fill="rgba(243, 227, 218, 0.98)" stroke="rgba(159, 86, 78, 0.18)" stroke-width="1.5"></rect>
+                      <text class="gfw-svg-node-title" x="62" y="27" text-anchor="middle">GFW sensor</text>
+                    </g>
+
+                    <g class="gfw-packet gfw-packet-query-one">
+                      <circle cx="150" cy="122" r="9"></circle>
+                    </g>
+
+                    <g class="gfw-packet gfw-packet-reply-one">
+                      <circle cx="850" cy="122" r="9"></circle>
+                    </g>
+
+                    <g class="gfw-packet gfw-packet-query-two">
+                      <circle cx="150" cy="122" r="9"></circle>
+                    </g>
+
+                    <g class="gfw-packet gfw-packet-stop">
+                      <circle cx="500" cy="122" r="9"></circle>
+                    </g>
+
+                    <g class="gfw-packet gfw-packet-late">
+                      <circle cx="850" cy="122" r="9"></circle>
+                    </g>
+                  </svg>
                 </div>
 
-                <!-- Arrow -->
-                <div class="flex justify-center">
-                  <i data-lucide="arrow-down" class="w-6 h-6 text-slate-500"></i>
+                <div class="gfw-stage-meta">
+                  <p class="gfw-loop-mode">Authorized</p>
+                  <p class="gfw-loop-status">Scanned and allowed.</p>
                 </div>
 
-                <!-- GFW -->
-                <div class="flex items-center gap-4">
-                  <div
-                    class="w-16 h-16 bg-gradient-to-br from-red-600 to-orange-700 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-red-900/30">
-                    <i data-lucide="shield" class="w-8 h-8 text-white"></i>
-                  </div>
-                  <div class="flex-1 p-4 bg-red-900/20 rounded-lg border border-red-700/30">
-                    <p class="text-red-300 text-sm font-medium mb-2">Great Firewall</p>
-                    <div class="flex flex-wrap gap-2">
-                      <span class="px-2 py-1 bg-red-800/40 text-red-200 text-xs rounded">DNS Poisoning</span>
-                      <span class="px-2 py-1 bg-red-800/40 text-red-200 text-xs rounded">IP Blocking</span>
-                      <span class="px-2 py-1 bg-red-800/40 text-red-200 text-xs rounded">DPI</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="flex justify-center">
-                  <div class="flex gap-8">
-                    <div class="flex flex-col items-center">
-                      <i data-lucide="arrow-down" class="w-6 h-6 text-green-500"></i>
-                      <span class="text-green-400 text-xs">Allowed</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                      <i data-lucide="x" class="w-6 h-6 text-red-500"></i>
-                      <span class="text-red-400 text-xs">Blocked</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Outcomes -->
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="p-3 bg-green-900/20 rounded-lg border border-green-700/30 text-center">
-                    <i data-lucide="globe" class="w-5 h-5 text-green-400 mx-auto mb-1"></i>
-                    <p class="text-green-300 text-xs">Global Internet</p>
-                  </div>
-                  <div class="p-3 bg-red-900/20 rounded-lg border border-red-700/30 text-center">
-                    <i data-lucide="ban" class="w-5 h-5 text-red-400 mx-auto mb-1"></i>
-                    <p class="text-red-300 text-xs">Connection Reset</p>
-                  </div>
+                <div class="gfw-loop-legend" aria-hidden="true">
+                  <span class="gfw-loop-key"><span class="gfw-loop-swatch gfw-loop-swatch-blue"></span> normal packet</span>
+                  <span class="gfw-loop-key"><span class="gfw-loop-swatch gfw-loop-swatch-red"></span> forged stop packet</span>
                 </div>
               </div>
             </div>
@@ -2448,19 +2633,224 @@
               ease: 'power2.out'
             });
 
-            // GFW architecture rows
-            gsap.from('.diagram-card .space-y-4 > .flex.items-center.gap-4', {
-              scrollTrigger: {
-                trigger: '.diagram-card',
-                start: 'top 82%',
-                toggleActions: 'play none none none'
-              },
-              x: -14,
-              duration: 0.45,
-              stagger: 0.1,
-              ease: 'power2.out'
-            });
+            // GFW single-line packet loop
+            const gfwDiagram = document.querySelector('.gfw-hybrid-card');
+            if (gfwDiagram) {
+              const queryOne = gfwDiagram.querySelector('.gfw-packet-query-one');
+              const replyOne = gfwDiagram.querySelector('.gfw-packet-reply-one');
+              const queryTwo = gfwDiagram.querySelector('.gfw-packet-query-two');
+              const stopPacket = gfwDiagram.querySelector('.gfw-packet-stop');
+              const lateReply = gfwDiagram.querySelector('.gfw-packet-late');
+              const userNode = gfwDiagram.querySelector('.gfw-node-user');
+              const gatewayNode = gfwDiagram.querySelector('.gfw-node-border');
+              const serverNode = gfwDiagram.querySelector('.gfw-node-server');
+              const sensorNode = gfwDiagram.querySelector('.gfw-node-sensor');
+              const sensorLink = gfwDiagram.querySelector('.gfw-svg-sensor-link');
+              const cable = gfwDiagram.querySelector('.gfw-svg-cable');
+              const mode = gfwDiagram.querySelector('.gfw-loop-mode');
+              const status = gfwDiagram.querySelector('.gfw-loop-status');
 
+              const userRect = userNode.querySelector('rect');
+              const gatewayRect = gatewayNode.querySelector('rect');
+              const serverRect = serverNode.querySelector('rect');
+              const sensorRect = sensorNode.querySelector('rect');
+
+              const nodeRestStyles = new Map([
+                [userRect, { fill: 'rgba(232, 238, 244, 0.94)', stroke: 'rgba(96, 117, 141, 0.18)', strokeWidth: 1.5 }],
+                [gatewayRect, { fill: 'rgba(241, 231, 216, 0.98)', stroke: 'rgba(145, 113, 76, 0.18)', strokeWidth: 1.5 }],
+                [serverRect, { fill: 'rgba(232, 238, 244, 0.94)', stroke: 'rgba(96, 117, 141, 0.18)', strokeWidth: 1.5 }],
+                [sensorRect, { fill: 'rgba(243, 227, 218, 0.98)', stroke: 'rgba(159, 86, 78, 0.18)', strokeWidth: 1.5 }]
+              ]);
+
+              const pulseNode = (target, rect, options = {}) => {
+                const scale = options.scale || 1.05;
+                const fill = options.fill || 'rgba(255, 250, 243, 0.98)';
+                const stroke = options.stroke || 'rgba(145, 113, 76, 0.52)';
+                const strokeWidth = options.strokeWidth || 2.8;
+                const duration = options.duration || 0.26;
+                const repeat = options.repeat || 1;
+                const rest = nodeRestStyles.get(rect);
+                const tl = gsap.timeline();
+                tl.to(target, {
+                  scale,
+                  duration,
+                  repeat,
+                  yoyo: true,
+                  ease: 'power1.inOut',
+                  transformOrigin: '50% 50%'
+                }, 0);
+                tl.to(rect, {
+                  fill,
+                  stroke,
+                  strokeWidth,
+                  duration,
+                  repeat,
+                  yoyo: true,
+                  ease: 'power1.inOut'
+                }, 0);
+                tl.set(target, { scale: 1 });
+                tl.set(rect, rest);
+                return tl;
+              };
+
+              const scanPulse = () => {
+                const tl = gsap.timeline();
+                tl.to(sensorLink, { stroke: 'rgba(145, 113, 76, 0.82)', strokeWidth: 3, duration: 0.18 }, 0);
+                tl.add(() => pulseNode(gatewayNode, gatewayRect, {
+                  scale: 1.05,
+                  fill: 'rgba(255, 249, 239, 0.98)',
+                  stroke: 'rgba(145, 113, 76, 0.66)',
+                  strokeWidth: 2.7,
+                  duration: 0.22,
+                  repeat: 1
+                }), 0);
+                tl.add(() => pulseNode(sensorNode, sensorRect, {
+                  scale: 1.06,
+                  fill: 'rgba(255, 246, 239, 0.98)',
+                  stroke: 'rgba(145, 113, 76, 0.7)',
+                  strokeWidth: 2.9,
+                  duration: 0.22,
+                  repeat: 1
+                }), 0.04);
+                tl.to(sensorLink, { stroke: 'rgba(145, 113, 76, 0.58)', strokeWidth: 2.5, duration: 0.18 }, 0.56);
+                return tl;
+              };
+
+              const alertPulse = () => {
+                const tl = gsap.timeline();
+                tl.to(sensorLink, { stroke: 'rgba(159, 86, 78, 0.96)', strokeWidth: 3.5, duration: 0.2 }, 0);
+                tl.add(() => pulseNode(gatewayNode, gatewayRect, {
+                  scale: 1.085,
+                  fill: 'rgba(255, 242, 238, 0.99)',
+                  stroke: 'rgba(159, 86, 78, 0.82)',
+                  strokeWidth: 3.4,
+                  duration: 0.24,
+                  repeat: 2
+                }), 0);
+                tl.add(() => pulseNode(sensorNode, sensorRect, {
+                  scale: 1.1,
+                  fill: 'rgba(255, 239, 234, 0.99)',
+                  stroke: 'rgba(159, 86, 78, 0.9)',
+                  strokeWidth: 3.6,
+                  duration: 0.24,
+                  repeat: 2
+                }), 0.03);
+                tl.to(sensorLink, { stroke: 'rgba(145, 113, 76, 0.58)', strokeWidth: 2.5, duration: 0.18 }, 0.92);
+                return tl;
+              };
+
+              const resetDiagram = () => {
+                mode.textContent = 'Authorized';
+                status.textContent = 'Scanned and allowed.';
+                gsap.set([queryOne, replyOne, queryTwo, stopPacket, lateReply], { autoAlpha: 0, x: 0 });
+                gsap.set([userNode, gatewayNode, serverNode, sensorNode], { scale: 1, opacity: 1, transformOrigin: '50% 50%' });
+                nodeRestStyles.forEach((styles, rect) => gsap.set(rect, styles));
+                gsap.set(sensorLink, { stroke: 'rgba(145, 113, 76, 0.58)', strokeWidth: 2.5, opacity: 0.9 });
+                gsap.set(cable, { stroke: 'rgba(96, 117, 141, 0.72)' });
+              };
+
+              resetDiagram();
+
+              const loop = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1.6, defaults: { ease: 'none' } });
+
+              loop
+                .call(resetDiagram)
+                .set(queryOne, { autoAlpha: 1 })
+                .add(() => pulseNode(userNode, userRect, {
+                  scale: 1.035,
+                  fill: 'rgba(243, 247, 251, 0.98)',
+                  stroke: 'rgba(96, 117, 141, 0.5)',
+                  strokeWidth: 2.3,
+                  duration: 0.22
+                }))
+                .to(queryOne, { x: 350, duration: 1.75 })
+                .call(() => {
+                  mode.textContent = 'Authorized';
+                  status.textContent = 'Scanned and allowed.';
+                })
+                .add(scanPulse())
+                .to({}, { duration: 0.45 })
+                .to(queryOne, { x: 700, duration: 1.55 })
+                .add(() => pulseNode(serverNode, serverRect, {
+                  scale: 1.04,
+                  fill: 'rgba(243, 247, 251, 0.98)',
+                  stroke: 'rgba(96, 117, 141, 0.5)',
+                  strokeWidth: 2.3,
+                  duration: 0.24
+                }), '-=0.05')
+                .to(queryOne, { autoAlpha: 0, duration: 0.08 })
+                .call(() => {
+                  status.textContent = 'Normal reply returns.';
+                })
+                .set(replyOne, { autoAlpha: 1 })
+                .to(replyOne, { x: -700, duration: 2.05 })
+                .add(() => pulseNode(userNode, userRect, {
+                  scale: 1.075,
+                  fill: 'rgba(243, 247, 251, 0.98)',
+                  stroke: 'rgba(96, 117, 141, 0.64)',
+                  strokeWidth: 3,
+                  duration: 0.28,
+                  repeat: 1
+                }), '-=0.18')
+                .to(replyOne, { autoAlpha: 0, duration: 0.08 })
+                .to({}, { duration: 1.25 })
+                .call(() => {
+                  mode.textContent = 'Unauthorized';
+                  status.textContent = 'Scanned and flagged.';
+                })
+                .set(queryTwo, { autoAlpha: 1 })
+                .add(() => pulseNode(userNode, userRect, {
+                  scale: 1.035,
+                  fill: 'rgba(243, 247, 251, 0.98)',
+                  stroke: 'rgba(96, 117, 141, 0.5)',
+                  strokeWidth: 2.3,
+                  duration: 0.22
+                }))
+                .to(queryTwo, { x: 350, duration: 1.75 })
+                .add(scanPulse())
+                .to({}, { duration: 0.18 })
+                .add(alertPulse())
+                .call(() => {
+                  status.textContent = 'Forged stop reply sent.';
+                })
+                .set(stopPacket, { autoAlpha: 1 }, 'unauth')
+                .to(queryTwo, { x: 700, duration: 1.5 }, 'unauth')
+                .to(stopPacket, { x: -350, duration: 1.5, ease: 'power1.out' }, 'unauth')
+                .add(() => pulseNode(serverNode, serverRect, {
+                  scale: 1.04,
+                  fill: 'rgba(243, 247, 251, 0.98)',
+                  stroke: 'rgba(96, 117, 141, 0.5)',
+                  strokeWidth: 2.3,
+                  duration: 0.24
+                }), 'unauth+=1.38')
+                .set(lateReply, { autoAlpha: 1 }, 'unauth+=1.45')
+                .to(lateReply, { x: -700, duration: 2.25 }, 'unauth+=1.45')
+                .to(queryTwo, { autoAlpha: 0, duration: 0.08 }, 'unauth+=1.5')
+                .add(() => pulseNode(userNode, userRect, {
+                  scale: 1.085,
+                  fill: 'rgba(255, 241, 236, 0.98)',
+                  stroke: 'rgba(159, 86, 78, 0.78)',
+                  strokeWidth: 3.2,
+                  duration: 0.32,
+                  repeat: 1
+                }), 'unauth+=1.35')
+                .to(stopPacket, { autoAlpha: 0, duration: 0.08 }, 'unauth+=1.5')
+                .call(() => {
+                  status.textContent = 'Late real reply loses.';
+                }, null, 'unauth+=1.95')
+                .to(lateReply, { autoAlpha: 0.14, duration: 0.24 }, 'unauth+=1.9')
+                .to(lateReply, { autoAlpha: 0, duration: 0.16 }, 'unauth+=2.28')
+                .to({}, { duration: 1.55 });
+
+              ScrollTrigger.create({
+                trigger: gfwDiagram,
+                start: 'top 82%',
+                onEnter: () => loop.play(0),
+                onEnterBack: () => loop.play(),
+                onLeave: () => loop.pause(),
+                onLeaveBack: () => loop.pause()
+              });
+            }
             // BAT cards
             gsap.from('.bat-card', {
               scrollTrigger: {
