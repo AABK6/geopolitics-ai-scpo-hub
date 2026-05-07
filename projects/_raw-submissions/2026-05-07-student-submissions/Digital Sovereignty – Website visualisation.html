@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Geopolitics of AI — Digital Sovereignty in the Age of Dependence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#080b12;--bg2:#0c1019;--bg3:#111620;--bg4:#161c28;
+--cyan:#00d4ff;--cyan-dim:#0094b3;--cyan-glow:rgba(0,212,255,.08);
+--red:#ff4d6a;--red-dim:#b33548;
+--txt:#c8cdd6;--txt-dim:#7a8294;--txt-muted:#4a5066;
+--border:rgba(0,212,255,.12);--border2:rgba(0,212,255,.06);
+--serif:'Cormorant Garamond',Georgia,serif;
+--body:'Outfit',-apple-system,sans-serif;
+--mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--cyan);color:var(--bg)}
+/* Grid overlay */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+background-size:60px 60px;opacity:.4}
+/* Accent text for italics in paragraphs */
+.body-text em,.body-text i,.section-prose em,.section-prose i{color:var(--cyan);font-style:italic;font-family:var(--serif)}
+sup a{color:var(--cyan-dim);text-decoration:none;font-family:var(--mono);font-size:.65em}
+sup a:hover{color:var(--cyan);text-decoration:underline}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.8rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,11,18,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);display:inline-block;margin-right:.6rem;animation:blink 3s ease infinite}
+.nav-brand{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt-dim);display:flex;align-items:center}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem 2.5rem;position:relative;z-index:1;
+background:linear-gradient(180deg,rgba(0,20,40,.4) 0%,var(--bg) 100%)}
+.hero-coords{font-family:var(--mono);font-size:.7rem;color:var(--txt-muted);letter-spacing:.1em;margin-bottom:1.5rem}
+.hero-status{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:.8rem;margin-bottom:2.5rem}
+.hero-status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:blink 2s ease infinite}
+.hero-status span{color:var(--txt-muted);font-weight:400}
+.hero h1{font-family:var(--serif);font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:1.08;font-weight:400;max-width:850px;margin-bottom:1.5rem;color:#e8ecf2}
+.hero h1 strong{color:var(--cyan);font-weight:600}
+.hero-sub{font-size:1.1rem;line-height:1.7;color:var(--txt-dim);max-width:680px;margin-bottom:3rem;font-weight:300}
+.hero-stats{display:flex;gap:3rem;margin-bottom:3rem;flex-wrap:wrap}
+.hero-stat .hs-num{font-family:var(--serif);font-size:2.5rem;color:var(--cyan);line-height:1}
+.hero-stat .hs-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-muted);margin-top:.3rem;max-width:180px;line-height:1.4}
+.hero-begin{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt-dim);text-decoration:none;display:flex;align-items:center;gap:1rem;margin-bottom:4rem;transition:color .2s}
+.hero-begin:hover{color:var(--cyan)}
+.hero-begin::before{content:'';width:40px;height:1px;background:var(--txt-muted)}
+.hero-ref{font-family:var(--mono);font-size:.62rem;color:var(--txt-muted);letter-spacing:.1em;position:absolute;bottom:2rem;right:2.5rem}
+/* SECTIONS */
+.section{padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.section-full{padding:6rem 2.5rem;position:relative;z-index:1}
+.section-num{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border);max-width:200px}
+.section-num .num{color:var(--cyan);font-weight:600}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.15;font-weight:400;margin-bottom:2rem;color:#e0e4eb;max-width:700px}
+.section-prose{font-size:.98rem;color:var(--txt-dim);max-width:700px;line-height:1.85;font-weight:300}
+.section-prose p+p{margin-top:1.2rem}
+.section-prose strong{color:var(--txt);font-weight:500}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1100px;margin:0 auto}
+/* Production function box */
+.eq-box{border:1px solid var(--border);padding:2rem 2.5rem;margin:2.5rem 0;max-width:700px;position:relative;background:var(--bg2)}
+.eq-box::before,.eq-box::after{content:'';position:absolute;width:12px;height:12px;border-color:var(--cyan);border-style:solid}
+.eq-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.eq-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.eq-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--txt-muted);margin-bottom:1rem}
+.eq-formula{font-family:var(--serif);font-size:2rem;color:#e0e4eb;margin-bottom:1.5rem}
+.eq-formula em{color:var(--cyan);font-style:italic}
+.eq-vars{display:flex;flex-direction:column;gap:.4rem}
+.eq-var-row{display:flex;align-items:center;gap:1rem;font-family:var(--mono);font-size:.78rem}
+.eq-var-row .var-letter{color:var(--cyan);font-weight:600;width:20px}
+.eq-var-row .var-name{color:var(--txt);text-transform:uppercase;letter-spacing:.1em;width:100px}
+.eq-var-row .var-desc{color:var(--txt-muted);font-weight:400}
+/* Definition block */
+.def-block{border-left:2px solid var(--cyan);padding:1.5rem 2rem;margin:2.5rem 0;max-width:700px;background:var(--cyan-glow)}
+.def-block p{font-family:var(--serif);font-size:1.05rem;line-height:1.7;color:#e0e4eb;font-style:italic}
+/* Framework cards */
+.fw-cards{display:flex;flex-direction:column;gap:1px;margin:2.5rem 0;max-width:700px;background:var(--border)}
+.fw-card{background:var(--bg3);padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:2rem}
+.fw-card .fw-org{font-family:var(--mono);font-size:.75rem;color:var(--cyan);font-weight:600;letter-spacing:.05em;min-width:70px}
+.fw-card .fw-focus{font-family:var(--mono);font-size:.68rem;color:var(--txt-muted);letter-spacing:.08em;text-transform:uppercase;text-align:right}
+.fw-card .fw-desc{font-size:.88rem;color:var(--txt-dim);flex:1;line-height:1.5}
+/* Asset boxes */
+.asset-grid{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0}
+.asset-box{border:1px solid var(--border);padding:.6rem 1.2rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--cyan);background:var(--cyan-glow);transition:all .2s}
+.asset-box:hover{border-color:var(--cyan);background:rgba(0,212,255,.12)}
+/* CASE STUDY LOCKS */
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);max-width:1100px;margin:3rem auto 0}
+.case-lock{background:var(--bg3);padding:2.5rem;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0110 0v3M5 10h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2z' fill='none' stroke='%2300d4ff' stroke-width='2'/%3E%3Ccircle cx='12' cy='16' r='1.5' fill='%2300d4ff'/%3E%3C/svg%3E") 12 12, pointer;
+position:relative;transition:background .3s}
+.case-lock:hover{background:var(--bg4)}
+.case-lock.unlocked{cursor:default}
+.case-lock .lock-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+.case-lock .lock-num{font-family:var(--mono);font-size:.7rem;color:var(--txt-muted)}
+.case-lock .lock-status{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid;border-radius:2px}
+.case-lock .lock-status.locked{color:var(--txt-muted);border-color:var(--txt-muted)}
+.case-lock .lock-status.open{color:var(--cyan);border-color:var(--cyan)}
+.lock-icon{font-size:2.5rem;margin-bottom:1rem;transition:transform .3s}
+.case-lock.unlocked .lock-icon{transform:rotate(-15deg)}
+.case-lock .lock-country{font-family:var(--serif);font-size:1.6rem;color:#e0e4eb;margin-bottom:.3rem}
+.case-lock .lock-approach{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-muted)}
+/* Case content */
+.case-content{display:none;max-width:1100px;margin:0 auto;padding:0 2.5rem}
+.case-content.active{display:block;animation:fadeIn .5s ease}
+.case-inner{background:var(--bg2);border:1px solid var(--border);border-top:none;padding:3rem}
+.case-coords{font-family:var(--mono);font-size:.68rem;color:var(--txt-muted);letter-spacing:.1em;margin-bottom:2rem}
+.case-section-title{font-family:var(--serif);font-size:1.8rem;line-height:1.2;color:#e0e4eb;margin-bottom:1.5rem}
+.case-intro{font-size:.95rem;color:var(--txt-dim);line-height:1.8;max-width:800px;margin-bottom:2.5rem}
+.case-intro em{color:var(--cyan);font-style:italic;font-family:var(--serif)}
+/* Leverage/dependency numbered items */
+.lever-section{margin:2rem 0}
+.lever-heading{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
+.lever-heading::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.lever-item{padding:1rem 0;border-bottom:1px solid var(--border)}
+.lever-item:last-child{border-bottom:none}
+.lever-item .li-num{font-family:var(--mono);font-size:.7rem;color:var(--cyan);margin-bottom:.3rem}
+.lever-item .li-name{font-family:var(--mono);font-size:.78rem;color:#e0e4eb;letter-spacing:.05em;margin-bottom:.5rem}
+.lever-item .li-desc{font-size:.88rem;color:var(--txt-dim);line-height:1.7}
+.lever-item .li-desc em{color:var(--cyan);font-style:italic;font-family:var(--serif)}
+.lever-item .li-desc strong{color:var(--txt);font-weight:500}
+/* Dep items - red accent */
+.dep-heading{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
+.dep-heading::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red)}
+.dep-item .li-num{color:var(--red)}
+.dep-item .li-name{color:var(--red)}
+/* Strategy bubble */
+.strategy-bubble{margin:2.5rem 0;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(0,212,255,.06),rgba(0,212,255,.02));border:1px solid rgba(0,212,255,.2);border-radius:12px;position:relative}
+.strategy-bubble::before{content:'DOMINANT STRATEGY';font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--cyan);position:absolute;top:-.5rem;left:1.5rem;background:var(--bg2);padding:0 .5rem}
+.strategy-bubble p{font-family:var(--serif);font-size:1.05rem;line-height:1.6;color:#e0e4eb;font-style:italic}
+/* Why bubble */
+.why-bubble{margin:2.5rem 0;padding:2rem 2.5rem;background:var(--bg3);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0}
+.why-bubble .why-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
+.why-bubble p{font-size:.92rem;color:var(--txt-dim);line-height:1.75}
+.why-bubble p strong{color:var(--cyan);font-weight:500}
+/* Comparison matrix */
+.matrix-cards{display:flex;flex-direction:column;gap:2rem;margin:2.5rem 0;max-width:1100px}
+.matrix-card{background:var(--bg3);border:1px solid var(--border);padding:2rem}
+.matrix-card .mc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.matrix-card .mc-country{font-family:var(--serif);font-size:1.4rem;color:#e0e4eb;display:flex;align-items:center;gap:.8rem}
+.matrix-card .mc-approach{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-muted)}
+.matrix-row{display:flex;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--border2)}
+.matrix-row:last-child{border-bottom:none}
+.matrix-row .mr-label{font-family:var(--mono);font-size:.68rem;color:var(--cyan);letter-spacing:.06em;text-transform:uppercase;min-width:160px;flex-shrink:0}
+.matrix-row .mr-val{font-size:.85rem;color:var(--txt-dim);line-height:1.6}
+/* Conclusion */
+.conclusion-block{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 2.5rem}
+.conclusion-inner{max-width:750px;margin:0 auto}
+.conclusion-inner blockquote{font-family:var(--serif);font-size:1.3rem;line-height:1.5;color:#e0e4eb;font-style:italic;border-left:2px solid var(--cyan);padding-left:1.5rem;margin:2rem 0 1rem}
+.conclusion-inner .bq-attr{font-family:var(--mono);font-size:.68rem;color:var(--txt-muted);letter-spacing:.06em;margin-bottom:2.5rem;padding-left:1.5rem}
+.principles-box{border:1px solid var(--border);padding:2rem 2.5rem;margin:2.5rem 0;position:relative;background:var(--bg3)}
+.principles-box::before,.principles-box::after{content:'';position:absolute;width:12px;height:12px;border-color:var(--cyan);border-style:solid}
+.principles-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.principles-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.principle{display:flex;gap:1rem;align-items:baseline;padding:.8rem 0;border-bottom:1px solid var(--border)}
+.principle:last-child{border-bottom:none}
+.principle .p-num{font-family:var(--serif);font-size:1.8rem;color:var(--cyan);min-width:40px}
+.principle .p-name{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:#e0e4eb;min-width:180px}
+.principle .p-desc{font-size:.85rem;color:var(--txt-dim);line-height:1.5}
+/* Footnotes */
+.fn-section{padding:4rem 2.5rem;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.fn-list{columns:2;column-gap:3rem;margin-top:1.5rem}
+.fn-item{font-size:.72rem;color:var(--txt-muted);line-height:1.5;margin-bottom:.5rem;break-inside:avoid;font-family:var(--mono)}
+.fn-item a{color:var(--cyan-dim);text-decoration:none;word-break:break-all}
+.fn-item a:hover{color:var(--cyan);text-decoration:underline}
+.fn-item .fn-num{color:var(--cyan);font-weight:600}
+/* Footer */
+footer{padding:2rem 2.5rem;border-top:1px solid var(--border);position:relative;z-index:1}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.footer-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.footer-meta .fm-label{font-family:var(--mono);font-size:.62rem;color:var(--txt-muted);letter-spacing:.1em;text-transform:uppercase}
+.footer-meta .fm-val{font-family:var(--mono);font-size:.72rem;color:var(--cyan)}
+.footer-sources{font-size:.65rem;color:var(--txt-muted);font-family:var(--mono);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* Responsive */
+@media(max-width:900px){
+.cases-grid{grid-template-columns:1fr}
+.nav-links{display:none}
+.hero-stats{gap:1.5rem}
+.fn-list{columns:1}
+.footer-meta{grid-template-columns:1fr 1fr}
+.matrix-row{flex-direction:column;gap:.3rem}
+.matrix-row .mr-label{min-width:auto}
+.fw-card{flex-direction:column;gap:.5rem;align-items:flex-start}
+.fw-card .fw-focus{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-brand"><span class="nav-dot"></span> GEOPOLITICS/AI</div>
+<ul class="nav-links">
+<li><a href="#condition">The Condition</a></li>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#position">Middle Powers</a></li>
+<li><a href="#cases">Field Studies</a></li>
+<li><a href="#matrix">Matrix</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#footnotes">Sources</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+<div class="hero-coords">48.8566° N · 2.3522° E</div>
+<div class="hero-status"><span>BRIEFING 01 — ACTIVE</span> <span style="margin-left:auto">14 PP.</span></div>
+<h1>The Geopolitics of <strong>Artificial&nbsp;Intelligence.</strong><br>A field report on digital sovereignty.</h1>
+<p class="hero-sub">Fewer than twelve computers in the world are large enough to train frontier AI models. Roughly 80% of nations lack sufficient AI infrastructure within their borders. This is the architecture of dependence — and the strategy of those negotiating its terms.</p>
+<div class="hero-stats">
+<div class="hero-stat"><div class="hs-num">90%</div><div class="hs-label">RARE-EARTH REFINING CONTROLLED BY CHINA</div></div>
+<div class="hero-stat"><div class="hs-num">70%</div><div class="hs-label">GLOBAL CLOUD HELD BY AWS, AZURE, GOOGLE</div></div>
+<div class="hero-stat"><div class="hs-num">70%</div><div class="hs-label">OF FOUNDATIONAL AI MODELS BUILT IN THE US</div></div>
+</div>
+<a href="#condition" class="hero-begin">BEGIN BRIEFING</a>
+<div class="hero-ref">REF · DS-2026-Q2 · TRANSMISSION OPEN</div>
+</header>
+
+<!-- 01 THE CONDITION -->
+<div class="section reveal" id="condition">
+<div class="section-num"><span class="num">01</span> THE CONDITION</div>
+<h2 class="section-title">Digital dependence in the age of AI.</h2>
+<div class="section-prose body-text">
+<p>Artificial intelligence is assuming a growing importance in geopolitics. Its role is evolving to the point where it directly impacts how states promote and develop their national and foreign policies. As discussed in the course, AI capability for a state is ultimately a production function of distinct inputs:</p>
+</div>
+
+<div class="eq-box reveal">
+<div class="eq-label">PRODUCTION FUNCTION</div>
+<div class="eq-formula">A = <em>f</em>(C, E, D) × T × η</div>
+<div class="eq-vars">
+<div class="eq-var-row"><span class="var-letter">C</span><span class="var-name">COMPUTE</span><span class="var-desc">Chips, GPUs, fabs</span></div>
+<div class="eq-var-row"><span class="var-letter">E</span><span class="var-name">ENERGY</span><span class="var-desc">Baseload for data centres</span></div>
+<div class="eq-var-row"><span class="var-letter">D</span><span class="var-name">DATA</span><span class="var-desc">Training corpora &amp; rights</span></div>
+<div class="eq-var-row"><span class="var-letter">T</span><span class="var-name">TALENT</span><span class="var-desc">Researchers &amp; engineers</span></div>
+<div class="eq-var-row"><span class="var-letter">η</span><span class="var-name">EFFICIENCY</span><span class="var-desc">How inputs combine</span></div>
+</div>
+</div>
+
+<div class="section-prose body-text reveal">
+<p>The states and firms that control these critical inputs of AI are accumulating structural advantages over those that do not, making digital dependence a pressing security concern.</p>
+<p><strong>This is not a prospective concern.</strong> The <strong>United States</strong> and <strong>China</strong> already dominate most layers of the AI infrastructure stack, from chip design and fabrication to the cloud platforms upon which models are trained and deployed. China controls around 90% of global rare earth refining capacity, essential for the hardware underpinning all digital systems, while Amazon, Microsoft, and Google alone account for roughly 70% of the global cloud market. The models themselves follow the same pattern: 70% of foundational AI systems have been developed in the United States and 15% in China (Bria et al., 2025)<sup><a href="#fn-0">0</a></sup>. For most nations, this means that the chips, data centres, and platforms their economies depend on are designed, owned, and governed elsewhere. This creates deep structural dependencies and clear imbalance in the distribution of AI power.</p>
+<p>For those who do not control all these inputs, the question is no longer whether to engage with foreign systems, but how to do so, with whom, on what terms and at what cost. These choices are being made now, driving innovation, growth and the modernization of public services. This strategic context is what leads to the question: <em>is it possible for middle power countries to achieve digital sovereignty?</em></p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 02 DEFINING THE TERM -->
+<div class="section reveal" id="definition">
+<div class="section-num"><span class="num">02</span> DEFINING THE TERM</div>
+<h2 class="section-title">Sovereignty under conditions of constraint.</h2>
+
+<div class="def-block">
+<p>Digital sovereignty is a state's domestic capacity to exercise meaningful, informed, and politically accountable control over its digital infrastructures, data regimes and governance rules — while managing international partnerships to overcome unavoidable external dependencies in line with its own legal frameworks, public interests and strategic priorities.</p>
+</div>
+
+<div class="section-prose body-text reveal">
+<p>This definition's framing deliberately focuses on <strong>states</strong>. The infrastructure it describes is largely built and operated by private actors whose decisions carry geopolitical consequences. That dimension is not ignored here but sovereignty, as a legal and political concept, remains a state function.</p>
+<p>No major intergovernmental body has adopted a single binding definition of digital sovereignty, and none explicitly uses the term as a formal concept. The institutions chosen represent broad and authoritative cross-sections of intergovernmental thinking on digital governance. As such, they offer a set of adjacent frameworks that can help address the problem from different entry points.</p>
+</div>
+
+<div class="fw-cards reveal">
+<div class="fw-card"><span class="fw-org">OECD</span><span class="fw-desc">Govern in a digital environment, not just digitise bureaucracy.<sup><a href="#fn-1">1</a></sup></span><span class="fw-focus">STATE CAPACITY</span></div>
+<div class="fw-card"><span class="fw-org">UNCTAD</span><span class="fw-desc">Data governance and structural terms of participation.<sup><a href="#fn-2">2</a></sup></span><span class="fw-focus">MATERIAL INPUTS</span></div>
+<div class="fw-card"><span class="fw-org">UN GDC</span><span class="fw-desc">Open, secure, rights-grounded digital future for all.<sup><a href="#fn-3">3</a></sup></span><span class="fw-focus">GLOBAL COOPERATION</span></div>
+<div class="fw-card"><span class="fw-org">WORLD BANK</span><span class="fw-desc">Shared, open foundations reducing proprietary lock-in.<sup><a href="#fn-4">4</a></sup></span><span class="fw-focus">INFRASTRUCTURE</span></div>
+</div>
+
+<div class="section-prose body-text reveal">
+<p><strong>Takeaway:</strong> These frameworks do not provide a single agreed definition of digital sovereignty, but they do point in the same direction. <em>All converge on the same underlying concern: ensuring that states retain enough agency to make meaningful choices about the digital systems that structure public and economic life, rather than simply inheriting arrangements designed by and for others.</em></p>
+<p>Because the term lacks a universally accepted definition, it is contested and justified in a myriad of ways across the policy board globally. The term of digital sovereignty is often invoked by actors pursuing fundamentally incompatible projects — such as states asserting infrastructure control, firms marketing compliance products, and movements resisting corporate surveillance — with no shared metric to determine when any of them has succeeded<sup><a href="#fn-5">5</a></sup>. Pohle and Thiel (2020) observe that the sovereignty discourse tends to appear most forcefully precisely where authority is weakest, making it as much a political speech act as a policy programme<sup><a href="#fn-6">6</a></sup>. Santaniello (2025) argues that the resulting gap between rhetoric and implementation is an inherent attribute of sovereignty claims<sup><a href="#fn-7">7</a></sup>. States can keep invoking digital sovereignty even when their policies fail to deliver it because the claim itself serves political functions — mobilising support, signalling intent, and framing national identity — which are independent of whether the underlying condition is actually achieved. The concept is politically self-sustaining even in the face of its own shortcomings.</p>
+<p>The sophistication of the question lies in <strong>whether a state can still make meaningful choices about where data flows, whose infrastructures shape public life, what legal protections apply and how dependencies are managed.</strong> Digital sovereignty is less about total independence than about governance under conditions of constraint. It is precisely because these inputs are finite, unevenly distributed, and increasingly contested that digital sovereignty has become an operational priority for states. Because states must operationally position themselves and define their AI strategies in response to concrete physical constraints, digital sovereignty retains meaning regardless of the theoretical ambiguity that surrounds it.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 03 THE STRATEGIC POSITION -->
+<div class="section reveal" id="position">
+<div class="section-num"><span class="num">03</span> THE STRATEGIC POSITION</div>
+<h2 class="section-title">Middle powers: room to act, not enough to escape.</h2>
+
+<div class="def-block reveal" style="border-left-color:var(--txt-muted)">
+<p>"When we [middle powers] only negotiate bilaterally with a hegemon, we negotiate from weakness… This is not sovereignty. It's the performance of sovereignty while accepting subordination… In a world of great power rivalry, the countries in between have a choice: compete with each other for favour, or combine to create a third path with impact."</p>
+<div style="font-family:var(--mono);font-size:.68rem;color:var(--txt-muted);margin-top:1rem;font-style:normal;letter-spacing:.06em">MARK CARNEY · WORLD ECONOMIC FORUM, DAVOS 2026<sup><a href="#fn-8">8</a></sup></div>
+</div>
+
+<div class="section-prose body-text reveal">
+<p>While great powers can absorb the costs of technological rivalry more easily because they control key firms, infrastructures, and strategic chokepoints, smaller states often have little choice but to adapt to their external circumstances. Middle powers sit in between these two poles. They are integrated enough in the global digital economy to be a commercially meaningful market that deploys this infrastructure, yet they lack the resources to fully develop them at home.</p>
+<p>States that fall under this definition of a middle power are typically shaped by varying levers, resources, and constraints, despite navigating similar strategic choices. With enough room to act strategically but not enough to combat all dependencies, their strategies are a result of their specific combination of assets and vulnerabilities.</p>
+<p>Those assets can be organised into five broad categories:</p>
+</div>
+
+<div class="asset-grid reveal">
+<div class="asset-box">01 · MARKET POWER</div>
+<div class="asset-box">02 · REGULATORY &amp; NORMATIVE AUTHORITY</div>
+<div class="asset-box">03 · DIGITAL PUBLIC INFRASTRUCTURE</div>
+<div class="asset-box">04 · PHYSICAL ENDOWMENTS</div>
+<div class="asset-box">05 · DIPLOMATIC POSITIONING</div>
+</div>
+
+<div class="section-prose body-text reveal">
+<p><strong>Market power</strong> considers the size and affluence of the domestic market — to what extent a state can use access to its market as a compliance lever over foreign firms. <strong>Regulatory and normative authority</strong> focuses on state capacity to set rules that others follow as a condition of market access, which can substitute for hardware control when enforced at sufficient scale. <strong>Digital public infrastructure (DPI)</strong> refers to states that have built open, interoperable DPI at scale — consisting normally of identity, payment and data exchange systems — on which both public and private applications can run, reducing dependence on closed proprietary systems and the lock-in that accompanies them. <strong>Physical endowments</strong> considers energy availability, renewable capacity, critical mineral reserves, and geographic positioning, which determine which parts of the AI stack a state can credibly claim to support or supply. <strong>Diplomatic and institutional positioning</strong> focuses on the state's ability to use multilateral forums, standard-setting bodies, and bilateral partnerships to shape governance norms and diversify dependencies, even in the absence of independent productive capacity.</p>
+</div>
+
+<div class="section-prose body-text reveal">
+<p>Their dilemma is how to manage strategic dependencies. They must decide which partnerships to pursue, which vulnerabilities to reduce and where to build leverage. The strategies they adopt are analytically understood as a result of the specific combination of assets and vulnerabilities of each middle power.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 04 FIELD STUDIES -->
+<div class="section-full" id="cases">
+<div style="max-width:1100px;margin:0 auto;padding:0 2.5rem">
+<div class="section-num reveal"><span class="num">04</span> FIELD STUDIES</div>
+<h2 class="section-title reveal">Unlock the implications of digital sovereignty.</h2>
+<div class="section-prose body-text reveal">
+<p>The following case studies examine how middle powers operationalise digital sovereignty under conditions of structural dependence. Rather than treating digital sovereignty as a single policy model to be replicated, the cases are analysed as different configurations of the same underlying problem: <em>how states that lack full control over the AI stack manage dependence, build leverage where possible, and prioritise specific layers of the digital ecosystem according to their economic, developmental, and geopolitical objectives.</em></p>
+<p>Each case mobilises a distinct combination of assets while accepting persistent vulnerabilities. Read comparatively, the cases illustrate that digital sovereignty for middle powers is not a question of absolute autonomy, but of strategic choice: <em>deciding where sovereignty matters most, which dependencies are tolerable, and how leverage can be accumulated over time within the constraints of an unequal global digital order.</em></p>
+</div>
+</div>
+
+<div class="cases-grid reveal">
+<div class="case-lock" onclick="toggleCase('eu')" id="lock-eu">
+<div class="lock-header"><span class="lock-num">01</span><span class="lock-status locked" id="status-eu">LOCKED</span></div>
+<div class="lock-icon">🔒</div>
+<div class="lock-country">European Union</div>
+<div class="lock-approach">STRATEGIC AUTONOMY</div>
+</div>
+<div class="case-lock" onclick="toggleCase('ke')" id="lock-ke">
+<div class="lock-header"><span class="lock-num">02</span><span class="lock-status locked" id="status-ke">LOCKED</span></div>
+<div class="lock-icon">🔒</div>
+<div class="lock-country">Kenya</div>
+<div class="lock-approach">LEADERSHIP THROUGH CREDIBILITY</div>
+</div>
+<div class="case-lock" onclick="toggleCase('in')" id="lock-in">
+<div class="lock-header"><span class="lock-num">03</span><span class="lock-status locked" id="status-in">LOCKED</span></div>
+<div class="lock-icon">🔒</div>
+<div class="lock-country">India</div>
+<div class="lock-approach">ATMANIRBHAR BHARAT</div>
+</div>
+<div class="case-lock" onclick="toggleCase('br')" id="lock-br">
+<div class="lock-header"><span class="lock-num">04</span><span class="lock-status locked" id="status-br">LOCKED</span></div>
+<div class="lock-icon">🔒</div>
+<div class="lock-country">Brazil</div>
+<div class="lock-approach">SMART INTERDEPENDENCE</div>
+</div>
+</div>
+
+<!-- EU CASE STUDY -->
+<div class="case-content" id="case-eu">
+<div class="case-inner">
+<div class="case-coords">50.85° N · 4.35° E · BRUSSELS</div>
+<div class="case-section-title">European Union — Regulating power in a world it does not build</div>
+<div class="case-intro">The EU's strategy has long relied on its ability to leverage its large, affluent single market to compel foreign firms to comply with European regulatory standards, a mechanism known as the Brussels Effect (Bradford, 2012)<sup><a href="#fn-9">9</a></sup>. Instruments such as the GDPR, the DMA, and the DSA extend beyond consumer protection alone to function as tools of normative influence, turning the EU the world's foremost regulatory power in the digital domain. However, the EU's share of global GDP has fallen from 30% in 2008 to 21% today and is projected to reach 16% by 2050 (Draghi, 2024), directly eroding the cost-of-bypass calculation. The AI Act has not yet achieved equivalent reach<sup><a href="#fn-10">10</a></sup><sup><a href="#fn-11">11</a></sup>. Its enforcement is inconsistent across member states and jurisdictions that adopted GDPR-aligned frameworks are now taking a wait-and-see approach before following Europe's lead again. Overall, the EU's approach reveals an appetite for governing technologies it does not fully control — a paradox at the heart of the European digital project<sup><a href="#fn-13">13</a></sup><sup><a href="#fn-14">14</a></sup>. Now, the bloc is trying to move beyond regulation alone, using industrial policy and external partnerships to reduce critical dependencies and strengthen its position across other layers of the digital stack. This tension makes the EU a particularly instructive case for understanding digital sovereignty not as a fixed objective to be attained, but as a dilemma to be continuously managed.</div>
+
+<div class="lever-section">
+<div class="lever-heading">LEVERAGE POINTS</div>
+<div class="lever-item"><div class="li-num">01</div><div class="li-name">REGULATORY MARKET POWER &amp; STANDARD-SETTING</div><div class="li-desc">A market of 450 million people and around €18 trillion in GDP is too large to ignore<sup><a href="#fn-15">15</a></sup>. Any firm interested in EU market access must meet compliance obligations. The GDPR became a global privacy standard; the AI Act is now shaping AI governance conversations far beyond Europe<sup><a href="#fn-16">16</a></sup>. By embedding values (privacy, transparency, interoperability) into legally binding frameworks, the EU shapes what "legitimate" AI looks like internationally.</div></div>
+<div class="lever-item"><div class="li-num">02</div><div class="li-name">ASML SEMICONDUCTOR CHOKEPOINT</div><div class="li-desc">The Dutch firm ASML holds a near-monopoly on extreme ultraviolet (EUV) lithography machines — the tools needed to manufacture the world's most advanced chips. No country, including the US or China, can produce cutting-edge semiconductors without them. This is Europe's single most powerful hardware chokepoint in the global AI supply chain.</div></div>
+<div class="lever-item"><div class="li-num">03</div><div class="li-name">ENERGY ASSETS</div><div class="li-desc">Although the EU is far from energy independent, it does have meaningful sources of green energy, the importance of which increases as geopolitical volatility continues to put pressure on oil and gas supplies. France's nuclear fleet provides large volumes of firm-power electricity attractive to AI infrastructure, with the country exporting a record 90 TWh of decarbonised electricity in 2024<sup><a href="#fn-17">17</a></sup><sup><a href="#fn-18">18</a></sup>. These assets are increasingly strategic as global data centre electricity demand surged 17% in 2025 and is projected to grow from 460 TWh in 2024 to over 1,000 TWh by 2030<sup><a href="#fn-19">19</a></sup><sup><a href="#fn-20">20</a></sup>. However, these assets are national and not collectively pooled, with no common procurement mechanism to convert them into shared digital infrastructure.</div></div>
+<div class="lever-item"><div class="li-num">04</div><div class="li-name">CAPITAL MOBILISATION</div><div class="li-desc">The AI Continent Action Plan (2025) commits €200 billion for AI development, including €20 billion via the InvestAI facility for up to 5 gigafactories and 19 AI factories already operational, targeting a tripling of EU data-centre capacity within 5–7 years<sup><a href="#fn-21">21</a></sup><sup><a href="#fn-22">22</a></sup><sup><a href="#fn-23">23</a></sup>. The financing architecture has been confirmed by the European Investment Bank<sup><a href="#fn-24">24</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">05</div><div class="li-name">MISTRAL AI — PROOF OF CONCEPT</div><div class="li-desc">Mistral AI has grown to a valuation exceeding $14 billion and raised $830 million in March 2026 to build a 44 MW data centre near Paris, with a total European infrastructure budget of €4 billion<sup><a href="#fn-25">25</a></sup>. It functions as Europe's only operational frontier AI company with dedicated sovereign compute infrastructure under construction<sup><a href="#fn-26">26</a></sup>. It holds important European significance, but its primary identity and regulatory home is French.</div></div>
+<div class="lever-item"><div class="li-num">06</div><div class="li-name">HUMAN CAPITAL</div><div class="li-desc">Europe boasts strong universities with 37.22% of the population having completed tertiary education<sup><a href="#fn-27">27</a></sup>. However, only a little over a quarter pursue degrees in STEM fields<sup><a href="#fn-28">28</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">07</div><div class="li-name">DIVERSIFICATION THROUGH PARTNERSHIPS</div><div class="li-desc">The EU's 2025 International Digital Strategy seeks to combine regulation, public-private investment and digital cooperation through a "Team Europe" approach<sup><a href="#fn-29">29</a></sup><sup><a href="#fn-30">30</a></sup>. Global Gateway uses infrastructure finance and digital partnerships to project influence. The EU is pursuing digital trade agreements with Canada, mutual data adequacy with Brazil, and deepening digital economy collaboration with India<sup><a href="#fn-31">31</a></sup><sup><a href="#fn-32">32</a></sup><sup><a href="#fn-33">33</a></sup>.</div></div>
+</div>
+
+<div class="lever-section">
+<div class="dep-heading">DEPENDENCIES &amp; LIMITS</div>
+<div class="lever-item dep-item"><div class="li-num">01</div><div class="li-name">CLOUD IN FOREIGN HANDS</div><div class="li-desc">European cloud providers hold less than 15% of their domestic market, with that share shrinking<sup><a href="#fn-34">34</a></sup>. AWS, Azure and Google Cloud are US companies subject to the US CLOUD Act<sup><a href="#fn-35">35</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">02</div><div class="li-name">FRAGMENTED INTERNAL MARKET</div><div class="li-desc">With 24 official languages and 27 member states with divergent industrial strategies, energy policies and risk tolerances, collective action is slow and costly.</div></div>
+<div class="lever-item dep-item"><div class="li-num">03</div><div class="li-name">SHALLOW CAPITAL MARKETS</div><div class="li-desc">US-listed companies achieve valuations 3.32 times higher than European counterparts<sup><a href="#fn-36">36</a></sup>. Between 2014 and 2023, VC investment amounted to EUR 89 billion in the EU, compared with over EUR 1,000 billion in the US<sup><a href="#fn-37">37</a></sup>. The Draghi Report identified this as a structural weakness<sup><a href="#fn-38">38</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">04</div><div class="li-name">ASML'S CHOKEPOINT IS NOT PERMANENT</div><div class="li-desc">China is investing heavily in domestic alternatives to EUV lithography. The lead Europe holds through ASML is real but time-limited.</div></div>
+<div class="lever-item dep-item"><div class="li-num">05</div><div class="li-name">ENERGY DEPENDENCY</div><div class="li-desc">In 2024, the EU still imported 57% of its energy needs<sup><a href="#fn-39">39</a></sup>, with major dependencies on oil and gas suppliers, presenting an indirect but real vulnerability for further infrastructure build-out.</div></div>
+</div>
+
+<div class="strategy-bubble">
+<p>Regulatory-industrial balancing — using legal weight to shape the rules of the game while simultaneously trying to diversify and build enough productive capacity to play. Brussels is simultaneously trying to do multiple things at once: retain its normative authority through regulation and partnerships while preventing regulatory complexity from becoming a competitive liability and innovation barrier through simplification initiatives and asset leveraging. Whether it can do both simultaneously without losing rule-making credibility in the process is the central strategic question.</p>
+</div>
+
+<div class="why-bubble">
+<div class="why-label">WHY THIS STRATEGY? USAGE OF ASSETS</div>
+<p>Since the EU lacks domestically dominant hyperscalers and frontier AI firms, its most credible source of influence lies not in production but in rule-setting. This structural constraint explains why the EU prioritises <strong>regulatory and normative authority</strong> and <strong>market power</strong>, while starting to expand its <strong>diplomatic and institutional positioning</strong>, as substitutes for hardware and platform control, rather than attempting immediate technological parity with the United States or China.</p>
+</div>
+</div>
+</div>
+
+<!-- KENYA CASE STUDY -->
+<div class="case-content" id="case-ke">
+<div class="case-inner">
+<div class="case-coords">1.2921° S · 36.8219° E · NAIROBI</div>
+<div class="case-section-title">Kenya — The sovereignty paradox of the Silicon Savannah</div>
+<div class="case-intro">Kenya is a small, lower-middle-income East African economy of 55 million people that has become the most advanced digital economy in East Africa and one of the continent's clearest cases of digital sovereignty pursued through visibility rather than ownership. Kenya's National AI Strategy 2025–2030 calls for AI development centres, a national dataset initiative, localised AI models, and governance reform<sup><a href="#fn-40">40</a></sup>. Kenya is effectively converting the credibility of its DPI ecosystem into geopolitical positioning, while remaining structurally reliant on the foreign capital and platforms that make that ecosystem run.</div>
+
+<div class="lever-section">
+<div class="lever-heading">LEVERAGE POINTS</div>
+<div class="lever-item"><div class="li-num">01</div><div class="li-name">M-PESA AND DPI AS GEOPOLITICAL CURRENCY</div><div class="li-desc">M-Pesa reaches over 90% of Kenyan adults and processes over 70% of the country's digital payment transactions. The government has developed eCitizen, hosting 16,000 public services, and NOFBI, a national fibre backbone connecting all 47 counties<sup><a href="#fn-41">41</a></sup><sup><a href="#fn-42">42</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">02</div><div class="li-name">RENEWABLE ENERGY COMPARATIVE ADVANTAGE</div><div class="li-desc">In 2023/24, 83% of electricity came from renewable sources, with geothermal alone meeting 41.71% of demand<sup><a href="#fn-43">43</a></sup>. Microsoft and G42 announced a new East Africa cloud region in Kenya, to be powered by geothermal energy. This is one of Kenya's clearest structural advantages for data-centre development.</div></div>
+<div class="lever-item"><div class="li-num">03</div><div class="li-name">PAPSS INTEGRATION &amp; REGIONAL POSITIONING</div><div class="li-desc">AI for development is central in Kenya, where digital systems are closely tied to public service delivery and economic transformation. The February 2026 integration of PesaLink into PAPSS connects over 80 Kenyan financial institutions to 160+ institutions across Africa in real-time local-currency settlement, bypassing dollar-dominated correspondent banking<sup><a href="#fn-44">44</a></sup>. Afreximbank estimates $5 billion in continental savings from full PAPSS rollout.</div></div>
+<div class="lever-item"><div class="li-num">04</div><div class="li-name">ICT SECTOR MOMENTUM</div><div class="li-desc">Kenya's ICT sector has grown at 10.8% annually over the past decade<sup><a href="#fn-45">45</a></sup>. Kenyan startups attracted close to $800 million in funding in 2023. The country attracts intra-African tech talent from Nigeria and Uganda.</div></div>
+<div class="lever-item"><div class="li-num">05</div><div class="li-name">DIPLOMATIC POSITIONING &amp; AU ROLE</div><div class="li-desc">Kenya has claimed the role of Africa's "digital capital" by hosting PAPSS headquarters, occupying the AU Champion on Institutional Reform role, and parlaying its DPI track record into a seat at global AI governance conversations.</div></div>
+</div>
+
+<div class="lever-section">
+<div class="dep-heading">DEPENDENCIES &amp; LIMITS</div>
+<div class="lever-item dep-item"><div class="li-num">01</div><div class="li-name">COMPUTE IS FOREIGN-OWNED</div><div class="li-desc">The Olkaria campus, announced in May 2024 as Kenya's flagship AI infrastructure project and to be built by Microsoft and UAE-based G42 on KenGen's geothermal land in Naivasha, has stalled due to grid capacity constraints and the absence of National Treasury financial approval. Kenya's only domestic semiconductor initiative, the STL nanofabrication facility at Dedan Kimathi University in Nyeri, produces legacy chips for testing and research rather than the advanced processors that AI infrastructure requires. A $1.3 million US feasibility grant awarded to STL in May 2024 under the Biden administration's CHIPS Act to study a potential fabrication facility has an uncertain future, as the Trump administration has redirected international semiconductor funding toward domestic US production<sup><a href="#fn-46">46</a></sup><sup><a href="#fn-47">47</a></sup><sup><a href="#fn-48">48</a></sup><sup><a href="#fn-49">49</a></sup>. Kenya currently relies on import of advanced semiconductors to power its AI ambitions. Supporters of Kenya's semiconductor ambitions may lean on the country's mineral wealth as a pillar for semiconductor manufacturing. However, most of the value in the semiconductor industry lies far beyond extraction, in processing and fabrication.</div></div>
+<div class="lever-item dep-item"><div class="li-num">02</div><div class="li-name">STATE DATA ON FOREIGN CLOUDS</div><div class="li-desc">Despite the Cloud-First Policy's localist framing, sensitive government databases sit on Microsoft Azure, AWS, and Huawei Cloud<sup><a href="#fn-50">50</a></sup>. The National Cloud Data Centre at Konza Technopolis remains underutilised — symbolising the gap between aspiration and operational reality.</div></div>
+<div class="lever-item dep-item"><div class="li-num">03</div><div class="li-name">WEAK DATA GOVERNANCE</div><div class="li-desc">The Data Protection Act of 2019 established oversight but administrative fines are capped at approximately $50,000, low enough that compliance costs often exceed penalty risk<sup><a href="#fn-51">51</a></sup>. The government has simultaneously expanded surveillance powers via the October 2025 Computer Misuse and Cybercrimes Amendment Act<sup><a href="#fn-52">52</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">04</div><div class="li-name">NO BINDING AI LEGAL FRAMEWORK</div><div class="li-desc">As of early 2026, no AI-specific legislation is in force. The Robotics and AI Society Bill remains pending. The National AI Strategy functions as a political document, not an enforceable framework<sup><a href="#fn-53">53</a></sup><sup><a href="#fn-54">54</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">05</div><div class="li-name">TALENT DRAIN WITH NO RETENTION MECHANISM</div><div class="li-desc">Kenya produces strong engineers but lacks binding retention mechanisms, diaspora equity programmes, or return-migration incentives. Silicon Valley, London, and Gulf hubs consistently absorb Kenyan talent at compensation levels the domestic market cannot match.</div></div>
+</div>
+
+<div class="strategy-bubble">
+<p>DPI-as-diplomatic-leverage: use the credibility of operational public digital infrastructure to claim governance authority and attract foreign investment, while managing rather than resolving the underlying structural dependencies. The gap between hosting infrastructure and owning it remains unresolved.</p>
+</div>
+
+<div class="why-bubble">
+<div class="why-label">WHY THIS STRATEGY? USAGE OF ASSETS</div>
+<p>For Kenya, digital sovereignty is shaped by the constraints of a small market and limited capital, which make ownership of frontier AI infrastructure unrealistic in the short term. The state prioritises visibility, credibility, <strong>physical endowments</strong> and <strong>diplomatic positioning</strong> through <strong>operational DPI</strong>, using these assets to attract investment and governance influence rather than attempting costly technological self-sufficiency.</p>
+</div>
+</div>
+</div>
+
+<!-- INDIA CASE STUDY -->
+<div class="case-content" id="case-in">
+<div class="case-inner">
+<div class="case-coords">28.6139° N · 77.2090° E · NEW DELHI</div>
+<div class="case-section-title">India — The greenfield sovereign that still imports its stack</div>
+<div class="case-intro">India frames digital sovereignty through an explicitly techno-nationalist lens. The "Atmanirbhar Bharat" (self-reliant India) doctrine links technological independence to national security, economic growth, and an anti-colonial narrative drawing explicit parallels between historical data extraction by US tech firms and the resource extraction of British colonial rule<sup><a href="#fn-55">55</a></sup>. India's DPI has delivered measurable results, raising the country to the top of the digitalisation index of revenue administrations among emerging market economies<sup><a href="#fn-56">56</a></sup><sup><a href="#fn-57">57</a></sup><sup><a href="#fn-58">58</a></sup>. This <em>"greenfield"</em> model — designing systems digitally from the outset rather than patching legacy ones — has been India's most reproducible export.</div>
+
+<div class="lever-section">
+<div class="lever-heading">LEVERAGE POINTS</div>
+<div class="lever-item"><div class="li-num">01</div><div class="li-name">OPERATIONAL HOMEGROWN DPI</div><div class="li-desc">Aadhaar (biometric identity for over 1.3 billion people), UPI (the world's fifth-largest payment network, accounting for 70% of India's digital payment transactions), and DigiLocker<sup><a href="#fn-59">59</a></sup><sup><a href="#fn-60">60</a></sup><sup><a href="#fn-61">61</a></sup>. UPI is live in the UAE, Bhutan, Oman, and Singapore; pilot-tested in France, Nepal, Mauritius, and Sri Lanka. MOSIP, a non-profit initiative hosted by the International Institute of Information Technology, Bangalore (IITB), is adopted by over twenty countries with 121 million+ active users<sup><a href="#fn-62">62</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">02</div><div class="li-name">SCALE OF DOMESTIC MARKET</div><div class="li-desc">With 1.4 billion people, India offers a market large enough to sustain domestically-oriented platforms. The economic value added from DPIs to India's GDP is estimated to reach 2.9–4.2% by 2030 (from 0.9% in 2022)<sup><a href="#fn-63">63</a></sup><sup><a href="#fn-64">64</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">03</div><div class="li-name">PUBLIC COMPUTE — INDIAAI MISSION</div><div class="li-desc">Launched in 2023 and spearheaded by the Ministry of Electronics and Information Technology (MeitY), the IndiaAI Mission focuses on developing AI applications to address societal challenges in healthcare, education, agriculture, and smart cities while promoting responsible and ethical AI development<sup><a href="#fn-65">65</a></sup>. It is responsible for deploying more than 34,000 GPUs by 2025, creating one of the largest public AI compute networks globally. This reduces dependence of Indian startups on private US hyperscalers.</div></div>
+<div class="lever-item"><div class="li-num">04</div><div class="li-name">BHASHINI — MULTILINGUAL DATA SOVEREIGNTY</div><div class="li-desc">Develops NLP models for India's 22 official languages using open-source frameworks<sup><a href="#fn-66">66</a></sup>. This addresses a structural gap — most frontier models perform poorly on non-English languages — while building an asset foreign models cannot easily replicate.</div></div>
+<div class="lever-item"><div class="li-num">05</div><div class="li-name">TALENT DEPTH &amp; GLOBAL POSITIONING</div><div class="li-desc">96% of Indian professionals use AI tools at work, significantly above the 81% US rate<sup><a href="#fn-67">67</a></sup>. India's IITs and IISc actively contribute to global open-source AI research.</div></div>
+<div class="lever-item"><div class="li-num">06</div><div class="li-name">STRATEGIC POSITIONING FOR SEMICONDUCTORS &amp; ENERGY</div><div class="li-desc">India is developing its own semiconductor manufacturing capacity under the India Semiconductor Mission (2021)<sup><a href="#fn-68">68</a></sup>. Its long-term carbon-neutrality roadmap (net-zero by 2070) is driving investment in nuclear baseload power via the SHANTI Bill, specifically designed to support AI infrastructure by supporting India's long-term vision of expanding clean, reliable energy<sup><a href="#fn-69">69</a></sup>. India has set an ambitious target of achieving 100 GW of nuclear capacity by 2047.</div></div>
+<div class="lever-item"><div class="li-num">07</div><div class="li-name">SUPPLY-CHAIN PARTNERSHIPS</div><div class="li-desc">India signed MoUs with Australia, Argentina, Brazil and the DRC for lithium and cobalt<sup><a href="#fn-70">70</a></sup><sup><a href="#fn-71">71</a></sup><sup><a href="#fn-72">72</a></sup><sup><a href="#fn-73">73</a></sup>. It joined the G7-led Mineral Security Partnership in 2023 and has an EU Trade and Technology Council<sup><a href="#fn-74">74</a></sup><sup><a href="#fn-75">75</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">08</div><div class="li-name">DPI AS GLOBAL NORM EXPORT</div><div class="li-desc">India used its G20 presidency in 2023 to globalise the DPI concept by launching the Global Digital Public Infrastructure Repository (GDPIR). It has signed bilateral MoUs with eleven countries including Kenya, Colombia, and Tanzania.</div></div>
+</div>
+
+<div class="lever-section">
+<div class="dep-heading">DEPENDENCIES &amp; LIMITS</div>
+<div class="lever-item dep-item"><div class="li-num">01</div><div class="li-name">SEMICONDUCTOR IMPORT DEPENDENCE</div><div class="li-desc">India imports over 95% of its semiconductors<sup><a href="#fn-76">76</a></sup>. When Microsoft temporarily blocked services to Nayara Energy in 2025, a single corporate decision made abroad disrupted a major Indian company with no domestic recourse. India remains 100% import-dependent for energy transition minerals such as lithium, cobalt and nickel, even though it has sizable reserves of cobalt (44.9 Mt ore), nickel (189 Mt), copper (163.9 Mt), and graphite<sup><a href="#fn-77">77</a></sup><sup><a href="#fn-78">78</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">02</div><div class="li-name">FOREIGN CLOUD INFRASTRUCTURE</div><div class="li-desc">Microsoft, Amazon, and Google collectively announced over $67 billion in India investments but they bring capacity, not sovereignty. Data centres in Hyderabad, Mumbai, and Pune remain subject to US jurisdiction, including the CLOUD Act.</div></div>
+<div class="lever-item dep-item"><div class="li-num">03</div><div class="li-name">TALENT DRAIN TO SILICON VALLEY</div><div class="li-desc">India produces exceptional AI engineers and exports a disproportionate share. The Atmanirbhar rhetoric has not been matched by policies capable of retaining the talent needed to make it real.</div></div>
+<div class="lever-item dep-item"><div class="li-num">04</div><div class="li-name">DATA PROTECTION LAGGING</div><div class="li-desc">India has pushed for data localisation through the DPDP Act, but its data protection standards remain significantly weaker than the EU's GDPR or China's Data Security Law<sup><a href="#fn-79">79</a></sup>. The gap between asserting data sovereignty and protecting data is a credibility problem.</div></div>
+<div class="lever-item dep-item"><div class="li-num">05</div><div class="li-name">THE OPEN-SOURCE DILEMMA</div><div class="li-desc">The practical path to AI capability runs through fine-tuning Meta's open-source Llama models rather than building from scratch<sup><a href="#fn-80">80</a></sup>. This is faster and cheaper but means India's AI "sovereignty" rests on a foundation it did not build — undermining the Atmanirbhar narrative.</div></div>
+</div>
+
+<div class="strategy-bubble">
+<p>Greenfield DPI with selective sovereignty: build from scratch where strategically viable (identity, payments, language infrastructure) and accept managed dependence where it is not (chips, cloud, foundation models). The goal is not to escape dependence but to accumulate enough domestic capability to negotiate its terms.</p>
+</div>
+
+<div class="why-bubble">
+<div class="why-label">WHY THIS STRATEGY? USAGE OF ASSETS</div>
+<p>India's prioritisation of <strong>digital public infrastructure</strong> is driven less by industrial competition with frontier AI powers than by the need to scale public service delivery across a vast population with uneven state capacity. Sovereignty at the application and governance layers matters more politically than sovereignty over chips or foundation models. This explains India's willingness to accept managed dependence at the hardware layer, leveraging its <strong>market power</strong> to attract foreign investment and using selective <strong>diplomatic positioning</strong> to secure inputs and extend the reach of its DPI model.</p>
+</div>
+</div>
+</div>
+
+<!-- BRAZIL CASE STUDY -->
+<div class="case-content" id="case-br">
+<div class="case-inner">
+<div class="case-coords">15.7975° S · 47.8919° W · BRASÍLIA</div>
+<div class="case-section-title">Brazil — The Interdependent Brownfield State that Reuses While Diversifying Partners</div>
+<div class="case-intro">Rather than asserting independence from foreign infrastructure or building from scratch, Brazil has pursued what its government explicitly calls a <em>"brownfield" strategy:</em> upgrading, connecting, and repurposing existing legacy systems into a unified digital public infrastructure, while simultaneously using multilateral diplomacy to diversify external dependencies. This is tied to a broader agenda of state transformation, in which digital infrastructure is linked to social, economic and environmental missions defined through interministerial plans, with the <strong>Ministry of Management and Innovation in Public Services (MGI)</strong> playing a coordinating role. The National Strategy for Digital Government 2024–2027 formalises this direction by emphasising inclusion, interoperability, secure data reuse, and simpler access to services<sup><a href="#fn-81">81</a></sup>.</div>
+
+<div class="lever-section">
+<div class="lever-heading">LEVERAGE POINTS</div>
+<div class="lever-item"><div class="li-num">01</div><div class="li-name">OPERATIONAL DPI AT SCALE</div><div class="li-desc">Gov.br (160 million users, 12,000+ integrated public services), Pix (150 million+ users, Brazil's dominant payment method), and Conecta Gov.br form the most operationally complete DPI ecosystem outside of India and China<sup><a href="#fn-82">82</a></sup><sup><a href="#fn-83">83</a></sup><sup><a href="#fn-84">84</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">02</div><div class="li-name">CLIMATE DATA AS A SOVEREIGN ASSET</div><div class="li-desc">CAR, a georeferenced registry covering 7 million rural properties and 700 million hectares, has been relaunched as Brazil's first official Digital Public Good during COP30<sup><a href="#fn-85">85</a></sup>. Combined with INPE's deforestation monitoring systems (DETER, PRODES)<sup><a href="#fn-86">86</a></sup>, Brazil has a data stock that is genuinely difficult to replicate elsewhere.</div></div>
+<div class="lever-item"><div class="li-num">03</div><div class="li-name">RENEWABLE ENERGY ADVANTAGE</div><div class="li-desc">Over 80% of Brazil's electricity comes from renewable sources<sup><a href="#fn-87">87</a></sup>. This gives Brazil a comparative advantage for powering AI infrastructure with low carbon intensity — directly relevant to data centre investment.</div></div>
+<div class="lever-item"><div class="li-num">04</div><div class="li-name">CRITICAL MINERALS POSITIONING</div><div class="li-desc">Brazil holds significant reserves of lithium, nickel, copper, graphite, rare earths, and niobium. The Ministry of Mines and Energy's 2026 investor guide explicitly links these reserves to higher value-added processing ambitions<sup><a href="#fn-88">88</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">05</div><div class="li-name">ELLALINK CONNECTIVITY</div><div class="li-desc">The 2021 EllaLink submarine fibre-optic cable connecting Brazil directly to Europe reduces dependence on North Atlantic data routes and lowers latency for transatlantic digital exchange<sup><a href="#fn-89">89</a></sup>.</div></div>
+<div class="lever-item"><div class="li-num">06</div><div class="li-name">MULTILATERAL DIPLOMATIC POSITIONING</div><div class="li-desc">Brazil leveraged the 2024 G20 presidency, 2025 BRICS presidency, and COP30 to project its climate-relevant systems outward through Climate DPI and ClimateStack<sup><a href="#fn-90">90</a></sup>. It signed a DPI MoU with India, participates in 50-in-5, partnered with Norway on CAR reform, and deepened EU cooperation through the EU-LAC Digital Alliance and the BELLA Programme<sup><a href="#fn-91">91</a></sup><sup><a href="#fn-92">92</a></sup><sup><a href="#fn-93">93</a></sup><sup><a href="#fn-94">94</a></sup><sup><a href="#fn-95">95</a></sup>.</div></div>
+</div>
+
+<div class="lever-section">
+<div class="dep-heading">DEPENDENCIES &amp; LIMITS</div>
+<div class="lever-item dep-item"><div class="li-num">01</div><div class="li-name">FOREIGN CLOUD &amp; ADVANCED CHIPS</div><div class="li-desc">Brazil's 205 data centres include AWS, Google Cloud, and Microsoft Azure, but supercomputing runs on imported NVIDIA GPUs and AMD/Intel CPUs. Brazil has no domestic advanced semiconductor production. The ReData tax-incentive regime incentivised local investment but not local ownership<sup><a href="#fn-96">96</a></sup>.</div></div>
+<div class="lever-item dep-item"><div class="li-num">02</div><div class="li-name">FRAGMENTED IMPLEMENTATION</div><div class="li-desc">The brownfield strategy depends on interoperability between federal, state, and municipal systems, but implementation is uneven. Remote and rural areas face weak connectivity and high infrastructure costs.</div></div>
+<div class="lever-item dep-item"><div class="li-num">03</div><div class="li-name">AI TALENT SHORTFALL</div><div class="li-desc">Brazil has significant institutional capacity (INPE, LNCC)<sup><a href="#fn-97">97</a></sup><sup><a href="#fn-98">98</a></sup> but faces shortages in advanced digital and AI skills. Brasscom estimated a projected deficit of over 500,000 ICT professionals<sup><a href="#fn-99">99</a></sup>. Public-sector AI capability is still being built: MGI and national agencies launched a civil servant AI training track in 2024, especially in procurement, implementation, auditing, and long-term governance of complex digital systems.</div></div>
+<div class="lever-item dep-item"><div class="li-num">04</div><div class="li-name">ENVIRONMENTAL TENSIONS</div><div class="li-desc">As digital infrastructure expands, its escalating energy and water demands are coming into sharper tension with the adverse effects experienced by local traditional communities.</div></div>
+<div class="lever-item dep-item"><div class="li-num">05</div><div class="li-name">POLICY WITHOUT STRUCTURAL TRANSFORMATION</div><div class="li-desc">The PBIA 2024–2028 and ReData regime are real commitments, but they stop short of addressing deeper hardware dependency<sup><a href="#fn-100">100</a></sup>. PBIA proposes a new supercomputer and AI excellence centres, yet the effort remains oriented toward expanding access and national capability rather than becoming a domestic producer of cutting-edge chips or server infrastructure. ReData itself was enacted by Provisional Presidential Measure, expired in February 2026, and is currently awaiting Congressional approval.</div></div>
+</div>
+
+<div class="strategy-bubble">
+<p>Brownfield DPI with diplomatic diversification: build what is strategic domestically, reuse what already works rather than rebuilding from scratch, and diversify external ties to avoid lock-in by any single partner. The brownfield logic generates leverage from existing systems rather than requiring the massive capital outlays that greenfield approaches demand.</p>
+</div>
+
+<div class="why-bubble">
+<div class="why-label">WHY THIS STRATEGY? USAGE OF ASSETS</div>
+<p>Brazil's strategy reflects the political and administrative realities of a large federal state with extensive legacy systems and uneven territorial capacity. Rather than pursuing a greenfield overhaul, Brazil prioritises upgrading and integrating existing systems into its <strong>digital public infrastructure (DPI)</strong>, avoiding the fiscal and political costs of rebuilding from scratch. Simultaneously, it leverages its <strong>market power</strong> and <strong>physical endowments</strong> to attract investment, while benefiting from its <strong>diplomatic positioning</strong> to diversify partnerships and avoid dependencies.</p>
+</div>
+</div>
+</div>
+
+</div><!-- close section-full -->
+
+<div class="divider"></div>
+
+<!-- 05 COMPARISON MATRIX -->
+<div class="section" id="matrix">
+<div class="section-num reveal"><span class="num">05</span> COMPARISON MATRIX</div>
+<h2 class="section-title reveal">A posture of smart interdependence.</h2>
+
+<div class="matrix-cards">
+
+<div class="matrix-card reveal">
+<div class="mc-header"><span class="mc-country">🇪🇺 EU</span><span class="mc-approach">STRATEGIC AUTONOMY</span></div>
+<div class="matrix-row"><span class="mr-label">HOW IT FRAMES SOVEREIGNTY</span><span class="mr-val">Rule-setting power and strategic autonomy: shaping the conditions under which digital technologies operate, while diversifying and building productive capacity</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LEVERAGE</span><span class="mr-val">Brussels Effect; ASML chokepoint; nuclear energy; standard-setting abroad; large market and capital mobilisation; Global Gateway partnerships</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN DEPENDENCIES</span><span class="mr-val">US cloud infrastructure; no hyperscalers; talent drain; fragmented market; capital gap; weak frontier AI production; energy dependence; exposure to US strategic shifts</span></div>
+<div class="matrix-row"><span class="mr-label">DOMINANT STRATEGY</span><span class="mr-val">Regulatory-industrial balancing: buy time with normative power while building compute, cloud and AI capacity</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LIMITATION</span><span class="mr-val">Confused standard-setting with capability-building for too long; risks dismantling regulatory leverage before alternatives are ready</span></div>
+</div>
+
+<div class="matrix-card reveal">
+<div class="mc-header"><span class="mc-country">🇰🇪 Kenya</span><span class="mc-approach">LEADERSHIP THROUGH CREDIBILITY</span></div>
+<div class="matrix-row"><span class="mr-label">HOW IT FRAMES SOVEREIGNTY</span><span class="mr-val">Visibility, credibility, and governance influence built through operational DPI and attraction of foreign investment without ownership of the full stack</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LEVERAGE</span><span class="mr-val">M-Pesa / eCitizen; NOFBI; renewable electricity; PAPSS hub role; diplomatic visibility as East Africa's digital hub</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN DEPENDENCIES</span><span class="mr-val">Foreign-owned compute (Microsoft/G42); imported chips; state data on US/Chinese clouds; weak data governance; no binding AI law; external capital; talent drain</span></div>
+<div class="matrix-row"><span class="mr-label">DOMINANT STRATEGY</span><span class="mr-val">DPI-as-diplomatic-leverage: convert operational credibility into continental and global positioning</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LIMITATION</span><span class="mr-val">Hosting foreign infrastructure is not owning it; energy advantage attracts foreign capital but no sovereign productive capacity yet</span></div>
+</div>
+
+<div class="matrix-card reveal">
+<div class="mc-header"><span class="mc-country">🇮🇳 India</span><span class="mc-approach">ATMANIRBHAR BHARAT</span></div>
+<div class="matrix-row"><span class="mr-label">HOW IT FRAMES SOVEREIGNTY</span><span class="mr-val">Techno-nationalist sovereign AI framed as anti-colonial self-reliance: build national DPI and AI capability to control key governance and application layers</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LEVERAGE</span><span class="mr-val">India Stack DPI (Aadhaar, UPI, DigiLocker); Bhashini; IndiaAI Mission public compute; global DPI diplomacy; huge domestic market; talent depth; expanding strategic positioning for semiconductors</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN DEPENDENCIES</span><span class="mr-val">95%+ semiconductor import dependence; foreign hyperscalers dominate cloud; talent drain; weak data protection; reliance on foreign open-source foundation models</span></div>
+<div class="matrix-row"><span class="mr-label">DOMINANT STRATEGY</span><span class="mr-val">Greenfield DPI with selective sovereignty: build where strategically valuable, accept managed dependence elsewhere</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LIMITATION</span><span class="mr-val">Atmanirbhar rhetoric outpaces structural reality — sovereignty claimed at the application layer while the hardware layer remains foreign</span></div>
+</div>
+
+<div class="matrix-card reveal">
+<div class="mc-header"><span class="mc-country">🇧🇷 Brazil</span><span class="mc-approach">SMART INTERDEPENDENCE</span></div>
+<div class="matrix-row"><span class="mr-label">HOW IT FRAMES SOVEREIGNTY</span><span class="mr-val">Domestic DPI assets built reusing existing systems ("brownfield approach"), while diversifying external partnerships rather than accepting lock-in</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LEVERAGE</span><span class="mr-val">Brownfield DPI at scale (Gov.br, Pix, CAR); EllaLink connectivity; renewable electricity; climate data; critical minerals; multilateral diplomacy (G20, BRICS, COP30)</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN DEPENDENCIES</span><span class="mr-val">Foreign cloud and advanced chips; uneven territorial implementation; AI talent deficit; politically contingent legislation; environmental tensions</span></div>
+<div class="matrix-row"><span class="mr-label">DOMINANT STRATEGY</span><span class="mr-val">Brownfield DPI with diplomatic diversification: upgrade existing systems, link to social/climate missions, project model internationally</span></div>
+<div class="matrix-row"><span class="mr-label">MAIN LIMITATION</span><span class="mr-val">Political contingency and implementation unevenness — coherent strategy that depends on administrative continuity and cannot yet close the compute sovereignty gap</span></div>
+</div>
+
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 06 CONCLUSION -->
+<div class="conclusion-block reveal" id="conclusion">
+<div class="conclusion-inner">
+<div class="section-num"><span class="num">06</span> CONCLUSION</div>
+<h2 class="section-title">A posture of smart interdependence.</h2>
+<div class="section-prose body-text">
+<p>The four cases examined here each represent a different configuration of smart interdependence. The EU wields regulatory market power to shape the rules governing technologies it does not build, buying time to develop productive capacity while risking the erosion of its normative leverage before industrial alternatives are ready. India builds public digital infrastructure from the ground up at the application layer while remaining structurally dependent on foreign chips, cloud, and foundation models at the hardware layer. Kenya converts the operational credibility of its public digital systems into diplomatic positioning and foreign investment, building the institutional profile of a digital leader while the underlying compute remains foreign-owned. Brazil upgrades existing systems, diversifying external partnerships and using critical minerals and renewable energy as strategic assets in what its own government terms a brownfield approach, but also without controlling the hardware and cloud layers beneath it and with uneven state capacity across its territory.</p>
+<p>What emerges from this analysis is a family of approaches, each shaped by local capabilities and constraints, yet all recognisable as variations of the same underlying posture: <em>smart interdependence</em> — understood as the deliberate identification, prioritisation, and governance of dependencies in ways that build leverage over time<sup><a href="#fn-101">101</a></sup>. Not all dependencies carry the same strategic risk. Dependence on foreign semiconductors carries fundamentally different risks than dependence on foreign governance norms.</p>
+<p>Keohane and Nye (1977) identified this logic decades ago, arguing that what matters in any relationship of interdependence is not the dependency itself, but who bears the higher cost of walking away<sup><a href="#fn-102">102</a></sup>. The middle powers examined here are not trying to escape dependence. What the cases reveal is a pattern of prioritisation, with states investing in the layers where domestic capacity is feasible and leverage is buildable, while accepting the structural dependencies they cannot yet address<sup><a href="#fn-103">103</a></sup>.</p>
+</div>
+
+<div class="principles-box">
+<div class="eq-label">THREE OPERATING PRINCIPLES</div>
+<div class="principle"><span class="p-num">01</span><span class="p-name">BUILD LEVERAGE</span><span class="p-desc">Where capacity, energy, data, or rules give a real edge.</span></div>
+<div class="principle"><span class="p-num">02</span><span class="p-name">ACCEPT DEPENDENCE</span><span class="p-desc">Where structural reality makes alternatives illusory.</span></div>
+<div class="principle"><span class="p-num">03</span><span class="p-name">INVEST TO RENEGOTIATE</span><span class="p-desc">In the institutional muscle to revise terms over time.</span></div>
+</div>
+
+<div class="section-prose body-text" style="margin-top:2rem">
+<p>None of these cases has achieved digital sovereignty in any absolute sense. What the cases collectively demonstrate is that digital sovereignty is not a condition to be reached but a capacity to be continuously built, defended, and renegotiated across five strategic levers (market power, regulatory authority, digital public infrastructure, physical endowments, and diplomatic positioning). Compute and semiconductor dependencies still stand out as the hardest to address and the most politically consequential, with none of the middle powers examined here meaningfully resolving them. However, they are accumulating the leverage needed to negotiate these dependencies rather than simply inheriting them.</p>
+<p>Smart interdependence is therefore less a policy model than a strategic orientation — moving beyond both the illusion of full sovereignty and the passivity of unmanaged dependence, toward a posture in which states build leverage where they can, accept dependence where they must, and invest continuously in the capacity to renegotiate both. Recent debates frame this less as self-sufficiency than as a more collaborative form of sovereignty, achieved through structured cooperation rather than isolation.</p>
+</div>
+
+<blockquote>Digital sovereignty retains political force precisely because of the physical nature of dependencies today. States that treat interdependence as something to organise, secure, and negotiate — rather than something to either deny or surrender to.</blockquote>
+
+</div>
+</div>
+
+<!-- FOOTNOTES -->
+<div class="fn-section" id="footnotes">
+<div class="section-num"><span class="num">07</span> SOURCES &amp; FOOTNOTES</div>
+<div class="fn-list">
+<p class="fn-item" id="fn-0"><span class="fn-num">[0]</span> Bria, F. et al. 2025. Foundational AI systems distribution data.</p>
+<p class="fn-item" id="fn-1"><span class="fn-num">[1]</span> OECD 2020. <a href="https://www.oecd.org/en/publications/the-oecd-digital-government-policy-framework_f64fed2a-en.html">Digital Government Policy Framework</a></p>
+<p class="fn-item" id="fn-2"><span class="fn-num">[2]</span> UNCTAD 2024. <a href="https://unctad.org/system/files/official-document/der2024_en.pdf">Digital Economy Report</a></p>
+<p class="fn-item" id="fn-3"><span class="fn-num">[3]</span> UN Global Digital Compact 2024. <a href="https://unglobalcompact.org/library/6240">unglobalcompact.org</a></p>
+<p class="fn-item" id="fn-4"><span class="fn-num">[4]</span> World Bank 2025. <a href="https://documents1.worldbank.org/curated/en/099031025172027713/pdf/P505739-84c5073b-9d40-4b83-a211-98b2263e87dd.pdf">DPI and Development Report</a></p>
+<p class="fn-item" id="fn-5"><span class="fn-num">[5]</span> Couture &amp; Toupin 2019. <a href="https://doi.org/10.1177/1461444819865984">doi.org/10.1177/1461444819865984</a></p>
+<p class="fn-item" id="fn-6"><span class="fn-num">[6]</span> Pohle &amp; Thiel 2020. <a href="https://doi.org/10.14763/2020.4.1532">doi.org/10.14763/2020.4.1532</a></p>
+<p class="fn-item" id="fn-7"><span class="fn-num">[7]</span> Santaniello 2025. <a href="https://doi.org/10.1080/14650045.2025.2521548">doi.org/10.1080/14650045.2025.2521548</a></p>
+<p class="fn-item" id="fn-8"><span class="fn-num">[8]</span> Mark Carney, WEF Davos 2026. <a href="https://www.weforum.org/stories/2026/01/davos-2026-special-address-by-mark-carney-prime-minister-of-canada/">weforum.org</a></p>
+<p class="fn-item" id="fn-9"><span class="fn-num">[9]</span> Bradford 2012. <a href="https://global.oup.com/academic/product/the-brussels-effect-9780190088583">The Brussels Effect, OUP</a></p>
+<p class="fn-item" id="fn-10"><span class="fn-num">[10]</span> Bradford 2020. The Brussels Effect. Oxford University Press.</p>
+<p class="fn-item" id="fn-11"><span class="fn-num">[11]</span> EU AI Act national implementation. <a href="https://artificialintelligenceact.eu/national-implementation-plans/">artificialintelligenceact.eu</a></p>
+<p class="fn-item" id="fn-13"><span class="fn-num">[13]</span> EC AI Continent Action Plan. <a href="https://commission.europa.eu/topics/competitiveness/ai-continent_en">commission.europa.eu</a></p>
+<p class="fn-item" id="fn-14"><span class="fn-num">[14]</span> EC International Digital Strategy. <a href="https://digital-strategy.ec.europa.eu/en/policies/international-digital-strategy">digital-strategy.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-15"><span class="fn-num">[15]</span> EU Facts and Figures. <a href="https://european-union.europa.eu/principles-countries-history/facts-and-figures-european-union_en">european-union.europa.eu</a></p>
+<p class="fn-item" id="fn-16"><span class="fn-num">[16]</span> Science Direct 2025. <a href="https://www.sciencedirect.com/science/article/pii/S2666659625000241">sciencedirect.com</a></p>
+<p class="fn-item" id="fn-17"><span class="fn-num">[17]</span> Data Center Dynamics. <a href="https://www.datacenterdynamics.com/en/analysis/france-ai-data-center-build-out-emmanuel-macron/">France AI data centre build-out</a></p>
+<p class="fn-item" id="fn-18"><span class="fn-num">[18]</span> IEA 2025. <a href="https://www.iea.org/news/data-centre-electricity-use-surged-in-2025-even-with-tightening-bottlenecks-driving-a-scramble-for-solutions">Data centre electricity use surged in 2025</a></p>
+<p class="fn-item" id="fn-19"><span class="fn-num">[19]</span> IEA 2025. <a href="https://www.iea.org/news/data-centre-electricity-use-surged-in-2025-even-with-tightening-bottlenecks-driving-a-scramble-for-solutions">Data centre electricity use</a></p>
+<p class="fn-item" id="fn-20"><span class="fn-num">[20]</span> IEA. <a href="https://www.iea.org/reports/energy-and-ai/energy-supply-for-ai">Energy supply for AI</a></p>
+<p class="fn-item" id="fn-21"><span class="fn-num">[21]</span> EC AI Continent Action Plan. <a href="https://commission.europa.eu/topics/competitiveness/ai-continent_en">commission.europa.eu</a></p>
+<p class="fn-item" id="fn-22"><span class="fn-num">[22]</span> AI Factories. <a href="https://digital-strategy.ec.europa.eu/en/policies/ai-factories">digital-strategy.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-23"><span class="fn-num">[23]</span> AI Action Plan factpage. <a href="https://digital-strategy.ec.europa.eu/en/factpages/ai-continent-action-plan">digital-strategy.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-24"><span class="fn-num">[24]</span> EIB Group &amp; European Commission. <a href="https://www.eib.org/en/press/all/2025-491-eib-group-and-european-commission-join-forces-to-finance-ai-gigafactories">EIB press: AI Gigafactories</a></p>
+<p class="fn-item" id="fn-25"><span class="fn-num">[25]</span> Mistral AI. <a href="https://mistral.ai/about">mistral.ai</a></p>
+<p class="fn-item" id="fn-26"><span class="fn-num">[26]</span> Mistral Europe. <a href="https://europe.mistral.ai/">europe.mistral.ai</a></p>
+<p class="fn-item" id="fn-27"><span class="fn-num">[27]</span> OECD. <a href="https://www.oecd.org/en/data/indicators/population-with-tertiary-education.html">Population with tertiary education</a></p>
+<p class="fn-item" id="fn-28"><span class="fn-num">[28]</span> EC. <a href="https://education.ec.europa.eu/resources-and-tools/data-and-analysis-on-education-and-skills/key-trends-in-education/stem-in-tertiary-education">STEM in tertiary education</a></p>
+<p class="fn-item" id="fn-29"><span class="fn-num">[29]</span> EC. <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_25_1370">International Digital Strategy 2025</a></p>
+<p class="fn-item" id="fn-30"><span class="fn-num">[30]</span> Team Europe Initiatives. <a href="https://international-partnerships.ec.europa.eu/policies/team-europe-initiatives_en">international-partnerships.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-31"><span class="fn-num">[31]</span> EC press: EU-Canada digital trade. <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_26_553">commission.europa.eu</a></p>
+<p class="fn-item" id="fn-32"><span class="fn-num">[32]</span> EC press: EU-Brazil data adequacy. <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_26_229">commission.europa.eu</a></p>
+<p class="fn-item" id="fn-33"><span class="fn-num">[33]</span> EU-India FTA summary. <a href="https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/india/eu-india-agreements/memo-eu-india-free-trade-agreement-chapter-chapter-summary_en">trade.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-34"><span class="fn-num">[34]</span> CNBC 2026. <a href="https://www.cnbc.com/2026/02/13/four-charts-europes-reliance-us-digital-infrastructure.html">Europe's reliance on US digital infrastructure</a></p>
+<p class="fn-item" id="fn-35"><span class="fn-num">[35]</span> CLOUD Act impact. <a href="https://www.alstonprivacy.com/cloud-act-impact-cross-border-access-contents-communications/">alstonprivacy.com</a></p>
+<p class="fn-item" id="fn-36"><span class="fn-num">[36]</span> ECB 2024. <a href="https://www.ecb.europa.eu/pub/pdf/scpops/ecb.op373.en.pdf">ECB working paper op373</a></p>
+<p class="fn-item" id="fn-37"><span class="fn-num">[37]</span> Banque de France. <a href="https://www.banque-france.fr/en/publications-and-statistics/publications/how-can-europe-scale-its-venture-capital-market">Europe VC market</a></p>
+<p class="fn-item" id="fn-38"><span class="fn-num">[38]</span> Draghi Report 2024. <a href="https://commission.europa.eu/document/download/97e481fd-2dc3-412d-be4c-f152a8232961_en">commission.europa.eu</a></p>
+<p class="fn-item" id="fn-39"><span class="fn-num">[39]</span> Eurostat Energy 2026. <a href="https://ec.europa.eu/eurostat/web/interactive-publications/energy-2026">eurostat</a></p>
+<p class="fn-item" id="fn-40"><span class="fn-num">[40]</span> Kenya AI Strategy 2025–2030. <a href="https://ict.go.ke/sites/default/files/2025-03/Kenya%20AI%20Strategy%202025%20-%202030.pdf">ict.go.ke</a></p>
+<p class="fn-item" id="fn-41"><span class="fn-num">[41]</span> M-Pesa Africa. <a href="https://www.m-pesa.africa/">m-pesa.africa</a></p>
+<p class="fn-item" id="fn-42"><span class="fn-num">[42]</span> eCitizen Portal. <a href="https://accounts.ecitizen.go.ke/">ecitizen.go.ke</a></p>
+<p class="fn-item" id="fn-43"><span class="fn-num">[43]</span> EPRA Kenya Energy Statistics Report FY 2023-2024. epra.go.ke</p>
+<p class="fn-item" id="fn-44"><span class="fn-num">[44]</span> PesaLink. <a href="https://pesalink.co.ke/">pesalink.co.ke</a></p>
+<p class="fn-item" id="fn-45"><span class="fn-num">[45]</span> Kenya Digital Economy. <a href="https://www.trade.gov/country-commercial-guides/kenya-digital-economy">trade.gov</a></p>
+<p class="fn-item" id="fn-46"><span class="fn-num">[46]</span> Semafor 2026. <a href="https://www.semafor.com/article/05/06/2026/energy-shortfall-problem-scuppers-kenyas-1b-microsoft-data-center">Kenya Microsoft data centre stalled</a></p>
+<p class="fn-item" id="fn-47"><span class="fn-num">[47]</span> Dedan Kimathi University STL. dkut.ac.ke</p>
+<p class="fn-item" id="fn-48"><span class="fn-num">[48]</span> USTDA Kenya semiconductors. <a href="https://www.ustda.gov/ustda-partners-with-kenya-to-boost-semiconductor-manufacturing/">ustda.gov</a></p>
+<p class="fn-item" id="fn-49"><span class="fn-num">[49]</span> Manufacturing Dive. <a href="https://www.manufacturingdive.com/news/trump-biden-chips-act-future-federal-cuts-layoffs-musk/741052/">CHIPS Act future</a></p>
+<p class="fn-item" id="fn-50"><span class="fn-num">[50]</span> Kenya Cloud Policy 2024. ict.go.ke</p>
+<p class="fn-item" id="fn-51"><span class="fn-num">[51]</span> Kenya Data Protection Act 2019. kentrade.go.ke</p>
+<p class="fn-item" id="fn-52"><span class="fn-num">[52]</span> Computer Misuse and Cybercrimes (Amendment) Act 2025. parliament.go.ke</p>
+<p class="fn-item" id="fn-53"><span class="fn-num">[53]</span> Kenya Robotics and AI Society Bill 2023. dataguidance.com</p>
+<p class="fn-item" id="fn-54"><span class="fn-num">[54]</span> Kenya AI Strategy 2025–2030. ict.go.ke</p>
+<p class="fn-item" id="fn-55"><span class="fn-num">[55]</span> Atmanirbhar Bharat. <a href="https://tribal.nic.in/atmanirbhar-bharat.aspx">tribal.nic.in</a></p>
+<p class="fn-item" id="fn-56"><span class="fn-num">[56]</span> DIKSHA. <a href="https://www.indiastack.global/diksha/">indiastack.global</a></p>
+<p class="fn-item" id="fn-57"><span class="fn-num">[57]</span> ABDM. <a href="https://www.india.gov.in/spotlight/ayushman-bharat-digital-mission-abdm">india.gov.in</a></p>
+<p class="fn-item" id="fn-58"><span class="fn-num">[58]</span> VISTAAR. <a href="https://vistaar.da.gov.in/">vistaar.da.gov.in</a></p>
+<p class="fn-item" id="fn-59"><span class="fn-num">[59]</span> Aadhaar. <a href="https://uidai.gov.in/en/">uidai.gov.in</a></p>
+<p class="fn-item" id="fn-60"><span class="fn-num">[60]</span> UPI. <a href="https://www.npci.org.in/product/upi">npci.org.in</a></p>
+<p class="fn-item" id="fn-61"><span class="fn-num">[61]</span> DigiLocker. <a href="https://www.digilocker.gov.in/">digilocker.gov.in</a></p>
+<p class="fn-item" id="fn-62"><span class="fn-num">[62]</span> MOSIP. <a href="https://www.mosip.io/">mosip.io</a></p>
+<p class="fn-item" id="fn-63"><span class="fn-num">[63]</span> Nasscom DPI Report. <a href="https://nasscom.in/knowledge-center/publications/nasscom-arthur-d-little-indias-digital-public-infrastructure">nasscom.in</a></p>
+<p class="fn-item" id="fn-64"><span class="fn-num">[64]</span> Institut Montaigne. <a href="https://www.institutmontaigne.org/en/expressions/indias-digital-public-infrastructure-success-story-world">institutmontaigne.org</a></p>
+<p class="fn-item" id="fn-65"><span class="fn-num">[65]</span> IndiaAI Mission. <a href="https://indiaai.gov.in/">indiaai.gov.in</a></p>
+<p class="fn-item" id="fn-66"><span class="fn-num">[66]</span> Bhashini. <a href="https://bhashini.gov.in/">bhashini.gov.in</a></p>
+<p class="fn-item" id="fn-67"><span class="fn-num">[67]</span> Emeritus 2025. <a href="https://emeritus.org/in/global-workplace-skill-study-2025-india-edition/">Global Workplace Skills Study</a></p>
+<p class="fn-item" id="fn-68"><span class="fn-num">[68]</span> India Semiconductor Mission. <a href="https://ism.gov.in/">ism.gov.in</a></p>
+<p class="fn-item" id="fn-69"><span class="fn-num">[69]</span> SHANTI Bill. <a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/dec/doc20251222741701.pdf">pib.gov.in</a></p>
+<p class="fn-item" id="fn-70"><span class="fn-num">[70]</span> IEEFA: India critical minerals strategy. <a href="https://ieefa.org/resources/critical-minerals-india-must-step-its-strategies">ieefa.org</a></p>
+<p class="fn-item" id="fn-71"><span class="fn-num">[71]</span> MEA India Annual Report. <a href="https://www.mea.gov.in/Uploads/PublicationDocs/33569_MEA_annual_Report.pdf">mea.gov.in</a></p>
+<p class="fn-item" id="fn-72"><span class="fn-num">[72]</span> India-Brazil MoU. <a href="https://www.mea.gov.in/Portal/LegalTreatiesDoc/BR25B4580.pdf">mea.gov.in</a></p>
+<p class="fn-item" id="fn-73"><span class="fn-num">[73]</span> IEEFA: India critical minerals. <a href="https://ieefa.org/resources/critical-minerals-india-must-step-its-strategies">ieefa.org</a></p>
+<p class="fn-item" id="fn-74"><span class="fn-num">[74]</span> Mineral Security Partnership (MSP). <a href="https://2021-2025.state.gov/minerals-security-partnership/">state.gov</a></p>
+<p class="fn-item" id="fn-75"><span class="fn-num">[75]</span> EU-India TTC. <a href="https://digital-strategy.ec.europa.eu/en/news/eu-and-india-deepen-strategic-engagement-second-trade-and-technology-council">digital-strategy.ec.europa.eu</a></p>
+<p class="fn-item" id="fn-76"><span class="fn-num">[76]</span> Bluekraft: India's Semiconductor Age. <a href="https://www.bluekraft.in/wp-content/uploads/2024/12/The-Beginning-of-Indias-Semiconductor-Age-01.pdf">bluekraft.in</a></p>
+<p class="fn-item" id="fn-77"><span class="fn-num">[77]</span> IEEFA: India's Hunt for Critical Minerals. <a href="https://ieefa.org/sites/default/files/2024-10/India%27s%20Hunt%20for%20Critical%20Minerals.pdf">ieefa.org</a></p>
+<p class="fn-item" id="fn-78"><span class="fn-num">[78]</span> IEEFA: Critical minerals import dependency. <a href="https://ieefa.org/resources/critical-minerals-india-must-step-its-strategies">ieefa.org</a></p>
+<p class="fn-item" id="fn-79"><span class="fn-num">[79]</span> DPDP Act analysis. <a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf">pib.gov.in</a></p>
+<p class="fn-item" id="fn-80"><span class="fn-num">[80]</span> Meta Llama. <a href="https://www.llama.com/">llama.com</a></p>
+<p class="fn-item" id="fn-81"><span class="fn-num">[81]</span> Brazil Digital Government Strategy. <a href="https://www.gov.br/governodigital/pt-br/estrategias-e-governanca-digital/estrategianacional">gov.br</a></p>
+<p class="fn-item" id="fn-82"><span class="fn-num">[82]</span> Gov.br. <a href="http://Gov.br">gov.br</a></p>
+<p class="fn-item" id="fn-83"><span class="fn-num">[83]</span> Pix. <a href="https://www.bcb.gov.br/estabilidadefinanceira/pix">bcb.gov.br</a></p>
+<p class="fn-item" id="fn-84"><span class="fn-num">[84]</span> Conecta Gov.br. <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/interoperabilidade/conecta-gov.br">gov.br</a></p>
+<p class="fn-item" id="fn-85"><span class="fn-num">[85]</span> Amazon Fund: CAR. <a href="https://www.amazonfund.gov.br/en/projeto/Environmental-Regularization/">amazonfund.gov.br</a></p>
+<p class="fn-item" id="fn-86"><span class="fn-num">[86]</span> PRODES/DETER systems. <a href="https://infoamazonia.org/en/2022/02/15/prodes-and-deter-systems-against-deforestation-amazon/">infoamazonia.org</a></p>
+<p class="fn-item" id="fn-87"><span class="fn-num">[87]</span> EPE: Brazilian Energy Balance 2025. <a href="https://www.epe.gov.br/en/press-room/news/epe-publishes-the-summary-report-brazilian-energy-balance-2025">epe.gov.br</a></p>
+<p class="fn-item" id="fn-88"><span class="fn-num">[88]</span> Brazil Mining Investor Guide 2026. <a href="https://www.gov.br/mme/pt-br/assuntos/secretarias/geologia-mineracao-e-transformacao-mineral/guia-investidor-minerais-criticos/guia-investidor-estrangeiro-em-minerais-criticos/2026/investors-guide-en-us.pdf">gov.br/mme</a></p>
+<p class="fn-item" id="fn-89"><span class="fn-num">[89]</span> EllaLink activation. gov.br/mcom</p>
+<p class="fn-item" id="fn-90"><span class="fn-num">[90]</span> ITS Rio: DPI for Climate Report. <a href="https://itsrio.org/wp-content/uploads/2017/01/Digital-Public-Infrastructure-for-Climate-Report.pdf">itsrio.org</a></p>
+<p class="fn-item" id="fn-91"><span class="fn-num">[91]</span> India-Brazil DPI MoU.</p>
+<p class="fn-item" id="fn-92"><span class="fn-num">[92]</span> 50-in-5 Campaign. <a href="https://50in5.net/">50in5.net</a></p>
+<p class="fn-item" id="fn-93"><span class="fn-num">[93]</span> 50-in-5 Brazil profile. 50in5.net</p>
+<p class="fn-item" id="fn-94"><span class="fn-num">[94]</span> EU-LAC Digital Alliance. <a href="https://www.eeas.europa.eu/eeas/eu-lac-digital-alliance-leading-human-centric-artificial-intelligence_en">eeas.europa.eu</a></p>
+<p class="fn-item" id="fn-95"><span class="fn-num">[95]</span> BELLA Programme. <a href="https://www.eeas.europa.eu/delegations/brazil/bella-programme_en">eeas.europa.eu</a></p>
+<p class="fn-item" id="fn-96"><span class="fn-num">[96]</span> ReData regime. <a href="https://www.gov.br/mme/pt-br/a-revolucao-brasileira-em-energia-e-mineracao/energia-eletrica/redata-politica-de-acesso-e-incentivos-para-data-centers">gov.br/mme</a></p>
+<p class="fn-item" id="fn-97"><span class="fn-num">[97]</span> INPE. <a href="https://www.gov.br/inpe/pt-br">gov.br/inpe</a></p>
+<p class="fn-item" id="fn-98"><span class="fn-num">[98]</span> LNCC. <a href="https://www.gov.br/lncc/pt-br">gov.br/lncc</a></p>
+<p class="fn-item" id="fn-99"><span class="fn-num">[99]</span> Brasscom: ICT talent deficit. <a href="https://brasscom.org.br/estudo-da-brasscom-aponta-demanda-de-797-mil-profissionais-de-tecnologia-ate-2025/">brasscom.org.br</a></p>
+<p class="fn-item" id="fn-100"><span class="fn-num">[100]</span> PBIA 2024-2028. gov.br/mcti</p>
+<p class="fn-item" id="fn-101"><span class="fn-num">[101]</span> GovTech Intelligence Hub: Digital Sovereignty &amp; the EuroStack. <a href="https://www.govtechintelhub.org/case-study-details/better-stack-%28part-1%29:-10-theses-to-demystify-the-debate-on-digital-sovereignty-and-the-euro-stack/aJYTG0000000te14AA">govtechintelhub.org</a></p>
+<p class="fn-item" id="fn-102"><span class="fn-num">[102]</span> Keohane, R.O. and Nye, J.S. (1977). Power and Interdependence. Little, Brown.</p>
+<p class="fn-item" id="fn-103"><span class="fn-num">[103]</span> ECDPM: Brazil to the World. <a href="https://ecdpm.org/work/brazil-world-open-digital-infrastructure-climate-cooperation">ecdpm.org</a></p>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+<div style="font-family:var(--mono);font-size:.72rem;color:var(--txt-dim);display:flex;align-items:center;gap:.6rem;margin-bottom:1rem">
+<span class="nav-dot"></span> GEOPOLITICS/AI
+</div>
+<div style="font-size:.92rem;color:var(--txt-dim);max-width:500px;line-height:1.5;margin-bottom:1.5rem">A briefing on digital sovereignty, middle powers, and the architecture of dependence.</div>
+<div class="footer-meta">
+<div><div class="fm-label">REF</div><div class="fm-val">DS-2026-Q2</div></div>
+<div><div class="fm-label">CASES</div><div class="fm-val">EU · KE · IN · BR</div></div>
+<div><div class="fm-label">PAGES</div><div class="fm-val">14</div></div>
+<div><div class="fm-label">STATUS</div><div class="fm-val">DECLASSIFIED</div></div>
+</div>
+<div class="footer-sources">SOURCES INCLUDE MIRLESSE &amp; ABECASSIS (2026); BRIA ET AL. (2025); DRAGHI REPORT (2024); OECD, UNCTAD, UN GDC, WORLD BANK; COUTURE &amp; TOUPIN (2019); POHLE &amp; THIEL (2020); SANTANIELLO (2025); KEOHANE &amp; NYE (1977).</div>
+</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.borderBottomColor =
+    window.scrollY > 80 ? 'rgba(0,212,255,0.2)' : 'rgba(0,212,255,0.12)';
+});
+
+// Case study lock toggle
+function toggleCase(id) {
+  const lock = document.getElementById('lock-' + id);
+  const content = document.getElementById('case-' + id);
+  const status = document.getElementById('status-' + id);
+  const icon = lock.querySelector('.lock-icon');
+
+  if (lock.classList.contains('unlocked')) {
+    // Close it
+    lock.classList.remove('unlocked');
+    content.classList.remove('active');
+    status.textContent = 'LOCKED';
+    status.classList.remove('open');
+    status.classList.add('locked');
+    icon.textContent = '\u{1F512}';
+  } else {
+    // Close all others first
+    ['eu','ke','in','br'].forEach(cid => {
+      document.getElementById('lock-' + cid).classList.remove('unlocked');
+      document.getElementById('case-' + cid).classList.remove('active');
+      const s = document.getElementById('status-' + cid);
+      s.textContent = 'LOCKED';
+      s.classList.remove('open');
+      s.classList.add('locked');
+      document.getElementById('lock-' + cid).querySelector('.lock-icon').textContent = '\u{1F512}';
+    });
+    // Open this one
+    lock.classList.add('unlocked');
+    content.classList.add('active');
+    status.textContent = 'UNLOCKED';
+    status.classList.remove('locked');
+    status.classList.add('open');
+    icon.textContent = '\u{1F513}';
+    // Scroll to content
+    setTimeout(() => {
+      content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+</script>
+</body>
+</html>
