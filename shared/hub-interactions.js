@@ -100,10 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (camera && controls) {
     if (isMobileConfig) {
-      // Mobile specific framing: Pan to the center of the vertical stack
-      scrollTl.to(camera.position, { x: 0, y: 0, z: 42 }, 0);
-      const targetObj = { x: 0, y: 0, z: 0 };
-      scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
+      // Mobile specific framing for paired session clusters.
+      scrollTl.to(camera.position, { x: 0, y: 1.0, z: 41 }, 0);
+      const targetObj = { x: 0, y: 1.0, z: 0 };
+      scrollTl.to(targetObj, { x: 0, y: 1.0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
     } else {
       // Desktop framing
       scrollTl.to(camera.position, { x: 0, y: 5, z: 42 }, 0); // Pulled back for tighter FOV

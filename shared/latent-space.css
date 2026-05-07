@@ -757,8 +757,11 @@ body::before {
     display: none;
   }
 
-  .escape-hatch {
-    padding: 0.72rem 0.95rem;
+  .top-bar .escape-hatch {
+    padding: 0.42rem 0.62rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    line-height: 1;
   }
 
   .map-legend {
@@ -775,8 +778,13 @@ body::before {
   }
 
   #briefing-card {
-    width: calc(100vw - 1rem) !important;
+    position: fixed !important;
+    box-sizing: border-box !important;
+    width: min(280px, calc(100vw - 1.5rem)) !important;
     max-width: none !important;
+    max-height: calc(100dvh - 1.5rem) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
     border-radius: 26px !important;
     padding: 1rem !important;
     pointer-events: auto !important;
