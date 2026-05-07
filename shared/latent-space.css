@@ -26,13 +26,13 @@ body::before {
   width: 100vw;
   height: 120vh;
   background-image:
-    linear-gradient(180deg, rgba(14, 12, 10, 0.12) 0%, rgba(14, 12, 10, 0.38) 40%, rgba(14, 12, 10, 0.7) 100%),
-    linear-gradient(90deg, rgba(14, 12, 10, 0.68) 0%, rgba(14, 12, 10, 0.24) 55%, rgba(14, 12, 10, 0.46) 100%),
+    linear-gradient(180deg, rgba(14, 12, 10, 0.04) 0%, rgba(14, 12, 10, 0.18) 42%, rgba(14, 12, 10, 0.46) 100%),
+    linear-gradient(90deg, rgba(14, 12, 10, 0.42) 0%, rgba(14, 12, 10, 0.08) 55%, rgba(14, 12, 10, 0.22) 100%),
     url('../images/MareNostrum1.jpg');
   background-size: cover;
   background-position: 50% 0%;
   background-repeat: no-repeat;
-  filter: brightness(0.66) saturate(0.94) contrast(1.04);
+  filter: brightness(0.82) saturate(0.98) contrast(1.02);
   z-index: 1;
   opacity: 1;
   transition: filter 0.8s ease, opacity 0.8s ease, background-position 0.8s ease;
@@ -121,15 +121,15 @@ body::before {
   letter-spacing: -0.06em;
   max-width: 25ch;
   text-wrap: balance;
-  text-shadow: 0 2px 18px rgba(18, 14, 12, 0.58), 0 1px 2px rgba(18, 14, 12, 0.5);
+  text-shadow: 0 2px 14px rgba(18, 14, 12, 0.46), 0 1px 2px rgba(18, 14, 12, 0.36);
 }
 
 .hero-title-accent {
-  background: linear-gradient(135deg, #f0e2c8, #c8824d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 2px 12px rgba(18, 14, 12, 0.42));
+  color: #d6ad78;
+  background: none;
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  background-clip: border-box;
 }
 
 .hero-subtitle {
