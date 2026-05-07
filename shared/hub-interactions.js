@@ -1,4 +1,4 @@
-import { initLatentSpace } from './3d-hub.js';
+import { initLatentSpace } from './3d-hub.js?v=project-cards-20260507';
 
 document.addEventListener('DOMContentLoaded', () => {
   const revealHeroNow = () => {

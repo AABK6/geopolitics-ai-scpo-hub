@@ -99,7 +99,7 @@ export const initLatentSpace = () => {
         { id: 'p1', type: 'research', title: 'AI & State Surveillance', shortLabel: 'G1', bluf: 'Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.', directUrl: 'projects/group-1/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'p3', type: 'research', title: 'The Invisible Thirst', shortLabel: 'G3', bluf: 'A visual investigation of AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.', directUrl: 'projects/group-3/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd4', isReal: false },
-        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", shortLabel: 'G2', bluf: 'An interactive op-ed on orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
+        { id: 'p2', type: 'research', title: "The Next Frontier of AI Isn't a Model. It's an Orbit.", nodeTitle: 'Orbit as Next Frontier', shortLabel: 'G2', bluf: 'An interactive op-ed on orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.', directUrl: 'projects/group-2/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
@@ -109,7 +109,7 @@ export const initLatentSpace = () => {
         { id: 'd5', isReal: false },
         { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
-        { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', shortLabel: 'G5', bluf: 'A field report on how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
+        { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', nodeTitle: 'Digital Sovereignty', shortLabel: 'G5', bluf: 'A field report on how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
         { id: 'd7', isReal: false }
       ]
     },
@@ -226,35 +226,34 @@ export const initLatentSpace = () => {
     // Typography Labels
     if (data.type === 'anchor' || data.type === 'research') {
       const isAnchor = data.type === 'anchor';
+      const showTitle = !isMobile || !isAnchor;
+      const isMobileResearch = isMobile && !isAnchor;
       const div = document.createElement('div');
       div.className = 'node-label';
+      div.dataset.nodeId = data.id;
+      div.dataset.nodeType = data.type;
 
-      if (isAnchor) {
-        div.innerHTML = isMobile
-          ? `<span>${data.shortLabel}</span>`
-          : `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.title}</span>`;
-      } else {
-        div.innerHTML = isMobile
-          ? `<span>${data.shortLabel}</span>`
-          : `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.title}</span>`;
-      }
+      div.innerHTML = showTitle
+        ? `<span style="font-weight: 700; opacity: 0.56; margin-right: 0.36rem;">${data.shortLabel}</span><span>${data.nodeTitle || data.title}</span>`
+        : `<span>${data.shortLabel}</span>`;
 
       div.style.color = '#f6efe5';
       div.style.fontFamily = 'Inter, -apple-system, sans-serif';
-      div.style.fontSize = isMobile ? '0.62rem' : (isAnchor ? '0.74rem' : '0.68rem');
+      div.style.fontSize = isMobile ? (isMobileResearch ? '0.56rem' : '0.62rem') : (isAnchor ? '0.74rem' : '0.68rem');
       div.style.fontWeight = '600';
-      div.style.letterSpacing = isMobile ? '0.12em' : '0.03em';
+      div.style.letterSpacing = isMobile ? (isMobileResearch ? '0.02em' : '0.12em') : '0.03em';
       div.style.lineHeight = '1.18';
-      div.style.whiteSpace = isMobile ? 'nowrap' : 'normal';
-      div.style.maxWidth = isMobile ? 'none' : (isAnchor ? '144px' : '124px');
+      div.style.whiteSpace = isMobileResearch ? 'normal' : (isMobile ? 'nowrap' : 'normal');
+      div.style.maxWidth = isMobile ? (isMobileResearch ? '190px' : 'none') : (isAnchor ? '144px' : '124px');
       div.style.textAlign = 'center';
+      div.style.textWrap = isMobileResearch ? 'balance' : 'auto';
 
       div.style.background = isAnchor ? 'rgba(19, 15, 12, 0.62)' : 'rgba(39, 53, 33, 0.82)';
       div.style.border = isAnchor ? '1px solid rgba(243, 236, 224, 0.16)' : '1px solid rgba(188, 214, 178, 0.22)';
       div.style.backdropFilter = 'blur(6px)';
       div.style.WebkitBackdropFilter = 'blur(6px)';
-      div.style.padding = isMobile ? '0.22rem 0.48rem' : (isAnchor ? '0.28rem 0.78rem' : '0.24rem 0.68rem');
-      div.style.borderRadius = '9999px';
+      div.style.padding = isMobile ? (isMobileResearch ? '0.3rem 0.52rem' : '0.22rem 0.48rem') : (isAnchor ? '0.28rem 0.78rem' : '0.24rem 0.68rem');
+      div.style.borderRadius = isMobileResearch ? '14px' : '9999px';
       div.style.boxShadow = '0 10px 22px rgba(0, 0, 0, 0.22)';
 
       div.style.opacity = '1';
@@ -574,8 +573,15 @@ export const initLatentSpace = () => {
       if (vector.z > 1.0) {
         briefingCard.style.visibility = 'hidden';
       } else {
-        briefingCard.style.left = `${x}px`;
-        briefingCard.style.top = `${y}px`;
+        if (isMobile) {
+          briefingCard.style.left = '50%';
+          briefingCard.style.top = 'auto';
+          briefingCard.style.bottom = '0.75rem';
+        } else {
+          briefingCard.style.left = `${x}px`;
+          briefingCard.style.top = `${y}px`;
+          briefingCard.style.bottom = 'auto';
+        }
         // Removed manual style.transform entirely so GSAP can handle scale/y offsets natively
       }
     }
