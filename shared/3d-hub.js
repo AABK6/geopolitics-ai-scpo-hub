@@ -114,7 +114,7 @@ export const initLatentSpace = () => {
     {
       x: 3.5, // Scaled in from 6
       nodes: [
-        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', shortLabel: '05', mobileLabel: '5 Sovereignty', bluf: 'The return of the production function: compute, energy, hardware, and supply-chain chokepoints.', url: 'primer/module-05.html', color: 0xc56e42, size: 1.5, isReal: true },
+        { id: 'm5', type: 'anchor', title: 'Industrial Sovereignty', shortLabel: '05', mobileLabel: '5 Production', bluf: 'The return of the production function: compute, energy, hardware, and supply-chain chokepoints.', url: 'primer/module-05.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd5', isReal: false },
         { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', mobileLabel: '6 Policy', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },

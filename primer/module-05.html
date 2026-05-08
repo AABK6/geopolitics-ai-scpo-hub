@@ -144,9 +144,9 @@
       --zoom: 1.08;
       --spot-x: 50%;
       --spot-y: 50%;
-      --scrim-strength: 0.34;
-      --base-brightness: 0.72;
-      --base-saturation: 0.96;
+      --scrim-strength: 0.28;
+      --base-brightness: 0.84;
+      --base-saturation: 1;
       --drift-x: 0%;
       --drift-y: 0%;
     }
@@ -157,8 +157,8 @@
       --zoom: 1.03;
       --spot-x: 50%;
       --spot-y: 50%;
-      --scrim-strength: 0.44;
-      --base-brightness: 0.72;
+      --scrim-strength: 0.26;
+      --base-brightness: 0.9;
     }
 
     .scrolly[data-active-step="production"] {
@@ -167,7 +167,6 @@
       --zoom: 1.18;
       --spot-x: 50%;
       --spot-y: 45%;
-      --base-brightness: 0.78;
     }
 
     .scrolly[data-active-step="thesis"] {
@@ -176,8 +175,7 @@
       --zoom: 1.05;
       --spot-x: 49%;
       --spot-y: 47%;
-      --scrim-strength: 0.42;
-      --base-brightness: 0.76;
+      --scrim-strength: 0.2;
     }
 
     .scrolly[data-active-step="compute"] {
@@ -186,7 +184,6 @@
       --zoom: 1.35;
       --spot-x: 56%;
       --spot-y: 45%;
-      --base-brightness: 0.84;
     }
 
     .scrolly[data-active-step="energy"] {
@@ -195,7 +192,6 @@
       --zoom: 1.55;
       --spot-x: 35%;
       --spot-y: 29%;
-      --base-brightness: 0.86;
     }
 
     .scrolly[data-active-step="water"] {
@@ -204,7 +200,6 @@
       --zoom: 1.45;
       --spot-x: 74%;
       --spot-y: 25%;
-      --base-brightness: 0.86;
     }
 
     .scrolly[data-active-step="data"] {
@@ -213,7 +208,6 @@
       --zoom: 1.55;
       --spot-x: 28%;
       --spot-y: 75%;
-      --base-brightness: 0.82;
     }
 
     .scrolly[data-active-step="talent"] {
@@ -222,7 +216,6 @@
       --zoom: 1.45;
       --spot-x: 47%;
       --spot-y: 77%;
-      --base-brightness: 0.84;
     }
 
     .scrolly[data-active-step="efficiency"] {
@@ -231,7 +224,6 @@
       --zoom: 1.28;
       --spot-x: 54%;
       --spot-y: 51%;
-      --base-brightness: 0.77;
     }
 
     .scrolly[data-active-step="integration"] {
@@ -240,7 +232,12 @@
       --zoom: 1.5;
       --spot-x: 70%;
       --spot-y: 71%;
-      --base-brightness: 0.8;
+    }
+
+    .scrolly:not([data-active-step="intro"]) {
+      --scrim-strength: 0.12;
+      --base-brightness: 1.12;
+      --base-saturation: 1.04;
     }
 
     .stage {
@@ -586,9 +583,9 @@
         ),
         linear-gradient(
           180deg,
-          rgba(0, 0, 0, 0.48) 0%,
+          rgba(0, 0, 0, 0.38) 0%,
           rgba(0, 0, 0, 0.04) 34%,
-          rgba(0, 0, 0, 0.42) 100%
+          rgba(0, 0, 0, 0.32) 100%
         );
       pointer-events: none;
       transition: background 620ms var(--ease);
@@ -1484,9 +1481,9 @@
       position: absolute;
       left: 1rem;
       right: 1rem;
-      bottom: 1rem;
+      bottom: 0.75rem;
       z-index: 4;
-      padding: 0.9rem 1rem;
+      padding: 0.65rem 0.8rem;
       color: #fffaf4;
       background: rgba(17, 17, 15, 0.54);
       border-top: 3px solid var(--reader-accent);
@@ -1499,7 +1496,7 @@
     .reader-stage-status span {
       display: block;
       color: color-mix(in srgb, var(--reader-accent), white 30%);
-      font-size: 0.72rem;
+      font-size: 0.66rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -1507,18 +1504,11 @@
 
     .reader-stage-status strong {
       display: block;
-      margin-top: 0.25rem;
+      margin-top: 0.16rem;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+      font-size: clamp(1.12rem, 2.35vw, 1.72rem);
       font-weight: 600;
-      line-height: 1.05;
-    }
-
-    .reader-stage-status p {
-      margin: 0.45rem 0 0;
-      color: rgba(255, 250, 244, 0.84);
-      font-size: 0.9rem;
-      line-height: 1.42;
+      line-height: 1.04;
     }
 
     .reader-text-column {
@@ -2441,13 +2431,23 @@
       }
 
       .stage {
-        height: 68vh;
-        height: 68svh;
+        height: 100vh;
+        height: 100svh;
+      }
+
+      .atlas-scene {
+        inset: auto;
+        top: 0;
+        left: 50%;
+        width: 260vw;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        margin-left: -130vw;
       }
 
       .step-layer {
-        margin-top: -68vh;
-        margin-top: -68svh;
+        margin-top: -100vh;
+        margin-top: -100svh;
         padding: 0 1rem;
       }
 
@@ -2458,7 +2458,8 @@
         min-height: 96svh;
         align-items: flex-end;
         justify-content: center;
-        padding-bottom: 4.2rem;
+        padding-top: 5.2rem;
+        padding-bottom: max(5rem, calc(env(safe-area-inset-bottom, 0px) + 4.2rem));
       }
 
       .step:nth-child(2n + 4) {
@@ -2467,6 +2468,10 @@
 
       .step-card {
         width: min(640px, 100%);
+        max-height: min(56vh, 27rem);
+        max-height: min(56svh, 27rem);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .atlas-labels,
@@ -2494,7 +2499,9 @@
       }
 
       .atlas-scene {
-        inset: -12%;
+        top: 0;
+        width: 270vw;
+        margin-left: -135vw;
       }
 
       .bridge-grid {
@@ -2514,7 +2521,8 @@
       }
 
       .reader-stage-card {
-        min-height: 44vh;
+        min-height: 22vh;
+        min-height: 22svh;
       }
 
       .atlas-reader-full .module-outline {
@@ -2597,13 +2605,13 @@
       }
 
       .stage {
-        height: 62vh;
-        height: 62svh;
+        height: 100vh;
+        height: 100svh;
       }
 
       .step-layer {
-        margin-top: -62vh;
-        margin-top: -62svh;
+        margin-top: -100vh;
+        margin-top: -100svh;
       }
 
       .step,
@@ -2611,7 +2619,8 @@
       .step:last-child {
         min-height: 92vh;
         min-height: 92svh;
-        padding-bottom: 3.4rem;
+        padding-top: 4.6rem;
+        padding-bottom: max(4.6rem, calc(env(safe-area-inset-bottom, 0px) + 3.8rem));
       }
 
       .step-card h2 {
@@ -2640,13 +2649,19 @@
       }
 
       .reader-stage-card {
-        min-height: 40vh;
+        min-height: 18vh;
+        min-height: 18svh;
       }
 
       .reader-stage-status {
-        left: 0.75rem;
-        right: 0.75rem;
-        bottom: 0.75rem;
+        left: 0.65rem;
+        right: 0.65rem;
+        bottom: 0.6rem;
+      }
+
+      .atlas-reader-full .content-section,
+      .atlas-reader-full .sources-section {
+        scroll-margin-top: calc(3.4rem + 30svh);
       }
 
       .atlas-reader-full {
@@ -3080,7 +3095,6 @@
             <div class="reader-stage-status">
               <span data-reader-kicker>1.0 Paradigm Shift</span>
               <strong data-reader-title>From Software to Sovereignty</strong>
-              <p data-reader-copy>The atlas stays pinned while the full text scrolls, so the section being read is also the section being drawn.</p>
             </div>
           </div>
         </aside>
@@ -4158,8 +4172,20 @@
         integration: { x: 1120, y: 720, zoom: 1.74 }
       };
 
+      const mobileCameraTargets = {
+        intro: { x: 768, y: 512, zoom: 1.03, focusY: 0.5 },
+        thesis: { x: 768, y: 512, zoom: 1.08, focusY: 0.36 },
+        production: { x: 760, y: 460, zoom: 1.18, focusY: 0.35 },
+        compute: { x: 720, y: 430, zoom: 1.36, focusY: 0.34 },
+        energy: { x: 210, y: 285, zoom: 1.22, focusY: 0.32 },
+        water: { x: 1320, y: 70, zoom: 1.28, focusY: 0.2 },
+        data: { x: 430, y: 835, zoom: 1.34, focusY: 0.26 },
+        talent: { x: 660, y: 825, zoom: 1.32, focusY: 0.26 },
+        efficiency: { x: 735, y: 455, zoom: 1.32, focusY: 0.34 },
+        integration: { x: 1400, y: 650, zoom: 1.3, focusY: 0.28 }
+      };
+
       const applyCamera = function (key) {
-        const target = cameraTargets[key] || cameraTargets.intro;
         const stage = root.querySelector(".stage");
         const scene = root.querySelector(".atlas-scene");
         const image = root.querySelector("img.atlas-base");
@@ -4170,6 +4196,9 @@
 
         const stageWidth = stage.clientWidth;
         const stageHeight = stage.clientHeight;
+        const isPortraitStage = stageWidth <= 700;
+        const targets = isPortraitStage ? mobileCameraTargets : cameraTargets;
+        const target = targets[key] || targets.intro;
 
         if (
           lastCameraKey === key &&
@@ -4196,8 +4225,10 @@
         const originY = sceneHeight / 2;
         const zoom = target.zoom;
 
-        let panX = stageWidth / 2 - (sceneLeft + originX + zoom * (featureX - originX));
-        let panY = stageHeight / 2 - (sceneTop + originY + zoom * (featureY - originY));
+        const focusX = stageWidth / 2;
+        const focusY = isPortraitStage ? stageHeight * (target.focusY || 0.34) : stageHeight / 2;
+        let panX = focusX - (sceneLeft + originX + zoom * (featureX - originX));
+        let panY = focusY - (sceneTop + originY + zoom * (featureY - originY));
 
         const minPanX = stageWidth - (sceneLeft + originX + zoom * (sceneWidth - originX));
         const maxPanX = -(sceneLeft + originX * (1 - zoom));
@@ -4355,7 +4386,6 @@
         .filter(Boolean);
       const kicker = reader.querySelector("[data-reader-kicker]");
       const title = reader.querySelector("[data-reader-title]");
-      const copy = reader.querySelector("[data-reader-copy]");
       const outlineLinks = Array.from(reader.querySelectorAll(".module-outline a"));
       const revealTargets = Array.from(reader.querySelectorAll(
         ".content-section, .sources-section, .analysis-panel, .diagram-block, .data-block, .response-card, .signal-card, .variable-tile, .scenario-card, .bridge-panel, .source-group, .technique-item, .process-step, .efficiency-card"
@@ -4520,7 +4550,6 @@
           reader.dataset.activeReader = id;
           if (kicker) kicker.textContent = meta.kicker;
           if (title) title.textContent = meta.title;
-          if (copy) copy.textContent = meta.copy;
           outlineLinks.forEach(function (link) {
             link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
           });
@@ -4533,22 +4562,36 @@
           document.body.classList.toggle("reader-mode", readerBridge.getBoundingClientRect().top < 74);
         }
 
-        const focusY = window.innerHeight * 0.42;
+        const focusY = window.innerWidth <= 700 ? window.innerHeight * 0.76 : window.innerHeight * 0.42;
+        const hashId = decodeURIComponent(window.location.hash || "").replace(/^#/, "");
+        const hashSection = window.innerWidth <= 700 && hashId
+          ? sections.find(function (section) { return section.id === hashId; })
+          : null;
         let active = sections[0];
         let bestDistance = Infinity;
 
-        sections.forEach(function (section) {
-          const rect = section.getBoundingClientRect();
-          const sectionFocus = rect.top + Math.min(rect.height * 0.34, window.innerHeight * 0.45);
-          const distance = Math.abs(sectionFocus - focusY);
-          if (rect.top <= focusY && rect.bottom >= focusY) {
-            active = section;
+        if (hashSection) {
+          const hashRect = hashSection.getBoundingClientRect();
+          if (hashRect.top < window.innerHeight * 0.82 && hashRect.bottom > window.innerHeight * 0.18) {
+            active = hashSection;
             bestDistance = -1;
-          } else if (bestDistance !== -1 && distance < bestDistance) {
-            active = section;
-            bestDistance = distance;
           }
-        });
+        }
+
+        if (bestDistance !== -1) {
+          sections.forEach(function (section) {
+            const rect = section.getBoundingClientRect();
+            const sectionFocus = rect.top + Math.min(rect.height * 0.34, window.innerHeight * 0.45);
+            const distance = Math.abs(sectionFocus - focusY);
+            if (rect.top <= focusY && rect.bottom >= focusY) {
+              active = section;
+              bestDistance = -1;
+            } else if (bestDistance !== -1 && distance < bestDistance) {
+              active = section;
+              bestDistance = distance;
+            }
+          });
+        }
 
         const rect = active.getBoundingClientRect();
         const progress = clamp((focusY - rect.top) / Math.max(1, rect.height * 0.7), 0, 1);
@@ -4562,6 +4605,16 @@
         }
         ticking = true;
         window.requestAnimationFrame(updateReader);
+      };
+
+      const syncReaderToHash = function () {
+        if (window.innerWidth > 700) {
+          return;
+        }
+        const hashId = decodeURIComponent(window.location.hash || "").replace(/^#/, "");
+        if (hashId && sectionMeta[hashId]) {
+          setReader(hashId, 1);
+        }
       };
 
       if ("IntersectionObserver" in window) {
@@ -4592,7 +4645,12 @@
 
       window.addEventListener("scroll", requestReaderUpdate, { passive: true });
       window.addEventListener("resize", requestReaderUpdate);
+      window.addEventListener("hashchange", function () {
+        window.setTimeout(syncReaderToHash, 120);
+        window.setTimeout(requestReaderUpdate, 180);
+      });
       updateReader();
+      window.setTimeout(syncReaderToHash, 180);
     })();
   </script>
 </body>
