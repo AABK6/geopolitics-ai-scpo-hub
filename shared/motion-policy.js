@@ -103,18 +103,36 @@
     return true;
   }
 
-  function loadModule01Prologue() {
-    const path = window.location.pathname || '';
-    const isModule01 = path.endsWith('/primer/module-01.html') || path.endsWith('/module-01.html');
-    if (!isModule01 || document.querySelector('script[data-module-01-prologue]')) {
+  function appendScriptOnce(src, marker) {
+    if (document.querySelector(`script[${marker}]`)) {
       return;
     }
 
     const script = document.createElement('script');
-    script.src = '../shared/module-01-prologue.js';
+    script.src = src;
     script.defer = true;
-    script.setAttribute('data-module-01-prologue', '');
+    script.setAttribute(marker, '');
     document.head.appendChild(script);
+  }
+
+  function loadModule01Prologue() {
+    const path = window.location.pathname || '';
+    const isModule01 = path.endsWith('/primer/module-01.html') || path.endsWith('/module-01.html');
+    if (!isModule01) {
+      return;
+    }
+
+    appendScriptOnce('../shared/module-01-prologue.js', 'data-module-01-prologue');
+  }
+
+  function loadSEORuntime() {
+    const path = window.location.pathname || '';
+    const isPrimerModule = /\/primer\/module-0[1-8]\.html$/.test(path) || /\/module-0[1-8]\.html$/.test(path);
+    if (!isPrimerModule) {
+      return;
+    }
+
+    appendScriptOnce('../shared/seo-runtime.js', 'data-seo-runtime');
   }
 
   window.AIGeoMotionPolicy = {
@@ -125,4 +143,5 @@
   };
 
   loadModule01Prologue();
+  loadSEORuntime();
 })();
