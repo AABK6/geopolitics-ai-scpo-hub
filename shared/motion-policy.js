@@ -103,10 +103,26 @@
     return true;
   }
 
+  function loadModule01Prologue() {
+    const path = window.location.pathname || '';
+    const isModule01 = path.endsWith('/primer/module-01.html') || path.endsWith('/module-01.html');
+    if (!isModule01 || document.querySelector('script[data-module-01-prologue]')) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = '../shared/module-01-prologue.js';
+    script.defer = true;
+    script.setAttribute('data-module-01-prologue', '');
+    document.head.appendChild(script);
+  }
+
   window.AIGeoMotionPolicy = {
     prefersReducedMotion,
     initGSAP,
     prepareGSAPPage,
     revealImmediately
   };
+
+  loadModule01Prologue();
 })();
