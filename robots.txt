@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /archive/
+Disallow: /projects/_raw-submissions/
+
+Sitemap: https://geopoliticsofai.org/sitemap.xml
