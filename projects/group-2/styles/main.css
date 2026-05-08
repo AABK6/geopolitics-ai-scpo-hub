@@ -39,10 +39,11 @@
   --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
   --ease-spring: cubic-bezier(0.34, 1.38, 0.64, 1);
 
-  /* Track geometry (consumed by JS). Total scroll length in vh.
-     Each scene's height = (its range width) × this value.
-     Must be high enough that the shortest scene (liftoff, 0.12) is ≥ 100vh. */
-  --track-vh: 900;
+  /* Track is content-driven now — each pinned scene sets its own
+     min-height directly (gallery 220vh, regnet 460vh, timeline 170vh).
+     Setting this to 0 means the track has no forced minimum, so the
+     page ends exactly where the last scene ends. */
+  --track-vh: 0;
 
   /* Live values written by the scroll engine */
   --progress: 0;

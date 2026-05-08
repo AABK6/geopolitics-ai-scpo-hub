@@ -984,7 +984,7 @@ body.stage-muted .cluster {
   font-weight: 400;
   font-size: clamp(1rem, 1.5vw, 1.3rem);
   color: var(--economist-red);
-  margin: 0.25rem 0 0.8rem;
+  margin: 0.25rem 0 0;
 }
 .colophon {
   font-family: var(--sans);
@@ -1869,12 +1869,16 @@ body.stage-muted .cluster {
   position: static;
   min-height: 0;
   padding-top: clamp(2rem, 6vh, 4rem) !important;
-  padding-bottom: clamp(0.6rem, 1.5vh, 1.4rem) !important;
+  padding-bottom: 0 !important;
 }
 .scene-closer {
   /* Reset any inherited margin/padding on the section element too. */
   padding: 0 !important;
   margin: 0 !important;
+}
+/* Last child of body — make sure the document ends here. */
+.scene-closer:last-of-type::after {
+  content: none;
 }
 
 /* ---------- Scene 3.5: Regulation network (the severed web) ----------
