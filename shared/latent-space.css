@@ -817,8 +817,10 @@ body::before {
   .hero-image-note {
     top: 0.95rem;
     right: 1rem;
-    left: auto;
-    max-width: calc(100vw - 2rem);
+    left: 4rem;
+    width: auto;
+    max-width: none;
+    text-align: right;
   }
 
   .hero-image-note__trigger {
@@ -826,7 +828,12 @@ body::before {
   }
 
   .hero-image-note__card {
-    width: min(330px, calc(100vw - 2rem));
+    position: absolute;
+    top: 3.45rem;
+    right: 0;
+    left: 0;
+    width: auto;
+    text-align: left;
     max-height: calc(100dvh - 7rem);
     overflow-y: auto;
   }

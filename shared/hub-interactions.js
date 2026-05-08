@@ -41,11 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
       setOpen(!note.classList.contains('is-open'));
     });
 
+    ['pointerdown', 'touchstart', 'click'].forEach((eventName) => {
+      note.addEventListener(eventName, (event) => {
+        event.stopPropagation();
+      });
+    });
+
     card.addEventListener('click', (event) => {
       event.stopPropagation();
     });
 
-    document.addEventListener('click', () => setOpen(false));
+    document.addEventListener('click', (event) => {
+      if (note.contains(event.target)) return;
+      setOpen(false);
+    });
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') setOpen(false);
     });
