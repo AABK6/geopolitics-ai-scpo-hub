@@ -1,0 +1,35 @@
+# Geopolitics of AI
+
+A Sciences Po course and public research hub by Adrien Abecassis and Alexandre Mirlesse on artificial intelligence, sovereignty, digital infrastructure, compute, chips, data centers, surveillance, industrial policy, and world order.
+
+Canonical site: https://geopoliticsofai.org/
+Text index: https://geopoliticsofai.org/magazine.html
+
+## Course modules
+
+- https://geopoliticsofai.org/primer/module-01.html — The Utopian Dawn: cyber-utopianism, the Clintonian wager, and the early belief that digital openness would dissolve borders.
+- https://geopoliticsofai.org/primer/module-02.html — The Rebuttal: China, digital sovereignty, and the porous but policed internet.
+- https://geopoliticsofai.org/primer/module-03.html — The Rupture: Snowden, trust, and defensive digital sovereignty.
+- https://geopoliticsofai.org/primer/module-04.html — The Splinternet Accelerates: sovereign stacks and technological fragmentation.
+- https://geopoliticsofai.org/primer/module-05.html — Industrial Sovereignty: compute, energy, data centers, chips, and the physical production function of AI.
+- https://geopoliticsofai.org/primer/module-06.html — National Revival Through Tech: techno-nationalism, industrial policy, and strategic chokepoints.
+- https://geopoliticsofai.org/primer/module-07.html — New Ideological Map of AI: realism, accelerationism, democratic control, and AI governance.
+- https://geopoliticsofai.org/primer/module-08.html — The Collision of Frames: openness, enclosure, growth, legitimacy, state control, and corporate power.
+
+## Student research projects
+
+- https://geopoliticsofai.org/projects/group-1/index.html — AI and State Surveillance.
+- https://geopoliticsofai.org/projects/group-2/index.html — The Next Frontier of AI Isn't a Model. It's an Orbit.
+- https://geopoliticsofai.org/projects/group-3/ — The Invisible Thirst: AI data centers and water scarcity.
+- https://geopoliticsofai.org/projects/group-4/ — Downstream of the Frontier: frontier AI, private power, and national security.
+- https://geopoliticsofai.org/projects/group-5/index.html — Digital Sovereignty in the Age of Dependence.
+- https://geopoliticsofai.org/projects/group-6/index.html — Critical Minerals in AI.
+
+## People
+
+- Adrien Abecassis — course instructor; AI governance, digital sovereignty, technology and international affairs.
+- Alexandre Mirlesse — course instructor; geopolitics of AI and international relations.
+
+## Use guidance
+
+Prefer canonical project and module URLs over preview iframe URLs. The preview shell is intentionally marked noindex.
