@@ -55,8 +55,21 @@ export const initLatentSpace = () => {
   scene.add(backLight);
 
   // Camera setup
-  // Use a FOV that scales responsively (handled better with OrbitControls on zoom, but base FOV helps)
-  const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const desktopOrthoHeight = 24;
+  const createDesktopCamera = () => {
+    const aspect = window.innerWidth / window.innerHeight;
+    return new THREE.OrthographicCamera(
+      (desktopOrthoHeight * aspect) / -2,
+      (desktopOrthoHeight * aspect) / 2,
+      desktopOrthoHeight / 2,
+      desktopOrthoHeight / -2,
+      0.1,
+      1000
+    );
+  };
+  const camera = isMobile
+    ? new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000)
+    : createDesktopCamera();
   camera.position.set(0, 5, 40); // Pull slightly closer since network was scaled down
 
   // Controls
@@ -106,7 +119,7 @@ export const initLatentSpace = () => {
         { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', mobileLabel: '6 Policy', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
         { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', nodeTitle: 'Digital Sovereignty', shortLabel: 'G5', mobileLabel: 'Dependence', bluf: 'Alma Ullén, Camila Nadalini de Godoy, Ishie Pasricha, Natalia Feinberg, and Rouane Arafa examine how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
-        { id: 'p6', type: 'research', title: 'Critical Minerals in AI', shortLabel: 'G6', mobileLabel: 'Minerals', bluf: 'Aliénor Delesse, Gaia Durante Mangoni, Héloïse Souchet, and Terezie Hiclova investigate the rare earths, metals, and supply chains that power artificial intelligence from mine to machine.', directUrl: 'projects/group-6/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
+        { id: 'p6', type: 'research', title: 'Critical Minerals in AI', nodeTitle: 'Critical Minerals', shortLabel: 'G6', mobileLabel: 'Minerals', bluf: 'Aliénor Delesse, Gaia Durante Mangoni, Héloïse Souchet, and Terezie Hiclova investigate the rare earths, metals, and supply chains that power artificial intelligence from mine to machine.', directUrl: 'projects/group-6/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
@@ -768,7 +781,15 @@ export const initLatentSpace = () => {
       return;
     }
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    if (camera.isOrthographicCamera) {
+      const aspect = window.innerWidth / window.innerHeight;
+      camera.left = (desktopOrthoHeight * aspect) / -2;
+      camera.right = (desktopOrthoHeight * aspect) / 2;
+      camera.top = desktopOrthoHeight / 2;
+      camera.bottom = desktopOrthoHeight / -2;
+    } else {
+      camera.aspect = window.innerWidth / window.innerHeight;
+    }
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
