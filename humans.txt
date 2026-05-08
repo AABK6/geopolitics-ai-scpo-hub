@@ -1,0 +1,7 @@
+Course: The Geopolitics of Artificial Intelligence
+Instructors: Adrien Abecassis, Alexandre Mirlesse
+Institution: Sciences Po
+Website: https://geopoliticsofai.org/
+Text index: https://geopoliticsofai.org/magazine.html
+
+Topics: artificial intelligence, sovereignty, digital infrastructure, compute, chips, data centers, industrial policy, digital sovereignty, technology and international relations, world order.
