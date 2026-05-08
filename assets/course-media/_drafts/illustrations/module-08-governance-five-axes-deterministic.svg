@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+<title id="title">Five tensions in AI governance</title>
+<desc id="desc">A pedagogic board for Module 8 showing five AI governance axes: diffusion, alignment, time, delegation, and legitimacy, each with opposing policy poles.</desc>
+<style>
+svg { background:#08111f; font-family: Inter, Arial, sans-serif; }
+.bgline { stroke:#1e2f49; stroke-width:1; opacity:.5; }
+.title { fill:#f8fafc; font-size:36px; font-weight:800; }
+.dek { fill:#94a3b8; font-size:17px; }
+.panel { fill:#0d1828; stroke:#24364f; stroke-width:1.2; }
+.axis-label { fill:#f8fafc; font-size:22px; font-weight:800; }
+.pole { fill:#dbe7f4; font-size:17px; font-weight:700; paint-order:stroke; stroke:#08111f; stroke-width:4px; }
+.question { fill:#8295ad; font-size:14px; }
+.neutral { stroke:#64748b; stroke-width:1.6; stroke-dasharray:5 7; opacity:.75; }
+.uncertain { fill:#111d30; stroke:#cbd5e1; stroke-width:2; }
+.footer { fill:#64748b; font-size:13px; letter-spacing:.08em; text-transform:uppercase; }
+</style>
+<path class="bgline" d="M0 168 H1400 M0 728 H1400"/>
+<text class="title" x="76" y="76">The collision of AI governance frames</text>
+<text class="dek" x="76" y="108">A teaching board for reading Module 8 as five recurring tradeoffs rather than fixed camps.</text>
+<rect class="panel" x="64" y="158" width="1272" height="610" rx="18"/>
+<text class="footer" x="300" y="184">contain</text>
+<text class="footer" x="700" y="184" text-anchor="middle">unresolved threshold</text>
+<text class="footer" x="1100" y="184" text-anchor="end">release</text>
+<g class="row">
+  <text class="axis-label" x="94" y="236">Diffusion</text>
+  <text class="pole left" x="272" y="212" text-anchor="end">Concentration</text>
+  <text class="pole right" x="1128" y="212">Proliferation</text>
+  <line x1="300" y1="230" x2="1100" y2="230" stroke="#60a5fa" stroke-width="4" stroke-linecap="round" opacity="0.84"/>
+  <line class="neutral" x1="700.0" y1="206" x2="700.0" y2="254"/>
+  <circle cx="300" cy="230" r="10" fill="#60a5fa" stroke="#f8fafc" stroke-width="2"/>
+  <circle cx="1100" cy="230" r="10" fill="#60a5fa" stroke="#f8fafc" stroke-width="2"/>
+  <circle class="uncertain" cx="700.0" cy="230" r="13"/>
+  <text class="question" x="300" y="272">Who should be allowed to access frontier capability?</text>
+</g><g class="row">
+  <text class="axis-label" x="94" y="348">Alignment</text>
+  <text class="pole left" x="272" y="324" text-anchor="end">Sovereign alignment</text>
+  <text class="pole right" x="1128" y="324">Humanity-first alignment</text>
+  <line x1="300" y1="342" x2="1100" y2="342" stroke="#34d399" stroke-width="4" stroke-linecap="round" opacity="0.84"/>
+  <line class="neutral" x1="700.0" y1="318" x2="700.0" y2="366"/>
+  <circle cx="300" cy="342" r="10" fill="#34d399" stroke="#f8fafc" stroke-width="2"/>
+  <circle cx="1100" cy="342" r="10" fill="#34d399" stroke="#f8fafc" stroke-width="2"/>
+  <circle class="uncertain" cx="700.0" cy="342" r="13"/>
+  <text class="question" x="300" y="384">Whose values should constrain model behavior?</text>
+</g><g class="row">
+  <text class="axis-label" x="94" y="460">Time</text>
+  <text class="pole left" x="272" y="436" text-anchor="end">Acceleration</text>
+  <text class="pole right" x="1128" y="436">Deceleration</text>
+  <line x1="300" y1="454" x2="1100" y2="454" stroke="#f59e0b" stroke-width="4" stroke-linecap="round" opacity="0.84"/>
+  <line class="neutral" x1="700.0" y1="430" x2="700.0" y2="478"/>
+  <circle cx="300" cy="454" r="10" fill="#f59e0b" stroke="#f8fafc" stroke-width="2"/>
+  <circle cx="1100" cy="454" r="10" fill="#f59e0b" stroke="#f8fafc" stroke-width="2"/>
+  <circle class="uncertain" cx="700.0" cy="454" r="13"/>
+  <text class="question" x="300" y="496">Should governance keep pace with deployment or slow it?</text>
+</g><g class="row">
+  <text class="axis-label" x="94" y="572">Delegation</text>
+  <text class="pole left" x="272" y="548" text-anchor="end">Human control</text>
+  <text class="pole right" x="1128" y="548">Agentic autonomy</text>
+  <line x1="300" y1="566" x2="1100" y2="566" stroke="#a78bfa" stroke-width="4" stroke-linecap="round" opacity="0.84"/>
+  <line class="neutral" x1="700.0" y1="542" x2="700.0" y2="590"/>
+  <circle cx="300" cy="566" r="10" fill="#a78bfa" stroke="#f8fafc" stroke-width="2"/>
+  <circle cx="1100" cy="566" r="10" fill="#a78bfa" stroke="#f8fafc" stroke-width="2"/>
+  <circle class="uncertain" cx="700.0" cy="566" r="13"/>
+  <text class="question" x="300" y="608">Where does human judgment remain mandatory?</text>
+</g><g class="row">
+  <text class="axis-label" x="94" y="684">Legitimacy</text>
+  <text class="pole left" x="272" y="660" text-anchor="end">Productivity dividend</text>
+  <text class="pole right" x="1128" y="660">Social fracture</text>
+  <line x1="300" y1="678" x2="1100" y2="678" stroke="#fb7185" stroke-width="4" stroke-linecap="round" opacity="0.84"/>
+  <line class="neutral" x1="700.0" y1="654" x2="700.0" y2="702"/>
+  <circle cx="300" cy="678" r="10" fill="#fb7185" stroke="#f8fafc" stroke-width="2"/>
+  <circle cx="1100" cy="678" r="10" fill="#fb7185" stroke="#f8fafc" stroke-width="2"/>
+  <circle class="uncertain" cx="700.0" cy="678" r="13"/>
+  <text class="question" x="300" y="720">When does economic gain become political strain?</text>
+</g>
+</svg>

@@ -1,0 +1,182 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Project palette — deep navy + teal */
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-rule: var(--rule);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-mute: var(--ink-mute);
+  --color-inverse: var(--inverse);
+  --color-inverse-fg: var(--inverse-fg);
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --animate-fade-in: fade-in 0.4s ease-out forwards;
+  --animate-slide-in-left: slide-in-left 0.5s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.5s ease-out forwards;
+  --animate-pop-in: pop-in 0.35s ease-out forwards;
+}
+
+:root {
+  --radius: 0.125rem;
+
+  /* Deep-navy editorial palette */
+  --paper: #0A0F1C;          /* page bg */
+  --paper-2: #111827;        /* card / panel bg */
+  --rule: #1E3A5F;           /* borders, dividers, timeline line */
+  --ink: #FFFFFF;            /* headings */
+  --ink-2: #CBD5E1;          /* body */
+  --ink-mute: #94A3B8;       /* secondary muted */
+  --accent: #06B6D4;         /* teal */
+  --accent-ink: #0A0F1C;     /* text on teal */
+  --inverse: #060A14;        /* interstitial bg */
+  --inverse-fg: #FFFFFF;
+
+  /* Map shadcn semantics */
+  --background: var(--paper);
+  --foreground: var(--ink-2);
+  --card: var(--paper-2);
+  --card-foreground: var(--ink-2);
+  --popover: var(--paper-2);
+  --popover-foreground: var(--ink-2);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-ink);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--ink-2);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--ink-mute);
+  --accent-foreground: var(--accent-ink);
+  --destructive: #F43F5E;
+  --destructive-foreground: var(--ink);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--accent);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+
+  *, *::before, *::after {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><line x1='1' y1='11' x2='21' y2='11' stroke='%2306B6D4' stroke-width='1'/><line x1='11' y1='1' x2='11' y2='21' stroke='%2306B6D4' stroke-width='1'/><circle cx='11' cy='11' r='2' fill='none' stroke='%2306B6D4' stroke-width='1'/></svg>") 11 11, none !important;
+  }
+
+
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern", "liga", "tnum", "lnum", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+
+  /* Editorial body text uses serif */
+  .prose-body, .prose-body p {
+    font-family: var(--font-serif);
+    font-size: 0.96875rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    hyphens: auto;
+  }
+
+  .has-dropcap > p:first-of-type::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    float: left;
+    font-size: 4.2em;
+    line-height: 0.9;
+    padding: 0.05em 0.12em 0 0;
+    color: var(--accent);
+  }
+
+  mark, .mark {
+    background: transparent;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .fn-ref {
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    color: var(--accent);
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 0.1em;
+  }
+
+  .rule-t { border-top: 1px solid var(--rule); }
+  .rule-b { border-bottom: 1px solid var(--rule); }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

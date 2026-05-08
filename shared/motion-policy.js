@@ -103,10 +103,59 @@
     return true;
   }
 
+  function appendScriptOnce(src, marker) {
+    if (document.querySelector(`script[${marker}]`)) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.setAttribute(marker, '');
+    document.head.appendChild(script);
+  }
+
+  function sharedPath(fileName) {
+    const path = window.location.pathname || '';
+    if (path.includes('/primer/') || path.includes('/projects/')) {
+      return `../../shared/${fileName}`;
+    }
+    return `shared/${fileName}`;
+  }
+
+  function loadAnalytics() {
+    appendScriptOnce(sharedPath('analytics-config.js'), 'data-analytics-config');
+    appendScriptOnce(sharedPath('analytics.js'), 'data-analytics-loader');
+  }
+
+  function loadModule01Prologue() {
+    const path = window.location.pathname || '';
+    const isModule01 = path.endsWith('/primer/module-01.html') || path.endsWith('/module-01.html');
+    if (!isModule01) {
+      return;
+    }
+
+    appendScriptOnce('../shared/module-01-prologue.js', 'data-module-01-prologue');
+  }
+
+  function loadSEORuntime() {
+    const path = window.location.pathname || '';
+    const isPrimerModule = /\/primer\/module-0[1-8]\.html$/.test(path) || /\/module-0[1-8]\.html$/.test(path);
+    if (!isPrimerModule) {
+      return;
+    }
+
+    appendScriptOnce('../shared/seo-runtime.js', 'data-seo-runtime');
+  }
+
   window.AIGeoMotionPolicy = {
     prefersReducedMotion,
     initGSAP,
     prepareGSAPPage,
     revealImmediately
   };
+
+  loadAnalytics();
+  loadModule01Prologue();
+  loadSEORuntime();
 })();

@@ -1,4 +1,18 @@
-import { initLatentSpace } from './3d-hub.js';
+import { initLatentSpace } from './3d-hub.js?v=group4-publish-20260507';
+
+(function loadAnalytics() {
+  const appendScriptOnce = (src, marker) => {
+    if (document.querySelector(`script[${marker}]`)) return;
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.setAttribute(marker, '');
+    document.head.appendChild(script);
+  };
+
+  appendScriptOnce('shared/analytics-config.js', 'data-analytics-config');
+  appendScriptOnce('shared/analytics.js', 'data-analytics-loader');
+}());
 
 document.addEventListener('DOMContentLoaded', () => {
   const revealHeroNow = () => {
@@ -18,6 +32,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  const initHeroImageNote = () => {
+    const note = document.querySelector('.hero-image-note');
+    if (!note) return;
+
+    const trigger = note.querySelector('.hero-image-note__trigger');
+    const card = note.querySelector('.hero-image-note__card');
+    if (!trigger || !card) return;
+
+    const setOpen = (isOpen) => {
+      note.classList.toggle('is-open', isOpen);
+      trigger.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) {
+        card.removeAttribute('hidden');
+      } else {
+        card.setAttribute('hidden', '');
+      }
+    };
+
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setOpen(!note.classList.contains('is-open'));
+    });
+
+    ['pointerdown', 'touchstart', 'click'].forEach((eventName) => {
+      note.addEventListener(eventName, (event) => {
+        event.stopPropagation();
+      });
+    });
+
+    card.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (note.contains(event.target)) return;
+      setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  };
+
   const hideLoadingOverlayNow = () => {
     const loadingOverlay = document.getElementById('loading-overlay');
     if (!loadingOverlay) return;
@@ -28,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+
+  initHeroImageNote();
 
   const jumpToNetwork = (behavior = 'smooth') => {
     window.scrollTo({ top: window.innerHeight * 0.95, behavior });
@@ -100,10 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (camera && controls) {
     if (isMobileConfig) {
-      // Mobile specific framing: Pan to the center of the vertical stack
-      scrollTl.to(camera.position, { x: 0, y: 0, z: 42 }, 0);
-      const targetObj = { x: 0, y: 0, z: 0 };
-      scrollTl.to(targetObj, { x: 0, y: 0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
+      // Mobile specific framing for paired session clusters.
+      scrollTl.to(camera.position, { x: 0, y: 1.0, z: 41 }, 0);
+      const targetObj = { x: 0, y: 1.0, z: 0 };
+      scrollTl.to(targetObj, { x: 0, y: 1.0, z: 0, onUpdate: () => controls.target.set(targetObj.x, targetObj.y, targetObj.z) }, 0);
     } else {
       // Desktop framing
       scrollTl.to(camera.position, { x: 0, y: 5, z: 42 }, 0); // Pulled back for tighter FOV

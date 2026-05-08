@@ -1,0 +1,17 @@
+{
+  "name": "The Geopolitics of Artificial Intelligence",
+  "short_name": "Geopolitics of AI",
+  "description": "A Sciences Po course and public research hub on artificial intelligence, sovereignty, digital infrastructure, compute, chips, data centers, surveillance, industrial policy, and world order.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#120f0d",
+  "theme_color": "#120f0d",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ The platform is deployed as a static site on GitHub Pages. The repository is org
 
 - **Root:** The command center. It contains the 3D landing page (`index.html`), the editorial fallback (`magazine.html`), shared design assets, and the global scripts that power the course site.
 - **Primer:** The course narrative. The `primer/` directory contains the eight module pages.
-- **Projects:** The field briefs. The `projects/` directory contains five reserved student sandboxes (`projects/group-1/` through `projects/group-5/`), each with its own `index.html` entrypoint.
+- **Projects:** The field briefs. The `projects/` directory contains six reserved student sandboxes (`projects/group-1/` through `projects/group-6/`), each with its own `index.html` entrypoint.
 
 Because the host is static, student work must be published as static output. Framework builds are acceptable only after they have been compiled down to files that can be served directly from a browser.
 

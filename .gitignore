@@ -8,3 +8,4 @@ output/
 _main_index_*.html
 patch.py
 patch2.py
+projects/_raw-submissions/**/node_modules/
