@@ -14,17 +14,19 @@ Archival visual snippets for Module 01, centered on Vice President Al Gore's Mar
 - `gore-gii-header.png` — header/title archival crop.
 - `gore-gii-parallel-computing.png` — excerpt linking distributed processors to networked problem-solving.
 - `gore-gii-democracy-metaphor.png` — excerpt linking the GII to democracy and citizen agency.
-- `gore-speech-illustration.png` — visual reference mockup for how the archival material could be composed into the Module 01 page.
+
+- `gore-speech-illustration.png` — THIS IS THE IMAGE YOU SHOULD USE - NO NEED TO RECOMPOSE BY CODING ALL THE DETAILS (clipper, tape, arrows etc...) - JUST TAKE THIS ONE.
 
 ## Intended use in Module 01
 
 Use as an archival evidence block in the Global Information Infrastructure section. Recommended framing: Gore presents network architecture as a political metaphor: distributed computing becomes a model for representative democracy and liberal digital order.
 
-Do not add a video block for this section. The visual emphasis should be the archival speech document and the two textual excerpts.
 
 ## Proposed Module 01 code architecture
 
 Start from the existing `primer/module-01.html` GII section rather than creating a new rendering system. Keep the current section heading, lead paragraph, quote language, Strategic Intent card, and Five Principles content. Add one new archival component between the lead paragraph and the Strategic Intent card.
+
+=== PARTS OF THE FOLLOWING ARE UNNECESSARY IF YOU JUST TAKE THE PRE-RENDERED IMAGE. SORT OUT WHAT YOU NEED HERE ==
 
 ### 1. HTML insertion point
 
@@ -220,7 +222,6 @@ Add this to the existing inline `<style>` in `primer/module-01.html` near the cu
 - It keeps Module 01 within the existing long-form chapter design.
 - It makes the Gore section visually richer without copying Module 05's scrollytelling mechanics.
 - It treats the images as archival evidence, not decoration.
-- It avoids a video embed, keeping the section focused on the speech document and the argument embedded in the text.
 - It creates a reusable pattern for later Module 01 archival inserts: one evidence panel, source image, excerpt images, interpretive quote, caption.
 
 ## Implementation note
