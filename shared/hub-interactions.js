@@ -18,6 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  const initHeroImageNote = () => {
+    const note = document.querySelector('.hero-image-note');
+    if (!note) return;
+
+    const trigger = note.querySelector('.hero-image-note__trigger');
+    const card = note.querySelector('.hero-image-note__card');
+    if (!trigger || !card) return;
+
+    const setOpen = (isOpen) => {
+      note.classList.toggle('is-open', isOpen);
+      trigger.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) {
+        card.removeAttribute('hidden');
+      } else {
+        card.setAttribute('hidden', '');
+      }
+    };
+
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setOpen(!note.classList.contains('is-open'));
+    });
+
+    card.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    document.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  };
+
   const hideLoadingOverlayNow = () => {
     const loadingOverlay = document.getElementById('loading-overlay');
     if (!loadingOverlay) return;
@@ -28,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+
+  initHeroImageNote();
 
   const jumpToNetwork = (behavior = 'smooth') => {
     window.scrollTo({ top: window.innerHeight * 0.95, behavior });
