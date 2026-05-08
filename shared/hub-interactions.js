@@ -1,5 +1,19 @@
 import { initLatentSpace } from './3d-hub.js?v=group4-publish-20260507';
 
+(function loadAnalytics() {
+  const appendScriptOnce = (src, marker) => {
+    if (document.querySelector(`script[${marker}]`)) return;
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.setAttribute(marker, '');
+    document.head.appendChild(script);
+  };
+
+  appendScriptOnce('shared/analytics-config.js', 'data-analytics-config');
+  appendScriptOnce('shared/analytics.js', 'data-analytics-loader');
+}());
+
 document.addEventListener('DOMContentLoaded', () => {
   const revealHeroNow = () => {
     const revealTargets = [
