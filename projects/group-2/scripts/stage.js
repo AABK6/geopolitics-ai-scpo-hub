@@ -271,15 +271,17 @@ export class Stage {
     root.setProperty("--rocket-opacity", rocketOpacity.toFixed(3));
 
     // Thrust: full during liftoff, starts cutting out as the rocket begins
-    // its transformation into the satellite cluster right around the
-    // Act I → Act II boundary (progress 0.50).
-    const clusterMix = smoothstep(remap(progress, 0.46, 0.54, 0, 1));
-    const thrust = igniteT * (1 - smoothstep(remap(progress, 0.42, 0.52, 0, 1)) * 0.95);
+    // its transformation into the satellite cluster, just before the
+    // gallery pin engages at progress 0.42.
+    const clusterMix = smoothstep(remap(progress, 0.34, 0.42, 0, 1));
+    const thrust = igniteT * (1 - smoothstep(remap(progress, 0.30, 0.40, 0, 1)) * 0.95);
     root.setProperty("--thrust", thrust.toFixed(3));
 
     // ---- Satellite cluster (replaces the rocket above ~1000 km) ----
-    // Cross-fade from rocket to cluster at the Act I → Act II handoff
-    // (progress 0.46–0.54), so Act II opens on the satellite constellation.
+    // Cross-fade from rocket to cluster BEFORE the gallery pin
+    // (rocket fades 0.38–0.42, cluster fades in 0.34–0.42). The
+    // gallery hides both via stage-muted while pinned. When the
+    // gallery releases, the cluster is already at full strength.
     root.setProperty("--cluster-mix", clusterMix.toFixed(3));
 
     // Cluster starts high (where the rocket was climbing to) and gently drifts
@@ -287,15 +289,16 @@ export class Stage {
     // cluster appears up high, matching where the eye is tracking the rocket.
     const clusterStartY = -vh * 0.08;
     const clusterEndY = -vh * 0.04;
-    const clusterY = lerp(clusterStartY, clusterEndY, smoothstep(remap(progress, 0.50, 0.95, 0, 1)));
+    const clusterY = lerp(clusterStartY, clusterEndY, smoothstep(remap(progress, 0.40, 0.95, 0, 1)));
     root.setProperty("--cluster-y", `${clusterY.toFixed(1)}px`);
 
     // Slow ambient rotation for cinematic feel — just a subtle yaw
-    const clusterRot = (progress - 0.50) * 14;
+    const clusterRot = (progress - 0.40) * 14;
     root.setProperty("--cluster-rot", `${clusterRot.toFixed(2)}deg`);
 
-    // Cluster emerges larger (dramatic reveal) and gently recedes past GEO
-    const clusterGrow = lerp(0.55, 1.1, smoothstep(remap(progress, 0.46, 0.66, 0, 1)));
+    // Cluster grows in as the cross-fade happens; settles at full size
+    // by the time the gallery pin engages.
+    const clusterGrow = lerp(0.55, 1.1, smoothstep(remap(progress, 0.32, 0.50, 0, 1)));
     const clusterRecede = lerp(1.0, 0.5, smoothstep(remap(progress, 0.78, 1.0, 0, 1)));
     root.setProperty("--cluster-scale", (clusterGrow * clusterRecede).toFixed(3));
 
