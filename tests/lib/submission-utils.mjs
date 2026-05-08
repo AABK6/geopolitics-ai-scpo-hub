@@ -3,7 +3,7 @@ import path from 'node:path';
 import { access, readdir, readFile } from 'node:fs/promises';
 import { constants as fsConstants } from 'node:fs';
 
-export const VALID_GROUPS = ['group-1', 'group-2', 'group-3', 'group-4', 'group-5'];
+export const VALID_GROUPS = ['group-1', 'group-2', 'group-3', 'group-4', 'group-5', 'group-6'];
 export const STATIC_TEXT_EXTENSIONS = new Set([
   '.css',
   '.csv',

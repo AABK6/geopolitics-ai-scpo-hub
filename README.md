@@ -20,12 +20,13 @@ For your final evaluation (30% of your grade), your group is required to build a
 Because this repository separates the main site from the student folders, your code is isolated. You have total creative and technical freedom over how you build your page, as long as it fits in the repository architecture without breaking the main website.
 
 ### Step 1: Find Your Sandbox
-Navigate to the `projects/` directory in this repository. You will see 5 folders:
+Navigate to the `projects/` directory in this repository. You will see 6 folders:
 - `/projects/group-1/`
 - `/projects/group-2/`
 - `/projects/group-3/`
 - `/projects/group-4/`
 - `/projects/group-5/`
+- `/projects/group-6/`
 
 Your group has been assigned one of these folders. **You must place your published files within your assigned folder.**
 

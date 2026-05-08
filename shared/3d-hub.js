@@ -106,7 +106,7 @@ export const initLatentSpace = () => {
         { id: 'm6', type: 'anchor', title: 'National Revival Through Tech', shortLabel: '06', mobileLabel: '6 Policy', bluf: 'The resurgence of techno-nationalism and aggressive industrial policy as instruments of state power.', url: 'primer/module-06.html', color: 0xc56e42, size: 1.5, isReal: true },
         { id: 'd6', isReal: false },
         { id: 'p5', type: 'research', title: 'Digital Sovereignty in the Age of Dependence', nodeTitle: 'Digital Sovereignty', shortLabel: 'G5', mobileLabel: 'Dependence', bluf: 'Alma Ullén, Camila Nadalini de Godoy, Ishie Pasricha, Natalia Feinberg, and Rouane Arafa examine how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.', directUrl: 'projects/group-5/index.html', color: 0x7fa26d, size: 1.05, isReal: true },
-        { id: 'd7', isReal: false }
+        { id: 'p6', type: 'research', title: 'Critical Minerals in AI', shortLabel: 'G6', mobileLabel: 'Minerals', bluf: 'Aliénor Delesse, Gaia Durante Mangoni, Héloïse Souchet, and Terezie Hiclova investigate the rare earths, metals, and supply chains that power artificial intelligence from mine to machine.', directUrl: 'projects/group-6/index.html', color: 0x7fa26d, size: 1.05, isReal: true }
       ]
     },
     {
@@ -136,7 +136,8 @@ export const initLatentSpace = () => {
     p2: { x: 2.8, y: 3.0, z: 0.3 },
     p3: { x: 4.2, y: -1.0, z: 0.3 },
     p4: { x: -4.2, y: -9.0, z: 0.3 },
-    p5: { x: 4.2, y: -9.0, z: 0.3 }
+    p5: { x: 4.2, y: -9.0, z: 0.3 },
+    p6: { x: 1.4, y: -1.0, z: 0.3 }
   };
   const mobileDummyPositions = {
     d1: { x: 0, y: 11.0, z: 0.2 },
@@ -152,7 +153,7 @@ export const initLatentSpace = () => {
     ['m1', 'd1', 'm2'],
     ['m3', 'd2', 'p1', 'd3'],
     ['m4', 'd4', 'p2'],
-    ['d5', 'm5', 'd6', 'p3'],
+    ['d5', 'm5', 'p6', 'p3'],
     ['m6', 'd7', 'm7'],
     ['p4', 'm8', 'd8', 'p5']
   ];
