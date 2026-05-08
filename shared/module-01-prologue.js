@@ -79,11 +79,6 @@
         text-wrap: balance;
       }
 
-      .clinton-prologue__subhead strong {
-        color: #fff7ed;
-        font-weight: 650;
-      }
-
       .clinton-prologue__stage {
         position: relative;
         max-width: min(88vw, 46rem);
@@ -208,7 +203,7 @@
     prologue.innerHTML = `
       <div class="clinton-prologue__inner">
         <p class="clinton-prologue__subhead">
-          The course opens with the liberal digital wager of the 1990s: <strong>that networks would expand exchange, spread democratic norms, and pull states toward convergence</strong>—before today's hard-tech fragmentation made digital infrastructure a terrain of sovereignty and rivalry.
+          At the end of the 1990s, American leaders believed digital technologies would expand exchange, spread democratic norms, and pull states toward convergence - faster than states could reassert sovereignty
         </p>
 
         <div class="clinton-prologue__stage">
