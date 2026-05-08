@@ -115,6 +115,19 @@
     document.head.appendChild(script);
   }
 
+  function sharedPath(fileName) {
+    const path = window.location.pathname || '';
+    if (path.includes('/primer/') || path.includes('/projects/')) {
+      return `../../shared/${fileName}`;
+    }
+    return `shared/${fileName}`;
+  }
+
+  function loadAnalytics() {
+    appendScriptOnce(sharedPath('analytics-config.js'), 'data-analytics-config');
+    appendScriptOnce(sharedPath('analytics.js'), 'data-analytics-loader');
+  }
+
   function loadModule01Prologue() {
     const path = window.location.pathname || '';
     const isModule01 = path.endsWith('/primer/module-01.html') || path.endsWith('/module-01.html');
@@ -142,6 +155,7 @@
     revealImmediately
   };
 
+  loadAnalytics();
   loadModule01Prologue();
   loadSEORuntime();
 })();
