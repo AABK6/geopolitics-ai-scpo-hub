@@ -51,7 +51,7 @@
   <link rel="stylesheet" href="shared/design-system.css">
   <link rel="stylesheet" href="shared/magazine.css">
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap"
     rel="stylesheet">
 </head>
 
@@ -59,137 +59,201 @@
 
   <div class="magazine-container">
     <header class="magazine-header">
-      <div class="magazine-tagline">Sciences Po — Series 01 — Spring 2026</div>
-      <div class="magazine-logo">Geopolitics of AI</div>
-      <div style="margin-top: 1rem;">
-        <a href="index.html"
-          style="font-family: 'Inter'; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid #000; padding: 0.4rem 1rem;">[
-          Back to Hub ]</a>
+      <nav class="magazine-topbar" aria-label="Magazine navigation">
+        <span>Sciences Po — Spring 2026</span>
+        <a href="index.html">Back to hub</a>
+      </nav>
+
+      <div class="magazine-hero">
+        <div>
+          <h1 class="magazine-logo">Geopolitics of AI</h1>
+        </div>
+        <p class="magazine-intro">Course modules and cohort research projects on artificial intelligence, infrastructure, sovereignty, and world order.</p>
       </div>
     </header>
 
-    <main class="editorial-grid">
-      <section class="main-feature">
-        <article class="feature-card">
-          <span class="feature-category">Module 01</span>
-          <h1 class="feature-title"><a href="primer/module-01.html">The Utopian Dawn</a></h1>
-          <p class="feature-excerpt">The "End of History" illusion and the Clintonian Wager: How early internet optimism
-            assumed the non-rival nature of digital ideas would inevitably dissolve borders.</p>
+    <main>
+      <section class="course-cycles" aria-label="Course modules">
+        <article class="cycle-band cycle-band--utopian">
+          <div class="cycle-copy">
+            <span class="cycle-label">Cycle I</span>
+            <h2>From Utopian Dawn to the Splinternet</h2>
+            <p>The first wave of AI imagination, the open internet creed, and the sovereign rebuttal that hardened into fragmented infrastructure.</p>
+          </div>
+
+          <figure class="cycle-figure">
+            <img src="assets/course-media/magazine-catalogue/cycle-01-utopian-to-splinternet.png" alt="Networked sphere and telegraph poles representing early internet utopianism and fragmented infrastructure." loading="lazy">
+          </figure>
+
+          <div class="module-grid module-grid--four">
+            <article class="module-card">
+              <span class="module-label">Module 01</span>
+              <h3><a href="primer/module-01.html">The Utopian Dawn</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-01-utopian-dawn-networked-globe.png" alt="Antique engraved networked globe representing cyber-utopianism." loading="lazy">
+              <a class="module-link" href="primer/module-01.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="module-card">
+              <span class="module-label">Module 02</span>
+              <h3><a href="primer/module-02.html">The Rebuttal</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-02-rebuttal-guardian.png" alt="Guardian lion statue representing sovereign control and gatekeeping." loading="lazy">
+              <a class="module-link" href="primer/module-02.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="module-card">
+              <span class="module-label">Module 03</span>
+              <h3><a href="primer/module-03.html">The Rupture</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-03-rupture-satellite-dish.png" alt="Antique satellite dish representing interception and the rupture of trust." loading="lazy">
+              <a class="module-link" href="primer/module-03.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="module-card">
+              <span class="module-label">Module 04</span>
+              <h3><a href="primer/module-04.html">The Splinternet Accelerates</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-04-splinternet-server-rack.png" alt="Server rack representing fragmented digital infrastructure." loading="lazy">
+              <a class="module-link" href="primer/module-04.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
         </article>
 
-        <article class="feature-card">
-          <span class="feature-category">Module 02</span>
-          <h1 class="feature-title"><a href="primer/module-02.html">The Rebuttal</a></h1>
-          <p class="feature-excerpt">China's foundational rebuttal and the architecture of sovereignty: the construction
-            of a "Porous but Policed" internet that imports capital while filtering dissent.</p>
+        <article class="cycle-band cycle-band--industrial cycle-band--pair">
+          <div class="cycle-copy">
+            <span class="cycle-label">Cycle II</span>
+            <h2>Industry and National Revival</h2>
+            <p>The turn to compute, energy, data, talent, capital, and industrial strategy as the material base of frontier AI.</p>
+          </div>
+
+          <figure class="cycle-figure">
+            <img src="assets/course-media/magazine-catalogue/cycle-02-industry-national-revival.png" alt="Industrial facility and data center representing the material infrastructure of AI power." loading="lazy">
+          </figure>
+
+          <div class="module-grid module-grid--pair">
+            <article class="module-card">
+              <span class="module-label">Module 05</span>
+              <h3><a href="primer/module-05.html">Industrial Sovereignty</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-05-industrial-sovereignty-chip.png" alt="Microchip containing an industrial landscape, representing AI industrial sovereignty." loading="lazy">
+              <a class="module-link" href="primer/module-05.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="module-card">
+              <span class="module-label">Module 06</span>
+              <h3><a href="primer/module-06.html">National Revival Through Tech</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-06-national-revival-flag.png" alt="Flag representing national revival through technology strategy." loading="lazy">
+              <a class="module-link" href="primer/module-06.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
         </article>
 
-        <article class="feature-card">
-          <span class="feature-category">Module 03</span>
-          <h1 class="feature-title"><a href="primer/module-03.html">The Rupture</a></h1>
-          <p class="feature-excerpt">The 2013 Snowden revelations and the resulting collapse of global trust, triggering
-            a race for defensive sovereignty over critical infrastructure.</p>
-        </article>
+        <article class="cycle-band cycle-band--ideological cycle-band--pair">
+          <div class="cycle-copy">
+            <span class="cycle-label">Cycle III</span>
+            <h2>Ideology and Collision</h2>
+            <p>Competing visions of AI governance, state power, and truth, where narratives collide and the future is contested.</p>
+          </div>
 
-        <article class="feature-card">
-          <span class="feature-category">Module 04</span>
-          <h1 class="feature-title"><a href="primer/module-04.html">The Splinternet Accelerates</a></h1>
-          <p class="feature-excerpt">The balkanization of the web into competing, deeply sovereign technological stacks
-            and the end of globalization as the default state.</p>
-        </article>
+          <figure class="cycle-figure">
+            <img src="assets/course-media/magazine-catalogue/cycle-03-ideology-collision.png" alt="Chess pieces and overlapping geometric circles representing ideological competition and collision." loading="lazy">
+          </figure>
 
-        <article class="feature-card">
-          <span class="feature-category">Module 05</span>
-          <h1 class="feature-title"><a href="primer/module-05.html">Industrial Sovereignty</a></h1>
-          <p class="feature-excerpt">The return of the production function: how frontier AI relies on rival, physical
-            inputs—compute, energy, data, and human talent.</p>
-        </article>
+          <div class="module-grid module-grid--pair">
+            <article class="module-card">
+              <span class="module-label">Module 07</span>
+              <h3><a href="primer/module-07.html">New Ideological Map of AI</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-07-ideological-map-compass.png" alt="Compass representing ideological mapping and strategic orientation." loading="lazy">
+              <a class="module-link" href="primer/module-07.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
 
-        <article class="feature-card">
-          <span class="feature-category">Module 06</span>
-          <h1 class="feature-title"><a href="primer/module-06.html">National Revival Through Tech</a></h1>
-          <p class="feature-excerpt">The resurgence of techno-nationalism and industrial policy, as states race to
-            secure domestic capability while denying adversaries access to critical chokepoints.</p>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-category">Module 07</span>
-          <h1 class="feature-title"><a href="primer/module-07.html">New Ideological Map of AI</a></h1>
-          <p class="feature-excerpt">Tracing the competing intellectual frames—from state realism to
-            techno-accelerationism—that are actively defining what constitutes "rational" policy.</p>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-category">Module 08</span>
-          <h1 class="feature-title"><a href="primer/module-08.html">The Collision of Frames</a></h1>
-          <p class="feature-excerpt">The core tradeoffs that will dictate the future global order: diffusion vs.
-            enclosure, growth vs. legitimacy, and state control vs. corporate power.</p>
+            <article class="module-card">
+              <span class="module-label">Module 08</span>
+              <h3><a href="primer/module-08.html">The Collision of Frames</a></h3>
+              <img src="assets/course-media/magazine-catalogue/module-08-collision-chess-pieces.png" alt="Chess pieces representing the collision of strategic frames." loading="lazy">
+              <a class="module-link" href="primer/module-08.html">Read module <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
         </article>
       </section>
 
-      <aside class="sidebar">
-        <h2 class="sidebar-title">Cohort Projects</h2>
-
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 1: AI &amp; State Surveillance</div>
-          <p style="font-size: 0.9rem; color: #555;">Aisyah Lyana, Arjun Jayaraman, Tal Ben Yakir, and Ariatna Valderrama examine how AI-enabled surveillance reshapes state power, civil liberties, and democratic oversight.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-1/index.html" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-1" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
+      <section class="cohort-projects" aria-labelledby="cohort-projects-title">
+        <div class="cohort-projects__intro">
+          <h2 id="cohort-projects-title">Cohort Projects</h2>
+          <p>Six student research projects.</p>
         </div>
 
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 2: The Next Frontier of AI Isn't a Model. It's an Orbit.</div>
-          <p style="font-size: 0.9rem; color: #555;">Andrew Petrecca-Berthelet, Wendi Gjata, Lydia Jebakumar, Julia Zahary, and Asger Grimberg examine orbital data centers, space law, and the geopolitics of moving AI compute beyond Earth.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-2/index.html" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-2" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
-        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-1/index.html" aria-label="Open Group 1: AI and State Surveillance">
+              <img src="assets/course-media/magazine-catalogue/project-01-state-surveillance-cctv.png" alt="CCTV camera representing AI and state surveillance." loading="lazy">
+            </a>
+            <span class="project-label">Group 1</span>
+            <h3><a href="projects/group-1/index.html">AI &amp; State Surveillance</a></h3>
+            <div class="project-links">
+              <a href="projects/group-1/index.html">Direct</a>
+              <a href="preview.html?project=group-1">Preview</a>
+            </div>
+          </article>
 
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 3: The Invisible Thirst</div>
-          <p style="font-size: 0.9rem; color: #555;">Amelie Kenney, Dienaba Annie Sagna, Angelina Trefilova, and Anais Servais investigate AI data centers, water scarcity, and the missing facility-level data that weakens environmental governance.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-3/" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-3" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
-        </div>
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-2/index.html" aria-label="Open Group 2: The Next Frontier of AI Isn't a Model. It's an Orbit.">
+              <img src="assets/course-media/magazine-catalogue/project-02-orbital-ai-satellite.png" alt="Satellite representing orbital AI infrastructure." loading="lazy">
+            </a>
+            <span class="project-label">Group 2</span>
+            <h3><a href="projects/group-2/index.html">The Next Frontier of AI Isn't a Model. It's an Orbit.</a></h3>
+            <div class="project-links">
+              <a href="projects/group-2/index.html">Direct</a>
+              <a href="preview.html?project=group-2">Preview</a>
+            </div>
+          </article>
 
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 4: Downstream of the Frontier</div>
-          <p style="font-size: 0.9rem; color: #555;">Aleksandra Majowka, Abe de Ruijter, Ram Erik Glomseth, Shariya Ashraf, and Sebastian Ramirez Hernandez examine AI as a privately held frontier technology and national-security asset.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-4/" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-4" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
-        </div>
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-3/" aria-label="Open Group 3: The Invisible Thirst">
+              <img src="assets/course-media/magazine-catalogue/project-03-invisible-thirst-cooling-tower.png" alt="Water cooling tower representing data centers and water demand." loading="lazy">
+            </a>
+            <span class="project-label">Group 3</span>
+            <h3><a href="projects/group-3/">The Invisible Thirst</a></h3>
+            <div class="project-links">
+              <a href="projects/group-3/">Direct</a>
+              <a href="preview.html?project=group-3">Preview</a>
+            </div>
+          </article>
 
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 5: Digital Sovereignty in the Age of Dependence</div>
-          <p style="font-size: 0.9rem; color: #555;">Alma Ullén, Camila Nadalini de Godoy, Ishie Pasricha, Natalia Feinberg, and Rouane Arafa examine how middle powers manage digital dependence across compute, energy, data, talent, regulation, and infrastructure.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-5/index.html" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-5" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-4/" aria-label="Open Group 4: Downstream of the Frontier">
+              <img src="assets/course-media/magazine-catalogue/project-04-frontier-server-rack.png" alt="Locked server rack representing frontier AI infrastructure and private control." loading="lazy">
+            </a>
+            <span class="project-label">Group 4</span>
+            <h3><a href="projects/group-4/">Downstream of the Frontier</a></h3>
+            <div class="project-links">
+              <a href="projects/group-4/">Direct</a>
+              <a href="preview.html?project=group-4">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-5/index.html" aria-label="Open Group 5: Digital Sovereignty in the Age of Dependence">
+              <img src="assets/course-media/magazine-catalogue/project-05-digital-sovereignty-cable-landing.png" alt="Undersea cable landing station representing digital sovereignty and infrastructure dependence." loading="lazy">
+            </a>
+            <span class="project-label">Group 5</span>
+            <h3><a href="projects/group-5/index.html">Digital Sovereignty in the Age of Dependence</a></h3>
+            <div class="project-links">
+              <a href="projects/group-5/index.html">Direct</a>
+              <a href="preview.html?project=group-5">Preview</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <a class="project-card__image" href="projects/group-6/index.html" aria-label="Open Group 6: Critical Minerals in AI">
+              <img src="assets/course-media/magazine-catalogue/project-06-critical-minerals-ore.png" alt="Rare-earth ore sample representing critical minerals in AI supply chains." loading="lazy">
+            </a>
+            <span class="project-label">Group 6</span>
+            <h3><a href="projects/group-6/index.html">Critical Minerals in AI</a></h3>
+            <div class="project-links">
+              <a href="projects/group-6/index.html">Direct</a>
+              <a href="preview.html?project=group-6">Preview</a>
+            </div>
+          </article>
         </div>
-        <div class="sidebar-item">
-          <div class="sidebar-item-title">Group 6: Critical Minerals in AI</div>
-          <p style="font-size: 0.9rem; color: #555;">Aliénor Delesse, Gaia Durante Mangoni, Héloïse Souchet, and Terezie Hiclova investigate the rare earths, metals, and supply chains that power artificial intelligence from mine to machine.</p>
-          <div style="margin-top: 0.5rem; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">
-            <a href="projects/group-6/index.html" style="color: #ea580c; margin-right: 1rem;">Direct ↗</a>
-            <a href="preview.html?project=group-6" style="color: #0f172a; text-decoration: underline;">Preview</a>
-          </div>
-        </div>
-      </aside>
+      </section>
     </main>
-
-    <footer style="margin-top: 6rem; border-top: 1px solid #000; padding: 3rem 0; text-align: center;">
-      <p
-        style="font-family: 'Inter'; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem;">
-        Sciences Po Paris — 2026</p>
-    </footer>
   </div>
 
 </body>
