@@ -286,6 +286,14 @@ header.magazine-header {
   filter: saturate(0.92) contrast(1.04);
 }
 
+.module-image-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  text-decoration: none;
+}
+
 .module-link {
   margin-top: 0.45rem;
   font-family: var(--font-mono);

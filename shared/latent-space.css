@@ -573,7 +573,12 @@ body::before {
   pointer-events: none;
   z-index: 20;
   opacity: 0;
+  visibility: hidden;
   background: radial-gradient(circle at center, transparent 45%, rgba(8, 6, 5, 0.34) 100%);
+}
+
+#ui-layer.is-network-active {
+  visibility: visible;
 }
 
 .top-bar {

@@ -457,6 +457,7 @@ export const initLatentSpace = () => {
   };
 
   const onClick = (event) => {
+    if (event.target.closest?.('.hero-image-note')) return;
     if (isBriefingCardEvent(event)) return;
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;

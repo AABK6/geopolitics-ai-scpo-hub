@@ -74,6 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  const setNetworkUiActive = (isActive) => {
+    const uiLayer = document.getElementById('ui-layer');
+    const heroImageNote = document.querySelector('.hero-image-note');
+    if (uiLayer) uiLayer.classList.toggle('is-network-active', isActive);
+    if (heroImageNote) heroImageNote.classList.toggle('is-network-active', !isActive);
+  };
+
   const hideLoadingOverlayNow = () => {
     const loadingOverlay = document.getElementById('loading-overlay');
     if (!loadingOverlay) return;
@@ -141,7 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
       onUpdate: (self) => {
         // Instantly disable the invisible hero shield so the 3D map is clickable
         const hero = document.getElementById('hero-section');
-        if (hero) hero.style.pointerEvents = self.progress > 0.18 ? 'none' : 'auto';
+        const isNetworkActive = self.progress > 0.18;
+        if (hero) hero.style.pointerEvents = isNetworkActive ? 'none' : 'auto';
+        setNetworkUiActive(isNetworkActive);
       }
     }
   });
