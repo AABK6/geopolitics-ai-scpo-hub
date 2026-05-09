@@ -1,16 +1,16 @@
 # Magazine catalogue bitmap asset pack
 
-This directory is reserved for bitmap illustration assets for a proposed magazine/archive-catalogue view of the course hub.
+This directory contains bitmap illustration assets for the magazine view of the course hub.
 
-The target page concept groups the course into three visual cycles:
+The page groups the course into three visual cycles:
 
-1. **Cycle I - From Cyber-Utopia to Digital Sovereignty**
+1. **Cycle I - From Utopian Dawn to the Splinternet**
    - Module 01: The Utopian Dawn
    - Module 02: The Rebuttal
    - Module 03: The Rupture
    - Module 04: The Splinternet Accelerates
 
-2. **Cycle II - The Industrialization of AI Power**
+2. **Cycle II - Industry and National Revival**
    - Module 05: Industrial Sovereignty
    - Module 06: National Revival Through Tech
 
@@ -18,13 +18,13 @@ The target page concept groups the course into three visual cycles:
    - Module 07: New Ideological Map of AI
    - Module 08: The Collision of Frames
 
-The visual language follows the existing course style: warm paper, deep navy typography, terracotta accents, sage green for the material/industrial cycle, thin archival rules, and engraving-like bitmap illustrations. These are design assets for a future magazine/catalogue implementation. This PR intentionally avoids modifying `magazine.html` or `shared/magazine.css`.
+The visual language follows the existing course style: warm paper, deep navy typography, terracotta accents, sage green for the material/industrial cycle, thin archival rules, and engraving-like bitmap illustrations.
 
-## Bitmap files to place in this directory
+## Bitmap files
 
 ### Rendering objective
 
-- `magazine-catalogue-final-rendering-objective.png` - visual target for the future magazine/archive-catalogue page implementation.
+- `magazine-catalogue-final-rendering-objective.png` - visual target used during implementation.
 
 ### Large cycle illustrations
 
@@ -52,70 +52,12 @@ The visual language follows the existing course style: warm paper, deep navy typ
 - `project-05-digital-sovereignty-cable-landing.png` - Group 5 / digital sovereignty and infrastructure dependence / cable landing station.
 - `project-06-critical-minerals-ore.png` - Group 6 / AI supply chains / critical mineral ore sample.
 
-## Suggested implementation architecture
+## Page implementation
 
-Keep the current `magazine.html` content structure, but replace the flat two-column list with a three-cycle catalogue. Avoid touching student project files.
+The current implementation updates `magazine.html` and `shared/magazine.css` only. It does not touch student project files.
 
-Recommended structure:
-
-```html
-<section class="catalogue-hero">...</section>
-<section class="course-cycles">
-  <article class="cycle-band cycle-band--utopian">...</article>
-  <article class="cycle-band cycle-band--industrial">...</article>
-  <article class="cycle-band cycle-band--ideological">...</article>
-</section>
-<section class="cohort-project-strip">...</section>
-```
-
-Recommended image usage:
-
-```html
-<img
-  src="assets/course-media/magazine-catalogue/cycle-01-utopian-to-splinternet.png"
-  alt="Networked sphere and telegraph poles representing early internet utopianism and the later fragmentation of the open network dream."
-  loading="lazy"
->
-```
-
-## CSS notes
-
-Suggested variables:
-
-```css
-:root {
-  --catalogue-paper: #faf9f7;
-  --catalogue-ink: #0f172a;
-  --catalogue-muted: #475569;
-  --catalogue-line: #e2d8ca;
-  --catalogue-orange: #ea580c;
-  --catalogue-sage: #166534;
-}
-```
-
-Large cycle image treatment:
-
-```css
-.cycle-band__image {
-  opacity: 0.82;
-  mix-blend-mode: multiply;
-  filter: saturate(0.88) contrast(0.96);
-  object-fit: contain;
-}
-```
-
-Small module thumbnails:
-
-```css
-.module-card__thumb {
-  width: 8rem;
-  aspect-ratio: 1;
-  opacity: 0.86;
-  mix-blend-mode: multiply;
-  object-fit: contain;
-}
-```
+Visible scaffolding from the design mockup was removed. The page should read as the actual course magazine rather than as a labelled design option.
 
 ## Accessibility
 
-Every image should have an `alt` attribute because these illustrations are meaningful navigational cues. Keep the alt text factual and concise.
+Every image has an `alt` attribute because the illustrations are meaningful navigational cues. Keep the alt text factual and concise when editing.
